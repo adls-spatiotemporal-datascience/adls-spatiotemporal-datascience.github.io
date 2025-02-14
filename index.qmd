@@ -1,0 +1,52 @@
+---
+echo: false
+---
+
+# Welcome {.unnumbered}
+
+![](images/us-weather.png)
+
+<!-- U.S. annual temperature compared to 20th-Century Average. Source [NOAA Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals) using data from NCEI -->
+
+
+
+
+
+Welcome to the course *Spatiotemporal Datascience*. This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW). 
+
+
+In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. 
+To start the course, we will recap the following topic from the course *GISc and Geodatabases*: [Geocomputation with R](https://zhaw-giscience-geodatabases.github.io) with raster and vector data
+
+<!-- During the course, we will recap [Image Processing with R](https://adls-image-processing-for-rs.github.io/) from the course *Image Processing for Remote Sensing*.  -->
+
+
+Our *preliminary* schedule is as follows. Please note that this schedule is subject to change!
+
+```{r}
+#| output: false
+library(readODS)
+library(dplyr)
+library(gt)
+```
+
+
+```{r}
+zeitplan <- readODS::read_ods("Zeitplan.ods")
+
+zeitplan$`Topics (intern)` <- NULL
+
+zeitplan |> 
+  mutate(across(everything(),\(x)ifelse(is.na(x),"tba",x))) |> 
+  gt() |> 
+  tab_options(table.width = "100%")
+
+```
+
+
+
+
+
+
+<div style="padding-bottom: 100px"></div>
+

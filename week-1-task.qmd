@@ -1,0 +1,88 @@
+---
+title: "🚀 Tasks"
+musterloesung: false
+---
+
+## Task 1
+
+
+On GitHub:
+
+1. On GitHub, [create a free organisation](https://github.com/organizations/plan) called `ADLS-STDS2025-kuerzel` (replace `kuerzel` with your ZHAW email prefix). 
+2. Submit the URL to this organisation to us via mail
+2. In this Organisation, create a new, blank repository called `week-1`.
+
+On your local machine:
+
+1. Install CLI Software [quarto](https://quarto.org/)
+2. Create a new directory to solve this weeks task.
+3. Make this folder a `git` repository (`git init`) and use the GitHub Repo you created previously as a remote (`git remote add origin <URL>`)
+4. Create a new file called `_quarto.yml` with the content as shown below
+5. Create a new quarto file called `index.qmd` with the content as shown below
+6. Run the CLI command `quarto preview` to preview the document
+7. Run the CLI command `quarto publish gh-pages` to publish the document to GitHub Pages
+
+
+```{.yaml filename="_quarto.yml"}
+project:
+  output-dir: _docs
+```
+
+
+```{.markdown filename="index.qmd"}
+# Solution for Week1: Vector data processing
+   
+In this document, I solve the tasks for week 1 of the course 
+*Spatiotemporal Datascience*
+```
+
+
+
+## Task 2 {#sec-gh-pages}
+
+1. Download the datasets [swissTLM3D](https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d) and [swissboundaries3d](https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d) from swisstopo.
+2. Add the datasets to the local folder you created above, in a subfolder named `data`
+3. Add the data folder to the `.gitignore` file.
+4. In `index.qmd`, add a code chunk (R or Python) and solve the following tasks using your preferred language.
+5. Using `swissTLM3d` and `swissboundaries3d`, calculate the percentage of area covered by forest *per canton*
+6. Visualize the results (in a map and / or a plot)
+7. Render the document using `quarto preview`
+8. Publish your result using `quarto publish gh-pages`
+
+
+A code chunk is added in the following manner. Please sonsult the [Quarto - Getting Started](https://quarto.org/docs/get-started/) for more information on your local setup.
+
+````{.markdown filename="index.qmd"}
+# Solution for Week1: Vector data processing
+   
+In this document, I solve the tasks for week 1 of the course 
+*Spatiotemporal Datascience*
+
+```{{r}}
+library(sf)
+
+```
+
+````
+
+::::{.content-hidden unless-meta="musterloesung"}
+
+## Sample Solution
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| eval: false
+
+
+{{< include _week-1-solution.R >}}
+```
+
+
+
+::::
+
+
+

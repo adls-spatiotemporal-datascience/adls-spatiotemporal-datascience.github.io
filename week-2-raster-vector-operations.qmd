@@ -1,0 +1,244 @@
+---
+echo: false
+---
+
+
+# Raster-Vector Operations
+```{r}
+library(sf)
+library(terra)
+library(dplyr)
+library(tmap)
+
+r <- rast(system.file("ex/elev.tif", package="terra"))
+
+p <- tm_shape(r) + 
+    tm_raster(alpha = 0, legend.show = FALSE) +
+    tm_layout(frame = FALSE,legend.outside = TRUE)
+
+```
+
+## Two worlds of spatial data
+
+- Till now, we have treated vector and raster data separately
+- However, in many cases, you will need to combine both types of data
+- For example, take the Zonal operation we discussed in the chapter @sec-zonal-1: Typically, your "zones" will be vector polygons
+
+
+
+
+```{r}
+r <- project(r, "epsg:2169")
+
+zones <- read_sf("data/week2-exercises/Luxembourg_-_Municipalities.shp") |> 
+  transmute(zone = NAME_2) |> 
+  group_by(zone) |> 
+  summarise() |> 
+  st_transform(2169)
+```
+
+
+## Zonal operations with vector data
+
+- The `zonal` function in `{terra}` can handle vector data: however, it requires `sf` objects to be converted to `terra`'s own vector format, called `SpatVector`. - The function `vect()` can be used to convert `sf` objects to `SpatVector` objects:
+
+
+```{r}
+#| echo: true
+
+
+mean_vals <- zonal(r, vect(zones), fun = mean, na.rm = TRUE)
+
+
+zones$mean <- mean_vals$elevation
+```
+
+
+```{r}
+#| layout-nrow: 1
+#| column: page
+#| label: fig-zonal-vector
+#| fig-cap: 
+#|   - The original raster data
+#|   - The original zones as vector polygons
+#|   - The resulting zones (mean elevation per zone), also as vector data
+
+p + tm_shape(r) + tm_raster()
+
+
+
+p + 
+  tm_shape(zones, is.master = TRUE) +
+  tm_polygons(col = "zone") +
+  tm_text("zone") +
+  tm_layout(legend.show = FALSE)
+
+tm_shape(zones) + 
+  tm_polygons(fill = "mean") +
+  tm_layout(frame = FALSE,legend.outside = TRUE)
+```
+
+
+## Extracting raster values at vector points
+
+- A another common operation is to extract raster values at specific points
+- Let's take the example of the city of Luxembourg (see @sec-global-2)
+- The function `extract()` can be used to extract raster values at specific points
+- `extract` returns a data.frame with 
+  - one column per raster band (1 in our case)
+  - one row per point (also 1 in our case): 
+
+```{r}
+
+luxembourg_city <- st_point(c(6.131944,49.611667)) |>     
+  st_sfc(crs = 4326) |> 
+  st_sf() |> 
+  mutate(text = "Luxembourg City") |> 
+  st_transform(2169) |> 
+  st_set_geometry("geom") 
+
+```
+
+```{r}
+p + tm_shape(r) + tm_raster() + tm_shape(luxembourg_city) + tm_dots() + tm_text("text",ymod = .9, xmod = .9)
+```
+
+
+```{r}
+#| echo: true
+
+lux_elev <- extract(r, luxembourg_city)
+lux_elev
+```
+
+
+## Vector to raster conversion
+
+- Functions that combine raster and vector data usually convert vector to raster internally
+- Sometimes, we might want to do this conversion explicitly. This can be done using the `rasterize()` function
+- This function takes three arguments:
+  1. `x`: The vector data (either of class `sf` or `SpatVector`)
+  2. `y`: A raster object that defines the extent, resolution, and CRS of the resulting raster (i.e. a "template")
+  3. `field`: The name of the column in the vector data that should be used to fill the raster cells
+
+```{r}
+#| echo: true
+# we can create a template using the input vector. All we have to specify 
+# is the resolution of the output raster, which is evalutated in the units of
+# the CRS of the input vector data (meters in our case).
+
+template <- rast(zones, resolution = 1000)
+
+zones_raster <- rasterize(zones, template, "zone")
+```
+
+
+```{r}
+#| fig-subcap: 
+#|   - The original zones as polygon data
+#|   - The zones as raster data
+#| fig-cap: Note how the conversion to polygons results in a loss of detail
+#| label: fig-vector-to-raster
+#| layout-nrow: 1
+#| column: page
+
+
+p + tm_shape(zones) + 
+  tm_polygons(col = "zone")
+
+p + tm_shape(zones_raster) + 
+  tm_raster()
+```
+
+:::{.callout-note}
+
+Note that rasters don't store character information. The above *zones* are coded as integers with a corresponding look-up table (see `?terra::levels`).
+
+:::
+
+
+## Raster to vector conversion
+
+
+- The opposite operation, converting raster data to vector data, can be done using the `{terra}` functions `as.points`, `as.lines` and `as.polygons`:
+- The resulting object will be of class `SpatVector`. This can be converted to the `sf` class using `st_as_sf()`
+
+
+```{r}
+#| echo: true
+zones_poly <- as.polygons(zones_raster) |> 
+  st_as_sf()
+```
+
+```{r}
+#| fig-subcap: 
+#|   - The zones as raster data
+#|   - The zones as polygon data
+#| fig-cap: Note how the conversion back to polygons preserves the cell boundaries
+#| label: fig-raster-to-vector
+#| layout-nrow: 1
+#| column: page
+
+p + tm_shape(zones_raster) + 
+  tm_raster()
+
+p + tm_shape(zones_poly) + 
+  tm_polygons(fill = "zone")
+```
+
+
+
+
+## Exercises {.exercises}
+
+
+1. Import `Arealstatistik.gpkg` from *Spatial_Analysis_II* using `{sf}`
+2. To rasterize the data, we need a template raster object. Create a template raster object with a resolution of 100m using the `rast()` function
+3. Rasterize the arealstatistik data using the function `rasterize`, the tempalte from the previous step, and the column `AS_4` as the field to fill the raster cells
+
+
+```{r}
+areal <- read_sf("data/week2-exercises/Arealstatistik.gpkg")
+
+template <- rast(areal, resolution = 100)
+
+areal_rast <- rasterize(areal, template, "AS_4")
+
+
+```
+
+
+4. The resulting raster contains the integer values 1 to 4. These values correspond to the following land use categories (see [metadata](https://www.bfs.admin.ch/asset/en/1420906)):
+   1. Settlement and urban areas
+   2. Agricultural areas
+   3. Wooded areas
+   4. Unproductive areas
+
+To make the raster more interpretable, assign the corresponding names to the levels of the raster using the `levels()` function. The levels should be a data.frame with two columns: `ID` and `name` (see below)
+
+
+```{r}
+#| echo: true
+
+levs <- data.frame(
+  ID = 1:4, 
+  name = c(
+    "Settlement and urban areas", 
+    "Agricultural areas", 
+    "Wooded areas", 
+    "Unproductive areas"
+    ) 
+  )
+
+levels(areal_rast) <- levs
+
+plot(areal_rast)
+
+```
+
+
+
+
+
+
+

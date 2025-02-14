@@ -1,0 +1,550 @@
+---
+echo: false
+---
+# Raster Operations
+
+## Introduction
+
+- Map algebra can be defined as operations that modify or summarize raster cell values, with reference to surrounding cells, zones, or statistical functions that apply to every cell.
+- Map algebra divides raster operations into four subclasses:
+  1. **Local** or per-cell operations
+  2. **Focal** or neighborhood operations. Most often the output cell value is the result of a 3 x 3 input cell block
+  3. **Zonal** operations are similar to focal operations, but the surrounding pixel grid on which new values are computed can have irregular sizes and shapes
+  4. **Global** or per-raster operations. That means the output cell derives its value potentially from one or several entire rasters
+
+
+```{r}
+
+library(terra)
+library(sf)
+library(tmap)
+library(dplyr)
+
+library(rnaturalearth)
+lux <- rnaturalearth::ne_countries(scale = 10, country = "Luxembourg") |> 
+  st_transform(2169)
+
+terraOptions(progress = 0)
+
+r <- rast(system.file("ex/elev.tif", package="terra"))
+
+
+r <- project(r, "epsg:2169")
+
+r_ext <- terra::ext(r)
+
+r2 <- rast(res = 1000, crs = "epsg:2169", ext = r_ext)
+
+r <- resample(r, r2)
+
+
+# writeRaster(r, "data-large/Luxembourg_Elevation.tif")
+```
+
+```{r}
+# make a raster with a boundary around the original values
+r_bool <- as.bool(r)
+
+r_bool[!is.na(r)] <- TRUE
+
+r_boundaries <- boundaries(r_bool)
+
+r_boundaries[r_boundaries == 0] <- NA
+
+```
+
+
+## Global Operation (1)
+
+- The most common global operations are descriptive statistics for the entire raster dataset such as the minimum, maximum or mean value. 
+- For example: What is the mean elevation value for Luxembourg?
+
+
+```{r}
+#| label: fig-elev
+#| fig-cap: Elevation of Luxembourg
+
+
+p0 <- tm_shape(r) + 
+    tm_raster(style = "cont", palette = "viridis",legend.show = FALSE) +
+    tm_layout(frame = FALSE,legend.outside = TRUE)
+
+p0
+
+
+p <- tm_shape(r) + 
+    tm_raster(alpha = 0, legend.show = FALSE) +
+    tm_layout(frame = FALSE,legend.outside = TRUE)
+
+```
+
+```{r}
+#| echo: true
+
+# note: mean(r) does not work, since "mean" is used as a local operator
+mean_elev <- global(r, mean, na.rm = TRUE)
+
+mean_elev
+```
+
+
+## Global Operation (2) {#sec-global-2}
+
+- Another type of "global" operation is `distance`
+- This function calculates the distance from each cell to a specific target cell
+- For example, what is the distance from each cell to *Luxembourg City*, the capital of Luxembourg?
+
+```{r}
+luxembourg_city <- st_point(c(6.131944,49.611667)) |>     
+  st_sfc(crs = 4326) |> 
+  st_sf() |> 
+  mutate(text = "Luxembourg City") |> 
+  st_transform(2169) |> 
+  st_set_geometry("geom") 
+
+
+p0 +
+  tm_shape(luxembourg_city) + tm_dots(shape = 4, size = 1.4) 
+
+luxembourg_city <- vect(luxembourg_city)
+```
+
+```{r}
+#| echo: true
+
+r_dist <- distance(r, luxembourg_city)
+r_dist <- mask(r_dist, r)
+```
+
+
+
+```{r}
+
+p0 +
+  tm_shape(r_dist) + tm_raster(palette = "viridis", style = "cont") +
+  tm_shape(st_as_sf(luxembourg_city)) + tm_dots(shape = 4, col = "red") +
+  tm_layout(legend.show = FALSE)
+
+```
+
+
+
+## Zonal {#sec-zonal-1}
+
+- Zonal operations apply an aggregation function to multiple raster cells
+- A second raster with categorical values define the "zones"
+
+What is the mean altitude *per municipality*?
+
+```{r}
+zones <- read_sf("data/week2-exercises/Luxembourg_-_Municipalities.shp") |> 
+  transmute(zone = NAME_2) |> 
+  group_by(zone) |> 
+  summarise() |> 
+  st_transform(2169) |> 
+  vect() |> 
+  rasterize(r, field = "zone")
+
+```
+
+```{r}
+# writeRaster(zones, "data-large/Luxembourg-Municipalities.tif")
+```
+
+
+```{r}
+#| echo: true
+
+mean_vals <- zonal(r, zones, fun = mean, na.rm = TRUE)
+
+
+```
+
+
+```{r}
+#| label: fig-zonal
+#| column: page
+#| layout-nrow: 1
+#| fig-cap:
+#|   - The original Zones (E.g. municipalities of Luxembourg)
+#|   - Mean elevation per zone / per municipality
+
+
+mean_vals2 <- mean_vals |> 
+  mutate(ID = row_number()-1, .before = 0) |> 
+  select(-zone)
+zones_int <- as.int(zones)
+
+zones_mean <- classify(zones_int, mean_vals2)
+
+p + 
+  tm_shape(zones, is.master = TRUE) +
+  tm_raster(style = "cat",legend.show = TRUE, palette = "Set1") 
+
+p + tm_shape(zones_mean) + 
+  tm_raster(style = "cont", palette = "viridis", title = "Mean Elevation") 
+```
+
+:::{.callout-note collapse="true}
+
+- The global operation can be seen as a special case of a zonal operation, where the only "Zone" is the entire dataset
+
+
+:::
+
+## Local (1)
+
+- Local operations comprise all cell-by-cell operations in one or several layers.
+- For example, we can classify the elevation into values above and below a certain threshold
+
+
+```{r}
+#| echo: true
+
+# first, create a boolean copy of the raster
+r_bool <- as.logical(r)
+
+mean_elev <- as.numeric(mean_elev)
+mean_elev
+
+r_bool[r > mean_elev] <- FALSE
+r_bool[r <= mean_elev] <- TRUE
+
+
+``` 
+
+
+```{r}
+
+p + 
+  tm_shape(r_bool) +
+  tm_raster(palette = "viridis", title = "Low Elevation")
+
+```
+
+
+
+## Local (2)
+
+- This type of (re-) classification is a very common operation
+- For more than 2 categories, we can use `classify`
+
+
+```{r}
+#| echo: true
+cuts <- global(r, quantile, probs = c(0, .33, .66, 1), na.rm = TRUE)
+
+r_classify <- classify(r, as.numeric(cuts))
+
+# this next line just replaces the default labels with some custom ones
+levels(r_classify) <- data.frame(ID = 0:2, category = c("low","mid","high"))
+
+p + tm_shape(r_classify) +
+    tm_raster(style = "cat",legend.show = TRUE, palette = "viridis", title = "Elevation") +
+    tm_layout(legend.show = TRUE)
+```
+
+
+## Local (3)
+
+- Local operations are often used with multiple bands
+- For example, we could calculate the mean intensity values of red, green and blue:
+
+
+```{r}
+#| echo: true
+l7 <- rast(system.file("tif/L7_ETMs.tif",package = "stars"))
+
+names(l7) <- c("B", "G", "R", "NIR", "SWIR", "MIR")
+
+l7_rgb <- l7[[c("R","G", "B")]]
+
+plot(l7_rgb, nr = 1)
+
+```
+
+```{r}
+#| echo: true
+l7_rgb_mean <- mean(l7_rgb)
+
+plot(l7_rgb_mean)
+```
+
+## Local (4)
+
+- In a more complex usecase, we could use the R, G and B band to calculate a grayscale value ($L^*$) using the following formula (from [here](https://stackoverflow.com/a/689547/4139249)):
+
+\begin{aligned}
+
+L^* &= 116 \times Y ^ {\frac{1}{3}} - 16\\
+
+Y &= 0.2126 \times R^\gamma+0.7152 \times G^\gamma+0.0722 \times B^\gamma \\
+
+
+\gamma &= 2.2
+
+\end{aligned}
+
+
+
+```{r}
+#| echo: true
+
+g <- 2.2
+
+l7 <- l7/255 # scale values to 0-1 (probabbly not necessary)
+
+Y <- 0.2126 * l7[["R"]]^g + 0.7152 * l7[["G"]]^g + 0.0722 * l7[["B"]]^g
+
+L <- 116* Y^(1/3)-16
+
+# Plot the result
+```
+
+
+```{r}
+
+tm_shape(L) + tm_raster(style = "cont", palette = grey.colors(255)) +
+  tm_layout(legend.show = FALSE)
+
+
+```
+
+
+## Focal {#sec-focal-1}
+
+- While local functions operate on one cell focal operations take into account a central (focal) cell *and its neighbors*. 
+- The neighborhood (also named kernel, filter or moving window) under consideration is typically of size 3-by-3 cells (that is the central cell and its eight surrounding neighbors), but can take on any other size or shape as defined by the user. 
+- A focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell
+
+
+:::{#fig-focal}
+
+![](images/focal.png)
+
+Note how, depending on the size of your moving window, NA's are produced. Source: @lovelace2019
+:::
+
+
+```{r}
+#| echo: true
+
+
+focal3by3 <- matrix(rep(1,9), ncol = 3)
+
+
+focal11by11 <- matrix(rep(1,121), ncol = 11)
+
+
+r_foc3 <- focal(r, focal3by3, fun = mean, fillNA = TRUE)
+
+r_foc11 <- focal(r, focal11by11, fun = mean, fillNA = TRUE)
+
+
+```
+
+
+```{r}
+#| label: fig-focal2
+#| layout-nrow: 1
+#| column: page
+#| fig-cap: 
+#|   - Original values
+#|   - Result of a 3x3 Focal Window
+#|   - Result of a 11x11 Focal Window
+
+
+p0 + tm_shape(r_boundaries) + tm_raster() + 
+  tm_layout(legend.show = FALSE)
+
+p + tm_shape(r_foc3) + tm_raster(style = "cont", palette = "viridis") +
+    tm_layout(legend.show = FALSE, frame = FALSE) +
+  tm_shape(r_boundaries) + tm_raster()
+
+p + tm_shape(r_foc11) + tm_raster(style = "cont", palette = "viridis") +
+    tm_layout(legend.show = FALSE, frame = FALSE) +
+    tm_shape(r_boundaries) + tm_raster()
+
+```
+
+:::{.callout-note collapse="true"}
+
+- Note how the output raster is smaller as the focal window is larger (edge effect)
+
+:::
+
+## Focal weights (1)
+
+- The focal weights we used above were square and evenly weighted
+
+```{r}
+#| echo: true
+focal3by3
+```
+
+```{r}
+#| echo: true
+focal11by11
+```
+
+
+## Focal weights (2)
+
+- However, we can also create uneven weights:
+
+
+
+For example, a [laplacian filter](https://de.wikipedia.org/wiki/Laplace-Filter) is commonly used for edge detection.
+
+```{r}
+#| echo: true
+
+
+laplacian <- matrix(c(0,1,0,1,-4,1,0,1,0), nrow=3) 
+
+laplacian
+
+```
+
+So are the [sobel filters](https://en.wikipedia.org/wiki/Sobel_operator)
+
+```{r}
+
+sobel_x <- matrix(c(-1,-2,-1,0,0,0,1,2,1), nrow=3)
+
+sobel_x
+
+sobel_y <- matrix(c(1,0,-1,2,0,-2,1,0,-1), nrow=3)
+
+sobel_y
+
+```
+
+
+```{r}
+#| label: fig-edgedetection
+#| fig-cap: 
+#|   - Laplacian Filter
+#|   - Sobel (x-direction)
+#|   - SObel (y-direction)
+#| column: page
+#| layout-nrow: 1
+focal(r, laplacian) |> plot()
+focal(r, sobel_x) |> plot()
+focal(r, sobel_y) |> plot()
+
+```
+
+
+## Focal weights (3)
+
+
+- We can also create specific *shapes* using weights
+- We don't need to create these matrices by hand. Rather, we can use the function `focalMat` to create different shapes automatically
+
+```{r}
+#| warning: false
+#| echo: true
+
+# Note 
+# - "d" is evaluated in the units of "x" (in our case: meters)
+# - The sum of all weights equals to 1
+# - Note how the edges receive a value of 0
+focal_circle3000 <- focalMat(x = r, d = 3000, "circle")
+
+focal_circle3000
+```
+
+```{r}
+#| fig-cap: A visual representation of the matrix / filter above
+focal_circle3000 |> rast() |> plot()
+```
+
+
+```{r}
+#| echo: true
+focal_gauss1000 <- focalMat(x = r, d = 1000, "Gauss")
+
+focal_gauss1000
+```
+
+```{r}
+#| fig-cap: A visual representation of the matrix / filter above
+focal_gauss1000 |> rast() |> plot()
+```
+
+## Focal functions in terrain processing
+
+- Focal functions are used to calculate the slope of a specific location, e.g. using the algorithm by @horn1981
+- Similarly, calculating the aspect (azimuth) of a location is a very typical task when dealing with elevation data
+- These algorithms are used so often, that they are implemented in a dedicated function (`terrain()`)
+
+```{r}
+#| echo: true
+#| layout-nrow: 1
+#| label: fig-terrain
+#| column: page
+#| fig-cap: 
+#|   - Calculating slope using a predefined algorithm
+#|   - Calculating aspect 
+
+
+terrain(r, "slope") |> plot()
+terrain(r, "aspect") |> plot()
+```
+
+
+## Exercises {.exercises}
+
+
+1. Import the elevation of Luxembourg using the following code:
+
+   ```{r}
+   #| eval: false
+   #| echo: true
+   r <- rast(system.file("ex/elev.tif", package="terra"))
+   ```
+
+2. Calculate the mean, maximum and minimum elevation values
+
+3. Calculate slope and aspect (see [terrain functions](https://rspatial.github.io/terra/reference/terrain.html))
+
+4. Determine suitable locations of solar panels using the following conditions:
+   - Elevation: above 300 MASL
+   - Slope: Between 1 and 3° 
+   - Aspect: Southfacing (between 135 and 235°)
+   
+
+5. Download the Municipalities of Luxembourg from Moodle and calculate the minimum, maximum and mean elevation values per municipality.
+
+6. Smooth the elevation values using different focal windows
+
+7. Import the multispectral Landsat 7 as a raster using the following path
+
+   ```{r}
+   #| eval: false
+   #| echo: true
+    
+   system.file("tif/L7_ETMs.tif",package = "stars")
+   ```
+
+8. Calculate the [NDVI](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index) using the following formula:
+
+$$\text{NDVI} = \frac{\text{NIR}-\text{red}}{\text{NIR}+\text{red}}$$
+
+```{r}
+NDVI <- (l7[["NIR"]]-l7[["R"]])/(l7[["NIR"]]+l7[["R"]])
+```
+
+
+```{r}
+#| fig-cap: The resulting NDVI values
+tm_shape(NDVI) + tm_raster(style = "cont", title = "NDVI", midpoint = 0, breaks = c(-1,0,1)) + 
+  tm_layout(legend.outside = TRUE)
+```
+
+
+
+
+
+

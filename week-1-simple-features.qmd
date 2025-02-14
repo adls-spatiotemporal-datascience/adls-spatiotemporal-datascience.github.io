@@ -1,0 +1,332 @@
+---
+knitr:
+  opts_chunk: 
+    tidy: false
+---
+
+
+# Simple Features
+
+## Simple feature standard
+
+- Simple features is an open standard (ISO 19125-1:2004) developed and endorsed by the [Open Geospatial Consortium (OGC)](https://www.ogc.org/)
+- The standard is widely implemented in spatial databases (such as PostGIS), desktop GIS (such as ArcGIS, QGIS), scripting languages (such as R, Python) and forms the vector data basis for libraries such as GDAL. 
+
+
+::::{.notes}
+
+This is the secret message for Area 2
+
+::::
+
+
+## What is a feature?
+
+The standard says: 
+
+> A simple feature is defined [...] to have both spatial and non-spatial attributes. Spatial attributes are geometry valued, and simple features are based on 2D geometry with linear interpolation between vertices. 
+
+- A feature is thought of as a thing / an object in the real world, such as a building or a tree. 
+- Features have: 
+  1. a geometry describing where on Earth the feature is located
+  2. attributes, which describe other properties. 
+- For example:
+  1. The geometry of a tree can be the delineation of its crown, of its stem, or the point indicating its center
+  2. attributes (properties) may include its height, color, diameter at breast height at a particular date, and so on
+
+
+## Simple Feature Model
+
+
+- Simple features is a hierarchical data model that represents a wide range of geometry types. 
+- All geometries are composed of points in a 2-, 3- or 4-dimensional space
+- Of 18 geometry types supported by the specification, only the following seven (see @fig-sf and @tbl-sf) are used in the vast majority of geographic research: 
+  - Three basic types: points, linestrings, polygons
+  - Three composite types: mutlipoints, multilinestrings, multipolygons
+  - One special case: geometrycollection (which can be a conglomarate of all the afore mentioned)
+- These seven core geometry types are fully supported by the R package sf [@pebesma2018]
+
+
+:::{#fig-sf}
+
+![](images/simple_feature_types.svg)
+
+Image source: @dorman2023
+:::
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| tbl-cap: "Source: @pebesma2018"
+#| label: tbl-sf
+
+
+library(dplyr)
+
+image_paths <- paste0("images/",c("points", "linestring", "polyongs", "multipoint", "multilinesting","multilpolygon", "geometrycollection"), ".png")
+
+df_sf <- tibble(
+  type = c(
+    "`POINT` ",
+    "`LINESTRING`  ",
+    "`POLYGON` ",
+    "`MULTIPOINT`  ",
+    "`MULTILINESTRING` ",
+    "`MULTIPOLYGON`  ",
+    "`GEOMETRYCOLLECTION`"
+    ),
+  desc = c(
+    "zero-dimensional geometry containing a single point",
+    "sequence of points connected by straight[^non-selfintersecting] line pieces",
+    "sequence of points form a closed[^non-selfintersecting] ring[^holes]",
+    "set of points",
+    "set of linestrings",
+    "set of polygons",
+    "set of geometries of any of the above types                "
+  ),
+  number_of_dimensions = c(0,1,2,0,1,2,NA),
+) 
+
+
+library(kableExtra)
+kable(df_sf, col.names = c("Type", "Description", "# of Dimension")) 
+  
+```
+
+
+
+[^non-selfintersecting]: non-selfintersecting
+[^holes]: the first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring
+
+## Simple features in R
+
+Simple Features in R is modelled in three levels:
+
+1. Simple feature geometries (`sfg`): Individual Simple Feature objects
+2. Simple Feature geometry columns (`sfc`): A list column of `sfg`s
+3. Simple Features (with attributes): A `sfc` with attributes, i.e. additional columns
+
+## sfg: simple feature geometry 
+
+- Simple feature geometries are implemented as R native data, using the following rules:
+  1. a single POINT is a numeric vector
+  2. a set of points, e.g. in a LINESTRING or ring of a POLYGON is a matrix, each row containing a point
+  3. any other set is a `list`
+  
+(however, creator functions are rarely used in practice, since we typically bulk read and write spatial data. They are useful for illustration)
+
+
+### Points 
+
+```{r}
+#| echo: true
+#| warning: false
+
+library(sf)
+fracht <- st_point(c(2685374, 1256519))
+
+fracht
+```
+
+
+```{r}
+plot(fracht)
+```
+
+### Linestrings
+
+```{r}
+coords <- c(
+  2684336, 1255553, 
+  2682705, 1258929
+  ) |> 
+  matrix(ncol = 2, byrow = TRUE)
+
+coords
+```
+
+
+```{r}
+piste <- st_linestring(coords)
+
+piste
+```
+
+
+```{r}
+plot(piste)
+```
+
+
+### Polygons
+
+```{r}
+coords_2 <- c(
+  2684142, 1255702, # ↰ 
+  2685600, 1256958, # start and end must
+  2682534, 1259699, # be identical (closed)
+  2684142, 1255702  # ↲ 
+) |> 
+  matrix(ncol = 2, byrow = TRUE) |> 
+  list()
+
+coords_2
+```
+
+
+```{r}
+flughafen <- st_polygon(coords_2)
+
+flughafen
+```
+
+
+```{r}
+plot(flughafen)
+```
+
+
+
+## sfc: Simple feature geometry columns
+
+- Usually, a `sfc` contains more than one `sfg`. 
+- This is not mandatory, and for convenience we will just use a single `sfg` to showcase `sfc`
+- As you might have noticed, we didn't specify a CRS when creating the `sfg` objects. This is because we weren't able to. With `sfc`, we can ([and should](https://fosstodon.org/@jjimenezshaw@mapstodon.space/113310384205885118)) specify a crs. 
+
+```{r}
+fracht_sfc <- st_sfc(fracht, crs = 2056)
+
+fracht_sfc
+```
+
+<hr class="br">
+
+```{r}
+piste_sfc <- st_sfc(piste, crs = 2056)
+
+piste_sfc
+```
+
+<hr class="br">
+
+
+```{r}
+flughafen_sfc <- st_sfc(flughafen, crs = 2056)
+
+flughafen_sfc
+```
+
+
+## sf: Simple features
+
+- Simple features have attributes
+- In order to add attributes to a simple feature column (`sfc`), we need to convert it to a simple feature (`sf`)
+- A `sf` object is a subset of a data.frame. Many (all?) things which can be done with a data.frame, can be done with an `sf` object
+- Many `tidyverse` functions are implemented to nicely work with `sf`
+- **Note**: Geometries are *sticky*. This means they aren't dropped implicitly
+
+
+```{r}
+fracht_sf <- st_as_sf(fracht_sfc)
+
+fracht_sf$name <- "Ost"
+```
+
+
+```{r}
+# sf objects are also dataframes
+is.data.frame(fracht_sf)
+```
+
+<hr class="br">
+
+```{r}
+# Geometries are sticky
+fracht_sf[, "name"] 
+```
+
+
+<hr class="br">
+
+```{r}
+piste_sf <- st_as_sf(piste_sfc)
+
+piste_sf$nr <- 34
+
+flughafen_sf <- st_as_sf(flughafen_sfc)
+
+flughafen_sf$name <- "Flughafen Zürich"
+
+flughafen_sf
+```
+
+
+## Plotting simple features {#sec-plotting}
+
+- Various libraries support plotting `sf` objects:
+  - base R (sf provides a `plot`-method)
+  - General purpose libraries such as `ggplot2`
+  - Dedicated geospatial plotting libraries such as `tmap`
+- Use:
+  - base R: If you want to take a quick look at your data. Base R has the most compact syntax and is extremely fast in plotting
+  - `ggplot2`: If you only have (small-ish) vector data (no raster) and/or want to leverage the power of `ggplot2`
+  - `tmap`: If you want to use all features a dedicated library for geospatial data has to offer: North arrow, scale bar, interactive (web) maps
+
+```{r}
+#| layout-nrow: 1
+#| fig-cap: 
+#|   - base R
+#|   - library `ggplot2`
+#|   - library `tmap`
+#
+# Using base R
+plot(st_geometry(flughafen_sf))
+plot(piste_sf, add = TRUE)
+plot(fracht_sf, add = TRUE)
+#
+# Using ggplot2
+library(ggplot2)
+ggplot() +
+  geom_sf(data = flughafen_sf) +
+  geom_sf(data = piste_sf) +
+  geom_sf(data = fracht_sf)
+#
+# Using tmap
+library(tmap)
+tm_shape(flughafen_sf) + tm_polygons() +
+  tm_shape(piste_sf) + tm_lines() +
+  tm_shape(fracht_sf) + tm_dots()
+  
+```
+
+## Interactive maps {#sec-plotting}
+
+The `tmap` library can render the map either in a static plot as above (the default) or as an interactive web map (see below)
+
+```{r}
+
+# set tmap_mode to "view" for an interactive web map
+tmap_mode("view")
+
+tm_shape(flughafen_sf) + tm_polygons() +
+  tm_shape(piste_sf) + tm_lines() +
+  tm_shape(fracht_sf) + tm_dots()
+
+```
+
+
+
+
+## Exercises {.exercises}
+
+1. Create some simple feature geometries (`sfg`) of objects you know "by hand"
+  - Create at least one `POINT`, one `LINESTRING` and one `POLYGON` geometry
+  - You can capture the coordinates of the nodes from [map.geo.admin](https://map.geo.admin.ch/) if these are is Switzerland and [openstreetmap](https://www.openstreetmap.org) (or similar) if they aren't
+2. Create simple feature columns from you `sfg`s. Make sure that you assign the correct CRS
+3. Create simple features (`sf`) from your `sfc`s and add some attributes
+
+
+
+
+

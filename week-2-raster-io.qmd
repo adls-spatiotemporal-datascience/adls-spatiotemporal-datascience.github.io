@@ -1,0 +1,66 @@
+
+
+# Raster Data I/O
+
+- In R, several libraries are available to work with raster data
+  - `{raster}` by Robert Hijmans. This library is not maintained anymore
+  - `{terra}` by the same author. This library is the successor of `{raster}` and is actively maintained
+  - `{stars}` by Edzer Pebesma. This library extremly well developed, but it tends to be slower than `{terra}` (which is why we will not cover it in this course)
+- Like `{sf}` The library `{terra}` is based on the GDAL library (see @sec-gdal-ogr2ogr)
+- GDAL Supports a *wide* range of raster formats (see [Raster drivers](https://gdal.org/en/latest/drivers/raster/index.html))
+
+
+## Import a raster file
+
+- `terra` uses the function `rast()` to import raster data
+- Printing the object will give you some basic information about the raster
+  - The number of rows and columns, as well as the number of layers
+  - The resolution of the raster, meter per pixel (25 in our case)
+  - The extent of the raster, in the coordinate reference system of the raster
+  - The coordinate reference system (CRS) of the raster
+  - The source (in memory, or a file path)
+  - The name(s) of the band(s) (we only have one band in our case)
+  - The min and max values of the raster
+
+```{r}
+library(terra)
+
+dhm25 <- rast("data/week2-exercises/dhm25_lu.tif")
+dhm25
+``` 
+
+
+
+## GeoTIFF
+
+- GeoTIFF is the most common raster format
+- GeoTIFF is an extension to the TIFF format, which includes additional metadata to establish the spatial reference of the file
+- This includes the CRS, the extent, the resolution, and the origin of the raster
+- The metadata is either stored in the header of the file, or in an accompanying file with the same name, but different extension (`.tfw` or `.aux.xml`)
+- Other important raster file formats include:
+  - Cloud optimized GeoTIFF (COG): A GeoTIFF file that is optimized for cloud storage which allows for efficient, partial reading of the file over HTTP
+  - JPG2000 (`.jp2`) is a compressed raster format that is often used for satellite imagery
+  - NetCDF (`.nc`) is a format that is often used for climate data
+  - HDF5 (`.h5`) is a format that is often used for remote sensing data
+
+
+
+## Writing a raster file
+
+
+- You can write a raster object to a file using the `writeRaster()` function
+
+
+```{r}
+writeRaster(dhm25, "data-out/dhm25_lu.tif", overwrite = TRUE)
+```
+
+
+## Exercises {.exercises}
+
+
+1. Import the raster `dhm25_lu.tif` from the lesson *Spatial Analysis II*
+2. Visualize the raster using the `plot()` function as well as the library `{tmap}`.
+
+
+

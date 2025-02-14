@@ -1,0 +1,219 @@
+---
+title: "Week 3: Vector Advanced" 
+---
+
+## Topological relations
+
+- We briefly touched topological relations in @sec-spatiao-queries
+- Topological relations describe the spatial relationships between objects. 
+- They are also called *Binary topological relationships* or *binary predicates*
+- They are logical statements (`TRUE`/`FALSE`) about the spatial relationships between two objects
+- The two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions [@egenhofer1990]. 
+
+
+## Useage
+
+- Topological relations can be used to subset or join spatial data
+- For example:
+  - Subsetting: *Return all rivers that flow through the canton of Zurich*
+  - Joining: *For each of the following Cinemas, what is the nearest train station?*
+
+## Named topological relations
+
+- The most common topological relations are offered as functions / tools in most GIS software
+- In `sf`, the following topological functions are available:
+  - `st_intersects()`
+  - `st_disjoint()`
+  - `st_touches()`
+  - `st_crosses()`
+  - `st_within()`
+  - `st_contains()`
+  - `st_contains_properly()`
+  - `st_overlaps()`
+  - `st_equals()`
+  - `st_covers()`
+  - `st_covered_by()`
+  - `st_equals_exact()`
+  - `st_is_within_distance()`
+  - `st_nearest_feature()`
+  - `st_nearest_points()`
+- These all work slightly differently, and are used in different contexts.
+- For example: 
+  - `st_covers()` returns `TRUE` if no points of `x` are outside `y`, and at least one point of `x` is inside `y`.
+  - `st_touches()` returns `TRUE` if the geometries have at least one point in common, but their interiors do not intersect.
+  
+
+## Named topological relations
+
+- Some of the relations mentioned above are symmetrical (the order of the geometries does not matter)
+- For example, if `st_touches(x, y)` is `TRUE`, then `st_touches(y, x)` is also `TRUE`
+- Others are not, meaning that the order of the geometries is important. 
+- For example, `st_contains(x, y)` returns `TRUE` if `x` contains `y`, but `st_contains(y, x)` returns `FALSE`
+- Some of the relations require additional arguments, such as `st_is_within_distance()`, which requires a distance argument
+- You can find the full list of topological relations in the `sf` documentation using `?geos_binary_pred`
+
+
+  
+## Subset Examples
+
+- Let's take the example of the playgrounds in Zurich and the public transport stops. 
+- We can subset the playground data to only include playgrounds that are close (e.g. 100m) to public transport stops
+
+
+```{r}
+library(sf)
+library(readr)
+# source: https://www.stadt-zuerich.ch/geodaten/
+playgrounds <- read_sf("data/week3-exercises/playgrounds.gpkg")
+publictransport <- read_sf("data/week3-exercises/public_transport.gpkg")
+
+# Using the shorthand notation
+playgrounds_close <- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]
+
+```
+
+
+```{r}
+#| echo: false
+#| label: fig-playground-publictransport
+#| fig-cap: "Note that the playgrounds within 100m of public transport (red dots) are a *subset* of all the playgrounds"
+
+library(tmap)  
+
+tm_shape(publictransport) + tm_dots(shape = 2, col = "darkblue") +
+tm_shape(playgrounds) + tm_dots(shape = 16, fill = "darkgreen", size = .5)  +
+  tm_shape(playgrounds_close) + tm_dots(shape = 16, fill = "red", size = .5) +
+  tm_add_legend(fill = c("darkgreen","red", "darkblue"), col = c("darkgreen", "red", "darkblue"), shape = c(16,16, 2),labels = c("Playgrounds", "Playgrounds within 100m", "Public Transport")) 
+
+
+```
+
+
+
+## Spatial join Example
+
+- In a spatial join, we want to add information from one dataset to another based on their spatial relationship
+- For example, we can add the name of the *nearest* public transport stop to each playground.
+
+
+```{r}
+
+# If we only want to transfer the name of the nearest public transport stop,
+# we first need to remove all other columns from the public transport data and 
+# keep only the name of the stop ("CHSTNAME")
+publictransport <- publictransport[,"CHSTNAME"]
+
+# Let's also remove all columns from the playgrounds data except the name
+playgrounds <- playgrounds[, "name"]
+
+
+playgrounds_join <- st_join(playgrounds, publictransport, join = st_nearest_feature)
+
+
+playgrounds_join
+
+```
+
+
+## Spatial join Example (2)
+
+- In the previous example, `playgrounds_join` has the same features as `playgrounds`, but with an additional column (`CHSTNAME`)
+- The reason for this, is that there is only one *nearest station* for every playground
+- In some joins, the number of rows in the joined dataset can be different from the original dataset
+- For example, if we want to join via the method *within 100m*, the result is different (see below). 
+- This is because there can be multiple public transport stops within 100m of a playground
+
+
+```{r}
+#| collapse: true
+playgrounds_join2 <- st_join(
+  playgrounds, 
+  publictransport, 
+  join = st_is_within_distance, 
+  dist = 100
+  )
+
+nrow(playgrounds)
+
+nrow(playgrounds_join2)
+
+playgrounds_join2
+```
+
+
+## Spatial join order
+
+- Note that as is the case with all joins, the order of the datasets matters
+- `st_join` by default is a left join (the first dataset is the left dataset)
+- The resulting dataset will have the geometry of the left dataset
+- This is especially noticeable when joining datasets of different types
+
+```{r}
+
+kreise <- read_sf("data/week3-exercises/stadtkreise-zh.gpkg")
+
+kreise <- kreise[,"STADTKREIS"]
+
+
+publictransport_join <- st_join(publictransport, kreise)
+```
+
+```{r}
+#| echo: false
+tm_shape(publictransport_join) + tm_dots(fill = "STADTKREIS")
+```
+
+- if you reverse the order, each `stadtkreis` will be duplicated for every point in the `publictransport` dataset it intersects
+
+```{r}
+#| collapse: true
+
+kreise_join <- st_join(kreise, publictransport)
+
+nrow(kreise)
+
+nrow(kreise_join)
+```
+
+
+```{r}
+#| echo: false
+#| label: fig-publictransport-kreise
+#| fig-cap: "Note that all the duplicate stadtkreise overlap each other, so when you visualize the data, the issue is not noticeable"
+#| fig-subcap: 
+#|   - "Dataset `kreise` with 12 features"
+#|   - "Dataset `kreise_join` with 477 features"
+#| layout-nrow: 1
+tm_shape(kreise) + tm_polygons("STADTKREIS") + tm_layout(legend.show = FALSE)
+
+tm_shape(kreise) + tm_polygons("STADTKREIS") + tm_layout(legend.show = FALSE)
+
+```
+
+
+
+
+
+
+  
+
+
+
+
+
+## Spatial data operations
+
+see https://r.geocompx.org/spatial-operations#introduction-1
+
+
+
+
+## DuckDB
+
+DuckDB is an in-process SQL OLAP database management system. It is designed to be used as an embedded database in applications, but it can also be used as a standalone SQL database.
+
+- In-process SQL means that DuckDB’s features run in your application, not an external process to which your application connects. In other words: there is no client sending instructions nor a server to read and process them. SQLite works the same way, while PostgreSQL, MySQL…, do not.
+
+- OLAP stands for OnLine Analytical Processing, and Microsoft defines it as a technology that organizes large business databases and supports complex analysis. It can be used to perform complex analytical queries without negatively affecting transactional systems.
+
+DuckDB is a great option if you’re looking for a serverless data analytics database management system.

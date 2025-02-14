@@ -1,0 +1,57 @@
+---
+title: "🚀 Tasks"
+musterloesung: false
+---
+
+
+# Content
+
+
+Today, we will recap the basics of working with spatial data in R from [Geocomputation "Raster Data"](https://zhaw-giscience-geodatabases.github.io) (Course GIScience and Geodatabases).
+
+
+
+# Tasks
+
+Follow the instructions in @sec-gh-pages from last week to create a new repo in the existing organization. As you did last week, solve the next task in a file named `index.qmd`.
+
+
+1. Redo the task from last week. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.
+2. Using the R package [`tictoc`](http://jabiru.github.io/tictoc/), measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week. 
+3. Compare the execution times of the two approaches. Which approach is faster? Where is the bottleneck? 
+4. Compare the results of the two approaches. Are they the same? If not, why?
+
+<!--
+1. Download an orthophoto (e.g. `Orthofoto ZH 2014/15 Sommer`) from the GIS Browser of the canton of Zurich [geo.zh.ch/maps](https://geo.zh.ch/maps).
+2. Import the dataset into R
+3. Check the raster resolution. Resample to a 10m resulution using `aggregate`.
+4. plot a false color image using the bands NIR (4), Green (2) and Blue (1)
+5. Calculate the NDVI with the following formula
+
+$$\text{NDVI} = \frac{\text{NIR}-\text{Red}}{\text{NIR}+\text{Red}}$$
+
+-->
+
+::::{.content-hidden unless-meta="musterloesung"}
+
+## Sample Solution
+
+::: {.panel-tabset}
+
+
+
+## R
+
+```{r}
+#| eval: false
+
+{{< include _week-2-solution.R >}}
+
+```
+
+
+
+:::
+
+::::
+

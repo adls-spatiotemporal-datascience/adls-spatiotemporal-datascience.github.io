@@ -1,0 +1,171 @@
+
+# Spatial Vector Operation
+
+:::{.callout-note}
+
+The data used in this chapter is available on moodle (`Week 1 Data`)
+
+:::
+
+
+
+
+## Thematic queries
+
+- SQL queries can be performed with file import
+
+```{r}
+library(sf)
+
+tlm3d_path <- "data/week1-exercises/swiss_TLM3D.gpkg"
+
+tlm_seen <- read_sf(
+  tlm3d_path, 
+  query = "SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'"
+  )
+```
+
+
+- However, datasets can also be queried after import using `data.frame` methods (such as `[` or `dplyr::filter`)
+
+```{r}
+
+
+tlm_bb <- read_sf(tlm3d_path, "tlm_bb")
+
+# Subsetting with base-R
+tlm_seen <- tlm_bb[tlm_bb$objektart == "Stehende Gewaesser", ]
+
+
+library(dplyr)
+
+
+# Subsetting using dplyr::filter
+tlm_seen <- filter(tlm_bb, objektart == "Stehende Gewaesser")
+```
+
+
+## Spatial queries using binary predicate functions {#sec-spatiao-queries}
+
+Take the following example:
+
+> Select all forests in the canton of Luzern
+
+- Spatial query functions include: `st_contains()`, `st_intersects()`, `st_touches()`, `st_within()`, and many more
+- These spatial queries are called [geometric binary predicates](https://r-spatial.github.io/sf/reference/geos_binary_pred.html) 
+- This family of functions return so called *sparse matrices*: a `list` the same length as `x`, which, for each element in `x`, contains the indices of `y` where the condition is met. 
+- They *could* return cross matrices, but these usually have a larger memory, since they have are $x \times y$ in size
+
+<hr class="br">
+
+```{r}
+luzern <- read_sf("data/week1-exercises/luzern.gpkg")
+
+tlm_wald <- filter(tlm_bb, objektart == "Wald")
+
+# The dataset already has this crs (2056), but apparently 
+# does not realize this
+tlm_wald <- st_set_crs(tlm_wald, 2056)
+
+
+query_res <- st_intersects(tlm_wald, luzern)
+
+# Note the length of the output equals nrow(tlm_wald)
+query_res
+```
+
+
+- (The first 10 elements are empty, because to not intersect Luzern)
+- This list can be used to subset `x` (`TRUE` where the list is not empty):
+
+
+<hr class="br">
+
+```{r}
+#| fig-cap: Note how some forests are outside the canton's border. This is the nature of `st_intersects`. If even a small part of a forest feature is within Luzern, this feature *intersects* Luzern and is therefore retained. To query only forests that are *completly* within Luzern, use `st_within()`.
+#| label: fig-intersects
+
+# Note the use of lenghts (with an s) to get the length of each element in the 
+# list
+wald_luzern <- tlm_wald[lengths(query_res) > 0,]
+
+
+library(ggplot2)
+
+
+ggplot(luzern) + 
+  geom_sf(data = wald_luzern, fill = "darkgreen") +
+  geom_sf(color = "red", fill = NA) 
+
+```
+
+
+## Spatial queries using `[` or `st_filter`
+
+- The code above was for illustration purposes. The code can be written more concise: 
+
+
+```{r}
+#| eval: false
+
+# using sf-methods in base-R
+tlm_wald[luzern,, op = st_intersects]
+
+# using st_filter
+st_filter(tlm_wald, luzern, .predicate = st_intersects)
+
+```
+
+- The default value for `op` and `.predicate` is `st_intersects`, so these arguments could also have been omitted
+
+
+## Overlay Analysis
+
+
+- In the example illustrated in @fig-intersects, we have the choice of subsetting forests that either intersect Luzern ever so slightly (`st_intersects`), or that lie *completely* within Luzern (`st_within`). 
+- Depending on the question, both options can be unsatisfactory (e.g. if the question was *Which percentage of Luzern is covered by forest?*)
+- For some cases, it might be necessary to "cut" the forest area at the cantons border
+- This can be achieved with `st_intersection` (which is different from `intersects`)
+- There are several other functions that work on pairs of geometries. See  [Geometric operations on pairs of simple feature geometry sets](https://r-spatial.github.io/sf/reference/geos_binary_ops.html)
+- There are even more functions that work on single geometries, e.g. `st_buffer`. See [Geometric unary operations on simple feature geometry sets](https://r-spatial.github.io/sf/reference/geos_unary.html)
+
+
+<hr class="br">
+
+```{r}
+library(glue)
+library(scales)
+wald_luzern2 <- st_intersection(luzern, wald_luzern)
+
+ggplot(luzern) + 
+  geom_sf(fill = "gray", color = NA) +
+  geom_sf(data = wald_luzern2, fill = "darkgreen", color = NA)
+
+```
+
+
+
+- Now, it's possible to compute the area of Luzern and the forest that *intersects* Luzern using the function `st_area`. 
+- There are several functions to [compute geometric measurements](https://r-spatial.github.io/sf/reference/geos_measures.html) of `sf`-objects.
+
+```{r}
+sum(st_area(wald_luzern2))/st_area(luzern)
+```
+
+
+<!-- todo: add buffer, union, dissolve -->
+
+## Exercises {.exercises}
+
+From the exercise in **Spatial Analysis I**, solve the following tasks using R:
+   
+- Task 2: Thematic Selections (Select by Attributes)
+- Task 3: Exporting Selected Features to a New ~~Layer~~ `sf` object
+- Task 6: Intersect (Intersection)
+- Task 8: Buffer
+- Task 9: Spatial Selection (Select by Location)
+
+
+
+
+
