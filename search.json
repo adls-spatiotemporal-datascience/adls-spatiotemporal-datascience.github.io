@@ -1,0 +1,319 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Spatiotemporal Datascience",
+    "section": "",
+    "text": "Welcome\n\n\n\nImage Source\n\n\nWelcome to the course Spatiotemporal Datascience. This course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data\n\nOur preliminary schedule is as follows. Please note that this schedule is subject to change!\n\n\n\n\n\n\n\n\n#\nCW\nDate\nLesson\nLecturer\n\n\n\n\n1\n8\n18.02.25\nModule introduction / Vector Data (recap)\nrata\n\n\n2\n9\n25.02.25\nRaster Data (recap)\nrata\n\n\n3\n10\n04.03.25\nVector Advanced\nrata\n\n\n4\n11\n11.03.25\nRaster Advanced\nrata\n\n\n5\n12\n18.03.25\ntba\nrata\n\n\n6\n13\n25.03.25\ntba\ntba\n\n\n7\n14\n01.04.25\nInterpolation\nlaup\n\n\n8\n15\n08.04.25\ntba\ntba\n\n\n9\n16\n15.04.25\nNetwork Analysis I: Centrality\nlaup\n\n\n10\n17\n22.04.25\nNetwork Analysis II: Shortest Path / TSP\nlaup\n\n\n11\n18\n29.04.25\nProject Week (no class)\nrata\n\n\n12\n19\n06.05.25\nMovement Analysis I: Patterns\nlaup\n\n\n13\n20\n13.05.25\nMovement Analysis II: Context\nlaup\n\n\n14\n21\n20.05.25\ntba\ntba\n\n\n15\n22\n27.05.25\ntba\ntba",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html",
+    "href": "week-1-simple-features.html",
+    "title": "Simple Features",
+    "section": "",
+    "text": "Simple feature standard",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#simple-feature-standard",
+    "href": "week-1-simple-features.html#simple-feature-standard",
+    "title": "Simple Features",
+    "section": "",
+    "text": "Simple features is an open standard (ISO 19125-1:2004) developed and endorsed by the Open Geospatial Consortium (OGC)\nThe standard is widely implemented in spatial databases (such as PostGIS), desktop GIS (such as ArcGIS, QGIS) and scripting languages (such as R, Python)\n\n\nThis is the secret message for Area 2",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#what-is-a-feature",
+    "href": "week-1-simple-features.html#what-is-a-feature",
+    "title": "Simple Features",
+    "section": "What is a feature?",
+    "text": "What is a feature?\nThe standard says:\n\nA simple feature is defined […] to have both spatial and non-spatial attributes. Spatial attributes are geometry valued, and simple features are based on 2D geometry with linear interpolation between vertices.\n\n\nA feature is thought of as a thing / an object in the real world, such as a building or a tree.\nFeatures have:\n\na geometry describing where on Earth the feature is located\nattributes, which describe other properties.\n\nFor example:\n\nThe geometry of a tree can be the delineation of its crown, of its stem, or the point indicating its center\nattributes (properties) may include its height, color, diameter at breast height at a particular date, and so on",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#simple-feature-model",
+    "href": "week-1-simple-features.html#simple-feature-model",
+    "title": "Simple Features",
+    "section": "Simple Feature Model",
+    "text": "Simple Feature Model\n\nSimple features is a hierarchical data model that represents a wide range of geometry types.\nAll geometries are composed of points in a 2-, 3- or 4-dimensional space\nOf 18 geometry types supported by the specification, only the following seven (see Figure 1.1 and Table 1.1) are used in the vast majority of geographic research:\n\nThree basic types: points, linestrings, polygons\nThree composite types: mutlipoints, multilinestrings, multipolygons\nOne special case: geometrycollection (which can be a conglomarate of all the afore mentioned)\n\nThese seven core geometry types are fully supported by the R package sf (Pebesma 2018)\n\n\n\n\n\n\n\nFigure 1.1: Image source: Dorman (2023)\n\n\n\n\n\n\n\nTable 1.1: Source: Pebesma (2018)\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n# of Dimension\n\n\n\n\nPOINT\nzero-dimensional geometry containing a single point\n0\n\n\nLINESTRING\nsequence of points connected by straight1 line pieces\n1\n\n\nPOLYGON\nsequence of points form a closed2 ring3\n2\n\n\nMULTIPOINT\nset of points\n0\n\n\nMULTILINESTRING\nset of linestrings\n1\n\n\nMULTIPOLYGON\nset of polygons\n2\n\n\nGEOMETRYCOLLECTION\nset of geometries of any of the above types\nNA",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#simple-features-in-r",
+    "href": "week-1-simple-features.html#simple-features-in-r",
+    "title": "Simple Features",
+    "section": "Simple features in R",
+    "text": "Simple features in R\nSimple Features in R is modelled in three levels:\n\nSimple feature geometries (sfg): Individual Simple Feature objects\nSimple Feature geometry columns (sfc): A list column of sfgs\nSimple Features (with attributes): A sfc with attributes, i.e. additional columns",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#sfg-simple-feature-geometry",
+    "href": "week-1-simple-features.html#sfg-simple-feature-geometry",
+    "title": "Simple Features",
+    "section": "sfg: simple feature geometry",
+    "text": "sfg: simple feature geometry\nSimple feature geometries are implemented as R native data, using the following rules:\n\na single POINT is a numeric vector\na set of points, e.g. in a LINESTRING or ring of a POLYGON is a matrix, each row containing a point\nany other set is a list\n\nLet’s create some simple feature geometries by hand: However, creator functions are rarely used in practice, since we typically bulk read and write spatial data. They are useful for illustration purposes.\n\nPoints\n\nlibrary(sf)\nfracht &lt;- st_point(c(2685374, 1256519))\n\nfracht\n\n\nplot(fracht)\n\n\n\n\n\n\n\n\n\n\nLinestrings\n\ncoords &lt;- c(\n  2684336, 1255553, \n  2682705, 1258929\n  ) |&gt; \n  matrix(ncol = 2, byrow = TRUE)\n\ncoords\n\n        [,1]    [,2]\n[1,] 2684336 1255553\n[2,] 2682705 1258929\n\n\n\npiste &lt;- st_linestring(coords)\n\npiste\n\n\nplot(piste)\n\n\n\n\n\n\n\n\n\n\nPolygons\n\ncoords_2 &lt;- c(\n  2684142, 1255702, # ↰ \n  2685600, 1256958, # start and end must\n  2682534, 1259699, # be identical (closed)\n  2684142, 1255702  # ↲ \n) |&gt; \n  matrix(ncol = 2, byrow = TRUE) |&gt; \n  list()\n\ncoords_2\n\n[[1]]\n        [,1]    [,2]\n[1,] 2684142 1255702\n[2,] 2685600 1256958\n[3,] 2682534 1259699\n[4,] 2684142 1255702\n\n\n\nflughafen &lt;- st_polygon(coords_2)\n\nflughafen\n\n\nBefore we said that the ring of a polygon is a matrix. Now we are turning it into a list. This is because a polygon could contain holes, which are additional rings.\n\n\nplot(flughafen)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#sfc-simple-feature-geometry-columns",
+    "href": "week-1-simple-features.html#sfc-simple-feature-geometry-columns",
+    "title": "Simple Features",
+    "section": "sfc: Simple feature geometry columns",
+    "text": "sfc: Simple feature geometry columns\n\nAs you might have noticed, we didn’t specify a CRS when creating the sfg objects. This is because we weren’t able to.\nIf we convert the sfg to sfc, we can (and should) specify a crs.\n(Usually, a sfc contains more than one sfg. This is not mandatory, and for convenience we will just use a single sfg to showcase sfc)\n\n\nfracht_sfc &lt;- st_sfc(fracht, crs = 2056)\n\nfracht_sfc\n\nGeometry set for 1 feature \nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2685374 ymin: 1256519 xmax: 2685374 ymax: 1256519\nProjected CRS: CH1903+ / LV95\n\n\n\n\npiste_sfc &lt;- st_sfc(piste, crs = 2056)\n\npiste_sfc\n\nGeometry set for 1 feature \nGeometry type: LINESTRING\nDimension:     XY\nBounding box:  xmin: 2682705 ymin: 1255553 xmax: 2684336 ymax: 1258929\nProjected CRS: CH1903+ / LV95\n\n\n\n\nflughafen_sfc &lt;- st_sfc(flughafen, crs = 2056)\n\nflughafen_sfc\n\nGeometry set for 1 feature \nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 2682534 ymin: 1255702 xmax: 2685600 ymax: 1259699\nProjected CRS: CH1903+ / LV95",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#sf-simple-features",
+    "href": "week-1-simple-features.html#sf-simple-features",
+    "title": "Simple Features",
+    "section": "sf: Simple features",
+    "text": "sf: Simple features\n\nSimple features have attributes\nIn order to add attributes to a simple feature column (sfc), we need to convert it to a simple feature (sf)\n\n\nfracht_sf &lt;- st_sf(fracht_sfc)\n\nfracht_sf$name &lt;- \"Ost\"\n\n\nA sf class is a subset (i.e. special case) of the class data.frame.\nMost things which can be done with a data.frame, can be done with an sf object as well\nMany tidyverse functions are implemented to nicely work with sf\n\n\n# sf objects are also dataframes\nis.data.frame(fracht_sf)\n\n[1] TRUE\n\n\n\n\nNote: Geometries are sticky. This means they aren’t dropped implicitly\n\n\n# Geometries are sticky\nfracht_sf[, \"name\"] \n\nSimple feature collection with 1 feature and 1 field\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2685374 ymin: 1256519 xmax: 2685374 ymax: 1256519\nProjected CRS: CH1903+ / LV95\n  name              fracht_sfc\n1  Ost POINT (2685374 1256519)\n\n\n\n\npiste_sf &lt;- st_sf(piste_sfc)\n\npiste_sf$nr &lt;- 34\n\nflughafen_sf &lt;- st_sf(flughafen_sfc)\n\nflughafen_sf$name &lt;- \"Flughafen Zürich\"\n\nflughafen_sf\n\nSimple feature collection with 1 feature and 1 field\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 2682534 ymin: 1255702 xmax: 2685600 ymax: 1259699\nProjected CRS: CH1903+ / LV95\n                   flughafen_sfc             name\n1 POLYGON ((2684142 1255702, ... Flughafen Zürich",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#sec-plotting",
+    "href": "week-1-simple-features.html#sec-plotting",
+    "title": "Simple Features",
+    "section": "Interactive maps",
+    "text": "Interactive maps\nThe tmap library can render the map either in a static plot as above (the default) or as an interactive web map (see below)\n\n# set tmap_mode to \"view\" for an interactive web map\ntmap_mode(\"view\")\n\ntm_shape(flughafen_sf) + tm_polygons() +\n  tm_shape(piste_sf) + tm_lines() +\n  tm_shape(fracht_sf) + tm_dots()",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#exercises",
+    "href": "week-1-simple-features.html#exercises",
+    "title": "Simple Features",
+    "section": "Exercises",
+    "text": "Exercises\n\nCreate some simple feature geometries (sfg) of objects you know “by hand”\n\n\nCreate at least one POINT, one LINESTRING and one POLYGON geometry\nYou can capture the coordinates of the nodes from map.geo.admin if these are is Switzerland and openstreetmap (or similar) if they aren’t\n\n\nCreate simple feature columns from you sfgs. Make sure that you assign the correct CRS\nCreate simple features (sf) from your sfcs and add some attributes\n\n\n\n\n\nDorman, Michael. 2023. “Spatial Data Programming with Python — Geobgu.xyz.” https://geobgu.xyz/py/.\n\n\nPebesma, Edzer. 2018. “Simple Features for R: Standardized Support for Spatial Vector Data.” The R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#footnotes",
+    "href": "week-1-simple-features.html#footnotes",
+    "title": "Simple Features",
+    "section": "",
+    "text": "non-selfintersecting↩︎\nnon-selfintersecting↩︎\nthe first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring↩︎",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html",
+    "href": "week-1-vector-io.html",
+    "title": "Vector data I/O",
+    "section": "",
+    "text": "GDAL / ogr2ogr\nGDAL:",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#sec-gdal-ogr2ogr",
+    "href": "week-1-vector-io.html#sec-gdal-ogr2ogr",
+    "title": "Vector data I/O",
+    "section": "",
+    "text": "is an open source translator library for raster and vector geospatial data formats.\nstands for Geospatial Data Abstraction Library\nis used in most geospatial software, be it FOSS or proprietary. The list includes: ArcGIS, QGIS, R (sf) and Python (geopandas)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#gdal-vector-drivers-read",
+    "href": "week-1-vector-io.html#gdal-vector-drivers-read",
+    "title": "Vector data I/O",
+    "section": "GDAL Vector drivers (read)",
+    "text": "GDAL Vector drivers (read)\n\nSince GDAL supports a long list of different geospatial file formats, all are in turn supported by {sf}\nRun the function st_drivers for a full list\n{sf} tries to guess the correct driver based on the file extension (see below)\n\n\n# sf uses the geojson driver, based on the file extension\nstationen_schweiz &lt;- read_sf(\"data/week1-exercises/stationen_schweiz.geojson\")\n\n\n# sf uses the shapefile driver, based on the file extension\nhoheitsgebiet &lt;- read_sf(\"data/week1-exercises/HOHEITSGEBIET_FR.shp\")\n\n\nThe read_sf() function is a wrapper around the st_read() function, which is the actual function that reads the data. I use read_sf since this wrapper’s default value for the quiet argument is TRUE (less verbose)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#multiple-layers-in-one-file",
+    "href": "week-1-vector-io.html#multiple-layers-in-one-file",
+    "title": "Vector data I/O",
+    "section": "Multiple layers in one file",
+    "text": "Multiple layers in one file\n\nSome file formats, e.g. Geopackages (*.gpkg) or Geodatabases (*.gdb) support multiple datasets in a single file.\nIf no specific layer is requested read_sf() will import the first available layer\nIf more than 1 layers are available, read_sf() will return a warning\nThe function st_layers() will list all available layers\n\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\ntlm3d &lt;- read_sf(tlm3d_path)\n\n\n\n# This will list all layers, including some metadata\nst_layers(tlm3d_path)\n\nDriver: GPKG \nAvailable layers:\n  layer_name    geometry_type features fields       crs_name\n1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95\n\n\n\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#sql-queries-during-import",
+    "href": "week-1-vector-io.html#sql-queries-during-import",
+    "title": "Vector data I/O",
+    "section": "SQL queries during import",
+    "text": "SQL queries during import\n\nread_sf() understands an Spatialite SQL query provided in the query = argument\nIn case query = is used, the layers = argument should be skipped (since the layers is specified in the query)\n\n\ntlm_seen &lt;- read_sf(\n  tlm3d_path, \n  query = \"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'\"\n  )",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#gdal-vector-drivers-write",
+    "href": "week-1-vector-io.html#gdal-vector-drivers-write",
+    "title": "Vector data I/O",
+    "section": "GDAL Vector drivers (write)",
+    "text": "GDAL Vector drivers (write)\n\nThe function st_write() is used to export an sf object to file\nMost vector drivers support reading and writing (see st_drivers / column write)\nMany file formats support appending to the dataset (see append =)\n\n\nst_write(tlm_seen, \"data-out/seen.geojson\")\n\nWriting layer `seen' to data source `data-out/seen.geojson' using driver `GeoJSON'\nWriting 1189 features with 1 fields and geometry type 3D Multi Polygon.",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-vector-io.html#exercises",
+    "href": "week-1-vector-io.html#exercises",
+    "title": "Vector data I/O",
+    "section": "Exercises",
+    "text": "Exercises\n\nImport the datasets from Spatial Analysis I and II using R\nExplore these datasets by printing the sf objects to the console\nTry different visualization methods (see Interactive maps)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html",
+    "href": "week-1-spatial-operations.html",
+    "title": "Spatial Vector Operation",
+    "section": "",
+    "text": "Thematic queries\nlibrary(sf)\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\ntlm_seen &lt;- read_sf(\n  tlm3d_path, \n  query = \"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'\"\n  )\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")\n\n# Subsetting with base-R\ntlm_seen &lt;- tlm_bb[tlm_bb$objektart == \"Stehende Gewaesser\", ]\n\n\nlibrary(dplyr)\n\n\n# Subsetting using dplyr::filter\ntlm_seen &lt;- filter(tlm_bb, objektart == \"Stehende Gewaesser\")",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html#thematic-queries",
+    "href": "week-1-spatial-operations.html#thematic-queries",
+    "title": "Spatial Vector Operation",
+    "section": "",
+    "text": "SQL queries can be performed with file import\n\n\n\nHowever, datasets can also be queried after import using data.frame methods (such as [ or dplyr::filter)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html#sec-spatiao-queries",
+    "href": "week-1-spatial-operations.html#sec-spatiao-queries",
+    "title": "Spatial Vector Operation",
+    "section": "Spatial queries using binary predicate functions",
+    "text": "Spatial queries using binary predicate functions\nTake the following example:\n\nSelect all forests in the canton of Luzern\n\n\nSpatial query functions include: st_contains(), st_intersects(), st_touches(), st_within(), and many more\nThese spatial queries are called geometric binary predicates\nThis family of functions return so called sparse matrices: a list the same length as x, which, for each element in x, contains the indices of y where the condition is met.\nThey could return cross matrices, but these usually have a larger memory, since they have are \\(x \\times y\\) in size\n\n\n\nluzern &lt;- read_sf(\"data/week1-exercises/luzern.gpkg\")\n\ntlm_wald &lt;- filter(tlm_bb, objektart == \"Wald\")\n\n# The dataset already has this crs (2056), but apparently \n# does not realize this\ntlm_wald &lt;- st_set_crs(tlm_wald, 2056)\n\n\nquery_res &lt;- st_intersects(tlm_wald, luzern)\n\n# Note the length of the output equals nrow(tlm_wald)\nquery_res\n\nSparse geometry binary predicate list of length 8096, where the\npredicate was `intersects'\nfirst 10 elements:\n 1: (empty)\n 2: (empty)\n 3: (empty)\n 4: (empty)\n 5: (empty)\n 6: (empty)\n 7: (empty)\n 8: (empty)\n 9: (empty)\n 10: (empty)\n\n\n\n(The first 10 elements are empty, because to not intersect Luzern)\nThis list can be used to subset x (TRUE where the list is not empty):\n\n\n\n# Note the use of lenghts (with an s) to get the length of each element in the \n# list\nwald_luzern &lt;- tlm_wald[lengths(query_res) &gt; 0,]\n\n\nlibrary(ggplot2)\n\n\nggplot(luzern) + \n  geom_sf(data = wald_luzern, fill = \"darkgreen\") +\n  geom_sf(color = \"red\", fill = NA) \n\n\n\n\n\n\n\nFigure 3.1: Note how some forests are outside the canton’s border. This is the nature of st_intersects. If even a small part of a forest feature is within Luzern, this feature intersects Luzern and is therefore retained. To query only forests that are completly within Luzern, use st_within().",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html#spatial-queries-using-or-st_filter",
+    "href": "week-1-spatial-operations.html#spatial-queries-using-or-st_filter",
+    "title": "Spatial Vector Operation",
+    "section": "Spatial queries using [ or st_filter",
+    "text": "Spatial queries using [ or st_filter\n\nThe code above was for illustration purposes. The code can be written more concise:\n\n\n# using sf-methods in base-R\ntlm_wald[luzern,, op = st_intersects]\n\n# using st_filter\nst_filter(tlm_wald, luzern, .predicate = st_intersects)\n\n\nThe default value for op and .predicate is st_intersects, so these arguments could also have been omitted",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html#overlay-analysis",
+    "href": "week-1-spatial-operations.html#overlay-analysis",
+    "title": "Spatial Vector Operation",
+    "section": "Overlay Analysis",
+    "text": "Overlay Analysis\n\nIn the example illustrated in Figure 3.1, we have the choice of subsetting forests that either intersect Luzern ever so slightly (st_intersects), or that lie completely within Luzern (st_within).\nDepending on the question, both options can be unsatisfactory (e.g. if the question was Which percentage of Luzern is covered by forest?)\nFor some cases, it might be necessary to “cut” the forest area at the cantons border\nThis can be achieved with st_intersection (which is different from intersects)\nThere are several other functions that work on pairs of geometries. See Geometric operations on pairs of simple feature geometry sets\nThere are even more functions that work on single geometries, e.g. st_buffer. See Geometric unary operations on simple feature geometry sets\n\n\n\nlibrary(glue)\nlibrary(scales)\nwald_luzern2 &lt;- st_intersection(luzern, wald_luzern)\n\nggplot(luzern) + \n  geom_sf(fill = \"gray\", color = NA) +\n  geom_sf(data = wald_luzern2, fill = \"darkgreen\", color = NA)\n\n\n\n\n\n\n\n\n\nNow, it’s possible to compute the area of Luzern and the forest that intersects Luzern using the function st_area.\nThere are several functions to compute geometric measurements of sf-objects.\n\n\nsum(st_area(wald_luzern2))/st_area(luzern)\n\n0.2721733 [1]",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-spatial-operations.html#exercises",
+    "href": "week-1-spatial-operations.html#exercises",
+    "title": "Spatial Vector Operation",
+    "section": "Exercises",
+    "text": "Exercises\nFrom the exercise in Spatial Analysis I, solve the following tasks using R:\n\nTask 2: Thematic Selections (Select by Attributes)\nTask 3: Exporting Selected Features to a New Layer sf object\nTask 6: Intersect (Intersection)\nTask 8: Buffer\nTask 9: Spatial Selection (Select by Location)",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-task.html",
+    "href": "week-1-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Task 1\nOn GitHub:\nOn your local machine:",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-task.html#task-1",
+    "href": "week-1-task.html#task-1",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "On GitHub, create a free organisation called ADLS-STDS2025-kuerzel (replace kuerzel with your ZHAW email prefix).\nSubmit the URL to this organisation to us via mail\nIn this Organisation, create a new, blank repository called week-1.\n\n\n\nInstall CLI Software quarto\nCreate a new directory to solve this weeks task.\nMake this folder a git repository (git init) and use the GitHub Repo you created previously as a remote (git remote add origin &lt;URL&gt;)\nCreate a new file called _quarto.yml with the content as shown below\nCreate a new quarto file called index.qmd with the content as shown below\nRun the CLI command quarto preview to preview the document\nRun the CLI command quarto publish gh-pages to publish the document to GitHub Pages\n\n\n\n_quarto.yml\n\nproject:\n  output-dir: _docs\n\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-task.html#sec-gh-pages",
+    "href": "week-1-task.html#sec-gh-pages",
+    "title": "🚀 Tasks",
+    "section": "Task 2",
+    "text": "Task 2\n\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo.\nAdd the datasets to the local folder you created above, in a subfolder named data\nAdd the data folder to the .gitignore file.\nIn index.qmd, add a code chunk (R or Python) and solve the following tasks using your preferred language.\nUsing swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton\nVisualize the results (in a map and / or a plot)\nRender the document using quarto preview\nPublish your result using quarto publish gh-pages\n\nA code chunk is added in the following manner. Please sonsult the Quarto - Getting Started for more information on your local setup.\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*\n\n```{r}\nlibrary(sf)\n\n```",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Dorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
+    "crumbs": [
+      "References"
+    ]
+  }
+]

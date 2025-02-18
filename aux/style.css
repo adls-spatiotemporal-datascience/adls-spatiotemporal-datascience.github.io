@@ -1,0 +1,8 @@
+.exercises h2::before{
+  content: "🚀 ";
+}
+
+
+.notes{
+  display: none;
+}
