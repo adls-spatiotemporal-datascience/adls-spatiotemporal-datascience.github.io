@@ -101,6 +101,17 @@
     "objectID": "week-1-simple-features.html#sec-plotting",
     "href": "week-1-simple-features.html#sec-plotting",
     "title": "Simple Features",
+    "section": "Plotting simple features",
+    "text": "Plotting simple features\n\nVarious libraries support plotting sf objects:\n\nbase R (sf provides a plot-method)\nGeneral purpose libraries such as ggplot2\nDedicated geospatial plotting libraries such as tmap\n\nUse:\n\nbase R: If you want to take a quick look at your data. Base R has the most compact syntax and is extremely fast in plotting\nggplot2: If you only have (small-ish) vector data (no raster) and/or want to leverage the power of ggplot2\ntmap: If you want to use all features a dedicated library for geospatial data has to offer: North arrow, scale bar, interactive (web) maps\n\n\n#\n# Using base R\nplot(st_geometry(flughafen_sf))\nplot(piste_sf, add = TRUE)\nplot(fracht_sf, add = TRUE)\n#\n# Using ggplot2\nlibrary(ggplot2)\nggplot() +\n  geom_sf(data = flughafen_sf) +\n  geom_sf(data = piste_sf) +\n  geom_sf(data = fracht_sf)\n#\n# Using tmap\nlibrary(tmap)\ntm_shape(flughafen_sf) + tm_polygons() +\n  tm_shape(piste_sf) + tm_lines() +\n  tm_shape(fracht_sf) + tm_dots()\n\n\n\n\n\n\nbase R\n\n\n\n\n\n\n\nlibrary ggplot2\n\n\n\n\n\n\n\nlibrary tmap",
+    "crumbs": [
+      "Week 1: Vector Recap",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
+    ]
+  },
+  {
+    "objectID": "week-1-simple-features.html#sec-plotting-interactive",
+    "href": "week-1-simple-features.html#sec-plotting-interactive",
+    "title": "Simple Features",
     "section": "Interactive maps",
     "text": "Interactive maps\nThe tmap library can render the map either in a static plot as above (the default) or as an interactive web map (see below)\n\n# set tmap_mode to \"view\" for an interactive web map\ntmap_mode(\"view\")\n\ntm_shape(flughafen_sf) + tm_polygons() +\n  tm_shape(piste_sf) + tm_lines() +\n  tm_shape(fracht_sf) + tm_dots()",
     "crumbs": [
@@ -201,7 +212,7 @@
     "href": "week-1-vector-io.html#exercises",
     "title": "Vector data I/O",
     "section": "Exercises",
-    "text": "Exercises\n\nImport the datasets from Spatial Analysis I and II using R\nExplore these datasets by printing the sf objects to the console\nTry different visualization methods (see Interactive maps)",
+    "text": "Exercises\n\nImport the datasets from Spatial Analysis I and II using R\nExplore these datasets by printing the sf objects to the console\nTry different visualization methods (see Plotting simple features)",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"

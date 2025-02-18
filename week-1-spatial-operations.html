@@ -340,7 +340,7 @@ Note
 <li>This family of functions return so called <em>sparse matrices</em>: a <code>list</code> the same length as <code>x</code>, which, for each element in <code>x</code>, contains the indices of <code>y</code> where the condition is met.</li>
 <li>They <em>could</em> return cross matrices, but these usually have a larger memory, since they have are <span class="math inline">\(x \times y\)</span> in size</li>
 </ul>
-<hr class="br">
+<p><br class="br"></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>luzern <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week1-exercises/luzern.gpkg"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -375,7 +375,7 @@ first 10 elements:
 <li>(The first 10 elements are empty, because to not intersect Luzern)</li>
 <li>This list can be used to subset <code>x</code> (<code>TRUE</code> where the list is not empty):</li>
 </ul>
-<hr class="br">
+<p><br class="br"></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the use of lenghts (with an s) to get the length of each element in the </span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
@@ -428,7 +428,7 @@ Figure&nbsp;3.1: Note how some forests are outside the canton’s border. This i
 <li>There are several other functions that work on pairs of geometries. See <a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html">Geometric operations on pairs of simple feature geometry sets</a></li>
 <li>There are even more functions that work on single geometries, e.g.&nbsp;<code>st_buffer</code>. See <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">Geometric unary operations on simple feature geometry sets</a></li>
 </ul>
-<hr class="br">
+<p><br class="br"></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
