@@ -56,7 +56,7 @@ Take the following example:
 - This family of functions return so called *sparse matrices*: a `list` the same length as `x`, which, for each element in `x`, contains the indices of `y` where the condition is met. 
 - They *could* return cross matrices, but these usually have a larger memory, since they have are $x \times y$ in size
 
-<hr class="br">
+<br class="br">
 
 ```{r}
 luzern <- read_sf("data/week1-exercises/luzern.gpkg")
@@ -79,7 +79,7 @@ query_res
 - This list can be used to subset `x` (`TRUE` where the list is not empty):
 
 
-<hr class="br">
+<br class="br">
 
 ```{r}
 #| fig-cap: Note how some forests are outside the canton's border. This is the nature of `st_intersects`. If even a small part of a forest feature is within Luzern, this feature *intersects* Luzern and is therefore retained. To query only forests that are *completly* within Luzern, use `st_within()`.
@@ -130,7 +130,7 @@ st_filter(tlm_wald, luzern, .predicate = st_intersects)
 - There are even more functions that work on single geometries, e.g. `st_buffer`. See [Geometric unary operations on simple feature geometry sets](https://r-spatial.github.io/sf/reference/geos_unary.html)
 
 
-<hr class="br">
+<br class="br">
 
 ```{r}
 library(glue)

@@ -22,25 +22,25 @@ book:
       - week-1-vector-io.qmd
       - week-1-spatial-operations.qmd
       - week-1-task.qmd
-    - part: "Week 2: Raster Recap"
-      chapters:
-      - week-2-raster-io.qmd
-      - week-2-raster-operations.qmd
-      - week-2-raster-vector-operations.qmd
-      - week-2-task.qmd
-    - week-3.qmd
-    - week-4.qmd
-    - week-5.qmd
-    - week-6.qmd
-    - week-7.qmd
-    - week-8.qmd
-    - week-9.qmd
-    - week-10.qmd
-    - week-11.qmd
-    - week-12.qmd
-    - week-13.qmd
-    - week-14.qmd
-    - week-15.qmd
+    # - part: "Week 2: Raster Recap"
+    #   chapters:
+    #   - week-2-raster-io.qmd
+    #   - week-2-raster-operations.qmd
+    #   - week-2-raster-vector-operations.qmd
+    #   - week-2-task.qmd
+    # - week-3.qmd
+    # - week-4.qmd
+    # - week-5.qmd
+    # - week-6.qmd
+    # - week-7.qmd
+    # - week-8.qmd
+    # - week-9.qmd
+    # - week-10.qmd
+    # - week-11.qmd
+    # - week-12.qmd
+    # - week-13.qmd
+    # - week-14.qmd
+    # - week-15.qmd
     - references.qmd
 
 

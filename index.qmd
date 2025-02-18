@@ -4,9 +4,8 @@ echo: false
 
 # Welcome {.unnumbered}
 
-![](images/us-weather.png)
+![[Image Source](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals)](images/us-weather.png)
 
-<!-- U.S. annual temperature compared to 20th-Century Average. Source [NOAA Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals) using data from NCEI -->
 
 
 

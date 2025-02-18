@@ -64,11 +64,10 @@ The `read_sf()` function is a wrapper around the `st_read()` function, which is 
 
 tlm3d_path <- "data/week1-exercises/swiss_TLM3D.gpkg"
 
-# Note the warning:
 tlm3d <- read_sf(tlm3d_path)
 ```
 
-<hr class="br">
+<br class="br">
 
 ```{r}
 # This will list all layers, including some metadata

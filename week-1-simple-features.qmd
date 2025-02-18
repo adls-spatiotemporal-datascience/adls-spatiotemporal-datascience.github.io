@@ -10,8 +10,7 @@ knitr:
 ## Simple feature standard
 
 - Simple features is an open standard (ISO 19125-1:2004) developed and endorsed by the [Open Geospatial Consortium (OGC)](https://www.ogc.org/)
-- The standard is widely implemented in spatial databases (such as PostGIS), desktop GIS (such as ArcGIS, QGIS), scripting languages (such as R, Python) and forms the vector data basis for libraries such as GDAL. 
-
+- The standard is widely implemented in spatial databases (such as PostGIS), desktop GIS (such as ArcGIS, QGIS) and scripting languages (such as R, Python) 
 
 ::::{.notes}
 
@@ -109,12 +108,13 @@ Simple Features in R is modelled in three levels:
 
 ## sfg: simple feature geometry 
 
-- Simple feature geometries are implemented as R native data, using the following rules:
-  1. a single POINT is a numeric vector
-  2. a set of points, e.g. in a LINESTRING or ring of a POLYGON is a matrix, each row containing a point
-  3. any other set is a `list`
+Simple feature geometries are implemented as R native data, using the following rules:
+
+1. a single POINT is a numeric vector
+2. a set of points, e.g. in a LINESTRING or ring of a POLYGON is a matrix, each row containing a point
+3. any other set is a `list`
   
-(however, creator functions are rarely used in practice, since we typically bulk read and write spatial data. They are useful for illustration)
+Let's create some simple feature geometries by hand: However, creator functions are rarely used in practice, since we typically bulk read and write spatial data. They are useful for illustration purposes.
 
 
 ### Points 
@@ -174,13 +174,17 @@ coords_2 <- c(
 coords_2
 ```
 
-
 ```{r}
 flughafen <- st_polygon(coords_2)
 
 flughafen
 ```
 
+
+:::{.notes}
+
+Before we said that the ring of a polygon is a matrix. Now we are turning it into a list. This is because a polygon could contain holes, which are additional rings.
+:::
 
 ```{r}
 plot(flughafen)
@@ -190,9 +194,9 @@ plot(flughafen)
 
 ## sfc: Simple feature geometry columns
 
-- Usually, a `sfc` contains more than one `sfg`. 
-- This is not mandatory, and for convenience we will just use a single `sfg` to showcase `sfc`
-- As you might have noticed, we didn't specify a CRS when creating the `sfg` objects. This is because we weren't able to. With `sfc`, we can ([and should](https://fosstodon.org/@jjimenezshaw@mapstodon.space/113310384205885118)) specify a crs. 
+- As you might have noticed, we didn't specify a CRS when creating the `sfg` objects. This is because we weren't able to. 
+- If we convert the `sfg` to `sfc`, we can ([and should](https://fosstodon.org/@jjimenezshaw@mapstodon.space/113310384205885118)) specify a crs. 
+- (Usually, a `sfc` contains more than one `sfg`. This is not mandatory, and for convenience we will just use a single `sfg` to showcase `sfc`)
 
 ```{r}
 fracht_sfc <- st_sfc(fracht, crs = 2056)
@@ -200,7 +204,7 @@ fracht_sfc <- st_sfc(fracht, crs = 2056)
 fracht_sfc
 ```
 
-<hr class="br">
+<br class="br">
 
 ```{r}
 piste_sfc <- st_sfc(piste, crs = 2056)
@@ -208,7 +212,7 @@ piste_sfc <- st_sfc(piste, crs = 2056)
 piste_sfc
 ```
 
-<hr class="br">
+<br class="br">
 
 
 ```{r}
@@ -222,16 +226,17 @@ flughafen_sfc
 
 - Simple features have attributes
 - In order to add attributes to a simple feature column (`sfc`), we need to convert it to a simple feature (`sf`)
-- A `sf` object is a subset of a data.frame. Many (all?) things which can be done with a data.frame, can be done with an `sf` object
-- Many `tidyverse` functions are implemented to nicely work with `sf`
-- **Note**: Geometries are *sticky*. This means they aren't dropped implicitly
 
 
 ```{r}
-fracht_sf <- st_as_sf(fracht_sfc)
+fracht_sf <- st_sf(fracht_sfc)
 
 fracht_sf$name <- "Ost"
 ```
+
+- A `sf` class is a subset (i.e. special case) of the class `data.frame`. 
+- Most things which can be done with a data.frame, can be done with an `sf` object as well
+- Many `tidyverse` functions are implemented to nicely work with `sf`
 
 
 ```{r}
@@ -239,7 +244,10 @@ fracht_sf$name <- "Ost"
 is.data.frame(fracht_sf)
 ```
 
-<hr class="br">
+<br class="br">
+
+
+- **Note**: Geometries are *sticky*. This means they aren't dropped implicitly
 
 ```{r}
 # Geometries are sticky
@@ -247,14 +255,14 @@ fracht_sf[, "name"]
 ```
 
 
-<hr class="br">
+<br class="br">
 
 ```{r}
-piste_sf <- st_as_sf(piste_sfc)
+piste_sf <- st_sf(piste_sfc)
 
 piste_sf$nr <- 34
 
-flughafen_sf <- st_as_sf(flughafen_sfc)
+flughafen_sf <- st_sf(flughafen_sfc)
 
 flughafen_sf$name <- "Flughafen Zürich"
 
@@ -275,6 +283,7 @@ flughafen_sf
 
 ```{r}
 #| layout-nrow: 1
+#| column: page
 #| fig-cap: 
 #|   - base R
 #|   - library `ggplot2`
@@ -300,7 +309,7 @@ tm_shape(flughafen_sf) + tm_polygons() +
   
 ```
 
-## Interactive maps {#sec-plotting}
+## Interactive maps {#sec-plotting-interactive}
 
 The `tmap` library can render the map either in a static plot as above (the default) or as an interactive web map (see below)
 
