@@ -174,7 +174,7 @@ window.onload = function() {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text">Welcome to the course <em>Spatiotemporal Datascience</em></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -210,6 +210,11 @@ window.onload = function() {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./week-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 2: Geopython Conference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -229,7 +234,6 @@ window.onload = function() {
   <li><a href="#multiple-layers-in-one-file" id="toc-multiple-layers-in-one-file" class="nav-link" data-scroll-target="#multiple-layers-in-one-file">Multiple layers in one file</a></li>
   <li><a href="#sql-queries-during-import" id="toc-sql-queries-during-import" class="nav-link" data-scroll-target="#sql-queries-during-import">SQL queries during import</a></li>
   <li><a href="#gdal-vector-drivers-write" id="toc-gdal-vector-drivers-write" class="nav-link" data-scroll-target="#gdal-vector-drivers-write">GDAL Vector drivers (write)</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -316,21 +320,28 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tlm3d_path <span class="ot">&lt;-</span> <span class="st">"data/week1-exercises/swiss_TLM3D.gpkg"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tlm3d <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(tlm3d_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the warning</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>tlm3d <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(tlm3d_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in CPL_read_ogr(dsn, layer, query, as.character(options), quiet, :
+automatically selected the first layer in a data source containing more than
+one.</code></pre>
+</div>
 </div>
 <p><br class="br"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This will list all layers, including some metadata</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(tlm3d_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This will list all layers, including some metadata</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(tlm3d_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Driver: GPKG 
 Available layers:
   layer_name    geometry_type features fields       crs_name
-1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95</code></pre>
+1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95
+2      dummy            Point        3      0 CH1903+ / LV95</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tlm_bb <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(tlm3d_path, <span class="st">"tlm_bb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tlm_bb <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(tlm3d_path, <span class="st">"tlm_bb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sql-queries-during-import" class="level2">
@@ -340,10 +351,10 @@ Available layers:
 <li>In case <code>query =</code> is used, the <code>layers =</code> argument should be skipped (since the layers is specified in the query)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tlm_seen <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  tlm3d_path, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">query =</span> <span class="st">"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tlm_seen <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  tlm3d_path, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">query =</span> <span class="st">"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="gdal-vector-drivers-write" class="level2">
@@ -354,20 +365,12 @@ Available layers:
 <li>Many file formats support appending to the dataset (see <code>append =</code>)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(tlm_seen, <span class="st">"data-out/seen.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(tlm_seen, <span class="st">"data-out/seen.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing layer `seen' to data source `data-out/seen.geojson' using driver `GeoJSON'
 Writing 1189 features with 1 fields and geometry type 3D Multi Polygon.</code></pre>
 </div>
 </div>
-</section>
-<section id="exercises" class="level2 exercises">
-<h2 class="exercises anchored" data-anchor-id="exercises">Exercises</h2>
-<ol type="1">
-<li>Import the datasets from Spatial Analysis I and II using R</li>
-<li>Explore these datasets by printing the <code>sf</code> objects to the console</li>
-<li>Try different visualization methods (see <a href="week-1-simple-features.html#sec-plotting" class="quarto-xref"><span>Plotting simple features</span></a>)</li>
-</ol>
 <!-- todo: reading / writing spatial databases -->
 
 

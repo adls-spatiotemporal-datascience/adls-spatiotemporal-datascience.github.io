@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Spatiotemporal Datascience",
     "section": "",
-    "text": "Welcome\n\n\n\nImage Source\n\n\nWelcome to the course Spatiotemporal Datascience. This course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data\n\nOur preliminary schedule is as follows. Please note that this schedule is subject to change!\n\n\n\n\n\n\n\n\n#\nCW\nDate\nLesson\nLecturer\n\n\n\n\n1\n8\n18.02.25\nModule introduction / Vector Data (recap)\nrata\n\n\n2\n9\n25.02.25\nRaster Data (recap)\nrata\n\n\n3\n10\n04.03.25\nVector Advanced\nrata\n\n\n4\n11\n11.03.25\nRaster Advanced\nrata\n\n\n5\n12\n18.03.25\ntba\nrata\n\n\n6\n13\n25.03.25\ntba\ntba\n\n\n7\n14\n01.04.25\nInterpolation\nlaup\n\n\n8\n15\n08.04.25\ntba\ntba\n\n\n9\n16\n15.04.25\nNetwork Analysis I: Centrality\nlaup\n\n\n10\n17\n22.04.25\nNetwork Analysis II: Shortest Path / TSP\nlaup\n\n\n11\n18\n29.04.25\nProject Week (no class)\nrata\n\n\n12\n19\n06.05.25\nMovement Analysis I: Patterns\nlaup\n\n\n13\n20\n13.05.25\nMovement Analysis II: Context\nlaup\n\n\n14\n21\n20.05.25\ntba\ntba\n\n\n15\n22\n27.05.25\ntba\ntba",
+    "text": "Welcome to the course Spatiotemporal Datascience\n\n\n\nImage Source\n\n\nThis course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data\n\nOur preliminary schedule is as follows. Please note that this schedule is subject to change!\n\n\n\n\n\n\n\n\n#\nCW\nDate\nLesson\nLecturer\n\n\n\n\n1\n8\n18.02.25\nModule introduction / Vector Data (recap)\nrata\n\n\n2\n9\n25.02.25\nGeoPython Confence\nrata\n\n\n3\n10\n04.03.25\nRaster Data (recap)\nrata\n\n\n4\n11\n11.03.25\nVector Advanced\nrata\n\n\n5\n12\n18.03.25\nRaster Advanced\nrata\n\n\n6\n13\n25.03.25\ntba\ntba\n\n\n7\n14\n01.04.25\nInterpolation\nlaup\n\n\n8\n15\n08.04.25\ntba\ntba\n\n\n9\n16\n15.04.25\nNetwork Analysis I: Centrality\nlaup\n\n\n10\n17\n22.04.25\nNetwork Analysis II: Shortest Path / TSP\nlaup\n\n\n11\n18\n29.04.25\nProject Week (no class)\nrata\n\n\n12\n19\n06.05.25\nMovement Analysis I: Patterns\nlaup\n\n\n13\n20\n13.05.25\nMovement Analysis II: Context\nlaup\n\n\n14\n21\n20.05.25\ntba\ntba\n\n\n15\n22\n27.05.25\ntba\ntba",
     "crumbs": [
-      "Welcome"
+      "Welcome to the course *Spatiotemporal Datascience*"
     ]
   },
   {
@@ -179,7 +179,7 @@
     "href": "week-1-vector-io.html#multiple-layers-in-one-file",
     "title": "Vector data I/O",
     "section": "Multiple layers in one file",
-    "text": "Multiple layers in one file\n\nSome file formats, e.g. Geopackages (*.gpkg) or Geodatabases (*.gdb) support multiple datasets in a single file.\nIf no specific layer is requested read_sf() will import the first available layer\nIf more than 1 layers are available, read_sf() will return a warning\nThe function st_layers() will list all available layers\n\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\ntlm3d &lt;- read_sf(tlm3d_path)\n\n\n\n# This will list all layers, including some metadata\nst_layers(tlm3d_path)\n\nDriver: GPKG \nAvailable layers:\n  layer_name    geometry_type features fields       crs_name\n1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95\n\n\n\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")",
+    "text": "Multiple layers in one file\n\nSome file formats, e.g. Geopackages (*.gpkg) or Geodatabases (*.gdb) support multiple datasets in a single file.\nIf no specific layer is requested read_sf() will import the first available layer\nIf more than 1 layers are available, read_sf() will return a warning\nThe function st_layers() will list all available layers\n\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\n# Note the warning\ntlm3d &lt;- read_sf(tlm3d_path)\n\nWarning in CPL_read_ogr(dsn, layer, query, as.character(options), quiet, :\nautomatically selected the first layer in a data source containing more than\none.\n\n\n\n\n# This will list all layers, including some metadata\nst_layers(tlm3d_path)\n\nDriver: GPKG \nAvailable layers:\n  layer_name    geometry_type features fields       crs_name\n1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95\n2      dummy            Point        3      0 CH1903+ / LV95\n\n\n\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
@@ -202,17 +202,6 @@
     "title": "Vector data I/O",
     "section": "GDAL Vector drivers (write)",
     "text": "GDAL Vector drivers (write)\n\nThe function st_write() is used to export an sf object to file\nMost vector drivers support reading and writing (see st_drivers / column write)\nMany file formats support appending to the dataset (see append =)\n\n\nst_write(tlm_seen, \"data-out/seen.geojson\")\n\nWriting layer `seen' to data source `data-out/seen.geojson' using driver `GeoJSON'\nWriting 1189 features with 1 fields and geometry type 3D Multi Polygon.",
-    "crumbs": [
-      "Week 1: Vector Recap",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
-    ]
-  },
-  {
-    "objectID": "week-1-vector-io.html#exercises",
-    "href": "week-1-vector-io.html#exercises",
-    "title": "Vector data I/O",
-    "section": "Exercises",
-    "text": "Exercises\n\nImport the datasets from Spatial Analysis I and II using R\nExplore these datasets by printing the sf objects to the console\nTry different visualization methods (see Plotting simple features)",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
@@ -256,7 +245,7 @@
     "href": "week-1-spatial-operations.html#spatial-queries-using-or-st_filter",
     "title": "Spatial Vector Operation",
     "section": "Spatial queries using [ or st_filter",
-    "text": "Spatial queries using [ or st_filter\n\nThe code above was for illustration purposes. The code can be written more concise:\n\n\n# using sf-methods in base-R\ntlm_wald[luzern,, op = st_intersects]\n\n# using st_filter\nst_filter(tlm_wald, luzern, .predicate = st_intersects)\n\n\nThe default value for op and .predicate is st_intersects, so these arguments could also have been omitted",
+    "text": "Spatial queries using [ or st_filter\nThe code above was for illustration purposes. The code can be written more concise:\n\n# using sf-methods in base-R\ntlm_wald[luzern,, op = st_intersects]\n\n# using st_filter\nst_filter(tlm_wald, luzern, .predicate = st_intersects)\n\nThe default value for op and .predicate is st_intersects, so these arguments could also have been omitted:\n\n# using sf-methods in base-R\ntlm_wald[luzern,,]\n\n# using st_filter\nst_filter(tlm_wald, luzern)",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
@@ -274,22 +263,11 @@
     ]
   },
   {
-    "objectID": "week-1-spatial-operations.html#exercises",
-    "href": "week-1-spatial-operations.html#exercises",
-    "title": "Spatial Vector Operation",
-    "section": "Exercises",
-    "text": "Exercises\nFrom the exercise in Spatial Analysis I, solve the following tasks using R:\n\nTask 2: Thematic Selections (Select by Attributes)\nTask 3: Exporting Selected Features to a New Layer sf object\nTask 6: Intersect (Intersection)\nTask 8: Buffer\nTask 9: Spatial Selection (Select by Location)",
-    "crumbs": [
-      "Week 1: Vector Recap",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
-    ]
-  },
-  {
     "objectID": "week-1-task.html",
     "href": "week-1-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "Task 1\nOn GitHub:\nOn your local machine:",
+    "text": "Task 1\nDue date for the tasks is the next lesson (week 2).\nOn GitHub:\nOn your local machine:",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
@@ -311,10 +289,20 @@
     "href": "week-1-task.html#sec-gh-pages",
     "title": "🚀 Tasks",
     "section": "Task 2",
-    "text": "Task 2\n\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo.\nAdd the datasets to the local folder you created above, in a subfolder named data\nAdd the data folder to the .gitignore file.\nIn index.qmd, add a code chunk (R or Python) and solve the following tasks using your preferred language.\nUsing swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton\nVisualize the results (in a map and / or a plot)\nRender the document using quarto preview\nPublish your result using quarto publish gh-pages\n\nA code chunk is added in the following manner. Please sonsult the Quarto - Getting Started for more information on your local setup.\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*\n\n```{r}\nlibrary(sf)\n\n```",
+    "text": "Task 2\n\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo.\nAdd the datasets to the local folder you created above, in a subfolder named data\nAdd the data folder to the .gitignore file.\nIn index.qmd, add a code chunk (R or Python) and solve the following tasks using your preferred language.\nUsing swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton\nVisualize the results (in a map and / or a plot)\nRender the document using quarto preview\nPublish your result using quarto publish gh-pages\n\nA code chunk is added in the following manner. Please consult the Quarto - Getting Started for more information on your local setup.\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*\n\n```{r}\nlibrary(sf)\n\n```",
     "crumbs": [
       "Week 1: Vector Recap",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "week-2.html",
+    "href": "week-2.html",
+    "title": "Week 2: Geopython Conference",
+    "section": "",
+    "text": "The concepts of this course are implemented in the programming language R. However, these concepts can be transferred to other programming languages, such as Python and vice versa. For this reason, we will take the opportunity that the 2025 Geopython conference is taking place this week, and some talks are during the course time.\nAn online ticket will be provided to all participants. If you want to attend the conference in person, you will have to pay for the ticket yourself.\nYour assignment is to watch at least the talks listed in Table 5.1. We will discuss them the following week. Feel free to watch other topics listed in the conference program.\n\n\n\nTable 5.1: Assigned talks at the Geopython conference\n\n\n\n\n\n\n\n\n\nTime\nTalk\n\n\n\n\n09:45–10:15\nThe earth is not flat! Introducing Spherely and support for spherical geometries in geopandas\n\n\n09:45–10:15\nduckdb-geography: Global vector data in DuckDB\n\n\n11:15–11:45\nScaling Geospatial Techniques to Cloud-Native Platforms",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 2: Geopython Conference</span>"
     ]
   },
   {

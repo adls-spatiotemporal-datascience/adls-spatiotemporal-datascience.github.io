@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spatial Vector Operation – Spatiotemporal Datascience</title>
+<title>Week 2: Geopython Conference – Spatiotemporal Datascience</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./week-1-task.html" rel="next">
-<link href="./week-1-vector-io.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./week-1-task.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -122,35 +88,6 @@ window.onload = function() {
 };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="aux/style.css">
 </head>
@@ -164,7 +101,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-1-simple-features.html">Week 1: Vector Recap</a></li><li class="breadcrumb-item"><a href="./week-1-spatial-operations.html"><span class="chapter-title">Spatial Vector Operation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-2.html"><span class="chapter-title">Week 2: Geopython Conference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -208,13 +145,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Week 1: Vector Recap</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./week-1-simple-features.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Simple Features</span></a>
@@ -227,7 +164,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-1-spatial-operations.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Spatial Vector Operation</span></a>
+  <a href="./week-1-spatial-operations.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Spatial Vector Operation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -239,7 +176,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 2: Geopython Conference</span></a>
+  <a href="./week-2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Week 2: Geopython Conference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -253,24 +190,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#thematic-queries" id="toc-thematic-queries" class="nav-link active" data-scroll-target="#thematic-queries">Thematic queries</a></li>
-  <li><a href="#sec-spatiao-queries" id="toc-sec-spatiao-queries" class="nav-link" data-scroll-target="#sec-spatiao-queries">Spatial queries using binary predicate functions</a></li>
-  <li><a href="#spatial-queries-using-or-st_filter" id="toc-spatial-queries-using-or-st_filter" class="nav-link" data-scroll-target="#spatial-queries-using-or-st_filter">Spatial queries using <code>[</code> or <code>st_filter</code></a></li>
-  <li><a href="#overlay-analysis" id="toc-overlay-analysis" class="nav-link" data-scroll-target="#overlay-analysis">Overlay Analysis</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-1-simple-features.html">Week 1: Vector Recap</a></li><li class="breadcrumb-item"><a href="./week-1-spatial-operations.html"><span class="chapter-title">Spatial Vector Operation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Spatial Vector Operation</span></h1>
+<h1 class="title"><span class="chapter-title">Week 2: Geopython Conference</span></h1>
 </div>
 
 
@@ -287,184 +215,46 @@ window.Quarto = {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The data used in this chapter is available on moodle (<code>Week 1 Data</code>)</p>
-</div>
-</div>
-<section id="thematic-queries" class="level2">
-<h2 class="anchored" data-anchor-id="thematic-queries">Thematic queries</h2>
-<ul>
-<li>SQL queries can be performed with file import</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tlm3d_path <span class="ot">&lt;-</span> <span class="st">"data/week1-exercises/swiss_TLM3D.gpkg"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tlm_seen <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  tlm3d_path, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">query =</span> <span class="st">"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>However, datasets can also be queried after import using <code>data.frame</code> methods (such as <code>[</code> or <code>dplyr::filter</code>)</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tlm_bb <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(tlm3d_path, <span class="st">"tlm_bb"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting with base-R</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tlm_seen <span class="ot">&lt;-</span> tlm_bb[tlm_bb<span class="sc">$</span>objektart <span class="sc">==</span> <span class="st">"Stehende Gewaesser"</span>, ]</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting using dplyr::filter</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>tlm_seen <span class="ot">&lt;-</span> <span class="fu">filter</span>(tlm_bb, objektart <span class="sc">==</span> <span class="st">"Stehende Gewaesser"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="sec-spatiao-queries" class="level2">
-<h2 class="anchored" data-anchor-id="sec-spatiao-queries">Spatial queries using binary predicate functions</h2>
-<p>Take the following example:</p>
-<blockquote class="blockquote">
-<p>Select all forests in the canton of Luzern</p>
-</blockquote>
-<ul>
-<li>Spatial query functions include: <code>st_contains()</code>, <code>st_intersects()</code>, <code>st_touches()</code>, <code>st_within()</code>, and many more</li>
-<li>These spatial queries are called <a href="https://r-spatial.github.io/sf/reference/geos_binary_pred.html">geometric binary predicates</a></li>
-<li>This family of functions return so called <em>sparse matrices</em>: a <code>list</code> the same length as <code>x</code>, which, for each element in <code>x</code>, contains the indices of <code>y</code> where the condition is met.</li>
-<li>They <em>could</em> return cross matrices, but these usually have a larger memory, since they have are <span class="math inline">\(x \times y\)</span> in size</li>
-</ul>
-<p><br class="br"></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>luzern <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week1-exercises/luzern.gpkg"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tlm_wald <span class="ot">&lt;-</span> <span class="fu">filter</span>(tlm_bb, objektart <span class="sc">==</span> <span class="st">"Wald"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The dataset already has this crs (2056), but apparently </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># does not realize this</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>tlm_wald <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(tlm_wald, <span class="dv">2056</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>query_res <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(tlm_wald, luzern)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the length of the output equals nrow(tlm_wald)</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>query_res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Sparse geometry binary predicate list of length 8096, where the
-predicate was `intersects'
-first 10 elements:
- 1: (empty)
- 2: (empty)
- 3: (empty)
- 4: (empty)
- 5: (empty)
- 6: (empty)
- 7: (empty)
- 8: (empty)
- 9: (empty)
- 10: (empty)</code></pre>
-</div>
-</div>
-<ul>
-<li>(The first 10 elements are empty, because to not intersect Luzern)</li>
-<li>This list can be used to subset <code>x</code> (<code>TRUE</code> where the list is not empty):</li>
-</ul>
-<p><br class="br"></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the use of lenghts (with an s) to get the length of each element in the </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>wald_luzern <span class="ot">&lt;-</span> tlm_wald[<span class="fu">lengths</span>(query_res) <span class="sc">&gt;</span> <span class="dv">0</span>,]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(luzern) <span class="sc">+</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wald_luzern, <span class="at">fill =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-intersects" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-intersects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-1-spatial-operations_files/figure-html/fig-intersects-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intersects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Note how some forests are outside the canton’s border. This is the nature of <code>st_intersects</code>. If even a small part of a forest feature is within Luzern, this feature <em>intersects</em> Luzern and is therefore retained. To query only forests that are <em>completly</em> within Luzern, use <code>st_within()</code>.
+<p>The concepts of this course are implemented in the programming language R. However, these concepts can be transferred to other programming languages, such as Python and vice versa. For this reason, we will take the opportunity that the <a href="https://2025.geopython.net/">2025 Geopython conference</a> is taking place this week, and some talks are during the course time.</p>
+<p>An online ticket will be provided to all participants. If you want to attend the conference in person, you will have to pay for the ticket yourself.</p>
+<p>Your assignment is to watch at least the talks listed in <a href="#tbl-geopython" class="quarto-xref">Table&nbsp;<span>5.1</span></a>. We will discuss them the following week. Feel free to watch other topics listed in <a href="https://2025.geopython.net/schedule">the conference program</a>.</p>
+<div id="tbl-geopython" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-geopython-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: Assigned talks at the Geopython conference
 </figcaption>
+<div aria-describedby="tbl-geopython-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Time</th>
+<th style="text-align: left;">Talk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>09:45–10:15</strong></td>
+<td style="text-align: left;">The earth is not flat! Introducing Spherely and support for spherical geometries in geopandas</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>09:45–10:15</strong></td>
+<td style="text-align: left;">duckdb-geography: Global vector data in DuckDB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>11:15–11:45</strong></td>
+<td style="text-align: left;">Scaling Geospatial Techniques to Cloud-Native Platforms</td>
+</tr>
+</tbody>
+</table>
+</div>
 </figure>
-</div>
-</div>
-</div>
-</section>
-<section id="spatial-queries-using-or-st_filter" class="level2">
-<h2 class="anchored" data-anchor-id="spatial-queries-using-or-st_filter">Spatial queries using <code>[</code> or <code>st_filter</code></h2>
-<p>The code above was for illustration purposes. The code can be written more concise:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using sf-methods in base-R</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tlm_wald[luzern,, op <span class="ot">=</span> st_intersects]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using st_filter</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_filter</span>(tlm_wald, luzern, <span class="at">.predicate =</span> st_intersects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The default value for <code>op</code> and <code>.predicate</code> is <code>st_intersects</code>, so these arguments could also have been omitted:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using sf-methods in base-R</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tlm_wald[luzern,,]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using st_filter</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_filter</span>(tlm_wald, luzern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="overlay-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="overlay-analysis">Overlay Analysis</h2>
-<ul>
-<li>In the example illustrated in <a href="#fig-intersects" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, we have the choice of subsetting forests that either intersect Luzern ever so slightly (<code>st_intersects</code>), or that lie <em>completely</em> within Luzern (<code>st_within</code>).</li>
-<li>Depending on the question, both options can be unsatisfactory (e.g.&nbsp;if the question was <em>Which percentage of Luzern is covered by forest?</em>)</li>
-<li>For some cases, it might be necessary to “cut” the forest area at the cantons border</li>
-<li>This can be achieved with <code>st_intersection</code> (which is different from <code>intersects</code>)</li>
-<li>There are several other functions that work on pairs of geometries. See <a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html">Geometric operations on pairs of simple feature geometry sets</a></li>
-<li>There are even more functions that work on single geometries, e.g.&nbsp;<code>st_buffer</code>. See <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">Geometric unary operations on simple feature geometry sets</a></li>
-</ul>
-<p><br class="br"></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>wald_luzern2 <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(luzern, wald_luzern)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(luzern) <span class="sc">+</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"gray"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wald_luzern2, <span class="at">fill =</span> <span class="st">"darkgreen"</span>, <span class="at">color =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="week-1-spatial-operations_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Now, it’s possible to compute the area of Luzern and the forest that <em>intersects</em> Luzern using the function <code>st_area</code>.</li>
-<li>There are several functions to <a href="https://r-spatial.github.io/sf/reference/geos_measures.html">compute geometric measurements</a> of <code>sf</code>-objects.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">st_area</span>(wald_luzern2))<span class="sc">/</span><span class="fu">st_area</span>(luzern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.2721733 [1]</code></pre>
-</div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1030,13 +820,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./week-1-vector-io.html" class="pagination-link" aria-label="Vector data I/O">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Vector data I/O</span></span>
+      <a href="./week-1-task.html" class="pagination-link" aria-label="🚀 Tasks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">🚀 Tasks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./week-1-task.html" class="pagination-link" aria-label="🚀 Tasks">
-        <span class="nav-page-text"><span class="chapter-title">🚀 Tasks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
