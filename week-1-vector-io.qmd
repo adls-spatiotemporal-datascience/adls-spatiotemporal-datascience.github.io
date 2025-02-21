@@ -64,6 +64,7 @@ The `read_sf()` function is a wrapper around the `st_read()` function, which is 
 
 tlm3d_path <- "data/week1-exercises/swiss_TLM3D.gpkg"
 
+# Note the warning
 tlm3d <- read_sf(tlm3d_path)
 ```
 
@@ -112,13 +113,6 @@ if(file.exists(target_file))file.remove(target_file)
 ```{r}
 st_write(tlm_seen, "data-out/seen.geojson")
 ```
-
-## Exercises {.exercises}
-
-1. Import the datasets from Spatial Analysis I and II using R
-2. Explore these datasets by printing the `sf` objects to the console
-3. Try different visualization methods (see @sec-plotting)
-
 
 
 

@@ -102,7 +102,7 @@ ggplot(luzern) +
 
 ## Spatial queries using `[` or `st_filter`
 
-- The code above was for illustration purposes. The code can be written more concise: 
+The code above was for illustration purposes. The code can be written more concise: 
 
 
 ```{r}
@@ -116,8 +116,19 @@ st_filter(tlm_wald, luzern, .predicate = st_intersects)
 
 ```
 
-- The default value for `op` and `.predicate` is `st_intersects`, so these arguments could also have been omitted
+The default value for `op` and `.predicate` is `st_intersects`, so these arguments could also have been omitted:
 
+
+```{r}
+#| eval: false
+
+# using sf-methods in base-R
+tlm_wald[luzern,,]
+
+# using st_filter
+st_filter(tlm_wald, luzern)
+
+```
 
 ## Overlay Analysis
 
@@ -144,7 +155,6 @@ ggplot(luzern) +
 ```
 
 
-
 - Now, it's possible to compute the area of Luzern and the forest that *intersects* Luzern using the function `st_area`. 
 - There are several functions to [compute geometric measurements](https://r-spatial.github.io/sf/reference/geos_measures.html) of `sf`-objects.
 
@@ -153,17 +163,7 @@ sum(st_area(wald_luzern2))/st_area(luzern)
 ```
 
 
-<!-- todo: add buffer, union, dissolve -->
 
-## Exercises {.exercises}
-
-From the exercise in **Spatial Analysis I**, solve the following tasks using R:
-   
-- Task 2: Thematic Selections (Select by Attributes)
-- Task 3: Exporting Selected Features to a New ~~Layer~~ `sf` object
-- Task 6: Intersect (Intersection)
-- Task 8: Buffer
-- Task 9: Spatial Selection (Select by Location)
 
 
 

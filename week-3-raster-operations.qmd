@@ -137,7 +137,7 @@ p0 +
 What is the mean altitude *per municipality*?
 
 ```{r}
-zones <- read_sf("data/week2-exercises/Luxembourg_-_Municipalities.shp") |> 
+zones <- read_sf("data/week3-exercises/Luxembourg_-_Municipalities.shp") |> 
   transmute(zone = NAME_2) |> 
   group_by(zone) |> 
   summarise() |> 
@@ -492,59 +492,5 @@ focal_gauss1000 |> rast() |> plot()
 terrain(r, "slope") |> plot()
 terrain(r, "aspect") |> plot()
 ```
-
-
-## Exercises {.exercises}
-
-
-1. Import the elevation of Luxembourg using the following code:
-
-   ```{r}
-   #| eval: false
-   #| echo: true
-   r <- rast(system.file("ex/elev.tif", package="terra"))
-   ```
-
-2. Calculate the mean, maximum and minimum elevation values
-
-3. Calculate slope and aspect (see [terrain functions](https://rspatial.github.io/terra/reference/terrain.html))
-
-4. Determine suitable locations of solar panels using the following conditions:
-   - Elevation: above 300 MASL
-   - Slope: Between 1 and 3° 
-   - Aspect: Southfacing (between 135 and 235°)
-   
-
-5. Download the Municipalities of Luxembourg from Moodle and calculate the minimum, maximum and mean elevation values per municipality.
-
-6. Smooth the elevation values using different focal windows
-
-7. Import the multispectral Landsat 7 as a raster using the following path
-
-   ```{r}
-   #| eval: false
-   #| echo: true
-    
-   system.file("tif/L7_ETMs.tif",package = "stars")
-   ```
-
-8. Calculate the [NDVI](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index) using the following formula:
-
-$$\text{NDVI} = \frac{\text{NIR}-\text{red}}{\text{NIR}+\text{red}}$$
-
-```{r}
-NDVI <- (l7[["NIR"]]-l7[["R"]])/(l7[["NIR"]]+l7[["R"]])
-```
-
-
-```{r}
-#| fig-cap: The resulting NDVI values
-tm_shape(NDVI) + tm_raster(style = "cont", title = "NDVI", midpoint = 0, breaks = c(-1,0,1)) + 
-  tm_layout(legend.outside = TRUE)
-```
-
-
-
-
 
 

@@ -15,38 +15,6 @@
 
 - Hanno hat eine Räumliche Indizes Übung gemacht in AGI (auf moodle schauen)
 
-# Timeline
-
-
-1. KW08: 
-   - Introduction to R and Spatial-R
-   - Recap: Working with Raster Data (`terra`): Local, Global, Focal and Zonal Ops
-2. KW09: 
-   - Recap: Working with Vector Data: Simple Features, Vector Overlay, Buffer, Dissolve, Merge
-3. KW10: 
-   - Density Analysis / Heatmaps
-4. KW11: 
-   - Interpolation
-5. KW12:
-   - Spatial Autocorrelation
-6. KW13: 
-   - Network Analysis I
-7. KW14: 
-   - Network Analysis II 
-8. KW15: 
-   - Big Rasterdata Processing with `gdal`
-   - Big Vectordata Processing with `duckdb`
-9. KW16: FF 
-10. KW17: FF Easter (no class)
-11. KW18: Project Week (no class)
-12. KW19: 
-    - Rest API
-13. KW20: 
-    - Machine Learning
-14. KW21: 
-    - Machine Learning
-15. KW22:
-
 
 # Modulinfos
 

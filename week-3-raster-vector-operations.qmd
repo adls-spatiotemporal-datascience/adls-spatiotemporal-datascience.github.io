@@ -30,7 +30,7 @@ p <- tm_shape(r) +
 ```{r}
 r <- project(r, "epsg:2169")
 
-zones <- read_sf("data/week2-exercises/Luxembourg_-_Municipalities.shp") |> 
+zones <- read_sf("data/week3-exercises/Luxembourg_-_Municipalities.shp") |> 
   transmute(zone = NAME_2) |> 
   group_by(zone) |> 
   summarise() |> 
@@ -185,59 +185,6 @@ p + tm_shape(zones_raster) +
 p + tm_shape(zones_poly) + 
   tm_polygons(fill = "zone")
 ```
-
-
-
-
-## Exercises {.exercises}
-
-
-1. Import `Arealstatistik.gpkg` from *Spatial_Analysis_II* using `{sf}`
-2. To rasterize the data, we need a template raster object. Create a template raster object with a resolution of 100m using the `rast()` function
-3. Rasterize the arealstatistik data using the function `rasterize`, the tempalte from the previous step, and the column `AS_4` as the field to fill the raster cells
-
-
-```{r}
-areal <- read_sf("data/week2-exercises/Arealstatistik.gpkg")
-
-template <- rast(areal, resolution = 100)
-
-areal_rast <- rasterize(areal, template, "AS_4")
-
-
-```
-
-
-4. The resulting raster contains the integer values 1 to 4. These values correspond to the following land use categories (see [metadata](https://www.bfs.admin.ch/asset/en/1420906)):
-   1. Settlement and urban areas
-   2. Agricultural areas
-   3. Wooded areas
-   4. Unproductive areas
-
-To make the raster more interpretable, assign the corresponding names to the levels of the raster using the `levels()` function. The levels should be a data.frame with two columns: `ID` and `name` (see below)
-
-
-```{r}
-#| echo: true
-
-levs <- data.frame(
-  ID = 1:4, 
-  name = c(
-    "Settlement and urban areas", 
-    "Agricultural areas", 
-    "Wooded areas", 
-    "Unproductive areas"
-    ) 
-  )
-
-levels(areal_rast) <- levs
-
-plot(areal_rast)
-
-```
-
-
-
 
 
 

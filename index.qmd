@@ -2,16 +2,11 @@
 echo: false
 ---
 
-# Welcome {.unnumbered}
+# Welcome to the course *Spatiotemporal Datascience* {.unnumbered}
 
 ![[Image Source](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals)](images/us-weather.png)
 
-
-
-
-
-
-Welcome to the course *Spatiotemporal Datascience*. This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW). 
+This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW). 
 
 
 In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. 

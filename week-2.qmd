@@ -1,0 +1,23 @@
+---
+title: "Week 2: Geopython Conference"
+---
+
+The concepts of this course are implemented in the programming language R. However, these concepts can be transferred to other programming languages, such as Python and vice versa. For this reason, we will take the opportunity that the [2025 Geopython conference](https://2025.geopython.net/) is taking place this week, and some talks are during the course time. 
+
+An online ticket will be provided to all participants. If you want to attend the conference in person, you will have to pay for the ticket yourself. 
+
+Your assignment (not marked) is to watch at least the talks listed in @tbl-geopython. We will discuss them the following week. Feel free to watch other topics listed in [the conference program](https://2025.geopython.net/schedule).
+
+
+| Time | Talk |
+|:----:|:-----|
+|**09:15–09:45** | The earth is not flat! Introducing Spherely and support for spherical geometries in geopandas |
+|**09:45–10:15** | duckdb-geography: Global vector data in DuckDB |
+|**11:15–11:45** | Scaling Geospatial Techniques to Cloud-Native Platforms |
+
+: Assigned talks at the Geopython conference {#tbl-geopython}
+
+
+   
+
+

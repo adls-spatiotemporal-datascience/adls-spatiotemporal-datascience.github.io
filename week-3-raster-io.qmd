@@ -25,7 +25,7 @@
 ```{r}
 library(terra)
 
-dhm25 <- rast("data/week2-exercises/dhm25_lu.tif")
+dhm25 <- rast("data/week3-exercises/dhm25_lu.tif")
 dhm25
 ``` 
 
@@ -54,13 +54,6 @@ dhm25
 ```{r}
 writeRaster(dhm25, "data-out/dhm25_lu.tif", overwrite = TRUE)
 ```
-
-
-## Exercises {.exercises}
-
-
-1. Import the raster `dhm25_lu.tif` from the lesson *Spatial Analysis II*
-2. Visualize the raster using the `plot()` function as well as the library `{tmap}`.
 
 
 
