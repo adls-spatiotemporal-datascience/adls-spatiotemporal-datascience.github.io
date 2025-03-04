@@ -304,10 +304,33 @@ window.onload = function() {
 <li>The <code>zonal</code> function in <code>{terra}</code> can handle vector data: however, it requires <code>sf</code> objects to be converted to <code>terra</code>’s own vector format, called <code>SpatVector</code>. - The function <code>vect()</code> can be used to convert <code>sf</code> objects to <code>SpatVector</code> objects:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mean_vals <span class="ot">&lt;-</span> <span class="fu">zonal</span>(r, <span class="fu">vect</span>(zones), <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>zones<span class="sc">$</span>mean <span class="ot">&lt;-</span> mean_vals<span class="sc">$</span>elevation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>zones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 12 features and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 49540.31 ymin: 57009.53 xmax: 105922 ymax: 138631.1
+Projected CRS: LUREF / Luxembourg TM
+# A tibble: 12 × 2
+   zone                                                                 geometry
+ * &lt;chr&gt;                                                           &lt;POLYGON [m]&gt;
+ 1 Capellen         ((67807.54 74157.87, 67831.1 74087.81, 67898.55 73957.4, 67…
+ 2 Clervaux         ((76452.54 123066.7, 76921.51 122665.9, 76473.69 122657.2, …
+ 3 Diekirch         ((87698.16 101220.4, 87632.77 101114.2, 87519.26 100859, 87…
+ 4 Echternach       ((101054.8 98587.69, 101873.3 98671.15, 102308.8 98302.53, …
+ 5 Esch-sur-Alzette ((70485.31 57109.03, 70479.23 57110.74, 70124.08 57203.85, …
+ 6 Grevenmacher     ((98316.48 77592.6, 98370.24 76804.03, 98372.67 76767.55, 9…
+ 7 Luxembourg       ((79432.03 68509.55, 79342.29 68579.14, 79284.43 68609.69, …
+ 8 Mersch           ((81080.72 86671, 81039.57 86437.63, 81015.75 86030.31, 810…
+ 9 Redange          ((66884.63 90450.9, 66949.54 90334.49, 67033.38 90124.69, 6…
+10 Remich           ((94804.67 63851.75, 94253.56 63591.47, 94439.38 62504.97, …
+11 Vianden          ((84572.47 109652.3, 84752.39 109225.1, 84638.88 108774.4, …
+12 Wiltz            ((69104.29 107418.7, 68964.91 107123.7, 68930.58 106984.6, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_vals <span class="ot">&lt;-</span> <span class="fu">zonal</span>(r, <span class="fu">vect</span>(zones), <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>zones<span class="sc">$</span>mean <span class="ot">&lt;-</span> mean_vals<span class="sc">$</span>elevation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div>
 
@@ -375,8 +398,8 @@ Figure&nbsp;8.3: The resulting zones (mean elevation per zone), also as vector d
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lux_elev <span class="ot">&lt;-</span> <span class="fu">extract</span>(r, luxembourg_city)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lux_elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lux_elev <span class="ot">&lt;-</span> <span class="fu">extract</span>(r, luxembourg_city)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lux_elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID elevation
 1  1  293.9805</code></pre>
@@ -396,13 +419,13 @@ Figure&nbsp;8.3: The resulting zones (mean elevation per zone), also as vector d
 </ol></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can create a template using the input vector. All we have to specify </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is the resolution of the output raster, which is evalutated in the units of</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the CRS of the input vector data (meters in our case).</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>template <span class="ot">&lt;-</span> <span class="fu">rast</span>(zones, <span class="at">resolution =</span> <span class="dv">1000</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>zones_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(zones, template, <span class="st">"zone"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can create a template using the input vector. All we have to specify </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is the resolution of the output raster, which is evalutated in the units of</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the CRS of the input vector data (meters in our case).</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>template <span class="ot">&lt;-</span> <span class="fu">rast</span>(zones, <span class="at">resolution =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>zones_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(zones, template, <span class="st">"zone"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full" data-layout-nrow="1">
 <div id="fig-vector-to-raster" class="quarto-layout-panel page-columns page-full">
@@ -462,8 +485,8 @@ Note
 <li>The resulting object will be of class <code>SpatVector</code>. This can be converted to the <code>sf</code> class using <code>st_as_sf()</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>zones_poly <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(zones_raster) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>zones_poly <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(zones_raster) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full" data-layout-nrow="1">
 <div id="fig-raster-to-vector" class="quarto-layout-panel page-columns page-full">
