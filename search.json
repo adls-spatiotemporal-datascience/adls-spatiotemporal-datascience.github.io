@@ -306,11 +306,286 @@
     ]
   },
   {
+    "objectID": "week-3-raster-io.html",
+    "href": "week-3-raster-io.html",
+    "title": "Raster Data I/O",
+    "section": "",
+    "text": "Import a raster file\nlibrary(terra)\n\ndhm25 &lt;- rast(\"data/week2-exercises/dhm25_lu.tif\")\ndhm25\n\nclass       : SpatRaster \ndimensions  : 2321, 2161, 1  (nrow, ncol, nlyr)\nresolution  : 25, 25  (x, y)\nextent      : 2628987, 2683012, 1179988, 1238013  (xmin, xmax, ymin, ymax)\ncoord. ref. : CH1903+ / LV95 (EPSG:2056) \nsource      : dhm25_lu.tif \nname        : dhm25_lu \nmin value   :    381.1 \nmax value   :   3228.3",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-io.html#import-a-raster-file",
+    "href": "week-3-raster-io.html#import-a-raster-file",
+    "title": "Raster Data I/O",
+    "section": "",
+    "text": "terra uses the function rast() to import raster data\nPrinting the object will give you some basic information about the raster\n\nThe number of rows and columns, as well as the number of layers\nThe resolution of the raster, meter per pixel (25 in our case)\nThe extent of the raster, in the coordinate reference system of the raster\nThe coordinate reference system (CRS) of the raster\nThe source (in memory, or a file path)\nThe name(s) of the band(s) (we only have one band in our case)\nThe min and max values of the raster",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-io.html#geotiff",
+    "href": "week-3-raster-io.html#geotiff",
+    "title": "Raster Data I/O",
+    "section": "GeoTIFF",
+    "text": "GeoTIFF\n\nGeoTIFF is the most common raster format\nGeoTIFF is an extension to the TIFF format, which includes additional metadata to establish the spatial reference of the file\nThis includes the CRS, the extent, the resolution, and the origin of the raster\nThe metadata is either stored in the header of the file, or in an accompanying file with the same name, but different extension (.tfw or .aux.xml)\nOther important raster file formats include:\n\nCloud optimized GeoTIFF (COG): A GeoTIFF file that is optimized for cloud storage which allows for efficient, partial reading of the file over HTTP\nJPG2000 (.jp2) is a compressed raster format that is often used for satellite imagery\nNetCDF (.nc) is a format that is often used for climate data\nHDF5 (.h5) is a format that is often used for remote sensing data",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-io.html#writing-a-raster-file",
+    "href": "week-3-raster-io.html#writing-a-raster-file",
+    "title": "Raster Data I/O",
+    "section": "Writing a raster file",
+    "text": "Writing a raster file\n\nYou can write a raster object to a file using the writeRaster() function\n\n\nwriteRaster(dhm25, \"data-out/dhm25_lu.tif\", overwrite = TRUE)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html",
+    "href": "week-3-raster-operations.html",
+    "title": "Raster Operations",
+    "section": "",
+    "text": "Introduction",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#introduction",
+    "href": "week-3-raster-operations.html#introduction",
+    "title": "Raster Operations",
+    "section": "",
+    "text": "Map algebra can be defined as operations that modify or summarize raster cell values, with reference to surrounding cells, zones, or statistical functions that apply to every cell.\nMap algebra divides raster operations into four subclasses:\n\nLocal or per-cell operations\nFocal or neighborhood operations. Most often the output cell value is the result of a 3 x 3 input cell block\nZonal operations are similar to focal operations, but the surrounding pixel grid on which new values are computed can have irregular sizes and shapes\nGlobal or per-raster operations. That means the output cell derives its value potentially from one or several entire rasters",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#global-operation-1",
+    "href": "week-3-raster-operations.html#global-operation-1",
+    "title": "Raster Operations",
+    "section": "Global Operation (1)",
+    "text": "Global Operation (1)\n\nThe most common global operations are descriptive statistics for the entire raster dataset such as the minimum, maximum or mean value.\nFor example: What is the mean elevation value for Luxembourg?\n\n\n\n\n\n\n\n\n\nFigure 7.1: Elevation of Luxembourg\n\n\n\n\n\n\n# note: mean(r) does not work, since \"mean\" is used as a local operator\nmean_elev &lt;- global(r, mean, na.rm = TRUE)\n\nmean_elev\n\n              mean\nelevation 347.6488",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#sec-global-2",
+    "href": "week-3-raster-operations.html#sec-global-2",
+    "title": "Raster Operations",
+    "section": "Global Operation (2)",
+    "text": "Global Operation (2)\n\nAnother type of “global” operation is distance\nThis function calculates the distance from each cell to a specific target cell\nFor example, what is the distance from each cell to Luxembourg City, the capital of Luxembourg?\n\n\n\n\n\n\n\n\n\n\n\nr_dist &lt;- distance(r, luxembourg_city)\nr_dist &lt;- mask(r_dist, r)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#sec-zonal-1",
+    "href": "week-3-raster-operations.html#sec-zonal-1",
+    "title": "Raster Operations",
+    "section": "Zonal",
+    "text": "Zonal\n\nZonal operations apply an aggregation function to multiple raster cells\nA second raster with categorical values define the “zones”\n\nWhat is the mean altitude per municipality?\n\nmean_vals &lt;- zonal(r, zones, fun = mean, na.rm = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.2: The original Zones (E.g. municipalities of Luxembourg)\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.3: Mean elevation per zone / per municipality\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\n\nThe global operation can be seen as a special case of a zonal operation, where the only “Zone” is the entire dataset",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#local-1",
+    "href": "week-3-raster-operations.html#local-1",
+    "title": "Raster Operations",
+    "section": "Local (1)",
+    "text": "Local (1)\n\nLocal operations comprise all cell-by-cell operations in one or several layers.\nFor example, we can classify the elevation into values above and below a certain threshold\n\n\n# first, create a boolean copy of the raster\nr_bool &lt;- as.logical(r)\n\nmean_elev &lt;- as.numeric(mean_elev)\nmean_elev\n\n[1] 347.6488\n\nr_bool[r &gt; mean_elev] &lt;- FALSE\nr_bool[r &lt;= mean_elev] &lt;- TRUE",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#local-2",
+    "href": "week-3-raster-operations.html#local-2",
+    "title": "Raster Operations",
+    "section": "Local (2)",
+    "text": "Local (2)\n\nThis type of (re-) classification is a very common operation\nFor more than 2 categories, we can use classify\n\n\ncuts &lt;- global(r, quantile, probs = c(0, .33, .66, 1), na.rm = TRUE)\n\nr_classify &lt;- classify(r, as.numeric(cuts))\n\n# this next line just replaces the default labels with some custom ones\nlevels(r_classify) &lt;- data.frame(ID = 0:2, category = c(\"low\",\"mid\",\"high\"))\n\np + tm_shape(r_classify) +\n    tm_raster(style = \"cat\",legend.show = TRUE, palette = \"viridis\", title = \"Elevation\") +\n    tm_layout(legend.show = TRUE)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#local-3",
+    "href": "week-3-raster-operations.html#local-3",
+    "title": "Raster Operations",
+    "section": "Local (3)",
+    "text": "Local (3)\n\nLocal operations are often used with multiple bands\nFor example, we could calculate the mean intensity values of red, green and blue:\n\n\nl7 &lt;- rast(system.file(\"tif/L7_ETMs.tif\",package = \"stars\"))\n\nnames(l7) &lt;- c(\"B\", \"G\", \"R\", \"NIR\", \"SWIR\", \"MIR\")\n\nl7_rgb &lt;- l7[[c(\"R\",\"G\", \"B\")]]\n\nplot(l7_rgb, nr = 1)\n\n\n\n\n\n\n\n\n\nl7_rgb_mean &lt;- mean(l7_rgb)\n\nplot(l7_rgb_mean)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#local-4",
+    "href": "week-3-raster-operations.html#local-4",
+    "title": "Raster Operations",
+    "section": "Local (4)",
+    "text": "Local (4)\n\nIn a more complex usecase, we could use the R, G and B band to calculate a grayscale value (\\(L^*\\)) using the following formula (from here):\n\n\\[\\begin{aligned}\n\nL^* &= 116 \\times Y ^ {\\frac{1}{3}} - 16\\\\\n\nY &= 0.2126 \\times R^\\gamma+0.7152 \\times G^\\gamma+0.0722 \\times B^\\gamma \\\\\n\n\n\\gamma &= 2.2\n\n\\end{aligned}\\]\n\ng &lt;- 2.2\n\nl7 &lt;- l7/255 # scale values to 0-1 (probabbly not necessary)\n\nY &lt;- 0.2126 * l7[[\"R\"]]^g + 0.7152 * l7[[\"G\"]]^g + 0.0722 * l7[[\"B\"]]^g\n\nL &lt;- 116* Y^(1/3)-16\n\n# Plot the result",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#sec-focal-1",
+    "href": "week-3-raster-operations.html#sec-focal-1",
+    "title": "Raster Operations",
+    "section": "Focal",
+    "text": "Focal\n\nWhile local functions operate on one cell focal operations take into account a central (focal) cell and its neighbors.\nThe neighborhood (also named kernel, filter or moving window) under consideration is typically of size 3-by-3 cells (that is the central cell and its eight surrounding neighbors), but can take on any other size or shape as defined by the user.\nA focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell\n\n\n\n\n\n\n\nFigure 7.4: Note how, depending on the size of your moving window, NA’s are produced. Source: Lovelace, Nowosad, and Muenchow (2019)\n\n\n\n\nfocal3by3 &lt;- matrix(rep(1,9), ncol = 3)\n\n\nfocal11by11 &lt;- matrix(rep(1,121), ncol = 11)\n\n\nr_foc3 &lt;- focal(r, focal3by3, fun = mean, fillNA = TRUE)\n\nr_foc11 &lt;- focal(r, focal11by11, fun = mean, fillNA = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.5: Original values\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.6: Result of a 3x3 Focal Window\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.7: Result of a 11x11 Focal Window\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\n\nNote how the output raster is smaller as the focal window is larger (edge effect)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#focal-weights-1",
+    "href": "week-3-raster-operations.html#focal-weights-1",
+    "title": "Raster Operations",
+    "section": "Focal weights (1)",
+    "text": "Focal weights (1)\n\nThe focal weights we used above were square and evenly weighted\n\n\nfocal3by3\n\n     [,1] [,2] [,3]\n[1,]    1    1    1\n[2,]    1    1    1\n[3,]    1    1    1\n\n\n\nfocal11by11\n\n      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]\n [1,]    1    1    1    1    1    1    1    1    1     1     1\n [2,]    1    1    1    1    1    1    1    1    1     1     1\n [3,]    1    1    1    1    1    1    1    1    1     1     1\n [4,]    1    1    1    1    1    1    1    1    1     1     1\n [5,]    1    1    1    1    1    1    1    1    1     1     1\n [6,]    1    1    1    1    1    1    1    1    1     1     1\n [7,]    1    1    1    1    1    1    1    1    1     1     1\n [8,]    1    1    1    1    1    1    1    1    1     1     1\n [9,]    1    1    1    1    1    1    1    1    1     1     1\n[10,]    1    1    1    1    1    1    1    1    1     1     1\n[11,]    1    1    1    1    1    1    1    1    1     1     1",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#focal-weights-2",
+    "href": "week-3-raster-operations.html#focal-weights-2",
+    "title": "Raster Operations",
+    "section": "Focal weights (2)",
+    "text": "Focal weights (2)\n\nHowever, we can also create uneven weights:\n\nFor example, a laplacian filter is commonly used for edge detection.\n\nlaplacian &lt;- matrix(c(0,1,0,1,-4,1,0,1,0), nrow=3) \n\nlaplacian\n\n     [,1] [,2] [,3]\n[1,]    0    1    0\n[2,]    1   -4    1\n[3,]    0    1    0\n\n\nSo are the sobel filters\n\nsobel_x &lt;- matrix(c(-1,-2,-1,0,0,0,1,2,1), nrow=3)\n\nsobel_x\n\n     [,1] [,2] [,3]\n[1,]   -1    0    1\n[2,]   -2    0    2\n[3,]   -1    0    1\n\nsobel_y &lt;- matrix(c(1,0,-1,2,0,-2,1,0,-1), nrow=3)\n\nsobel_y\n\n     [,1] [,2] [,3]\n[1,]    1    2    1\n[2,]    0    0    0\n[3,]   -1   -2   -1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.8: Laplacian Filter\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.9: Sobel (x-direction)\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.10: SObel (y-direction)",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#focal-weights-3",
+    "href": "week-3-raster-operations.html#focal-weights-3",
+    "title": "Raster Operations",
+    "section": "Focal weights (3)",
+    "text": "Focal weights (3)\n\nWe can also create specific shapes using weights\nWe don’t need to create these matrices by hand. Rather, we can use the function focalMat to create different shapes automatically\n\n\n# Note \n# - \"d\" is evaluated in the units of \"x\" (in our case: meters)\n# - The sum of all weights equals to 1\n# - Note how the corners receive a value of 0\nfocal_circle3000 &lt;- focalMat(x = r, d = 3000, \"circle\")\n\nfocal_circle3000\n\n           [,1]       [,2]       [,3]       [,4]       [,5]\n[1,] 0.00000000 0.00000000 0.03703704 0.00000000 0.00000000\n[2,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[3,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[4,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[5,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[6,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[7,] 0.00000000 0.00000000 0.03703704 0.00000000 0.00000000\n\n\n\n\n\n\n\nA visual representation of the matrix / filter above\n\n\n\n\n\nfocal_gauss1000 &lt;- focalMat(x = r, d = 1000, \"Gauss\")\n\nfocal_gauss1000\n\n            [,1]        [,2]        [,3]        [,4]        [,5]\n[1,] 0.000241551 0.001082556 0.001784834 0.001082556 0.000241551\n[2,] 0.002942693 0.013188236 0.021743725 0.013188236 0.002942693\n[3,] 0.013188236 0.059105572 0.097448614 0.059105572 0.013188236\n[4,] 0.021743725 0.097448614 0.160665602 0.097448614 0.021743725\n[5,] 0.013188236 0.059105572 0.097448614 0.059105572 0.013188236\n[6,] 0.002942693 0.013188236 0.021743725 0.013188236 0.002942693\n[7,] 0.000241551 0.001082556 0.001784834 0.001082556 0.000241551\n\n\n\n\n\n\n\nA visual representation of the matrix / filter above",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-operations.html#focal-functions-in-terrain-processing",
+    "href": "week-3-raster-operations.html#focal-functions-in-terrain-processing",
+    "title": "Raster Operations",
+    "section": "Focal functions in terrain processing",
+    "text": "Focal functions in terrain processing\n\nFocal functions are used to calculate the slope of a specific location, e.g. using the algorithm by Horn (1981)\nSimilarly, calculating the aspect (azimuth) of a location is a very typical task when dealing with elevation data\nThese algorithms are used so often, that they are implemented in a dedicated function (terrain())\n\nterrain(r, \"slope\") |&gt; plot()\nterrain(r, \"aspect\") |&gt; plot()\n\n\n\n\n\n\n\n\n\nFigure 7.11: Calculating slope using a predefined algorithm\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.12: Calculating aspect\n\n\n\n\n\n\n\n\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance Map.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. Geocomputation with r. Chapman; Hall/CRC.",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html",
+    "href": "week-3-raster-vector-operations.html",
+    "title": "Raster-Vector Operations",
+    "section": "",
+    "text": "Two worlds of spatial data",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html#two-worlds-of-spatial-data",
+    "href": "week-3-raster-vector-operations.html#two-worlds-of-spatial-data",
+    "title": "Raster-Vector Operations",
+    "section": "",
+    "text": "Till now, we have treated vector and raster data separately\nHowever, in many cases, you will need to combine both types of data\nFor example, take the Zonal operation we discussed in the chapter Zonal: Typically, your “zones” will be vector polygons",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html#zonal-operations-with-vector-data",
+    "href": "week-3-raster-vector-operations.html#zonal-operations-with-vector-data",
+    "title": "Raster-Vector Operations",
+    "section": "Zonal operations with vector data",
+    "text": "Zonal operations with vector data\n\nThe zonal function in {terra} can handle vector data: however, it requires sf objects to be converted to terra’s own vector format, called SpatVector. - The function vect() can be used to convert sf objects to SpatVector objects:\n\n\nmean_vals &lt;- zonal(r, vect(zones), fun = mean, na.rm = TRUE)\n\n\nzones$mean &lt;- mean_vals$elevation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.1: The original raster data\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.2: The original zones as vector polygons\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.3: The resulting zones (mean elevation per zone), also as vector data",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html#extracting-raster-values-at-vector-points",
+    "href": "week-3-raster-vector-operations.html#extracting-raster-values-at-vector-points",
+    "title": "Raster-Vector Operations",
+    "section": "Extracting raster values at vector points",
+    "text": "Extracting raster values at vector points\n\nA another common operation is to extract raster values at specific points\nLet’s take the example of the city of Luxembourg (see Global Operation (2))\nThe function extract() can be used to extract raster values at specific points\nextract returns a data.frame with\n\none column per raster band (1 in our case)\none row per point (also 1 in our case):\n\n\n\n\n\n\n\n\n\n\n\n\nlux_elev &lt;- extract(r, luxembourg_city)\nlux_elev\n\n  ID elevation\n1  1  293.9805",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html#vector-to-raster-conversion",
+    "href": "week-3-raster-vector-operations.html#vector-to-raster-conversion",
+    "title": "Raster-Vector Operations",
+    "section": "Vector to raster conversion",
+    "text": "Vector to raster conversion\n\nFunctions that combine raster and vector data usually convert vector to raster internally\nSometimes, we might want to do this conversion explicitly. This can be done using the rasterize() function\nThis function takes three arguments:\n\nx: The vector data (either of class sf or SpatVector)\ny: A raster object that defines the extent, resolution, and CRS of the resulting raster (i.e. a “template”)\nfield: The name of the column in the vector data that should be used to fill the raster cells\n\n\n\n# we can create a template using the input vector. All we have to specify \n# is the resolution of the output raster, which is evalutated in the units of\n# the CRS of the input vector data (meters in our case).\n\ntemplate &lt;- rast(zones, resolution = 1000)\n\nzones_raster &lt;- rasterize(zones, template, \"zone\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) The original zones as polygon data\n\n\n\n\n\n\n\n\n\n\n\n(b) The zones as raster data\n\n\n\n\n\n\n\nFigure 8.4: Note how the conversion to polygons results in a loss of detail\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nNote that rasters don’t store character information. The above zones are coded as integers with a corresponding look-up table (see ?terra::levels).",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-raster-vector-operations.html#raster-to-vector-conversion",
+    "href": "week-3-raster-vector-operations.html#raster-to-vector-conversion",
+    "title": "Raster-Vector Operations",
+    "section": "Raster to vector conversion",
+    "text": "Raster to vector conversion\n\nThe opposite operation, converting raster data to vector data, can be done using the {terra} functions as.points, as.lines and as.polygons:\nThe resulting object will be of class SpatVector. This can be converted to the sf class using st_as_sf()\n\n\nzones_poly &lt;- as.polygons(zones_raster) |&gt; \n  st_as_sf()\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) The zones as raster data\n\n\n\n\n\n\n\n\n\n\n\n(b) The zones as polygon data\n\n\n\n\n\n\n\nFigure 8.5: Note how the conversion back to polygons preserves the cell boundaries",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
+    ]
+  },
+  {
+    "objectID": "week-3-task.html",
+    "href": "week-3-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Content\nToday, we will recap the basics of working with spatial data in R from Geocomputation “Raster Data” (Course GIScience and Geodatabases).\n\n\nTasks\nFollow the instructions in Task 2 from last week to create a new repo in the existing organization. As you did last week, solve the next task in a file named index.qmd.\n\nRedo the task from last week. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.\nUsing the R package tictoc, measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week.\nCompare the execution times of the two approaches. Which approach is faster? Where is the bottleneck?\nCompare the results of the two approaches. Are they the same? If not, why?",
+    "crumbs": [
+      "Week 2: Raster Recap",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Dorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
+    "text": "Dorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance\nMap.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019.\nGeocomputation with r. Chapman; Hall/CRC.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
     "crumbs": [
       "References"
     ]
