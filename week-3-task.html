@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./week-4-topological-rel.html" rel="next">
 <link href="./week-3-raster-vector-operations.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -101,7 +101,7 @@ window.onload = function() {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 2: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 3: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +182,7 @@ window.onload = function() {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Week 2: Raster Recap</span></a>
+ <span class="menu-text">Week 3: Raster Recap</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -210,6 +210,32 @@ window.onload = function() {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Week 4: Vector Advanced</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week-4-topological-rel.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Topological relations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week-4-duckdb.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DuckDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week-4-task.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Tasks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
@@ -226,14 +252,14 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#task" id="toc-task" class="nav-link active" data-scroll-target="#task">Task</a></li>
+  <li><a href="#sec-task-rast-basic" id="toc-sec-task-rast-basic" class="nav-link active" data-scroll-target="#sec-task-rast-basic">Task 3.1</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 2: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 3: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">🚀 Tasks</span></h1>
 </div>
@@ -252,8 +278,6 @@ window.onload = function() {
 </header>
 
 
-<section id="task" class="level1">
-<h1>Task</h1>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -264,12 +288,14 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Due date for the tasks is the next lesson (week 2).</p>
+<p>Due date for the tasks is the next lesson</p>
 </div>
 </div>
-<p>Follow the instructions in <a href="week-1-task.html#sec-gh-pages" class="quarto-xref"><span>Task 2</span></a> from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named <code>index.qmd</code>.</p>
+<section id="sec-task-rast-basic" class="level2">
+<h2 class="anchored" data-anchor-id="sec-task-rast-basic">Task 3.1</h2>
+<p>Follow the instructions in <a href="week-1-task.html#sec-gh-pages" class="quarto-xref"><span>Task 1.1</span></a> from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named <code>index.qmd</code>.</p>
 <ol type="1">
-<li>Redo the task from last week. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.</li>
+<li>Redo <a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a>. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.</li>
 <li>Using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>, measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week.</li>
 <li>Compare the execution times of the two approaches. Which approach is faster? Where is the bottleneck?</li>
 <li>Compare the results of the two approaches. Are they the same? If not, why?</li>
@@ -857,8 +883,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./week-4-topological-rel.html" class="pagination-link" aria-label="Topological relations">
+        <span class="nav-page-text"><span class="chapter-title">Topological relations</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

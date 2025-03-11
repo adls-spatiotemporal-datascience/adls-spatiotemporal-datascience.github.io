@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Named topological relations – Spatiotemporal Datascience</title>
+<title>Topological relations – Spatiotemporal Datascience</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -155,7 +155,7 @@ window.onload = function() {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-4.html">Week 4: Vector Advanced</a></li><li class="breadcrumb-item"><a href="./week-4.html"><span class="chapter-title">Named topological relations</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-4-topological-rel.html">Week 4: Vector Advanced</a></li><li class="breadcrumb-item"><a href="./week-4-topological-rel.html"><span class="chapter-title">Topological relations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -275,12 +275,17 @@ window.onload = function() {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-4.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Named topological relations</span></a>
+  <a href="./week-4-topological-rel.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Topological relations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./week-4-duckdb.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DuckDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week-4-task.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Tasks</span></a>
   </div>
 </li>
       </ul>
@@ -301,13 +306,16 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#usage" id="toc-usage" class="nav-link active" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#named-topological-relations" id="toc-named-topological-relations" class="nav-link active" data-scroll-target="#named-topological-relations">Named topological relations</a>
+  <ul class="collapse">
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   <li><a href="#sec-named-topological-relations" id="toc-sec-named-topological-relations" class="nav-link" data-scroll-target="#sec-named-topological-relations">Named topological relations (I)</a></li>
   <li><a href="#named-topological-relations-ii" id="toc-named-topological-relations-ii" class="nav-link" data-scroll-target="#named-topological-relations-ii">Named topological relations (II)</a></li>
   <li><a href="#subset-examples" id="toc-subset-examples" class="nav-link" data-scroll-target="#subset-examples">Subset Examples</a></li>
   <li><a href="#spatial-join-example-i" id="toc-spatial-join-example-i" class="nav-link" data-scroll-target="#spatial-join-example-i">Spatial join Example (I)</a></li>
   <li><a href="#spatial-join-example-ii" id="toc-spatial-join-example-ii" class="nav-link" data-scroll-target="#spatial-join-example-ii">Spatial join Example (II)</a></li>
   <li><a href="#spatial-join-order" id="toc-spatial-join-order" class="nav-link" data-scroll-target="#spatial-join-order">Spatial join order</a></li>
+  </ul></li>
   <li><a href="#custom-topological-relations" id="toc-custom-topological-relations" class="nav-link" data-scroll-target="#custom-topological-relations">Custom topological relations</a>
   <ul class="collapse">
   <li><a href="#rooks-case" id="toc-rooks-case" class="nav-link" data-scroll-target="#rooks-case">Rook’s case</a></li>
@@ -320,9 +328,9 @@ window.onload = function() {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-4.html">Week 4: Vector Advanced</a></li><li class="breadcrumb-item"><a href="./week-4.html"><span class="chapter-title">Named topological relations</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-4-topological-rel.html">Week 4: Vector Advanced</a></li><li class="breadcrumb-item"><a href="./week-4-topological-rel.html"><span class="chapter-title">Topological relations</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Named topological relations</span></h1>
+<h1 class="title"><span class="chapter-title">Topological relations</span></h1>
 </div>
 
 
@@ -339,6 +347,8 @@ window.onload = function() {
 </header>
 
 
+<section id="named-topological-relations" class="level2">
+<h2 class="anchored" data-anchor-id="named-topological-relations">Named topological relations</h2>
 <ul>
 <li>We briefly touched topological relations in <a href="week-1-spatial-operations.html#sec-spatiao-queries" class="quarto-xref"><span>Spatial queries using binary predicate functions</span></a></li>
 <li>Topological relations describe the spatial relationships between objects.</li>
@@ -417,7 +427,7 @@ window.onload = function() {
 <div id="fig-playground-publictransport" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-playground-publictransport-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-4_files/figure-html/fig-playground-publictransport-1.png" class="img-fluid figure-img" width="672">
+<img src="week-4-topological-rel_files/figure-html/fig-playground-publictransport-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-playground-publictransport-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10.1: Note that the playgrounds within 100m of public transport (red dots) are a <em>subset</em> of all the playgrounds
@@ -538,7 +548,7 @@ Projected CRS: CH1903+ / LV95
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week-4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week-4-topological-rel_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -564,7 +574,7 @@ Projected CRS: CH1903+ / LV95
 <div id="fig-publictransport-kreise-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-publictransport-kreise-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-4_files/figure-html/fig-publictransport-kreise-1.png" class="img-fluid figure-img" data-ref-parent="fig-publictransport-kreise" width="672">
+<img src="week-4-topological-rel_files/figure-html/fig-publictransport-kreise-1.png" class="img-fluid figure-img" data-ref-parent="fig-publictransport-kreise" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-publictransport-kreise-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Dataset <code>kreise</code> with 12 features
@@ -576,7 +586,7 @@ Projected CRS: CH1903+ / LV95
 <div id="fig-publictransport-kreise-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-publictransport-kreise-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-4_files/figure-html/fig-publictransport-kreise-2.png" class="img-fluid figure-img" data-ref-parent="fig-publictransport-kreise" width="672">
+<img src="week-4-topological-rel_files/figure-html/fig-publictransport-kreise-2.png" class="img-fluid figure-img" data-ref-parent="fig-publictransport-kreise" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-publictransport-kreise-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Dataset <code>kreise_join</code> with 477 features
@@ -592,6 +602,7 @@ Figure&nbsp;10.2: Note that all the duplicate stadtkreise overlap each other, so
 </figure>
 </div>
 </div>
+</section>
 </section>
 <section id="custom-topological-relations" class="level2">
 <h2 class="anchored" data-anchor-id="custom-topological-relations">Custom topological relations</h2>
@@ -611,23 +622,23 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
 </figcaption>
 <div aria-describedby="tbl-de9im-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="zkekdeemrb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zkekdeemrb table {
+<div id="asjatociew" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#asjatociew table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zkekdeemrb thead, #zkekdeemrb tbody, #zkekdeemrb tfoot, #zkekdeemrb tr, #zkekdeemrb td, #zkekdeemrb th {
+#asjatociew thead, #asjatociew tbody, #asjatociew tfoot, #asjatociew tr, #asjatociew td, #asjatociew th {
   border-style: none;
 }
 
-#zkekdeemrb p {
+#asjatociew p {
   margin: 0;
   padding: 0;
 }
 
-#zkekdeemrb .gt_table {
+#asjatociew .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -653,12 +664,12 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-left-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_caption {
+#asjatociew .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zkekdeemrb .gt_title {
+#asjatociew .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -670,7 +681,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-bottom-width: 0;
 }
 
-#zkekdeemrb .gt_subtitle {
+#asjatociew .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -682,7 +693,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-top-width: 0;
 }
 
-#zkekdeemrb .gt_heading {
+#asjatociew .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -694,13 +705,13 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-right-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_bottom_border {
+#asjatociew .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_col_headings {
+#asjatociew .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -715,7 +726,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-right-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_col_heading {
+#asjatociew .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -735,7 +746,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   overflow-x: hidden;
 }
 
-#zkekdeemrb .gt_column_spanner_outer {
+#asjatociew .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -747,15 +758,15 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 4px;
 }
 
-#zkekdeemrb .gt_column_spanner_outer:first-child {
+#asjatociew .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zkekdeemrb .gt_column_spanner_outer:last-child {
+#asjatociew .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zkekdeemrb .gt_column_spanner {
+#asjatociew .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -767,11 +778,11 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   width: 100%;
 }
 
-#zkekdeemrb .gt_spanner_row {
+#asjatociew .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zkekdeemrb .gt_group_heading {
+#asjatociew .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -797,7 +808,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   text-align: left;
 }
 
-#zkekdeemrb .gt_empty_group_heading {
+#asjatociew .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -812,15 +823,15 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   vertical-align: middle;
 }
 
-#zkekdeemrb .gt_from_md > :first-child {
+#asjatociew .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zkekdeemrb .gt_from_md > :last-child {
+#asjatociew .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zkekdeemrb .gt_row {
+#asjatociew .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -839,7 +850,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   overflow-x: hidden;
 }
 
-#zkekdeemrb .gt_stub {
+#asjatociew .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -852,7 +863,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 5px;
 }
 
-#zkekdeemrb .gt_stub_row_group {
+#asjatociew .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -866,15 +877,15 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   vertical-align: top;
 }
 
-#zkekdeemrb .gt_row_group_first td {
+#asjatociew .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zkekdeemrb .gt_row_group_first th {
+#asjatociew .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zkekdeemrb .gt_summary_row {
+#asjatociew .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -884,16 +895,16 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 5px;
 }
 
-#zkekdeemrb .gt_first_summary_row {
+#asjatociew .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_first_summary_row.thick {
+#asjatociew .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zkekdeemrb .gt_last_summary_row {
+#asjatociew .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -903,7 +914,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-bottom-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_grand_summary_row {
+#asjatociew .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -913,7 +924,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 5px;
 }
 
-#zkekdeemrb .gt_first_grand_summary_row {
+#asjatociew .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -923,7 +934,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-top-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_last_grand_summary_row_top {
+#asjatociew .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -933,11 +944,11 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-bottom-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_striped {
+#asjatociew .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zkekdeemrb .gt_table_body {
+#asjatociew .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -946,7 +957,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-bottom-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_footnotes {
+#asjatociew .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -960,7 +971,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-right-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_footnote {
+#asjatociew .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -969,7 +980,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 5px;
 }
 
-#zkekdeemrb .gt_sourcenotes {
+#asjatociew .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -983,7 +994,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   border-right-color: #D3D3D3;
 }
 
-#zkekdeemrb .gt_sourcenote {
+#asjatociew .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -991,72 +1002,72 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
   padding-right: 5px;
 }
 
-#zkekdeemrb .gt_left {
+#asjatociew .gt_left {
   text-align: left;
 }
 
-#zkekdeemrb .gt_center {
+#asjatociew .gt_center {
   text-align: center;
 }
 
-#zkekdeemrb .gt_right {
+#asjatociew .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zkekdeemrb .gt_font_normal {
+#asjatociew .gt_font_normal {
   font-weight: normal;
 }
 
-#zkekdeemrb .gt_font_bold {
+#asjatociew .gt_font_bold {
   font-weight: bold;
 }
 
-#zkekdeemrb .gt_font_italic {
+#asjatociew .gt_font_italic {
   font-style: italic;
 }
 
-#zkekdeemrb .gt_super {
+#asjatociew .gt_super {
   font-size: 65%;
 }
 
-#zkekdeemrb .gt_footnote_marks {
+#asjatociew .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zkekdeemrb .gt_asterisk {
+#asjatociew .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zkekdeemrb .gt_indent_1 {
+#asjatociew .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zkekdeemrb .gt_indent_2 {
+#asjatociew .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zkekdeemrb .gt_indent_3 {
+#asjatociew .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zkekdeemrb .gt_indent_4 {
+#asjatociew .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zkekdeemrb .gt_indent_5 {
+#asjatociew .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zkekdeemrb .katex-display {
+#asjatociew .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zkekdeemrb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#asjatociew div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1122,7 +1133,7 @@ Table&nbsp;10.1: Image source: M. W. Taves <a href="https://commons.wikimedia.or
 <div id="fig-chessboard" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chessboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-4_files/figure-html/fig-chessboard-1.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="week-4-topological-rel_files/figure-html/fig-chessboard-1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10.3: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an endge with the origin?
@@ -1146,23 +1157,23 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
 </figcaption>
 <div aria-describedby="tbl-rook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="qiupjeoqdi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qiupjeoqdi table {
+<div id="ffqisgbbso" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ffqisgbbso table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qiupjeoqdi thead, #qiupjeoqdi tbody, #qiupjeoqdi tfoot, #qiupjeoqdi tr, #qiupjeoqdi td, #qiupjeoqdi th {
+#ffqisgbbso thead, #ffqisgbbso tbody, #ffqisgbbso tfoot, #ffqisgbbso tr, #ffqisgbbso td, #ffqisgbbso th {
   border-style: none;
 }
 
-#qiupjeoqdi p {
+#ffqisgbbso p {
   margin: 0;
   padding: 0;
 }
 
-#qiupjeoqdi .gt_table {
+#ffqisgbbso .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1188,12 +1199,12 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-left-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_caption {
+#ffqisgbbso .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qiupjeoqdi .gt_title {
+#ffqisgbbso .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1205,7 +1216,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-bottom-width: 0;
 }
 
-#qiupjeoqdi .gt_subtitle {
+#ffqisgbbso .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1217,7 +1228,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-top-width: 0;
 }
 
-#qiupjeoqdi .gt_heading {
+#ffqisgbbso .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1229,13 +1240,13 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-right-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_bottom_border {
+#ffqisgbbso .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_col_headings {
+#ffqisgbbso .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1250,7 +1261,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-right-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_col_heading {
+#ffqisgbbso .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1270,7 +1281,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   overflow-x: hidden;
 }
 
-#qiupjeoqdi .gt_column_spanner_outer {
+#ffqisgbbso .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1282,15 +1293,15 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 4px;
 }
 
-#qiupjeoqdi .gt_column_spanner_outer:first-child {
+#ffqisgbbso .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qiupjeoqdi .gt_column_spanner_outer:last-child {
+#ffqisgbbso .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qiupjeoqdi .gt_column_spanner {
+#ffqisgbbso .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1302,11 +1313,11 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   width: 100%;
 }
 
-#qiupjeoqdi .gt_spanner_row {
+#ffqisgbbso .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qiupjeoqdi .gt_group_heading {
+#ffqisgbbso .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1332,7 +1343,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   text-align: left;
 }
 
-#qiupjeoqdi .gt_empty_group_heading {
+#ffqisgbbso .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1347,15 +1358,15 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   vertical-align: middle;
 }
 
-#qiupjeoqdi .gt_from_md > :first-child {
+#ffqisgbbso .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qiupjeoqdi .gt_from_md > :last-child {
+#ffqisgbbso .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qiupjeoqdi .gt_row {
+#ffqisgbbso .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1374,7 +1385,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   overflow-x: hidden;
 }
 
-#qiupjeoqdi .gt_stub {
+#ffqisgbbso .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1387,7 +1398,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 5px;
 }
 
-#qiupjeoqdi .gt_stub_row_group {
+#ffqisgbbso .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1401,15 +1412,15 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   vertical-align: top;
 }
 
-#qiupjeoqdi .gt_row_group_first td {
+#ffqisgbbso .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qiupjeoqdi .gt_row_group_first th {
+#ffqisgbbso .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qiupjeoqdi .gt_summary_row {
+#ffqisgbbso .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1419,16 +1430,16 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 5px;
 }
 
-#qiupjeoqdi .gt_first_summary_row {
+#ffqisgbbso .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_first_summary_row.thick {
+#ffqisgbbso .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qiupjeoqdi .gt_last_summary_row {
+#ffqisgbbso .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1438,7 +1449,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-bottom-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_grand_summary_row {
+#ffqisgbbso .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1448,7 +1459,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 5px;
 }
 
-#qiupjeoqdi .gt_first_grand_summary_row {
+#ffqisgbbso .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1458,7 +1469,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-top-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_last_grand_summary_row_top {
+#ffqisgbbso .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1468,11 +1479,11 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-bottom-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_striped {
+#ffqisgbbso .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qiupjeoqdi .gt_table_body {
+#ffqisgbbso .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1481,7 +1492,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-bottom-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_footnotes {
+#ffqisgbbso .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1495,7 +1506,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-right-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_footnote {
+#ffqisgbbso .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1504,7 +1515,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 5px;
 }
 
-#qiupjeoqdi .gt_sourcenotes {
+#ffqisgbbso .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1518,7 +1529,7 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   border-right-color: #D3D3D3;
 }
 
-#qiupjeoqdi .gt_sourcenote {
+#ffqisgbbso .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1526,72 +1537,72 @@ Table&nbsp;10.2: The DE-9IM for the <em>rooks</em> case. This can be flattend in
   padding-right: 5px;
 }
 
-#qiupjeoqdi .gt_left {
+#ffqisgbbso .gt_left {
   text-align: left;
 }
 
-#qiupjeoqdi .gt_center {
+#ffqisgbbso .gt_center {
   text-align: center;
 }
 
-#qiupjeoqdi .gt_right {
+#ffqisgbbso .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qiupjeoqdi .gt_font_normal {
+#ffqisgbbso .gt_font_normal {
   font-weight: normal;
 }
 
-#qiupjeoqdi .gt_font_bold {
+#ffqisgbbso .gt_font_bold {
   font-weight: bold;
 }
 
-#qiupjeoqdi .gt_font_italic {
+#ffqisgbbso .gt_font_italic {
   font-style: italic;
 }
 
-#qiupjeoqdi .gt_super {
+#ffqisgbbso .gt_super {
   font-size: 65%;
 }
 
-#qiupjeoqdi .gt_footnote_marks {
+#ffqisgbbso .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qiupjeoqdi .gt_asterisk {
+#ffqisgbbso .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qiupjeoqdi .gt_indent_1 {
+#ffqisgbbso .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qiupjeoqdi .gt_indent_2 {
+#ffqisgbbso .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qiupjeoqdi .gt_indent_3 {
+#ffqisgbbso .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qiupjeoqdi .gt_indent_4 {
+#ffqisgbbso .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qiupjeoqdi .gt_indent_5 {
+#ffqisgbbso .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qiupjeoqdi .katex-display {
+#ffqisgbbso .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qiupjeoqdi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ffqisgbbso div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1658,7 +1669,7 @@ was `relate_pattern'
 <div id="fig-chessboard-rook" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chessboard-rook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="week-4_files/figure-html/fig-chessboard-rook-1.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="week-4-topological-rel_files/figure-html/fig-chessboard-rook-1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-rook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10.4: The chessboard situation with the potential fields for the rook highlighted with a red outline
