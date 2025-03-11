@@ -1,12 +1,12 @@
 ---
-title: "Week 3: Vector Advanced" 
+title: "Topological relations" 
 ---
 
-## Topological relations
+## Named topological relations
 
 - We briefly touched topological relations in @sec-spatiao-queries
 - Topological relations describe the spatial relationships between objects. 
-- They are also called *Binary topological relationships* or *binary predicates*
+- They are also called *binary topological relationships* or *binary predicates*
 - They are logical statements (`TRUE`/`FALSE`) about the spatial relationships between two objects
 - The two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions [@egenhofer1990]. 
 
@@ -16,9 +16,9 @@ title: "Week 3: Vector Advanced"
 - Topological relations can be used to subset or join spatial data
 - For example:
   - Subsetting: *Return all rivers that flow through the canton of Zurich*
-  - Joining: *For each of the following Cinemas, what is the nearest train station?*
+  - Joining: *For every train station, give me the name of the municipality it lies within*
 
-### Named topological relations {#sec-named-topological-relations}
+### Named topological relations (I) {#sec-named-topological-relations}
 
 - The most common topological relations are offered as functions / tools in most GIS software
 - In `sf`, the following topological functions are available:
@@ -41,7 +41,7 @@ title: "Week 3: Vector Advanced"
   - `st_touches()` returns `TRUE` if the geometries have at least one point in common, but their interiors do not intersect.
   
 
-### Named topological relations
+### Named topological relations (II)
 
 - Some of the relations mentioned above are symmetrical (the order of the geometries does not matter)
 - For example, if `st_touches(x, y)` is `TRUE`, then `st_touches(y, x)` is also `TRUE`
@@ -88,7 +88,7 @@ tm_shape(playgrounds) + tm_dots(shape = 16, fill = "darkgreen", size = .5)  +
 
 
 
-### Spatial join Example
+### Spatial join Example (I)
 
 - In a spatial join, we want to add information from one dataset to another based on their spatial relationship
 - For example, we can add the name of the *nearest* public transport stop to each playground.
@@ -115,13 +115,13 @@ playgrounds_join
 ```
 
 
-### Spatial join Example (2)
+### Spatial join Example (II)
 
 - In the previous example, `playgrounds_join` has the same features as `playgrounds`, but with an additional column (`CHSTNAME`)
 - The reason for this, is that there is only one *nearest station* for every playground
 - In some joins, the number of rows in the joined dataset can be different from the original dataset
 - For example, if we want to join via the method *within 100m*, the result is different (see below). 
-- This is because there can be multiple public transport stops within 100m of a playground
+- This is because there can be none, or even multiple public transport stops within 100m of a playground
 
 
 ```{r}
@@ -191,7 +191,7 @@ tm_shape(kreise) + tm_polygons("STADTKREIS") + tm_layout(legend.show = FALSE)
 ```
 
 
-### Advanced topological operations
+## Custom topological relations
 
 - In case the named topological relations (see @sec-named-topological-relations) do not covery a specific usecase, we can gain more fine grained control using so called *DE-9IM strings*. 
 - DE-9IM stands for *Dimensionally Extended nine-Intersection Model* and is the formal definition of the topological relations between two geometries
@@ -233,7 +233,7 @@ df |>
 
   
 - In the example in @tbl-de9im
-  - the intersection of both *interiors* results in an area This is denoted as `2`
+  - the intersection of both *interiors* results in an area. This is denoted as `2`
   - the intersection of *interior* with *boundary* results in a line, this is denoted as `1`
   - the intersection of *boundary* with *boundary* results in two points, this is denoted as `0`
 - Once all nine intersections have been regarded and encoded, the result is flattened into a string (with nine characters) which describes the topological relationship precisely
@@ -241,37 +241,108 @@ df |>
 - This concept is especially interesting from the opposite perspective: i.e. we describe the DE-9IM string we are looking for (see next chapter)
 
 
-## DE-9IM spatial predicates
+### Rook's case
 
+- As alluded in the last chapter, the DE-9IM string can help us look for specific relations not covered in the named topological relation
+- Consider a chessboard like situation with 3x3 fields (see @fig-chessboard)
+- From the *origin* field, you might be interested to know all fields that share a full edge (i.e. how a [rook](https://en.wikipedia.org/wiki/Rook_(chess)) would move)
+- This relation is not covered by the named topological relations, so we need to model it using a DE-9IM string
 
-https://r.geocompx.org/spatial-operations#DE-9IM-strings
 
 ```{r}
+#| echo: false
+#| out-width: "80%"
+#| label: fig-chessboard
+#| fig-cap: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an endge with the origin?
 xy2sfc = function(x, y) st_sfc(st_polygon(list(cbind(x, y))))
 x = xy2sfc(x = c(0, 0, 1, 1, 0), y = c(0, 1, 1, 0, 0))
 
 grid = st_make_grid(x, n = 3)
-plot(grid)
+
+grid_dest <- grid[c(1:4, 6:9)]
+grid_orig <- grid[5]
+
+chessplot <- tm_shape(grid_dest) + tm_polygons(fill = "#7fc97f") +
+  tm_shape(grid_orig) + tm_polygons(fill = "#beaed4") +
+  tm_shape((x)) + 
+  tm_dots(shape =tmap_icons("images/rook.png"),size = 1.2) +
+    tm_layout(frame = FALSE) +
+  tm_add_legend(
+    labels = c("Origin","Destination"),
+    fill = c("#beaed4","#7fc97f"),
+    type = "polygons"
+    )
+
+chessplot
+```
+
+
+```{r}
+#| echo: false
+#| output: false
+
+st_write(grid_dest, "data/week4-exercises/chessboard.gpkg","grid_dest", append = FALSE)
+
+st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append = FALSE)
+
+
 ```
 
 
 
+### Modeling the rook's case
+
+
+- To specify our requirement (destination field must share a boundary with the origin) we need to use the 3x3 DE-9IM we discussed in @tbl-de9im
+- The requirement is, that the interiors should *not* intersect (`F`) and the intersection of the boundaries should result in a *line* (`1`). All other intersections to not matter (`*`). This is displayed in @tbl-rook
+
+```{r}
+#| label: tbl-rook
+#| tbl-cap: "The DE-9IM for the *rooks* case. This can be flattend into the string `F***1****`"
+#| echo: false
+
+
+df_rook <- stringr::str_split("F***1****","")[[1]] |> 
+  matrix(ncol = 3, byrow = TRUE,dimnames = list(perspec,perspec)) |> 
+  as.data.frame()
+
+gt(df_rook,rownames_to_stub = TRUE)
+```
+
+
+### Implementation using `st_relate`
+
+- We can now use this string in the function `st_realate` to select fields where the condition is met
+
+
+```{r}
+st_relate(grid_orig,grid_dest, pattern = "F***1****")
+```
+
+We could also create our custom `st_rook` function and use this as we use other named predicates
+
+```{r}
+st_rook <- \(x, y) st_relate(x, y, pattern = "F***1****")
+
+grid_rook <- grid_dest[grid_orig, , op = st_rook] |> 
+  st_sample(1000, type = "hexagonal",by_polygon = TRUE)
+```
+
+
+```{r}
+#| echo: false
+#| out-width: "80%"
+#| label: fig-chessboard-rook
+#| fig-cap: The chessboard situation with the potential fields for the rook highlighted with a red outline
+
+
+chessplot +
+  tm_shape(grid_rook) + tm_dots() +
+  tm_add_legend(
+    labels = c("Rooks case"),
+    type = "dots"
+    )
+```
 
 
 
-## Spatial data operations
-
-see https://r.geocompx.org/spatial-operations#introduction-1
-
-
-
-
-## DuckDB
-
-DuckDB is an in-process SQL OLAP database management system. It is designed to be used as an embedded database in applications, but it can also be used as a standalone SQL database.
-
-- In-process SQL means that DuckDB’s features run in your application, not an external process to which your application connects. In other words: there is no client sending instructions nor a server to read and process them. SQLite works the same way, while PostgreSQL, MySQL…, do not.
-
-- OLAP stands for OnLine Analytical Processing, and Microsoft defines it as a technology that organizes large business databases and supports complex analysis. It can be used to perform complex analytical queries without negatively affecting transactional systems.
-
-DuckDB is a great option if you’re looking for a serverless data analytics database management system.

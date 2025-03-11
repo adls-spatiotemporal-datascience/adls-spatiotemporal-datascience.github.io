@@ -1,0 +1,90 @@
+---
+title: "🚀 Tasks"
+musterloesung: false
+---
+
+
+:::{.callout-important}
+Due date for the tasks is the next lesson
+:::
+
+Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named `index.qmd`.
+
+## Task 4.1
+
+Without consulting external help, try and specify the DE-9IM string for the queen and bishop's case as shown in @fig-chessboard-2. 
+
+Concentrate on the boundary-boundary intersection. Note:
+   - No intersection: `F`
+   - Point intersection: `0`
+   - Line intersetion: `1`
+   - Any intersection: `*`
+  
+The 3x3 "chessboard" is available on moodle.
+
+
+```{r}
+#| echo: false
+#| out-width: "80%"
+#| label: fig-chessboard-2
+#| fig-cap: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals
+#| fig-subcap: 
+#|   - King's case (all fields)
+#|   - Bishop's case (diagonal fields)
+#| layout-nrow: 1
+
+
+library(sf)
+library(tmap)
+
+
+xy2sfc = function(x, y) st_sfc(st_polygon(list(cbind(x, y))))
+x = xy2sfc(x = c(0, 0, 1, 1, 0), y = c(0, 1, 1, 0, 0))
+
+grid = st_make_grid(x, n = 3)
+
+grid_dest <- grid[c(1:4, 6:9)]
+grid_orig <- grid[5]
+
+
+st_king <- \(x, y) st_relate(x, y, pattern = "F***T****")
+
+grid_king <- grid_dest[grid_orig, , op = st_king] |> 
+  st_sample(1000, type = "hexagonal",by_polygon = TRUE)
+  
+
+st_bishop <- \(x, y) st_relate(x, y, pattern = "F***0****")
+
+grid_bishop <- grid_dest[grid_orig, , op = st_bishop] |> 
+  st_sample(1000, type = "hexagonal",by_polygon = TRUE)
+
+
+
+chessplot <- tm_shape(grid_dest) + tm_polygons(fill = "#7fc97f") +
+  tm_shape(grid_orig) + tm_polygons(fill = "#beaed4") +
+  tm_shape((x)) + 
+    tm_layout(frame = FALSE)
+
+
+
+chessplot +
+  tm_dots(shape =tmap_icons("images/chess/king.png"),size = 1.2) +
+  tm_shape(grid_king) + tm_dots()
+
+chessplot +
+  tm_dots(shape =tmap_icons("images/chess/bishop.png"),size = 1.2) +
+  tm_shape(grid_bishop) + tm_dots()
+
+
+```
+
+
+# Task 4.2
+
+We have prepared a duckdb database on moodle (`wald-kantone.duckdb`). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D. 
+
+Use this dataset and with the help of @sec-duckdb-practice, recreate @sec-vec-basic and measure the execution time using the R package [`tictoc`](http://jabiru.github.io/tictoc/). 
+
+Compare the execution times of all three approaches (@sec-vec-basic, @sec-task-rast-basic and the duckdb approach). Which approach is fastest?
+  
+

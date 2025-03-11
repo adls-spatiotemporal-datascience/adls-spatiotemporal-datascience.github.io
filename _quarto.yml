@@ -23,13 +23,17 @@ book:
       - week-1-spatial-operations.qmd
       - week-1-task.qmd
     - week-2.qmd
-    # - part: "Week 2: Raster Recap"
-    #   chapters:
-    #   - week-3-raster-io.qmd
-    #   - week-3-raster-operations.qmd
-    #   - week-3-raster-vector-operations.qmd
-    #   - week-3-task.qmd
-    # - week-4.qmd
+    - part: "Week 3: Raster Recap"
+      chapters:
+      - week-3-raster-io.qmd
+      - week-3-raster-operations.qmd
+      - week-3-raster-vector-operations.qmd
+      - week-3-task.qmd
+    - part: "Week 4: Vector Advanced"
+      chapters:
+      - week-4-topological-rel.qmd
+      - week-4-duckdb.qmd
+      - week-4-task.qmd
     - references.qmd
 
 

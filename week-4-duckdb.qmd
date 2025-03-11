@@ -1,0 +1,289 @@
+---
+title: "DuckDB"
+---
+
+- DuckDB is a relatively new, open-source, column-oriented relational database management system (RDBMS)
+- It is designed to provide high performance on complex queries against large databases in embedded configuration
+- It has a flexible [extension](https://duckdb.org/docs/stable/extensions/overview) mechanism consisting of *core* and *community* extensions
+- [spatial](https://duckdb.org/docs/stable/extensions/spatial/overview.html) is a core extension
+- DuckDB is a *OLAP*, *in process* RDBMS (see below)
+
+<!-- todo: add https://youtu.be/Z-6SnP6yzgo?si=qWkNw2fw1cq6IgGF -->
+
+## OLAP vs. OLTP
+
+- OLAP:
+  - Read-mostly workloads
+  - Complex queries
+  - read large parts of the data
+  - bulk appends / updates
+- OLTP:
+  - Many samll writes and updates
+  - simple queries
+  - read only individual rows
+
+
+## In process vs. standalone
+
+- DuckDB is an *in process* database management system, it is not an external process to which your application connects. 
+- In other words: there is no client sending instructions nor a server to read and process them
+- SQLite works the same way, while PostgreSQL, MySQL etc. do not
+
+
+```{r}
+#| echo: false
+#| label: tbl-duckdb
+#| tbl-cap: DuckDB fills a niche that no previous software has filled yet
+
+library(gt)
+
+df2 <- c("sqlite","duckdb","postgres","clickhouse") |> 
+  (\(x)file.path("images","logos",paste0(x, ".png")))() |> 
+  matrix(ncol = 2, byrow = TRUE, dimnames = list(c("In-Process","Stand-Alone"),c("OLTP","OLAP"))) |> 
+  data.frame()
+  
+df2 |> 
+  gt(rownames_to_stub = TRUE) |> 
+  fmt_image(columns = c(OLTP, OLAP),width = "30%") 
+
+```
+
+
+## Duckdb in practice {#sec-duckdb-practice}
+
+
+We have prepared a duckdb database (available on moodle) with the data containing the forest in switzerland and the canton boundaries. Download this dataset (`wald-kantone.duckdb` ) from moodle.
+
+## Install duckdb
+
+- Install the [duckdb CLI](duckdb.org/docs/installation/?version=stable&environment=cli) and [duckdb R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
+
+- Install the [dbeaver Community Version](https://dbeaver.io/download/)
+
+
+### Connect
+
+Using *dbeaver*, connect to the duckdb database
+
+
+Install and load the spatial extension running the following query:
+   
+```{.sql}
+INSTALL spatial;
+LOAD spatial;
+```
+   
+Check if you can see both tables stored in the database using the command:
+
+```{.sql}
+SHOW TABLES;
+```
+
+Explore the tables using the basic SQL syntax:
+
+
+```{.sql}
+SELECT * FROM wald;
+SELECT * FROM kantone;
+```
+
+Before we proceed, create an R-Tree spatial index for both tables using the following syntax:
+
+```{.sql}
+CREATE INDEX kantone_idx ON kantone USING RTREE (geom);
+CREATE INDEX wald_idx ON wald USING RTREE (geom);
+```
+
+### SQL `VIEW`
+
+Now, we would like to recreate @sec-vec-basic using SQL. To facilitate this, we are going to make extensive use of `VIEW`s. But what is a `VIEW`? [geeksforgeeks.org](https://www.geeksforgeeks.org/sql-views/) explains it like this:
+
+> Views in SQL are a type of virtual table that simplifies how users interact with data across one or more tables. Unlike traditional tables, a view in SQL does not store data on disk; instead, it dynamically retrieves data based on a pre-defined query each time it’s accessed. 
+
+
+In other words, you store a SQL statement with a specific name. This helps us create very complex queries in a concatenated manner (rather than nesting). We *could* also simply create materialized tables as intermediate results. But not only does this increase the size of our database with duplicate data, the intermediate results do not update when something in our source changes.
+
+Our first `VIEW` will be a subset of the forest dataset, so that the execution time in the iterative phase is shorter:
+
+To create a subset of our forest dataset, we limit the results to 1'000 rows:
+
+```{.sql}
+SELECT * FROM wald LIMIT 1000; 
+```
+
+To store this as a view, all we need to do is prepend `CREATE VIEW somename AS` to our query:
+
+```{.sql}
+CREATE VIEW wald2 AS            -- <1>
+SELECT * FROM wald LIMIT 1000;  -- <2>
+```
+
+1. This creates a `VIEW` from...
+2. ... the preceeding `SELECT` statement
+
+We can now call the `VIEW` above with the following query:
+
+```{.sql}
+SELECT * FROM wald2; 
+```
+
+
+### Develop SQL Code
+
+The following SQL statement gets the intersection of forest and kantone (@sec-vec-basic).
+
+
+```{.sql}
+SELECT 
+  name, 
+  st_intersection(w.geom, k.geom),  -- <2>
+FROM wald2 w, kantone k;            -- <1>
+```
+
+1. `w` and `k` are aliases...
+2. ... used in the intersection
+
+
+However, we can optimize this query with a `WHERE` clause:
+
+```{.sql}
+SELECT 
+  name, 
+  st_intersection(w.geom, k.geom),
+FROM wald2 w, kantone k
+WHERE st_intersects(w.geom, k.geom); -- <1>
+```
+
+1. This `WHERE` clause reduces execution time
+
+We are actually interested in the area of the intersection and the total area of the canton. We can get this information like so:
+
+
+```{.sql}
+SELECT 
+  name, 
+  st_area(st_intersection(w.geom, k.geom)) as wald_area, -- <1>
+FROM wald2 w, kantone k
+WHERE st_intersects(w.geom, k.geom);
+```
+
+1. `st_area` calculates the are of the intersection
+
+The next step is to aggregate the area per canton. Before we do this, let's save this query as a `VIEW`.
+
+
+
+```{.sql}
+CREATE VIEW wald_kantone AS            -- <1>
+SELECT 
+  name, 
+  st_area(st_intersection(w.geom, k.geom)) as wald_area,
+FROM wald2 w, kantone k
+WHERE st_intersects(w.geom, k.geom);
+```
+
+1. This creates a `VIEW` from the proceeding query
+
+
+We can now query this `VIEW` as if it was a table:
+
+```{.sql}
+SELECT * FROM wald_kantone; 
+```
+
+To calculate the total aggregated area per canton, we can use the `GROUP BY` function:
+
+```{.sql}
+SELECT 
+  name,                         -- <3>
+  sum(wald_area) as wald_area   -- <2>
+FROM wald_kantone
+GROUP BY name;                  -- <1>
+``` 
+
+1. If we use `GROUP BY` in a SQL query..
+2. ... we need to wrap all columns with aggregate function...
+3. ... except for the columns that we use for grouping
+
+Let's create a view of this as well:
+
+```{.sql}
+CREATE VIEW wald_kanton_grp AS
+SELECT 
+  name, 
+  sum(wald_area) as wald_area
+FROM wald_kantone
+GROUP BY name;
+``` 
+
+Finally, we have to join `wald_kanton_grp` with `kantone` to get the information of the total size per canton.
+
+```{.sql}
+SELECT 
+	kantone.name,                          -- <3>
+	wald_area/area as waldanteil,          -- <4>
+FROM wald_kanton_grp 
+LEFT JOIN kantone                        -- <1>
+ON wald_kanton_grp.name=kantone.name;    -- <2>
+```
+
+1. TO do a join, append the `JOIN` method after the select statement...
+2. ... providing the column names on which to Join on 
+3. In the resulting table, we only need the canton name...
+4. ... and the fraction `wald_area` over `area` (total area of canton)
+
+
+
+This, we can save in a `VIEW` as well:
+
+```{.sql}
+CREATE VIEW kanton_frac AS
+SELECT 
+	kantone.name,                 
+	wald_area/area as waldanteil, 
+FROM wald_kanton_grp 
+LEFT JOIN kantone 
+ON wald_kanton_grp.name=kantone.name
+ORDER BY waldanteil DESC;           -- <1>
+```
+
+1. We can `ORDER BY` to show us the highest values first
+
+Till now, we only worked with the first 1'000 features of our forest dataset, so the results are incorrect. Since we worked with `VIEW`, it very straightforward to run our analysis on the full dataset. We simply need to replace the `VIEW wald2` with the full version of the dataset, (omitting the `LIMIT` clause).
+
+We can't simply use `CREATE VIEW wald2` since `wald2` already exists. We therefore need to use `CREATE OR REPLACE VIEW`:
+
+
+```{.sql}
+
+CREATE OR REPLACE VIEW wald2
+AS
+SELECT * FROM wald;
+```
+
+Now we can call `kanton_frac` again, and we will get a query on the full dataset, since all intermediate `VIEW`s are updated automatically. 
+
+This method has the downside that now full query takes a while to process (since no intermediate datasets are materialized). 
+
+```{.sql}
+SELECT * FROM kanton_frac;
+```
+
+## Import results into R
+
+To import the data into R (e.g. to create a visualization), we can simply connect to the database and
+
+```{r}
+#| eval: false
+library(duckdb)
+
+con <- dbConnect(
+  duckdb(),
+  dbdir = "data/week4-exercises/wald-kantone.duckdb",
+  read_only = TRUE
+)
+
+dbExecute(con, "LOAD spatial;")
+kanton_frac <- dbReadTable(con, "kanton_frac")
+```
+

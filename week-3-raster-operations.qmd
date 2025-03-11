@@ -318,6 +318,7 @@ tm_shape(L) + tm_raster(style = "cont", palette = grey.colors(255)) +
 - A focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell
 
 
+
 :::{#fig-focal}
 
 ![](images/focal.png)
@@ -409,6 +410,7 @@ laplacian
 So are the [sobel filters](https://en.wikipedia.org/wiki/Sobel_operator)
 
 ```{r}
+#| echo: true
 
 sobel_x <- matrix(c(-1,-2,-1,0,0,0,1,2,1), nrow=3)
 
@@ -426,7 +428,7 @@ sobel_y
 #| fig-cap: 
 #|   - Laplacian Filter
 #|   - Sobel (x-direction)
-#|   - SObel (y-direction)
+#|   - Sobel (y-direction)
 #| column: page
 #| layout-nrow: 1
 focal(r, laplacian) |> plot()
@@ -449,7 +451,7 @@ focal(r, sobel_y) |> plot()
 # Note 
 # - "d" is evaluated in the units of "x" (in our case: meters)
 # - The sum of all weights equals to 1
-# - Note how the edges receive a value of 0
+# - Note how the corners receive a value of 0
 focal_circle3000 <- focalMat(x = r, d = 3000, "circle")
 
 focal_circle3000

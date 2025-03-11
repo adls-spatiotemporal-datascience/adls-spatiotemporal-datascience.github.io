@@ -3,9 +3,11 @@ title: "🚀 Tasks"
 musterloesung: false
 ---
 
+:::{.callout-important}
 Due date for the tasks is the next lesson (week 2).
+:::
 
-## Task 1
+## Task 1.1 {#sec-gh-pages}
 
 
 
@@ -41,7 +43,7 @@ In this document, I solve the tasks for week 1 of the course
 
 
 
-## Task 2 {#sec-gh-pages}
+## Task 1.2 {#sec-vec-basic}
 
 1. Download the datasets [swissTLM3D](https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d) and [swissboundaries3d](https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d) from swisstopo.
 2. Add the datasets to the local folder you created above, in a subfolder named `data`

@@ -46,6 +46,7 @@ zones <- read_sf("data/week3-exercises/Luxembourg_-_Municipalities.shp") |>
 ```{r}
 #| echo: true
 
+zones
 
 mean_vals <- zonal(r, vect(zones), fun = mean, na.rm = TRUE)
 
@@ -63,12 +64,11 @@ zones$mean <- mean_vals$elevation
 #|   - The original zones as vector polygons
 #|   - The resulting zones (mean elevation per zone), also as vector data
 
-p + tm_shape(r) + tm_raster()
+tm_shape(r) + tm_raster()
 
 
 
-p + 
-  tm_shape(zones, is.master = TRUE) +
+tm_shape(zones, is.master = TRUE) +
   tm_polygons(col = "zone") +
   tm_text("zone") +
   tm_layout(legend.show = FALSE)
@@ -100,7 +100,7 @@ luxembourg_city <- st_point(c(6.131944,49.611667)) |>
 ```
 
 ```{r}
-p + tm_shape(r) + tm_raster() + tm_shape(luxembourg_city) + tm_dots() + tm_text("text",ymod = .9, xmod = .9)
+tm_shape(r) + tm_raster() + tm_shape(luxembourg_city) + tm_dots() + tm_text("text",ymod = .9, xmod = .9)
 ```
 
 
@@ -143,10 +143,10 @@ zones_raster <- rasterize(zones, template, "zone")
 #| column: page
 
 
-p + tm_shape(zones) + 
+tm_shape(zones) + 
   tm_polygons(col = "zone")
 
-p + tm_shape(zones_raster) + 
+tm_shape(zones_raster) + 
   tm_raster()
 ```
 
@@ -179,10 +179,10 @@ zones_poly <- as.polygons(zones_raster) |>
 #| layout-nrow: 1
 #| column: page
 
-p + tm_shape(zones_raster) + 
+tm_shape(zones_raster) + 
   tm_raster()
 
-p + tm_shape(zones_poly) + 
+tm_shape(zones_poly) + 
   tm_polygons(fill = "zone")
 ```
 
