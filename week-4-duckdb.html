@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -252,11 +286,16 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#duckdb" id="toc-duckdb" class="nav-link active" data-scroll-target="#duckdb">DuckDB</a>
-  <ul class="collapse">
-  <li><a href="#olap-vs.-oltp" id="toc-olap-vs.-oltp" class="nav-link" data-scroll-target="#olap-vs.-oltp">OLAP vs.&nbsp;OLTP</a></li>
+  <li><a href="#olap-vs.-oltp" id="toc-olap-vs.-oltp" class="nav-link active" data-scroll-target="#olap-vs.-oltp">OLAP vs.&nbsp;OLTP</a></li>
   <li><a href="#in-process-vs.-standalone" id="toc-in-process-vs.-standalone" class="nav-link" data-scroll-target="#in-process-vs.-standalone">In process vs.&nbsp;standalone</a></li>
+  <li><a href="#sec-duckdb-practice" id="toc-sec-duckdb-practice" class="nav-link" data-scroll-target="#sec-duckdb-practice">Duckdb in practice</a></li>
+  <li><a href="#install-duckdb" id="toc-install-duckdb" class="nav-link" data-scroll-target="#install-duckdb">Install duckdb</a>
+  <ul class="collapse">
+  <li><a href="#connect" id="toc-connect" class="nav-link" data-scroll-target="#connect">Connect</a></li>
+  <li><a href="#sql-view" id="toc-sql-view" class="nav-link" data-scroll-target="#sql-view">SQL <code>VIEW</code></a></li>
+  <li><a href="#develop-sql-code" id="toc-develop-sql-code" class="nav-link" data-scroll-target="#develop-sql-code">Develop SQL Code</a></li>
   </ul></li>
+  <li><a href="#import-results-into-r" id="toc-import-results-into-r" class="nav-link" data-scroll-target="#import-results-into-r">Import results into R</a></li>
   </ul>
 </nav>
     </div>
@@ -282,8 +321,6 @@ window.onload = function() {
 </header>
 
 
-<section id="duckdb" class="level2">
-<h2 class="anchored" data-anchor-id="duckdb">DuckDB</h2>
 <ul>
 <li>DuckDB is a relatively new, open-source, column-oriented relational database management system (RDBMS)</li>
 <li>It is designed to provide high performance on complex queries against large databases in embedded configuration</li>
@@ -292,8 +329,8 @@ window.onload = function() {
 <li>DuckDB is a <em>OLAP</em>, <em>in process</em> RDBMS (see below)</li>
 </ul>
 <!-- todo: add https://youtu.be/Z-6SnP6yzgo?si=qWkNw2fw1cq6IgGF -->
-<section id="olap-vs.-oltp" class="level3">
-<h3 class="anchored" data-anchor-id="olap-vs.-oltp">OLAP vs.&nbsp;OLTP</h3>
+<section id="olap-vs.-oltp" class="level2">
+<h2 class="anchored" data-anchor-id="olap-vs.-oltp">OLAP vs.&nbsp;OLTP</h2>
 <ul>
 <li>OLAP:
 <ul>
@@ -310,8 +347,8 @@ window.onload = function() {
 </ul></li>
 </ul>
 </section>
-<section id="in-process-vs.-standalone" class="level3">
-<h3 class="anchored" data-anchor-id="in-process-vs.-standalone">In process vs.&nbsp;standalone</h3>
+<section id="in-process-vs.-standalone" class="level2">
+<h2 class="anchored" data-anchor-id="in-process-vs.-standalone">In process vs.&nbsp;standalone</h2>
 <ul>
 <li>DuckDB is an <em>in process</em> database management system, it is not an external process to which your application connects.</li>
 <li>In other words: there is no client sending instructions nor a server to read and process them</li>
@@ -325,23 +362,23 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
 </figcaption>
 <div aria-describedby="tbl-duckdb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="wtxsmmqopg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wtxsmmqopg table {
+<div id="izdyuodtrx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#izdyuodtrx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wtxsmmqopg thead, #wtxsmmqopg tbody, #wtxsmmqopg tfoot, #wtxsmmqopg tr, #wtxsmmqopg td, #wtxsmmqopg th {
+#izdyuodtrx thead, #izdyuodtrx tbody, #izdyuodtrx tfoot, #izdyuodtrx tr, #izdyuodtrx td, #izdyuodtrx th {
   border-style: none;
 }
 
-#wtxsmmqopg p {
+#izdyuodtrx p {
   margin: 0;
   padding: 0;
 }
 
-#wtxsmmqopg .gt_table {
+#izdyuodtrx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -367,12 +404,12 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-left-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_caption {
+#izdyuodtrx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wtxsmmqopg .gt_title {
+#izdyuodtrx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -384,7 +421,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-width: 0;
 }
 
-#wtxsmmqopg .gt_subtitle {
+#izdyuodtrx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -396,7 +433,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-top-width: 0;
 }
 
-#wtxsmmqopg .gt_heading {
+#izdyuodtrx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -408,13 +445,13 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_bottom_border {
+#izdyuodtrx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_col_headings {
+#izdyuodtrx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -429,7 +466,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_col_heading {
+#izdyuodtrx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -449,7 +486,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   overflow-x: hidden;
 }
 
-#wtxsmmqopg .gt_column_spanner_outer {
+#izdyuodtrx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -461,15 +498,15 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 4px;
 }
 
-#wtxsmmqopg .gt_column_spanner_outer:first-child {
+#izdyuodtrx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wtxsmmqopg .gt_column_spanner_outer:last-child {
+#izdyuodtrx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wtxsmmqopg .gt_column_spanner {
+#izdyuodtrx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -481,11 +518,11 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   width: 100%;
 }
 
-#wtxsmmqopg .gt_spanner_row {
+#izdyuodtrx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wtxsmmqopg .gt_group_heading {
+#izdyuodtrx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -511,7 +548,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   text-align: left;
 }
 
-#wtxsmmqopg .gt_empty_group_heading {
+#izdyuodtrx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -526,15 +563,15 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   vertical-align: middle;
 }
 
-#wtxsmmqopg .gt_from_md > :first-child {
+#izdyuodtrx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wtxsmmqopg .gt_from_md > :last-child {
+#izdyuodtrx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wtxsmmqopg .gt_row {
+#izdyuodtrx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -553,7 +590,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   overflow-x: hidden;
 }
 
-#wtxsmmqopg .gt_stub {
+#izdyuodtrx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -566,7 +603,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#wtxsmmqopg .gt_stub_row_group {
+#izdyuodtrx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -580,15 +617,15 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   vertical-align: top;
 }
 
-#wtxsmmqopg .gt_row_group_first td {
+#izdyuodtrx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wtxsmmqopg .gt_row_group_first th {
+#izdyuodtrx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wtxsmmqopg .gt_summary_row {
+#izdyuodtrx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -598,16 +635,16 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#wtxsmmqopg .gt_first_summary_row {
+#izdyuodtrx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_first_summary_row.thick {
+#izdyuodtrx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wtxsmmqopg .gt_last_summary_row {
+#izdyuodtrx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -617,7 +654,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_grand_summary_row {
+#izdyuodtrx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -627,7 +664,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#wtxsmmqopg .gt_first_grand_summary_row {
+#izdyuodtrx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -637,7 +674,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-top-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_last_grand_summary_row_top {
+#izdyuodtrx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -647,11 +684,11 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_striped {
+#izdyuodtrx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wtxsmmqopg .gt_table_body {
+#izdyuodtrx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -660,7 +697,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_footnotes {
+#izdyuodtrx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -674,7 +711,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_footnote {
+#izdyuodtrx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -683,7 +720,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#wtxsmmqopg .gt_sourcenotes {
+#izdyuodtrx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -697,7 +734,7 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#wtxsmmqopg .gt_sourcenote {
+#izdyuodtrx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -705,72 +742,72 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#wtxsmmqopg .gt_left {
+#izdyuodtrx .gt_left {
   text-align: left;
 }
 
-#wtxsmmqopg .gt_center {
+#izdyuodtrx .gt_center {
   text-align: center;
 }
 
-#wtxsmmqopg .gt_right {
+#izdyuodtrx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wtxsmmqopg .gt_font_normal {
+#izdyuodtrx .gt_font_normal {
   font-weight: normal;
 }
 
-#wtxsmmqopg .gt_font_bold {
+#izdyuodtrx .gt_font_bold {
   font-weight: bold;
 }
 
-#wtxsmmqopg .gt_font_italic {
+#izdyuodtrx .gt_font_italic {
   font-style: italic;
 }
 
-#wtxsmmqopg .gt_super {
+#izdyuodtrx .gt_super {
   font-size: 65%;
 }
 
-#wtxsmmqopg .gt_footnote_marks {
+#izdyuodtrx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wtxsmmqopg .gt_asterisk {
+#izdyuodtrx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wtxsmmqopg .gt_indent_1 {
+#izdyuodtrx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wtxsmmqopg .gt_indent_2 {
+#izdyuodtrx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wtxsmmqopg .gt_indent_3 {
+#izdyuodtrx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wtxsmmqopg .gt_indent_4 {
+#izdyuodtrx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wtxsmmqopg .gt_indent_5 {
+#izdyuodtrx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wtxsmmqopg .katex-display {
+#izdyuodtrx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wtxsmmqopg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#izdyuodtrx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -803,9 +840,209 @@ Table&nbsp;11.1: DuckDB fills a niche that no previous software has filled yet
 </figure>
 </div>
 </div>
-
-
 </section>
+<section id="sec-duckdb-practice" class="level2">
+<h2 class="anchored" data-anchor-id="sec-duckdb-practice">Duckdb in practice</h2>
+<p>We have prepared a duckdb database (available on moodle) with the data containing the forest in switzerland and the canton boundaries. Download this dataset (<code>wald-kantone.duckdb</code> ) from moodle.</p>
+</section>
+<section id="install-duckdb" class="level2">
+<h2 class="anchored" data-anchor-id="install-duckdb">Install duckdb</h2>
+<ul>
+<li><p>Install the <a href="duckdb.org/docs/installation/?version=stable&amp;environment=cli">duckdb CLI</a> and <a href="https://duckdb.org/docs/installation/?version=stable&amp;environment=r">duckdb R package</a></p></li>
+<li><p>Install the <a href="https://dbeaver.io/download/">dbeaver Community Version</a></p></li>
+</ul>
+<section id="connect" class="level3">
+<h3 class="anchored" data-anchor-id="connect">Connect</h3>
+<p>Using <em>dbeaver</em>, connect to the duckdb database</p>
+<p>Install and load the spatial extension running the following query:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>INSTALL spatial;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>LOAD spatial;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check if you can see both tables stored in the database using the command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explore the tables using the basic SQL syntax:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kantone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Before we proceed, create an R-Tree spatial index for both tables using the following syntax:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> kantone_idx <span class="kw">ON</span> kantone <span class="kw">USING</span> RTREE (geom);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> wald_idx <span class="kw">ON</span> wald <span class="kw">USING</span> RTREE (geom);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sql-view" class="level3">
+<h3 class="anchored" data-anchor-id="sql-view">SQL <code>VIEW</code></h3>
+<p>Now, we would like to recreate <a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a> using SQL. To facilitate this, we are going to make extensive use of <code>VIEW</code>s. But what is a <code>VIEW</code>? <a href="https://www.geeksforgeeks.org/sql-views/">geeksforgeeks.org</a> explains it like this:</p>
+<blockquote class="blockquote">
+<p>Views in SQL are a type of virtual table that simplifies how users interact with data across one or more tables. Unlike traditional tables, a view in SQL does not store data on disk; instead, it dynamically retrieves data based on a pre-defined query each time it’s accessed.</p>
+</blockquote>
+<p>In other words, you store a SQL statement with a specific name. This helps us create very complex queries in a concatenated manner (rather than nesting). We <em>could</em> also simply create materialized tables as intermediate results. But not only does this increase the size of our database with duplicate data, the intermediate results do not update when something in our source changes.</p>
+<p>Our first <code>VIEW</code> will be a subset of the forest dataset, so that the execution time in the iterative phase is shorter:</p>
+<p>To create a subset of our forest dataset, we limit the results to 1’000 rows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald <span class="kw">LIMIT</span> <span class="dv">1000</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To store this as a view, all we need to do is prepend <code>CREATE VIEW somename AS</code> to our query:</p>
+<div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald2 <span class="kw">AS</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald <span class="kw">LIMIT</span> <span class="dv">1000</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="1">This creates a <code>VIEW</code> from…</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">… the preceeding <code>SELECT</code> statement</span>
+</dd>
+</dl>
+<p>We can now call the <code>VIEW</code> above with the following query:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald2; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="develop-sql-code" class="level3">
+<h3 class="anchored" data-anchor-id="develop-sql-code">Develop SQL Code</h3>
+<p>The following SQL statement gets the intersection of forest and kantone (<a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a>).</p>
+<div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  st_intersection(w.geom, k.geom),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="4" data-code-annotation="1"><code>w</code> and <code>k</code> are aliases…</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="2">… used in the intersection</span>
+</dd>
+</dl>
+<p>However, we can optimize this query with a <code>WHERE</code> clause:</p>
+<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  st_intersection(w.geom, k.geom),</span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="5" data-code-annotation="1">This <code>WHERE</code> clause reduces execution time</span>
+</dd>
+</dl>
+<p>We are actually interested in the area of the intersection and the total area of the canton. We can get this information like so:</p>
+<div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">as</span> wald_area,</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="1"><code>st_area</code> calculates the are of the intersection</span>
+</dd>
+</dl>
+<p>The next step is to aggregate the area per canton. Before we do this, let’s save this query as a <code>VIEW</code>.</p>
+<div class="sourceCode" id="annotated-cell-11"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-1" class="code-annotation-target"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kantone <span class="kw">AS</span></span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">as</span> wald_area,</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="1" data-code-annotation="1">This creates a <code>VIEW</code> from the proceeding query</span>
+</dd>
+</dl>
+<p>We can now query this <code>VIEW</code> as if it was a table:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald_kantone; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To calculate the total aggregated area per canton, we can use the <code>GROUP BY</code> function:</p>
+<div class="sourceCode" id="annotated-cell-13"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  name,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kantone</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-5" class="code-annotation-target"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="5" data-code-annotation="1">If we use <code>GROUP BY</code> in a SQL query..</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="2">… we need to wrap all columns with aggregate function…</span>
+</dd>
+<dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="2" data-code-annotation="3">… except for the columns that we use for grouping</span>
+</dd>
+</dl>
+<p>Let’s create a view of this as well:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kanton_grp <span class="kw">AS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kantone</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we have to join <code>wald_kanton_grp</code> with <code>kantone</code> to get the information of the total size per canton.</p>
+<div class="sourceCode" id="annotated-cell-15"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>    kantone.name,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil,</span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kanton_grp </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-5" class="code-annotation-target"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-6" class="code-annotation-target"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="5" data-code-annotation="1">TO do a join, append the <code>JOIN</code> method after the select statement…</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="6" data-code-annotation="2">… providing the column names on which to Join on</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="3">In the resulting table, we only need the canton name…</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="3" data-code-annotation="4">… and the fraction <code>wald_area</code> over <code>area</code> (total area of canton)</span>
+</dd>
+</dl>
+<p>This, we can save in a <code>VIEW</code> as well:</p>
+<div class="sourceCode" id="annotated-cell-16"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> kanton_frac <span class="kw">AS</span></span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    kantone.name,                 </span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil, </span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kanton_grp </span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone </span>
+<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-16-8" class="code-annotation-target"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> waldanteil <span class="kw">DESC</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="8" data-code-annotation="1">We can <code>ORDER BY</code> to show us the highest values first</span>
+</dd>
+</dl>
+<p>Till now, we only worked with the first 1’000 features of our forest dataset, so the results are incorrect. Since we worked with <code>VIEW</code>, it very straightforward to run our analysis on the full dataset. We simply need to replace the <code>VIEW wald2</code> with the full version of the dataset, (omitting the <code>LIMIT</code> clause).</p>
+<p>We can’t simply use <code>CREATE VIEW wald2</code> since <code>wald2</code> already exists. We therefore need to use <code>CREATE OR REPLACE VIEW</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> wald2</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">AS</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can call <code>kanton_frac</code> again, and we will get a query on the full dataset, since all intermediate <code>VIEW</code>s are updated automatically.</p>
+<p>This method has the downside that now full query takes a while to process (since no intermediate datasets are materialized).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kanton_frac;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="import-results-into-r" class="level2">
+<h2 class="anchored" data-anchor-id="import-results-into-r">Import results into R</h2>
+<p>To import the data into R (e.g.&nbsp;to create a visualization), we can simply connect to the database and</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">duckdb</span>(),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbdir =</span> <span class="st">"data/week4-exercises/wald-kantone.duckdb"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">read_only =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dbExecute</span>(con, <span class="st">"LOAD spatial;"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>kanton_frac <span class="ot">&lt;-</span> <span class="fu">dbReadTable</span>(con, <span class="st">"kanton_frac"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

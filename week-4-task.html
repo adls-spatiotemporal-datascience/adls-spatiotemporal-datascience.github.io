@@ -295,15 +295,9 @@ Important
 <p>Follow the instructions in <a href="week-1-task.html#sec-gh-pages" class="quarto-xref"><span>Task 1.1</span></a> from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named <code>index.qmd</code>.</p>
 <section id="task-4.1" class="level2">
 <h2 class="anchored" data-anchor-id="task-4.1">Task 4.1</h2>
-<ol type="1">
-<li>Without consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in <a href="#fig-chessboard-2" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. Note: concentrate on the boundary-boundary intersection. Note:
-<ul>
-<li>No intersection: <code>F</code></li>
-<li>Point intersection: <code>0</code></li>
-<li>Line intersetion: <code>1</code></li>
-<li>Any intersection: <code>*</code></li>
-</ul></li>
-</ol>
+<p>Without consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in <a href="#fig-chessboard-2" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>.</p>
+<p>Concentrate on the boundary-boundary intersection. Note: - No intersection: <code>F</code> - Point intersection: <code>0</code> - Line intersetion: <code>1</code> - Any intersection: <code>*</code></p>
+<p>The 3x3 “chessboard” is available on moodle.</p>
 <div class="cell" data-layout-nrow="1">
 <div id="fig-chessboard-2" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -344,11 +338,9 @@ Figure&nbsp;12.1: Different cases for chess piece movements. The King can move i
 </section>
 <section id="task-4.2" class="level1">
 <h1>Task 4.2</h1>
-<ol type="1">
-<li>Redo <a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a>. However, use <strong>duckdb</strong> with the SQL syntax.</li>
-<li>Using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>, measure the execute time of each step in the process.</li>
-<li>Compare the execution times of all three approaches (<a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a>, <a href="week-3-task.html#sec-task-rast-basic" class="quarto-xref"><span>Task 3.1</span></a> and the duckdb approach). Which approach is fastest?</li>
-</ol>
+<p>We have prepared a duckdb database on moodle (<code>wald-kantone.duckdb</code>). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D.</p>
+<p>Use this dataset and with the help of <a href="week-4-duckdb.html#sec-duckdb-practice" class="quarto-xref"><span>Duckdb in practice</span></a>, recreate <a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a> and measure the execution time using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>.</p>
+<p>Compare the execution times of all three approaches (<a href="week-1-task.html#sec-vec-basic" class="quarto-xref"><span>Task 1.2</span></a>, <a href="week-3-task.html#sec-task-rast-basic" class="quarto-xref"><span>Task 3.1</span></a> and the duckdb approach). Which approach is fastest?</p>
 
 
 </section>
