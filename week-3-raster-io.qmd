@@ -1,6 +1,6 @@
 
 
-# Raster Data I/O
+# Raster Data I/O {#sec-raster-data-io}
 
 - In R, several libraries are available to work with raster data
   - `{raster}` by Robert Hijmans. This library is not maintained anymore

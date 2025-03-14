@@ -1,0 +1,226 @@
+---
+title: "GDAL"
+engine: knitr
+---
+
+
+- As mentioned in @sec-gdal-ogr2ogr, GDAL is the basis for most GIS Software
+- Rather than using GDAL through R or Python, we can use the GDAL CLI tool instead
+- GDAL is a software suite containing several so called [Raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
+- These are especially useful if you need faster data processing, e.g. if you have large raster files or a lot of small ones
+- You can install GDAL [using conda](https://gdal.org/en/stable/download.html#conda)
+
+
+
+## GDALInfo
+
+- The simplest program in GDAL is probabbly `gdalinfo`
+- It lists information about a raster dataset.
+- The simplest command to test if a CLI tool is working, is to get the version number using `--version `:
+
+
+
+```{bash}
+gdalinfo --version
+```
+
+
+
+### Get help
+
+- All named arguments to `gdalinfo` are listed with `[-argument]`
+- Some arguments need parameters: 
+  - For example: `-if` stands for *input format*
+  - `if Gtiff` specifies that the input is a `GeoTIFF`
+  - This allows you to be explicit about your input format, rather than GDAL guessing it from the file extension
+  - These inputs are denoted with `<>` (i.e. `[-if <format>]`)
+- Positional arguments do not have square brackets
+- A positional argument needs to be in a specific position
+- `gdalinfo` only has one position argument: `<dataset_name>`
+
+
+```{bash}
+gdalinfo --help
+```
+
+
+
+### Get basic Information
+
+
+
+
+```{bash}
+gdalinfo data/week5-exercises/elev-lux.tif
+```
+
+
+### Get histogram
+
+- To calculate a histogram, we can use the argument `-hist` (see the [help page](https://gdal.org/en/stable/programs/gdalinfo.html))
+- Note: I'm piping the output into `head` and then `tail` to truncate the result
+
+```{bash}
+gdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2
+```
+
+
+### Get output as JSON
+
+- To get the output as a JSON, use the argument `-json`
+- JSON outputs are much easier to to parse 
+- This is especially useful if you want to use the output in a script or program
+
+
+```{bash}
+#| output: false
+
+# pipe the output to a JSON file
+gdalinfo -hist -json data/week5-exercises/elev-lux.tif  > data-out/elev-lux.json
+
+```
+
+
+### Parse JSON output
+
+- Open the file `elev-lux.json` in a browser to get a good idea of the hierarchy
+- Use a tool like `jq` to parse the JSON in the terminal
+- `jq` is a powerful tool for parsing JSON in the terminal
+- We can "climb" down the JSON structure using the `.` operator and the key names
+- To extract from an array, we can use `[]`
+
+
+
+```{bash}
+gdalinfo -hist data/week5-exercises/elev-lux.tif -json | \
+  jq ".bands[].min"
+```
+
+
+
+
+
+### Plots in bash
+
+- To illustrate, we extract the histogram from the data and visualize it with [bashplotlib](https://github.com/glamp/bashplotlib)
+
+
+
+```{bash}
+#| output: false
+
+gdalinfo -hist data/week5-exercises/elev-lux.tif -json | 
+  jq ".bands[].histogram.buckets[]" | # <1>
+  hist -w 1 -p +                      # <2>
+
+```
+
+1. This `jq` filter extracts the raw values from the array
+2. `hist` from [bashplotlib](https://github.com/glamp/bashplotlib) creates a histogram: `-w 1` sets the width to 1 and `-p +` creates a `+` instead of a point
+
+```
+ 20|  +                                                                    
+ 19|  +                                                                    
+ 18|  +                                                                    
+ 17|  +                                                                    
+ 16|  +                                                                    
+ 15|  +                                                                    
+ 14|  +                                                                    
+ 13|  +                                                                    
+ 12|  +    +                                                               
+ 11|  +    +                                                               
+ 10| ++ ++ +                                                               
+  9| ++ ++++                  + +                                          
+  8| +++++++  +               + +                                          
+  7| ++++++++ ++++ +    ++    + +                                          
+  6| ++++++++ ++++ +   +++    + +                                          
+  5| +++++++++++++ +  ++++    + ++ +                                       
+  4| ++++++++++++++++ ++++++  + ++ ++     +                                
+  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              
+  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            
+  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++
+    ----------------------------------------------------------------------
+```
+
+
+### Getting the CRS
+
+- To get the Coordinate Reference System (CRS) of a raster, we can filter for the entry `.coordinateSystem`
+- The specific raster does not seem to have a CRS assigned, so the output is `null`
+- We need to consult the metadata provided by the data provider to get the CRS
+- As noted [here](https://www.swisstopo.admin.ch/de/hoehenmodell-dhm25#DHM25---Download), the CRS is `LV03 LN02`, which is the old swiss coordinate system, aka [`EPSG:21781`](https://epsg.io/21781)
+
+```{bash}
+gdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq ".coordinateSystem"
+```
+
+- We can confirm this by geetting the extent of the raster,
+- For this we can use the argument `-json` and then extract the `cornerCoordinates` key
+
+
+
+
+```{bash}
+gdalinfo -json \
+  data/week5-exercises/dhm25_grid_raster.asc | 
+  jq ".cornerCoordinates"
+```
+
+
+## Gdalwarp
+
+- The DHM25 raster is in the old Swiss coordinate system `EPSG:21781`
+- To transform it to the new Swiss coordinate system `EPSG:2056`, we can use the [`gdalwarp`](https://gdal.org/en/stable/programs/gdalwarp.html) program
+
+
+- Note that `gdalwarp` has two positional arguments: 
+  - `<src_dataset_name>...` and `<dst_dataset_name>`
+  - The dots indicate that you can input multiple data sources
+
+
+
+```{bash}
+gdalwarp --help
+```
+
+
+## Reproject / Transform Raster
+
+- Since our data has no CRS assigned, we need to specify the source CRS using `-s_srs` 
+- The EPSG code for the new Swiss coordinate system is `2056`, which we will provide as the target CRS using `-t_srs`
+- We recommend using geotiff rather than ascii output
+
+
+```{bash}
+#| eval: false
+gdalwarp -s_srs EPSG:21781 \
+  -t_srs EPSG:2056 \ 
+  data/week5-exercises/dhm25_grid_raster.asc \
+  data-out/dhm25.tif
+
+```
+
+
+
+```
+0...10...20...30...40...50...60...70...80...90...100 - done.
+```
+
+## Check the CRS
+
+- We can now check the CRS on our created dataset
+
+```{bash}
+gdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45
+```
+
+<br class ="br">
+
+- As well as the extent
+- (note how the values have changed)
+
+```{bash}
+gdalinfo -json data-out/dhm25.tif | 
+  jq ".cornerCoordinates"
+```
+

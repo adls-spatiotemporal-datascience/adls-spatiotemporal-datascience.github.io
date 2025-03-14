@@ -34,6 +34,13 @@ book:
       - week-4-topological-rel.qmd
       - week-4-duckdb.qmd
       - week-4-task.qmd
+    - part: "Week 5: Raster Advanced"
+      chapters:
+      - week-5-datatypes.qmd
+      - week-5-gdal.qmd
+      - week-5-compression.qmd
+      - week-5-task.qmd
+      # - week-5-nodata.qmd     # in FS26, finish this chapter
     - references.qmd
 
 

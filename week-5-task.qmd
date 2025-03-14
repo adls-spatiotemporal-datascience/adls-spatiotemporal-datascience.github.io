@@ -1,0 +1,36 @@
+---
+title: "🚀 Tasks"
+---
+
+
+## Task 5.1 {#sec-task-rast-advanced}
+
+Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named `index.qmd`.
+
+1. Redo @sec-task-rast-basic. However, this time use `gdal` from the command line to to the processing. Note that you can use `bash` commands in quarto, you just have to 
+   - set the language to `{bash}` in the code chunk and 
+   - the `engine` to `knitr` in the YAML header
+2. Again, use the R package [`tictoc`](http://jabiru.github.io/tictoc/) to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.
+3. Compare the execution times of with the `terra` approach. Which is faster? 
+
+
+````
+```{{r}}
+tictoc::tic(msg = "Step 1: Transform the data")
+```
+
+```{{bash}}
+gdal_translate input.tif output.tif
+```
+
+```{{r}}
+tictoc::toc(log = TRUE)
+```
+
+
+```{{r}}
+# Finally (to get a full log:)
+tictoc::tic.log()
+```
+
+````

@@ -177,7 +177,7 @@ The next step is to aggregate the area per canton. Before we do this, let's save
 CREATE VIEW wald_kantone AS            -- <1>
 SELECT 
   name, 
-  st_area(st_intersection(w.geom, k.geom)) as wald_area,
+  st_area(st_intersection(w.geom, k.geom)) AS wald_area,
 FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom);
 ```
@@ -205,7 +205,7 @@ GROUP BY name;                  -- <1>
 2. ... we need to wrap all columns with aggregate function...
 3. ... except for the columns that we use for grouping
 
-Let's create a view of this as well:
+Let's create a `VIEW` of this as well:
 
 ```{.sql}
 CREATE VIEW wald_kanton_grp AS
@@ -271,7 +271,7 @@ SELECT * FROM kanton_frac;
 
 ## Import results into R
 
-To import the data into R (e.g. to create a visualization), we can simply connect to the database and
+To import the data into R (e.g. to create a visualization), we can simply connect to the database, load the spatial extension and the import the `VIEW` using `dbReadTable()`:
 
 ```{r}
 #| eval: false
