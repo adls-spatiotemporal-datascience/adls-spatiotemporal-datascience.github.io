@@ -702,11 +702,319 @@
     ]
   },
   {
+    "objectID": "week-5-datatypes.html",
+    "href": "week-5-datatypes.html",
+    "title": "Data types / transformations",
+    "section": "",
+    "text": "Raster data types",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#raster-data-types",
+    "href": "week-5-datatypes.html#raster-data-types",
+    "title": "Data types / transformations",
+    "section": "",
+    "text": "While R and Python have a variety of data types including character strings, raster data is always stored as numeric\nHowever, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required\nThe choice of data type can have a significant impact on the size of the file and the precision of the data stored\nSince raster data is powered by GDAL, most raster based software (including R and Python) use the same data types when writing the file to disk\nThe numeric data types are supported by gdal are summarized in Table 13.1\n\n\n\n\nTable 13.1: The possible ranges of different datatypes in gdal (source: Amatulli 2024)\n\n\n\n\n\n\n\n\n\n\n\n\nData type\nMinimum\nMaximum\nSize1\nFactor\n\n\n\n\nByte\n0\n255\n39M\n1x\n\n\nUInt16\n0\n65,535\n78M\n2x\n\n\nInt16 / CInt16\n-32,768\n32,767\n78M\n2x\n\n\nUInt32\n0\n4,294,967,295\n155M\n~4x\n\n\nInt32 / CInt32\n-2,147,483,648\n2,147,483,647\n155M\n~4x\n\n\nFloat32 / CFloat32\n-3.4E38\n3.4E38\n155M\n~4x\n\n\nFloat64 / CFloat64\n-1.79E308\n1.79E308\n309M\n~8x\n\n\n\n\n\n\n\n\nIf you store categorical data, use integer datatype and store the corespondence in the metadata\nAlways be minimalistic about which datatype you need.\nQuestion if you have a continuous value from 0 to 1, which datatype do you use?\n\nNot Float32! But Multiply by 100 and use Byte or by 1000 (if you need more precision) and use UInt16\n\nQuestion: if you are measuring temperature, and your values are floating point ranging is -20 to +40 degrees, what datatype are you going to use?\n\nNot CFloat32!\nMultiply by 100 and use CInt16\n\nQuestion: if you compute NDVI and have values in the range 0 - 1, what datatype do you use?\n\nNot Float32, but not CInt16 either:\nTransform the values to 0 - 255",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#choosing-a-data-type",
+    "href": "week-5-datatypes.html#choosing-a-data-type",
+    "title": "Data types / transformations",
+    "section": "Choosing a data type",
+    "text": "Choosing a data type\n\nTo minimize file size, it’s important to choose the data type that best fits the range of values in the raster\nAt a first glance, it might seem that the numeric values we measured / calculated determine the datatype we use\nHowever, we can transform the values to a different range to fit a different datatype\nExample 1: Fraction values ranging from 0 to 1\n\nIt might seem that we need to use Float32 to store these values.\nHowever, we can turn fraction into percentages and store them as Byte datatype.\n\nExample 2: NDVI values ranging from -1 to 1\n\nIt might seem that we need to use CFloat32 to store these values.\nHowever, we can transform (rescale) these values to the range 0 - 255 and store them as Byte datatype.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#rescaling-transforming-values-to-0---255",
+    "href": "week-5-datatypes.html#rescaling-transforming-values-to-0---255",
+    "title": "Data types / transformations",
+    "section": "Rescaling / Transforming values to 0 - 255",
+    "text": "Rescaling / Transforming values to 0 - 255\nFrom Wikipedia:\n\nTo rescale a range between an arbitrary set of values [a, b], the formula becomes: \\[x' = a + \\frac{(x-min(x))\\times(b - a)}{max(x)-min(x)}\\]\n\nFor the NDVI usecase, we can consider:\n\n\\(x'\\) to be the stored value\n\\(x\\) to be the measured value\n\\(a\\) and \\(b\\) to be the maximum, minimum value of Byte (0 and 255 respectively)\n\\(min(x)\\) and \\(max(x)\\) the maximum and minimum measured values (-1 and 1 respectively)\n\nWe can use these values and simplify the formula as follows:\n\\[\\begin{align}\n\nx' &= 0 + \\frac{(x+1)\\times 255}{2} \\\\\n\nx' &= \\frac{255x+255}{2} \\\\\n\nx' &= 127.5x+127.5 \\\\\n\n\\end{align}\\]",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#rescaling-ndvi-values",
+    "href": "week-5-datatypes.html#rescaling-ndvi-values",
+    "title": "Data types / transformations",
+    "section": "Rescaling NDVI values",
+    "text": "Rescaling NDVI values\n\nWe can now use this formula \\(x' = 127.5x+127.5\\) to rescale NDVI values to the range 0 - 255\nSo, rather than storing the NDVI value 0.2, for example, we store the value 153\nThis rescaling is determined by two values: scale and offset (127.5 for both values in our case)",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#precision",
+    "href": "week-5-datatypes.html#precision",
+    "title": "Data types / transformations",
+    "section": "Precision",
+    "text": "Precision\nNote that this transformation to 255 values limits our precision:\n\nOur values are now limited to in their precision, since we only have 255 possible values\nWe can calculate the available precision like so: \\(\\frac{max(x)-min(x)}{b-a}\\)\nIn our case this is \\(\\frac{1 - (-1)}{255-0} = 0.0078\\).\nAny measured / calculated NDVI value will be rounded to a multiple of 0.0078.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#r-implementation-for-vectors",
+    "href": "week-5-datatypes.html#r-implementation-for-vectors",
+    "title": "Data types / transformations",
+    "section": "R Implementation for vectors",
+    "text": "R Implementation for vectors\n\nA generic way to implement this in R is as follows:\n\n\nscale_minmax &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x) \n  max_x = max(x) \n  a + (x - min_x) * (b - a) / (max_x - min_x)\n}\n\nTake the following example:\n\nset.seed(552)\n\n\n# this creates 100 random NDVI values between -1 and 1\nndvi_measured &lt;- runif(100, -1, 1)\n\nndvi_stored &lt;- scale_minmax(ndvi_measured)\n\ntibble(ndvi_measured, ndvi_stored) |&gt;\n  ggplot(aes(ndvi_measured, ndvi_stored)) + \n  geom_line(col = \"grey\") +\n  geom_point() +\n  labs(x = \"Measured NDVI (-1 to +1)\", y = \"Stored value (0 to 255)\") +\n  theme_minimal()",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#restoring-the-original-values",
+    "href": "week-5-datatypes.html#restoring-the-original-values",
+    "title": "Data types / transformations",
+    "section": "Restoring the original values",
+    "text": "Restoring the original values\n\nImagine you stored the NDVI values in the range 0 - 255, stored these values in a Geotiff and sent it to a colleague.\nTo restore the original NDVI values the transformation (\\(x' = 127x+127.5\\)) needs to be known\nMore precisely, the scale and offset values need to be known\nWe can simply invert the transformation to get the original values back: \\(x = \\frac{x'-127.5}{127.5}\\)",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#r-implementation-for-rasters-i",
+    "href": "week-5-datatypes.html#r-implementation-for-rasters-i",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters I",
+    "text": "R implementation for rasters I\n\nSince rescaling values is a common operation, it is supported by GDAL and therefore most raster libraries\nRather than transforming our values in memory, we can transform them when writing the raster to disk.\nFor this, we can use the arguments scale = and offset = in the writeRaster function\nTo use these arguments we need to calculate the scale and offset values first\nRewriting the formula above, we can calculate scale and offset:\n\n\\[\\begin{align}\n\\text{scale} &= \\frac{b - a}{max(x)-min(x)} \\\\\n\\text{offset} &= \\frac{a \\times max(x) - b \\times min(x)}{max(x)-min(x)}\n\\end{align}\\]\n\nTo implement this in R, I create a function: get_scale_offset:\n\n\nget_scale_offset &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x)\n  max_x = max(x)\n  \n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  list(\"scale\" = scale, \"offset\" = offset)\n}\n\n\n\nget_scale_offset(ndvi_measured)\n\n$scale\n[1] 130.0526\n\n$offset\n[1] 129.1798",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#r-implementation-for-rasters-ii",
+    "href": "week-5-datatypes.html#r-implementation-for-rasters-ii",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters II",
+    "text": "R implementation for rasters II\n\nThe new function get_scale_offset works nicely with vectors, but not with rasters\nThe reason it does not work for raster is that min(x) (and max(x)) are local and not global functions\n\nThey return the minimum / maximum value per cell over all bands, not the global minimum / maximum value\nTo calculate the global minimum and maximum value, we can either use global, or the slightly faster minmax function\n\nAdditionally, the writeRaster function will divide by scale and subtract offset from the values (see ?writeRaster), so we need to invert the two values\nThis is how this is implemented in R:\n\n\nget_scale_offset2 &lt;- function(\n    x, \n    a = 0,          \n    b = 255         \n    ){\n  library(terra)\n  min_max = minmax(x) \n  # careful, this function is currently designed for single band rasters only\n  min_x &lt;- min_max[1,1]\n  max_x &lt;- min_max[2,1]\n\n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  scale_inverted &lt;- 1/scale           # invert the scale, since writeRaster divides by scale\n  offset_inverted &lt;- offset * -1       # invert the offset, since writeRaster subtracts the offset\n\n  \n  list(\"scale\" = scale, \"offset\" = offset, \"scale_inverted\" = scale_inverted, offset_inverted = offset_inverted)\n\n}",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#r-implementation-for-rasters-example",
+    "href": "week-5-datatypes.html#r-implementation-for-rasters-example",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters: example",
+    "text": "R implementation for rasters: example\n\nLet’s import a raster, calculate the scale and offset values and use these values to write to disk\n\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package=\"terra\"))\n\nplot(elev, main = paste(minmax(elev),collapse = \"-\"))\n\n\n\n\n\n\n\n\n\nscale_offset &lt;- get_scale_offset2(elev)\n\n# Note: this implementation leads to NA's due to floating point errors. \n# 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06\n# I haven't found a solution for this yet.\nwriteRaster(\n  elev, \n  \"data-out/INT1U.tif\",\n  datatype = \"INT1U\",\n  overwrite = TRUE, \n  scale = scale_offset$scale_inverted, \n  offset = scale_offset$offset_inverted\n  )",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#r-implementation-for-rasters-example-1",
+    "href": "week-5-datatypes.html#r-implementation-for-rasters-example-1",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters: example",
+    "text": "R implementation for rasters: example\n\nSince GDAL stores the scale and offset values in the metadata, any software powered by GDAL will restore the original values on import\nIn other words, if you run rast(\"data-out/INT1U.tif\") you will not notice the values were internally stored using 0 - 255. Instead, you will retrieve the original values.\nTo finish off, let’s compare the file sizes of the raster stored as INT1U (Byte) and FLT8S (Float32)\n\n\nwriteRaster(\n  elev, \n  \"data-out/FLT8S.tif\",\n  datatype = \"FLT8S\", \n  overwrite = TRUE\n  )\n\n\nfile.size(\"data-out/INT1U.tif\")/file.size(\"data-out/FLT8S.tif\")\n\n[1] 0.537006\n\n\n\n\n\n\nAmatulli, Giuseppe. 2024. “Geocomputation and Machine Learning for Environmental Applications.” http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-datatypes.html#footnotes",
+    "href": "week-5-datatypes.html#footnotes",
+    "title": "Data types / transformations",
+    "section": "",
+    "text": "Difference in file size using constant dataset (same values and resolution) and varying the datatype↩︎",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-gdal.html",
+    "href": "week-5-gdal.html",
+    "title": "GDAL",
+    "section": "",
+    "text": "GDALInfo\ngdalinfo --version\n\nGDAL 3.9.3, released 2024/10/07",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-gdal.html#gdalinfo",
+    "href": "week-5-gdal.html#gdalinfo",
+    "title": "GDAL",
+    "section": "",
+    "text": "The simplest program in GDAL is probabbly gdalinfo\nIt lists information about a raster dataset.\nThe simplest command to test if a CLI tool is working, is to get the version number using --version:\n\n\n\nGet help\n\nAll named arguments to gdalinfo are listed with [-argument]\nSome arguments need parameters:\n\nFor example: -if stands for input format\nif Gtiff specifies that the input is a GeoTIFF\nThis allows you to be explicit about your input format, rather than GDAL guessing it from the file extension\nThese inputs are denoted with &lt;&gt; (i.e. [-if &lt;format&gt;])\n\nPositional arguments do not have square brackets\nA positional argument needs to be in a specific position\ngdalinfo only has one position argument: &lt;dataset_name&gt;\n\n\ngdalinfo --help\n\nUsage: gdalinfo [--help] [--long-usage] [--help-general]\n                [-json] [-mm]\n                [[-stats]|[-approx_stats]]\n                [-hist] [-nogcp] [-nomd] [-norat] [-noct] [-nofl] [-checksum] [-listmdd] [-proj4]\n                [-wkt_format &lt;WKT1|WKT2|WKT2_2015|WKT2_2018|WKT2_2019&gt;] [-sd &lt;n&gt;] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-if &lt;format&gt;]... [-mdd &lt;domain&gt;|all]\n                &lt;dataset_name&gt;\n\nNote: gdalinfo --long-usage for full help.\n\n\n\n\nGet basic Information\n\ngdalinfo data/week5-exercises/elev-lux.tif\n\nDriver: GTiff/GeoTIFF\nFiles: data/week5-exercises/elev-lux.tif\n       data/week5-exercises/elev-lux.tif.aux.xml\nSize is 95, 90\nCoordinate System is:\nGEOGCRS[\"WGS 84\",\n    ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n        MEMBER[\"World Geodetic System 1984 (Transit)\"],\n        MEMBER[\"World Geodetic System 1984 (G730)\"],\n        MEMBER[\"World Geodetic System 1984 (G873)\"],\n        MEMBER[\"World Geodetic System 1984 (G1150)\"],\n        MEMBER[\"World Geodetic System 1984 (G1674)\"],\n        MEMBER[\"World Geodetic System 1984 (G1762)\"],\n        MEMBER[\"World Geodetic System 1984 (G2139)\"],\n        MEMBER[\"World Geodetic System 1984 (G2296)\"],\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"World.\"],\n        BBOX[-90,-180,90,180]],\n    ID[\"EPSG\",4326]]\nData axis to CRS axis mapping: 2,1\nOrigin = (5.741666666666666,50.191666666666663)\nPixel Size = (0.008333333333333,-0.008333333333333)\nMetadata:\n  AREA_OR_POINT=Area\nImage Structure Metadata:\n  COMPRESSION=LZW\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (   5.7416667,  50.1916667) (  5d44'30.00\"E, 50d11'30.00\"N)\nLower Left  (   5.7416667,  49.4416667) (  5d44'30.00\"E, 49d26'30.00\"N)\nUpper Right (   6.5333333,  50.1916667) (  6d32' 0.00\"E, 50d11'30.00\"N)\nLower Right (   6.5333333,  49.4416667) (  6d32' 0.00\"E, 49d26'30.00\"N)\nCenter      (   6.1375000,  49.8166667) (  6d 8'15.00\"E, 49d49' 0.00\"N)\nBand 1 Block=95x43 Type=Int16, ColorInterp=Gray\n  Description = elevation\n  Min=141.000 Max=547.000 \n  Minimum=141.000, Maximum=547.000, Mean=-9999.000, StdDev=-9999.000\n  NoData Value=-32768\n  Metadata:\n    STATISTICS_MINIMUM=141\n    STATISTICS_MAXIMUM=547\n    STATISTICS_MEAN=-9999\n    STATISTICS_STDDEV=-9999\n\n\n\n\nGet histogram\n\nTo calculate a histogram, we can use the argument -hist (see the help page)\nNote: I’m piping the output into head and then tail to truncate the result\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2\n\n  256 buckets from 140.204 to 547.796:\n  2 3 1 4 0 0 1 1 1 5 1 0 0 2 1 1 3 5 1 5 4 4 1 4 4 1 1 3 2 0 6 4 0 2 6 7 5 5 6 5 7 8 4 4 3 11 8 2 3 3 10 5 13 14 3 13 4 14 10 6 19 6 12 11 10 18 9 17 26 14 25 8 19 24 10 37 15 30 12 30 37 22 32 18 47 42 23 44 35 48 53 21 56 33 52 59 31 46 33 39 68 27 57 31 44 28 61 64 24 55 32 57 69 30 55 22 52 40 25 51 28 48 52 23 37 20 40 13 42 55 17 39 11 41 37 20 40 22 38 25 25 31 17 21 42 13 30 12 18 27 11 24 10 25 14 19 30 12 19 10 27 28 3 22 10 15 28 9 15 6 20 20 7 9 5 20 12 9 19 6 25 7 18 27 9 21 7 21 19 9 19 8 18 27 9 27 16 17 25 12 31 18 25 26 16 35 14 25 11 36 20 17 35 15 27 27 14 16 6 29 20 7 27 11 28 14 2 12 8 11 3 6 7 6 9 6 4 6 1 3 1 1 5 1 1 1 1 1 0 1 0 2 2 0 0 1 \n\n\n\n\nGet output as JSON\n\nTo get the output as a JSON, use the argument -json\nJSON outputs are much easier to to parse\nThis is especially useful if you want to use the output in a script or program\n\n\n# pipe the output to a JSON file\ngdalinfo -hist -json data/week5-exercises/elev-lux.tif  &gt; data-out/elev-lux.json\n\n\n\nParse JSON output\n\nOpen the file elev-lux.json in a browser to get a good idea of the hierarchy\nUse a tool like jq to parse the JSON in the terminal\njq is a powerful tool for parsing JSON in the terminal\nWe can “climb” down the JSON structure using the . operator and the key names\nTo extract from an array, we can use []\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \\\n  jq \".bands[].min\"\n\n141.0\n\n\n\n\nPlots in bash\n\nTo illustrate, we extract the histogram from the data and visualize it with bashplotlib\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \n1  jq \".bands[].histogram.buckets[]\" |\n2  hist -w 1 -p +\n\n\n1\n\nThis jq filter extracts the raw values from the array\n\n2\n\nhist from bashplotlib creates a histogram: -w 1 sets the width to 1 and -p + creates a + instead of a point\n\n\n\n\n 20|  +                                                                    \n 19|  +                                                                    \n 18|  +                                                                    \n 17|  +                                                                    \n 16|  +                                                                    \n 15|  +                                                                    \n 14|  +                                                                    \n 13|  +                                                                    \n 12|  +    +                                                               \n 11|  +    +                                                               \n 10| ++ ++ +                                                               \n  9| ++ ++++                  + +                                          \n  8| +++++++  +               + +                                          \n  7| ++++++++ ++++ +    ++    + +                                          \n  6| ++++++++ ++++ +   +++    + +                                          \n  5| +++++++++++++ +  ++++    + ++ +                                       \n  4| ++++++++++++++++ ++++++  + ++ ++     +                                \n  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              \n  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            \n  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++\n    ----------------------------------------------------------------------\n\n\nGetting the CRS\n\nTo get the Coordinate Reference System (CRS) of a raster, we can filter for the entry .coordinateSystem\nThe specific raster does not seem to have a CRS assigned, so the output is null\nWe need to consult the metadata provided by the data provider to get the CRS\nAs noted here, the CRS is LV03 LN02, which is the old swiss coordinate system, aka EPSG:21781\n\n\ngdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq \".coordinateSystem\"\n\nnull\n\n\n\nWe can confirm this by geetting the extent of the raster,\nFor this we can use the argument -json and then extract the cornerCoordinates key\n\n\ngdalinfo -json \\\n  data/week5-exercises/dhm25_grid_raster.asc | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-gdal.html#gdalwarp",
+    "href": "week-5-gdal.html#gdalwarp",
+    "title": "GDAL",
+    "section": "Gdalwarp",
+    "text": "Gdalwarp\n\nThe DHM25 raster is in the old Swiss coordinate system EPSG:21781\nTo transform it to the new Swiss coordinate system EPSG:2056, we can use the gdalwarp program\nNote that gdalwarp has two positional arguments:\n\n&lt;src_dataset_name&gt;... and &lt;dst_dataset_name&gt;\nThe dots indicate that you can input multiple data sources\n\n\n\ngdalwarp --help\n\nUsage: gdalwarp [--help] [--long-usage] [--help-general]\n                [--quiet] [-overwrite] [-of &lt;output_format&gt;] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-s_srs &lt;srs_def&gt;]\n                [-t_srs &lt;srs_def&gt;]\n                [[-srcalpha]|[-nosrcalpha]]\n                [-dstalpha] [-tr &lt;xres&gt; &lt;yres&gt;|square] [-ts &lt;width&gt; &lt;height&gt;] [-te &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;]\n                [-te_srs &lt;srs_def&gt;] [-r near|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum]\n                [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                &lt;src_dataset_name&gt;... &lt;dst_dataset_name&gt;\n\nAdvanced options:\n                [-wo &lt;NAME&gt;=&lt;VALUE&gt;]... [-multi] [-s_coord_epoch &lt;epoch&gt;] [-t_coord_epoch &lt;epoch&gt;] [-ct &lt;string&gt;]\n                [[-tps]|[-rpc]|[-geoloc]]\n                [-order &lt;1|2|3&gt;] [-refine_gcps &lt;tolerance&gt; [&lt;minimum_gcps&gt;]] [-to &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-et &lt;err_threshold&gt;] [-wm &lt;memory_in_mb&gt;] [-srcnodata \"&lt;value&gt;[ &lt;value&gt;]...\"]\n                [-dstnodata \"&lt;value&gt;[ &lt;value&gt;]...\"] [-tap] [-wt Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                [-cutline &lt;datasource&gt;|&lt;WKT&gt;] [-cutline_srs &lt;srs_def&gt;] [-cwhere &lt;expression&gt;]\n                [[-cl &lt;layername&gt;]|[-csql &lt;query&gt;]]\n                [-cblend &lt;distance&gt;] [-crop_to_cutline] [-nomd] [-cvmd &lt;meta_conflict_value&gt;] [-setci]\n                [-oo &lt;NAME&gt;=&lt;VALUE&gt;]... [-doo &lt;NAME&gt;=&lt;VALUE&gt;]... [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE]\n                [[-vshift]|[-novshiftgrid]]\n                [-if &lt;format&gt;]... [-srcband &lt;band&gt;]... [-dstband &lt;band&gt;]...\n\nNote: gdalwarp --long-usage for full help.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-gdal.html#reproject-transform-raster",
+    "href": "week-5-gdal.html#reproject-transform-raster",
+    "title": "GDAL",
+    "section": "Reproject / Transform Raster",
+    "text": "Reproject / Transform Raster\n\nSince our data has no CRS assigned, we need to specify the source CRS using -s_srs\nThe EPSG code for the new Swiss coordinate system is 2056, which we will provide as the target CRS using -t_srs\nWe recommend using geotiff rather than ascii output\n\n\ngdalwarp -s_srs EPSG:21781 \\\n  -t_srs EPSG:2056 \\ \n  data/week5-exercises/dhm25_grid_raster.asc \\\n  data-out/dhm25.tif\n\n0...10...20...30...40...50...60...70...80...90...100 - done.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-gdal.html#check-the-crs",
+    "href": "week-5-gdal.html#check-the-crs",
+    "title": "GDAL",
+    "section": "Check the CRS",
+    "text": "Check the CRS\n\nWe can now check the CRS on our created dataset\n\n\ngdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45\n\nCoordinate System is:\nPROJCRS[\"CH1903+ / LV95\",\n    BASEGEOGCRS[\"CH1903+\",\n        DATUM[\"CH1903+\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4150]],\n    CONVERSION[\"Swiss Oblique Mercator 1995\",\n        METHOD[\"Hotine Oblique Mercator (variant B)\",\n            ID[\"EPSG\",9815]],\n        PARAMETER[\"Latitude of projection centre\",46.9524055555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8811]],\n        PARAMETER[\"Longitude of projection centre\",7.43958333333333,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8812]],\n        PARAMETER[\"Azimuth of initial line\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8813]],\n        PARAMETER[\"Angle from Rectified to Skew Grid\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8814]],\n        PARAMETER[\"Scale factor on initial line\",1,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8815]],\n        PARAMETER[\"Easting at projection centre\",2600000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8816]],\n        PARAMETER[\"Northing at projection centre\",1200000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8817]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Cadastre, engineering survey, topographic mapping (large and medium scale).\"],\n        AREA[\"Liechtenstein; Switzerland.\"],\n        BBOX[45.82,5.96,47.81,10.49]],\n    ID[\"EPSG\",2056]]\n\n\n\n\nAs well as the extent\n(note how the values have changed)\n\n\ngdalinfo -json data-out/dhm25.tif | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    2479987.5,\n    1302012.5\n  ],\n  \"lowerLeft\": [\n    2479987.5,\n    1073987.5\n  ],\n  \"lowerRight\": [\n    2865012.5,\n    1073987.5\n  ],\n  \"upperRight\": [\n    2865012.5,\n    1302012.5\n  ],\n  \"center\": [\n    2672500.0,\n    1188000.0\n  ]\n}",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html",
+    "href": "week-5-compression.html",
+    "title": "Compression",
+    "section": "",
+    "text": "Raster Data Storage Requirements\nMuch of this section was taken from Gandhi (2020). See also this great blog post by Paul Ramsey.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#raster-data-storage-requirements",
+    "href": "week-5-compression.html#raster-data-storage-requirements",
+    "title": "Compression",
+    "section": "",
+    "text": "The storage space required for an image depends on its dimensions and data type.\n\nExample:\n\nAn SRTM tile consists of a single band with a resolution of 3601 × 3601 pixels.\n\nEach pixel is stored as an Int16 (16-bit integer), requiring 2 Bytes (1 Byte = 8 Bits).\n\nThe total storage needed is: \\(3601 \\times 3601 \\times 2 = 25,934,402 \\text{ Bytes} \\approx 25.93 \\text{ MB}\\)\n\nCompression algorithms can be used to reduce the required storage space.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#types-of-compression",
+    "href": "week-5-compression.html#types-of-compression",
+    "title": "Compression",
+    "section": "Types of Compression",
+    "text": "Types of Compression\n\nLossless Compression\n\nPreserves data quality without any loss.\n\nThe original data can be perfectly reconstructed.\n\nReduces file size by eliminating redundant information.\n\nCommonly used for scientific data such as elevation models and satellite imagery.\n\nExamples: LZW, DEFLATE, PACKBITS, ZSTD, …\n\nLossy Compression\n\nSacrifices some data quality to achieve higher compression.\n\nThe original data is approximated rather than perfectly reconstructed.\n\nAllows for significantly smaller file sizes by discarding less perceptible details.\nCommonly used for photographic data such as aerial and drone imagery.\n\nExamples: JPEG2000, WEBP (supports both lossy and lossless modes), …",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#how-does-compression-work",
+    "href": "week-5-compression.html#how-does-compression-work",
+    "title": "Compression",
+    "section": "How does compression work?",
+    "text": "How does compression work?\n\nGiven the pixel values: 100, 101, 102, 100, 100\n\nInstead of storing each value individually, we can store each unique value once and keep track of its positions.\n\nRepresentation:\n\n100 → Appears at positions [0, 3, 4]\n\n101 → Appears at position [1]\n\n102 → Appears at position [2]",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#use-of-predictor",
+    "href": "week-5-compression.html#use-of-predictor",
+    "title": "Compression",
+    "section": "Use of PREDICTOR",
+    "text": "Use of PREDICTOR\n\nSome compression algorithms, such as LZW, DEFLATE, and ZSTD, can utilize a predictor to enhance compression efficiency.\n\nInstead of storing absolute values, a predictor stores only the differences between consecutive values.\n\nAvailable predictor methods:\n\nNo predictor (1, default)\n\nHorizontal differencing (2)\n\nFloating point prediction (3)\n\nExample:\n\nOriginal values: 100, 101, 102, 100, 100\n\nValues with predictor: 100, 1, 1, -2, 0",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#use-of-tiling",
+    "href": "week-5-compression.html#use-of-tiling",
+    "title": "Compression",
+    "section": "Use of Tiling",
+    "text": "Use of Tiling\n\nBy default, data is stored line by line.\n\nIn many cases, storing and reading data in blocks of pixels improves efficiency.\n\nWhen the TILED=YES option is enabled, data is stored and compressed in 256 × 256 pixel blocks.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#compression-costs",
+    "href": "week-5-compression.html#compression-costs",
+    "title": "Compression",
+    "section": "Compression Costs",
+    "text": "Compression Costs\n\nCompression adds processing overhead during both data creation and retrieval.\n\nHighly compressed data may result in slower read times.\n\nIn many applications, the reduction in disk space comes at the cost of increased processing time and CPU usage.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-compression.html#gdal_translate",
+    "href": "week-5-compression.html#gdal_translate",
+    "title": "Compression",
+    "section": "Gdal_translate",
+    "text": "Gdal_translate\n\ngdal_translate is a program to convert raster data between different formats\nNote how the naming convention differs (snake case). The APIs for all the software vary slightly, always consult the documentation (e.g. using --help)\nSome options are mutually exclusive. These are wrapped in extra []. For example: [[-strict]|[-not_strict]]\nNote how this program has two positional arguments: &lt;input_file&gt; and &lt;output_file&gt;\n\n\ngdal_translate --help\n\nUsage: gdal_translate [--help] [--long-usage] [--help-general]\n                      [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}] [-if &lt;format&gt;]...\n                      [-of &lt;output_format&gt;] [--quiet] [-b &lt;band&gt;]... [-mask &lt;mask&gt;] [-expand gray|rgb|rgba]\n                      [[-strict]|[-not_strict]]\n                      [-outsize &lt;xsize[%]|0&gt; &lt;ysize[%]|0&gt;] [-tr &lt;xres&gt; &lt;yes&gt;] [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE] [-sds]\n                      [-r nearest,bilinear,cubic,cubicspline,lanczos,average,mode]\n                      [[-scale [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-scale_X [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|[-unscale]]\n                      [[-exponent &lt;value&gt;]|[-exponent_X &lt;value&gt;]...]\n                      [-srcwin &lt;xoff&gt; &lt;yoff&gt; &lt;xsize&gt; &lt;ysize&gt;] [-projwin &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-projwin_srs &lt;srs_def&gt;] [-epo] [-eco] [-a_srs &lt;srs_def&gt;] [-a_coord_epoch &lt;epoch&gt;]\n                      [-a_ullr &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;] [-a_nodata &lt;value&gt;|none]\n                      [-a_gt &lt;gt(0)&gt; &lt;gt(1)&gt; &lt;gt(2)&gt; &lt;gt(3)&gt; &lt;gt(4)&gt; &lt;gt(5)&gt;] [-a_scale &lt;value&gt;] [-a_offset &lt;value&gt;]\n                      [-nogcp] [-gcp &lt;pixel&gt; &lt;line&gt; &lt;easting&gt; &lt;northing&gt; [&lt;elevation&gt;]]...\n                      [-colorinterp {red|green|blue|alpha|gray|undefined},...]\n                      [-colorinterp_X {red|green|blue|alpha|gray|undefined}]...\n                      [[-stats]|[-approx_stats]]\n                      [-norat] [-noxmp] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-mo &lt;NAME&gt;=&lt;VALUE&gt;]... [-dmo &lt;DOMAIN&gt;:&lt;KEY&gt;=&lt;VALUE&gt;]...\n                      [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      &lt;input_file&gt; &lt;output_file&gt;\n\nNote: gdal_translate --long-usage for full help.\n\n\n\nConvert to Geotiff\n\nIn the last exercise, we reprojected a raster file to a geotiff file.\nHowever, for this exercise we will ignore this an concentrate on using gdal_translate to create a Geotiff and use compression\n\n\ngdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\nLet’s compare the file sizes:\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\n\n\n\n\n\nCompress DEFLATE\n\nWe can now compress the file using the DEFLATE algorithm with the -co argument\n\n\ngdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif  \\ \n  -co COMPRESS=DEFLATE \n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\n\n\n\n\n\nCompress TILED=YES\n\ntictoc::tic(msg = \"trans\")\n\n\ngdal_translate data-out/dhm25.tif data-out/dhm25_3.tif \\\n  -co COMPRESS=DEFLATE \\\n  -co TILED=YES\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\ntictoc::toc(log = TRUE)\n\ntrans: 5.297 sec elapsed\n\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\n\n\n\n\n\nCompress PREDICTOR=3\n\ngdal_translate data-out/dhm25.tif data-out/dhm25_4.tif  \\ \n  -co COMPRESS=DEFLATE \\\n  -co TILED=YES \\\n  -co PREDICTOR=3\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\nPREDICTOR=3\n150.89\n-82 %\n\n\n\n\n\n\n\n\n\nGandhi, Ujaval. 2020. “Mastering GDAL Tools (Full Course).” https://courses.spatialthoughts.com/gdal-tools.html#compressing-output.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-task.html",
+    "href": "week-5-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Task 5.1\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named index.qmd.",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "week-5-task.html#sec-task-rast-advanced",
+    "href": "week-5-task.html#sec-task-rast-advanced",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Redo Task 3.1. However, this time use gdal from the command line to to the processing. Note that you can use bash commands in quarto, you just have to\n\nset the language to {bash} in the code chunk and\nthe engine to knitr in the YAML header\n\nAgain, use the R package tictoc to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.\nCompare the execution times of with the terra approach. Which is faster?\n\n```{r}\ntictoc::tic(msg = \"Step 1: Transform the data\")\n```\n\n```{bash}\ngdal_translate input.tif output.tif\n```\n\n```{r}\ntictoc::toc(log = TRUE)\n```\n\n\n```{r}\n# Finally (to get a full log:)\ntictoc::tic.log()\n```",
+    "crumbs": [
+      "Week 5: Raster Advanced",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Dorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework\nfor the Definition of Topological Relations.” In Proc. The\nFourth International Symposium on Spatial Data Handing, 803–13.\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance\nMap.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019.\nGeocomputation with r. Chapman; Hall/CRC.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
+    "text": "Amatulli, Giuseppe. 2024. “Geocomputation and Machine Learning for\nEnvironmental Applications.” http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.\n\n\nDorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework\nfor the Definition of Topological Relations.” In Proc. The\nFourth International Symposium on Spatial Data Handing, 803–13.\n\n\nGandhi, Ujaval. 2020. “Mastering GDAL Tools (Full Course).”\nhttps://courses.spatialthoughts.com/gdal-tools.html#compressing-output.\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance\nMap.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019.\nGeocomputation with r. Chapman; Hall/CRC.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
     "crumbs": [
       "References"
     ]

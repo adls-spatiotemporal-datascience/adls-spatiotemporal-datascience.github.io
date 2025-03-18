@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Nils Ratnaweera">
 
-<title>Spatiotemporal Datascience</title>
+<title>GDAL – Spatiotemporal Datascience</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./week-1-simple-features.html" rel="next">
+<link href="./week-5-compression.html" rel="next">
+<link href="./week-5-datatypes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -101,7 +135,7 @@ window.onload = function() {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome to the course <em>Spatiotemporal Datascience</em></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">Week 5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-gdal.html"><span class="chapter-title">GDAL</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +173,7 @@ window.onload = function() {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome to the course <em>Spatiotemporal Datascience</em></span></a>
   </div>
 </li>
@@ -238,13 +272,13 @@ window.onload = function() {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Week 5: Raster Advanced</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./week-5-datatypes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data types / transformations</span></a>
@@ -252,7 +286,7 @@ window.onload = function() {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-5-gdal.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">GDAL</span></a>
+  <a href="./week-5-gdal.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">GDAL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -283,29 +317,34 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome-to-the-course-spatiotemporal-datascience" id="toc-welcome-to-the-course-spatiotemporal-datascience" class="nav-link active" data-scroll-target="#welcome-to-the-course-spatiotemporal-datascience">Welcome to the course <em>Spatiotemporal Datascience</em></a></li>
+  <li><a href="#gdalinfo" id="toc-gdalinfo" class="nav-link active" data-scroll-target="#gdalinfo">GDALInfo</a>
+  <ul class="collapse">
+  <li><a href="#get-help" id="toc-get-help" class="nav-link" data-scroll-target="#get-help">Get help</a></li>
+  <li><a href="#get-basic-information" id="toc-get-basic-information" class="nav-link" data-scroll-target="#get-basic-information">Get basic Information</a></li>
+  <li><a href="#get-histogram" id="toc-get-histogram" class="nav-link" data-scroll-target="#get-histogram">Get histogram</a></li>
+  <li><a href="#get-output-as-json" id="toc-get-output-as-json" class="nav-link" data-scroll-target="#get-output-as-json">Get output as JSON</a></li>
+  <li><a href="#parse-json-output" id="toc-parse-json-output" class="nav-link" data-scroll-target="#parse-json-output">Parse JSON output</a></li>
+  <li><a href="#plots-in-bash" id="toc-plots-in-bash" class="nav-link" data-scroll-target="#plots-in-bash">Plots in bash</a></li>
+  <li><a href="#getting-the-crs" id="toc-getting-the-crs" class="nav-link" data-scroll-target="#getting-the-crs">Getting the CRS</a></li>
+  </ul></li>
+  <li><a href="#gdalwarp" id="toc-gdalwarp" class="nav-link" data-scroll-target="#gdalwarp">Gdalwarp</a></li>
+  <li><a href="#reproject-transform-raster" id="toc-reproject-transform-raster" class="nav-link" data-scroll-target="#reproject-transform-raster">Reproject / Transform Raster</a></li>
+  <li><a href="#check-the-crs" id="toc-check-the-crs" class="nav-link" data-scroll-target="#check-the-crs">Check the CRS</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">Week 5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-gdal.html"><span class="chapter-title">GDAL</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Spatiotemporal Datascience</h1>
-<p class="subtitle lead">Bachelor ADLS / FS25</p>
+<h1 class="title"><span class="chapter-title">GDAL</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Nils Ratnaweera </p>
-          </div>
-  </div>
     
   
     
@@ -316,594 +355,398 @@ window.onload = function() {
 </header>
 
 
-<section id="welcome-to-the-course-spatiotemporal-datascience" class="level1 unnumbered">
-<h1 class="unnumbered">Welcome to the course <em>Spatiotemporal Datascience</em></h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/us-weather.png" class="img-fluid figure-img"></p>
-<figcaption><a href="https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals">Image Source</a></figcaption>
-</figure>
-</div>
-<p>This course is taught in the Bachelor Degree <a href="https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/">Applied Digital Life Sciences</a> at the Zurich University of Applied Sciences (ZHAW).</p>
-<p>In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course <em>GISc and Geodatabases</em>: <a href="https://zhaw-giscience-geodatabases.github.io">Geocomputation with R</a> with raster and vector data</p>
-<!-- During the course, we will recap [Image Processing with R](https://adls-image-processing-for-rs.github.io/) from the course *Image Processing for Remote Sensing*.  -->
-<p>Our <em>preliminary</em> schedule is as follows. Please note that this schedule is subject to change!</p>
+<ul>
+<li>As mentioned in <a href="week-1-vector-io.html#sec-gdal-ogr2ogr" class="quarto-xref"><span>GDAL / ogr2ogr</span></a>, GDAL is the basis for most GIS Software</li>
+<li>Rather than using GDAL through R or Python, we can use the GDAL CLI tool instead</li>
+<li>GDAL is a software suite containing several so called <a href="https://gdal.org/en/stable/programs/#raster-programs">Raster programs</a>, each designed for a specific task</li>
+<li>These are especially useful if you need faster data processing, e.g.&nbsp;if you have large raster files or a lot of small ones</li>
+<li>You can install GDAL <a href="https://gdal.org/en/stable/download.html#conda">using conda</a></li>
+</ul>
+<section id="gdalinfo" class="level2">
+<h2 class="anchored" data-anchor-id="gdalinfo">GDALInfo</h2>
+<ul>
+<li>The simplest program in GDAL is probabbly <code>gdalinfo</code></li>
+<li>It lists information about a raster dataset.</li>
+<li>The simplest command to test if a CLI tool is working, is to get the version number using <code>--version</code>:</li>
+</ul>
 <div class="cell">
-<div class="cell-output-display">
-<div id="mbjqxawwcs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mbjqxawwcs table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#mbjqxawwcs thead, #mbjqxawwcs tbody, #mbjqxawwcs tfoot, #mbjqxawwcs tr, #mbjqxawwcs td, #mbjqxawwcs th {
-  border-style: none;
-}
-
-#mbjqxawwcs p {
-  margin: 0;
-  padding: 0;
-}
-
-#mbjqxawwcs .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: 100%;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#mbjqxawwcs .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#mbjqxawwcs .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#mbjqxawwcs .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#mbjqxawwcs .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#mbjqxawwcs .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#mbjqxawwcs .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#mbjqxawwcs .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#mbjqxawwcs .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#mbjqxawwcs .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#mbjqxawwcs .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#mbjqxawwcs .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#mbjqxawwcs .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#mbjqxawwcs .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#mbjqxawwcs .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mbjqxawwcs .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#mbjqxawwcs .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#mbjqxawwcs .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#mbjqxawwcs .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mbjqxawwcs .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#mbjqxawwcs .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mbjqxawwcs .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#mbjqxawwcs .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mbjqxawwcs .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#mbjqxawwcs .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mbjqxawwcs .gt_left {
-  text-align: left;
-}
-
-#mbjqxawwcs .gt_center {
-  text-align: center;
-}
-
-#mbjqxawwcs .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#mbjqxawwcs .gt_font_normal {
-  font-weight: normal;
-}
-
-#mbjqxawwcs .gt_font_bold {
-  font-weight: bold;
-}
-
-#mbjqxawwcs .gt_font_italic {
-  font-style: italic;
-}
-
-#mbjqxawwcs .gt_super {
-  font-size: 65%;
-}
-
-#mbjqxawwcs .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#mbjqxawwcs .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#mbjqxawwcs .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#mbjqxawwcs .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#mbjqxawwcs .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#mbjqxawwcs .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#mbjqxawwcs .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#mbjqxawwcs .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#mbjqxawwcs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="#" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">#</th>
-<th id="CW" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">CW</th>
-<th id="Date" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Date</th>
-<th id="Lesson" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Lesson</th>
-<th id="Lecturer" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Lecturer</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">1</td>
-<td class="gt_row gt_right" headers="CW">8</td>
-<td class="gt_row gt_right" headers="Date">18.02.25</td>
-<td class="gt_row gt_left" headers="Lesson">Module introduction / Vector Data (recap)</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">2</td>
-<td class="gt_row gt_right" headers="CW">9</td>
-<td class="gt_row gt_right" headers="Date">25.02.25</td>
-<td class="gt_row gt_left" headers="Lesson">GeoPython Confence</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">3</td>
-<td class="gt_row gt_right" headers="CW">10</td>
-<td class="gt_row gt_right" headers="Date">04.03.25</td>
-<td class="gt_row gt_left" headers="Lesson">Raster Data (recap)</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">4</td>
-<td class="gt_row gt_right" headers="CW">11</td>
-<td class="gt_row gt_right" headers="Date">11.03.25</td>
-<td class="gt_row gt_left" headers="Lesson">Vector Advanced</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">5</td>
-<td class="gt_row gt_right" headers="CW">12</td>
-<td class="gt_row gt_right" headers="Date">18.03.25</td>
-<td class="gt_row gt_left" headers="Lesson">Raster Advanced</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">6</td>
-<td class="gt_row gt_right" headers="CW">13</td>
-<td class="gt_row gt_right" headers="Date">25.03.25</td>
-<td class="gt_row gt_left" headers="Lesson">tba</td>
-<td class="gt_row gt_left" headers="Lecturer">tba</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">7</td>
-<td class="gt_row gt_right" headers="CW">14</td>
-<td class="gt_row gt_right" headers="Date">01.04.25</td>
-<td class="gt_row gt_left" headers="Lesson">Interpolation</td>
-<td class="gt_row gt_left" headers="Lecturer">laup</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">8</td>
-<td class="gt_row gt_right" headers="CW">15</td>
-<td class="gt_row gt_right" headers="Date">08.04.25</td>
-<td class="gt_row gt_left" headers="Lesson">tba</td>
-<td class="gt_row gt_left" headers="Lecturer">tba</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">9</td>
-<td class="gt_row gt_right" headers="CW">16</td>
-<td class="gt_row gt_right" headers="Date">15.04.25</td>
-<td class="gt_row gt_left" headers="Lesson">Network Analysis I: Centrality</td>
-<td class="gt_row gt_left" headers="Lecturer">laup</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">10</td>
-<td class="gt_row gt_right" headers="CW">17</td>
-<td class="gt_row gt_right" headers="Date">22.04.25</td>
-<td class="gt_row gt_left" headers="Lesson">Network Analysis II: Shortest Path / TSP</td>
-<td class="gt_row gt_left" headers="Lecturer">laup</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">11</td>
-<td class="gt_row gt_right" headers="CW">18</td>
-<td class="gt_row gt_right" headers="Date">29.04.25</td>
-<td class="gt_row gt_left" headers="Lesson">Project Week (no class)</td>
-<td class="gt_row gt_left" headers="Lecturer">rata</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">12</td>
-<td class="gt_row gt_right" headers="CW">19</td>
-<td class="gt_row gt_right" headers="Date">06.05.25</td>
-<td class="gt_row gt_left" headers="Lesson">Movement Analysis I: Patterns</td>
-<td class="gt_row gt_left" headers="Lecturer">laup</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">13</td>
-<td class="gt_row gt_right" headers="CW">20</td>
-<td class="gt_row gt_right" headers="Date">13.05.25</td>
-<td class="gt_row gt_left" headers="Lesson">Movement Analysis II: Context</td>
-<td class="gt_row gt_left" headers="Lecturer">laup</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="#">14</td>
-<td class="gt_row gt_right" headers="CW">21</td>
-<td class="gt_row gt_right" headers="Date">20.05.25</td>
-<td class="gt_row gt_left" headers="Lesson">tba</td>
-<td class="gt_row gt_left" headers="Lecturer">tba</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="#">15</td>
-<td class="gt_row gt_right" headers="CW">22</td>
-<td class="gt_row gt_right" headers="Date">27.05.25</td>
-<td class="gt_row gt_left" headers="Lesson">tba</td>
-<td class="gt_row gt_left" headers="Lecturer">tba</td>
-</tr>
-</tbody>
-</table>
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GDAL 3.9.3, released 2024/10/07</code></pre>
 </div>
 </div>
-</div>
-<div style="padding-bottom: 100px">
+<section id="get-help" class="level3">
+<h3 class="anchored" data-anchor-id="get-help">Get help</h3>
+<ul>
+<li>All named arguments to <code>gdalinfo</code> are listed with <code>[-argument]</code></li>
+<li>Some arguments need parameters:
+<ul>
+<li>For example: <code>-if</code> stands for <em>input format</em></li>
+<li><code>if Gtiff</code> specifies that the input is a <code>GeoTIFF</code></li>
+<li>This allows you to be explicit about your input format, rather than GDAL guessing it from the file extension</li>
+<li>These inputs are denoted with <code>&lt;&gt;</code> (i.e.&nbsp;<code>[-if &lt;format&gt;]</code>)</li>
+</ul></li>
+<li>Positional arguments do not have square brackets</li>
+<li>A positional argument needs to be in a specific position</li>
+<li><code>gdalinfo</code> only has one position argument: <code>&lt;dataset_name&gt;</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Usage: gdalinfo [--help] [--long-usage] [--help-general]
+                [-json] [-mm]
+                [[-stats]|[-approx_stats]]
+                [-hist] [-nogcp] [-nomd] [-norat] [-noct] [-nofl] [-checksum] [-listmdd] [-proj4]
+                [-wkt_format &lt;WKT1|WKT2|WKT2_2015|WKT2_2018|WKT2_2019&gt;] [-sd &lt;n&gt;] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...
+                [-if &lt;format&gt;]... [-mdd &lt;domain&gt;|all]
+                &lt;dataset_name&gt;
 
+Note: gdalinfo --long-usage for full help.</code></pre>
+</div>
+</div>
+</section>
+<section id="get-basic-information" class="level3">
+<h3 class="anchored" data-anchor-id="get-basic-information">Get basic Information</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> data/week5-exercises/elev-lux.tif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Driver: GTiff/GeoTIFF
+Files: data/week5-exercises/elev-lux.tif
+       data/week5-exercises/elev-lux.tif.aux.xml
+Size is 95, 90
+Coordinate System is:
+GEOGCRS["WGS 84",
+    ENSEMBLE["World Geodetic System 1984 ensemble",
+        MEMBER["World Geodetic System 1984 (Transit)"],
+        MEMBER["World Geodetic System 1984 (G730)"],
+        MEMBER["World Geodetic System 1984 (G873)"],
+        MEMBER["World Geodetic System 1984 (G1150)"],
+        MEMBER["World Geodetic System 1984 (G1674)"],
+        MEMBER["World Geodetic System 1984 (G1762)"],
+        MEMBER["World Geodetic System 1984 (G2139)"],
+        MEMBER["World Geodetic System 1984 (G2296)"],
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]],
+        ENSEMBLEACCURACY[2.0]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    USAGE[
+        SCOPE["Horizontal component of 3D system."],
+        AREA["World."],
+        BBOX[-90,-180,90,180]],
+    ID["EPSG",4326]]
+Data axis to CRS axis mapping: 2,1
+Origin = (5.741666666666666,50.191666666666663)
+Pixel Size = (0.008333333333333,-0.008333333333333)
+Metadata:
+  AREA_OR_POINT=Area
+Image Structure Metadata:
+  COMPRESSION=LZW
+  INTERLEAVE=BAND
+Corner Coordinates:
+Upper Left  (   5.7416667,  50.1916667) (  5d44'30.00"E, 50d11'30.00"N)
+Lower Left  (   5.7416667,  49.4416667) (  5d44'30.00"E, 49d26'30.00"N)
+Upper Right (   6.5333333,  50.1916667) (  6d32' 0.00"E, 50d11'30.00"N)
+Lower Right (   6.5333333,  49.4416667) (  6d32' 0.00"E, 49d26'30.00"N)
+Center      (   6.1375000,  49.8166667) (  6d 8'15.00"E, 49d49' 0.00"N)
+Band 1 Block=95x43 Type=Int16, ColorInterp=Gray
+  Description = elevation
+  Min=141.000 Max=547.000 
+  Minimum=141.000, Maximum=547.000, Mean=-9999.000, StdDev=-9999.000
+  NoData Value=-32768
+  Metadata:
+    STATISTICS_MINIMUM=141
+    STATISTICS_MAXIMUM=547
+    STATISTICS_MEAN=-9999
+    STATISTICS_STDDEV=-9999</code></pre>
+</div>
+</div>
+</section>
+<section id="get-histogram" class="level3">
+<h3 class="anchored" data-anchor-id="get-histogram">Get histogram</h3>
+<ul>
+<li>To calculate a histogram, we can use the argument <code>-hist</code> (see the <a href="https://gdal.org/en/stable/programs/gdalinfo.html">help page</a>)</li>
+<li>Note: I’m piping the output into <code>head</code> and then <code>tail</code> to truncate the result</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-hist</span> data/week5-exercises/elev-lux.tif <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 8 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  256 buckets from 140.204 to 547.796:
+  2 3 1 4 0 0 1 1 1 5 1 0 0 2 1 1 3 5 1 5 4 4 1 4 4 1 1 3 2 0 6 4 0 2 6 7 5 5 6 5 7 8 4 4 3 11 8 2 3 3 10 5 13 14 3 13 4 14 10 6 19 6 12 11 10 18 9 17 26 14 25 8 19 24 10 37 15 30 12 30 37 22 32 18 47 42 23 44 35 48 53 21 56 33 52 59 31 46 33 39 68 27 57 31 44 28 61 64 24 55 32 57 69 30 55 22 52 40 25 51 28 48 52 23 37 20 40 13 42 55 17 39 11 41 37 20 40 22 38 25 25 31 17 21 42 13 30 12 18 27 11 24 10 25 14 19 30 12 19 10 27 28 3 22 10 15 28 9 15 6 20 20 7 9 5 20 12 9 19 6 25 7 18 27 9 21 7 21 19 9 19 8 18 27 9 27 16 17 25 12 31 18 25 26 16 35 14 25 11 36 20 17 35 15 27 27 14 16 6 29 20 7 27 11 28 14 2 12 8 11 3 6 7 6 9 6 4 6 1 3 1 1 5 1 1 1 1 1 0 1 0 2 2 0 0 1 </code></pre>
+</div>
+</div>
+</section>
+<section id="get-output-as-json" class="level3">
+<h3 class="anchored" data-anchor-id="get-output-as-json">Get output as JSON</h3>
+<ul>
+<li>To get the output as a JSON, use the argument <code>-json</code></li>
+<li>JSON outputs are much easier to to parse</li>
+<li>This is especially useful if you want to use the output in a script or program</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pipe the output to a JSON file</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-hist</span> <span class="at">-json</span> data/week5-exercises/elev-lux.tif  <span class="op">&gt;</span> data-out/elev-lux.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="parse-json-output" class="level3">
+<h3 class="anchored" data-anchor-id="parse-json-output">Parse JSON output</h3>
+<ul>
+<li>Open the file <code>elev-lux.json</code> in a browser to get a good idea of the hierarchy</li>
+<li>Use a tool like <code>jq</code> to parse the JSON in the terminal</li>
+<li><code>jq</code> is a powerful tool for parsing JSON in the terminal</li>
+<li>We can “climb” down the JSON structure using the <code>.</code> operator and the key names</li>
+<li>To extract from an array, we can use <code>[]</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-hist</span> data/week5-exercises/elev-lux.tif <span class="at">-json</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> <span class="st">".bands[].min"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>141.0</code></pre>
+</div>
+</div>
+</section>
+<section id="plots-in-bash" class="level3">
+<h3 class="anchored" data-anchor-id="plots-in-bash">Plots in bash</h3>
+<ul>
+<li>To illustrate, we extract the histogram from the data and visualize it with <a href="https://github.com/glamp/bashplotlib">bashplotlib</a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode bash code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-hist</span> data/week5-exercises/elev-lux.tif <span class="at">-json</span> <span class="kw">|</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> <span class="st">".bands[].histogram.buckets[]"</span> <span class="kw">|</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">hist</span> <span class="at">-w</span> 1 <span class="at">-p</span> +</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="1">This <code>jq</code> filter extracts the raw values from the array</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="2"><code>hist</code> from <a href="https://github.com/glamp/bashplotlib">bashplotlib</a> creates a histogram: <code>-w 1</code> sets the width to 1 and <code>-p +</code> creates a <code>+</code> instead of a point</span>
+</dd>
+</dl>
+</div>
+</div>
+<pre><code> 20|  +                                                                    
+ 19|  +                                                                    
+ 18|  +                                                                    
+ 17|  +                                                                    
+ 16|  +                                                                    
+ 15|  +                                                                    
+ 14|  +                                                                    
+ 13|  +                                                                    
+ 12|  +    +                                                               
+ 11|  +    +                                                               
+ 10| ++ ++ +                                                               
+  9| ++ ++++                  + +                                          
+  8| +++++++  +               + +                                          
+  7| ++++++++ ++++ +    ++    + +                                          
+  6| ++++++++ ++++ +   +++    + +                                          
+  5| +++++++++++++ +  ++++    + ++ +                                       
+  4| ++++++++++++++++ ++++++  + ++ ++     +                                
+  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              
+  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            
+  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++
+    ----------------------------------------------------------------------</code></pre>
+</section>
+<section id="getting-the-crs" class="level3">
+<h3 class="anchored" data-anchor-id="getting-the-crs">Getting the CRS</h3>
+<ul>
+<li>To get the Coordinate Reference System (CRS) of a raster, we can filter for the entry <code>.coordinateSystem</code></li>
+<li>The specific raster does not seem to have a CRS assigned, so the output is <code>null</code></li>
+<li>We need to consult the metadata provided by the data provider to get the CRS</li>
+<li>As noted <a href="https://www.swisstopo.admin.ch/de/hoehenmodell-dhm25#DHM25---Download">here</a>, the CRS is <code>LV03 LN02</code>, which is the old swiss coordinate system, aka <a href="https://epsg.io/21781"><code>EPSG:21781</code></a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-json</span> data/week5-exercises/dhm25_grid_raster.asc <span class="kw">|</span> <span class="ex">jq</span> <span class="st">".coordinateSystem"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>null</code></pre>
+</div>
+</div>
+<ul>
+<li>We can confirm this by geetting the extent of the raster,</li>
+<li>For this we can use the argument <code>-json</code> and then extract the <code>cornerCoordinates</code> key</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-json</span> <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  data/week5-exercises/dhm25_grid_raster.asc <span class="kw">|</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> <span class="st">".cornerCoordinates"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+  "upperLeft": [
+    479987.5,
+    302012.5
+  ],
+  "lowerLeft": [
+    479987.5,
+    73987.5
+  ],
+  "lowerRight": [
+    865012.5,
+    73987.5
+  ],
+  "upperRight": [
+    865012.5,
+    302012.5
+  ],
+  "center": [
+    672500.0,
+    188000.0
+  ]
+}</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="gdalwarp" class="level2">
+<h2 class="anchored" data-anchor-id="gdalwarp">Gdalwarp</h2>
+<ul>
+<li><p>The DHM25 raster is in the old Swiss coordinate system <code>EPSG:21781</code></p></li>
+<li><p>To transform it to the new Swiss coordinate system <code>EPSG:2056</code>, we can use the <a href="https://gdal.org/en/stable/programs/gdalwarp.html"><code>gdalwarp</code></a> program</p></li>
+<li><p>Note that <code>gdalwarp</code> has two positional arguments:</p>
+<ul>
+<li><code>&lt;src_dataset_name&gt;...</code> and <code>&lt;dst_dataset_name&gt;</code></li>
+<li>The dots indicate that you can input multiple data sources</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalwarp</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Usage: gdalwarp [--help] [--long-usage] [--help-general]
+                [--quiet] [-overwrite] [-of &lt;output_format&gt;] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-s_srs &lt;srs_def&gt;]
+                [-t_srs &lt;srs_def&gt;]
+                [[-srcalpha]|[-nosrcalpha]]
+                [-dstalpha] [-tr &lt;xres&gt; &lt;yres&gt;|square] [-ts &lt;width&gt; &lt;height&gt;] [-te &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;]
+                [-te_srs &lt;srs_def&gt;] [-r near|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum]
+                [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]
+                &lt;src_dataset_name&gt;... &lt;dst_dataset_name&gt;
+
+Advanced options:
+                [-wo &lt;NAME&gt;=&lt;VALUE&gt;]... [-multi] [-s_coord_epoch &lt;epoch&gt;] [-t_coord_epoch &lt;epoch&gt;] [-ct &lt;string&gt;]
+                [[-tps]|[-rpc]|[-geoloc]]
+                [-order &lt;1|2|3&gt;] [-refine_gcps &lt;tolerance&gt; [&lt;minimum_gcps&gt;]] [-to &lt;NAME&gt;=&lt;VALUE&gt;]...
+                [-et &lt;err_threshold&gt;] [-wm &lt;memory_in_mb&gt;] [-srcnodata "&lt;value&gt;[ &lt;value&gt;]..."]
+                [-dstnodata "&lt;value&gt;[ &lt;value&gt;]..."] [-tap] [-wt Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]
+                [-cutline &lt;datasource&gt;|&lt;WKT&gt;] [-cutline_srs &lt;srs_def&gt;] [-cwhere &lt;expression&gt;]
+                [[-cl &lt;layername&gt;]|[-csql &lt;query&gt;]]
+                [-cblend &lt;distance&gt;] [-crop_to_cutline] [-nomd] [-cvmd &lt;meta_conflict_value&gt;] [-setci]
+                [-oo &lt;NAME&gt;=&lt;VALUE&gt;]... [-doo &lt;NAME&gt;=&lt;VALUE&gt;]... [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE]
+                [[-vshift]|[-novshiftgrid]]
+                [-if &lt;format&gt;]... [-srcband &lt;band&gt;]... [-dstband &lt;band&gt;]...
+
+Note: gdalwarp --long-usage for full help.</code></pre>
+</div>
+</div>
+</section>
+<section id="reproject-transform-raster" class="level2">
+<h2 class="anchored" data-anchor-id="reproject-transform-raster">Reproject / Transform Raster</h2>
+<ul>
+<li>Since our data has no CRS assigned, we need to specify the source CRS using <code>-s_srs</code></li>
+<li>The EPSG code for the new Swiss coordinate system is <code>2056</code>, which we will provide as the target CRS using <code>-t_srs</code></li>
+<li>We recommend using geotiff rather than ascii output</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalwarp</span> <span class="at">-s_srs</span> EPSG:21781 <span class="dt">\</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t_srs</span> EPSG:2056 <span class="dt">\ </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">data/week5-exercises/dhm25_grid_raster.asc</span> <span class="dt">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  data-out/dhm25.tif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.</code></pre>
+</section>
+<section id="check-the-crs" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-crs">Check the CRS</h2>
+<ul>
+<li>We can now check the CRS on our created dataset</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> data-out/dhm25.tif <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 60 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 45</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate System is:
+PROJCRS["CH1903+ / LV95",
+    BASEGEOGCRS["CH1903+",
+        DATUM["CH1903+",
+            ELLIPSOID["Bessel 1841",6377397.155,299.1528128,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4150]],
+    CONVERSION["Swiss Oblique Mercator 1995",
+        METHOD["Hotine Oblique Mercator (variant B)",
+            ID["EPSG",9815]],
+        PARAMETER["Latitude of projection centre",46.9524055555556,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8811]],
+        PARAMETER["Longitude of projection centre",7.43958333333333,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8812]],
+        PARAMETER["Azimuth of initial line",90,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8813]],
+        PARAMETER["Angle from Rectified to Skew Grid",90,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8814]],
+        PARAMETER["Scale factor on initial line",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8815]],
+        PARAMETER["Easting at projection centre",2600000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8816]],
+        PARAMETER["Northing at projection centre",1200000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8817]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Cadastre, engineering survey, topographic mapping (large and medium scale)."],
+        AREA["Liechtenstein; Switzerland."],
+        BBOX[45.82,5.96,47.81,10.49]],
+    ID["EPSG",2056]]</code></pre>
+</div>
+</div>
+<p><br class="br"></p>
+<ul>
+<li>As well as the extent</li>
+<li>(note how the values have changed)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">-json</span> data-out/dhm25.tif <span class="kw">|</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> <span class="st">".cornerCoordinates"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+  "upperLeft": [
+    2479987.5,
+    1302012.5
+  ],
+  "lowerLeft": [
+    2479987.5,
+    1073987.5
+  ],
+  "lowerRight": [
+    2865012.5,
+    1073987.5
+  ],
+  "upperRight": [
+    2865012.5,
+    1302012.5
+  ],
+  "center": [
+    2672500.0,
+    1188000.0
+  ]
+}</code></pre>
+</div>
 </div>
 
 
@@ -1473,10 +1316,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./week-5-datatypes.html" class="pagination-link" aria-label="Data types / transformations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Data types / transformations</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./week-1-simple-features.html" class="pagination-link" aria-label="Simple Features">
-        <span class="nav-page-text"><span class="chapter-title">Simple Features</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./week-5-compression.html" class="pagination-link" aria-label="Compression">
+        <span class="nav-page-text"><span class="chapter-title">Compression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

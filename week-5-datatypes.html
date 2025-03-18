@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Raster Data I/O – Spatiotemporal Datascience</title>
+<title>Data types / transformations – Spatiotemporal Datascience</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +84,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./week-3-raster-operations.html" rel="next">
-<link href="./week-2.html" rel="prev">
+<link href="./week-5-gdal.html" rel="next">
+<link href="./week-4-task.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -122,6 +142,35 @@ window.onload = function() {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="aux/style.css">
 </head>
@@ -135,7 +184,7 @@ window.onload = function() {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 3: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-raster-io.html"><span class="chapter-title">Raster Data I/O</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">Week 5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-datatypes.html"><span class="chapter-title">Data types / transformations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -215,16 +264,16 @@ window.onload = function() {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Week 3: Raster Recap</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-3-raster-io.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Raster Data I/O</span></a>
+  <a href="./week-3-raster-io.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Raster Data I/O</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -272,16 +321,16 @@ window.onload = function() {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Week 5: Raster Advanced</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-5-datatypes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data types / transformations</span></a>
+  <a href="./week-5-datatypes.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Data types / transformations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -317,18 +366,26 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#import-a-raster-file" id="toc-import-a-raster-file" class="nav-link active" data-scroll-target="#import-a-raster-file">Import a raster file</a></li>
-  <li><a href="#geotiff" id="toc-geotiff" class="nav-link" data-scroll-target="#geotiff">GeoTIFF</a></li>
-  <li><a href="#writing-a-raster-file" id="toc-writing-a-raster-file" class="nav-link" data-scroll-target="#writing-a-raster-file">Writing a raster file</a></li>
+  <li><a href="#raster-data-types" id="toc-raster-data-types" class="nav-link active" data-scroll-target="#raster-data-types">Raster data types</a></li>
+  <li><a href="#choosing-a-data-type" id="toc-choosing-a-data-type" class="nav-link" data-scroll-target="#choosing-a-data-type">Choosing a data type</a></li>
+  <li><a href="#rescaling-transforming-values-to-0---255" id="toc-rescaling-transforming-values-to-0---255" class="nav-link" data-scroll-target="#rescaling-transforming-values-to-0---255">Rescaling / Transforming values to 0 - 255</a></li>
+  <li><a href="#rescaling-ndvi-values" id="toc-rescaling-ndvi-values" class="nav-link" data-scroll-target="#rescaling-ndvi-values">Rescaling NDVI values</a></li>
+  <li><a href="#precision" id="toc-precision" class="nav-link" data-scroll-target="#precision">Precision</a></li>
+  <li><a href="#r-implementation-for-vectors" id="toc-r-implementation-for-vectors" class="nav-link" data-scroll-target="#r-implementation-for-vectors">R Implementation for vectors</a></li>
+  <li><a href="#restoring-the-original-values" id="toc-restoring-the-original-values" class="nav-link" data-scroll-target="#restoring-the-original-values">Restoring the original values</a></li>
+  <li><a href="#r-implementation-for-rasters-i" id="toc-r-implementation-for-rasters-i" class="nav-link" data-scroll-target="#r-implementation-for-rasters-i">R implementation for rasters I</a></li>
+  <li><a href="#r-implementation-for-rasters-ii" id="toc-r-implementation-for-rasters-ii" class="nav-link" data-scroll-target="#r-implementation-for-rasters-ii">R implementation for rasters II</a></li>
+  <li><a href="#r-implementation-for-rasters-example" id="toc-r-implementation-for-rasters-example" class="nav-link" data-scroll-target="#r-implementation-for-rasters-example">R implementation for rasters: example</a></li>
+  <li><a href="#r-implementation-for-rasters-example-1" id="toc-r-implementation-for-rasters-example-1" class="nav-link" data-scroll-target="#r-implementation-for-rasters-example-1">R implementation for rasters: example</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-3-raster-io.html">Week 3: Raster Recap</a></li><li class="breadcrumb-item"><a href="./week-3-raster-io.html"><span class="chapter-title">Raster Data I/O</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">Week 5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-datatypes.html"><span class="chapter-title">Data types / transformations</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-raster-data-io" class="quarto-section-identifier"><span class="chapter-title">Raster Data I/O</span></span></h1>
+<h1 class="title"><span class="chapter-title">Data types / transformations</span></h1>
 </div>
 
 
@@ -345,75 +402,374 @@ window.onload = function() {
 </header>
 
 
+<section id="raster-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="raster-data-types">Raster data types</h2>
 <ul>
-<li>In R, several libraries are available to work with raster data
-<ul>
-<li><code>{raster}</code> by Robert Hijmans. This library is not maintained anymore</li>
-<li><code>{terra}</code> by the same author. This library is the successor of <code>{raster}</code> and is actively maintained</li>
-<li><code>{stars}</code> by Edzer Pebesma. This library extremly well developed, but it tends to be slower than <code>{terra}</code> (which is why we will not cover it in this course)</li>
-</ul></li>
-<li>Like <code>{sf}</code> The library <code>{terra}</code> is based on the GDAL library (see <a href="week-1-vector-io.html#sec-gdal-ogr2ogr" class="quarto-xref"><span>GDAL / ogr2ogr</span></a>)</li>
-<li>GDAL Supports a <em>wide</em> range of raster formats (see <a href="https://gdal.org/en/latest/drivers/raster/index.html">Raster drivers</a>)</li>
+<li>While R and Python have a variety of data types including character strings, raster data is always stored as numeric</li>
+<li>However, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required</li>
+<li>The choice of data type can have a significant impact on the size of the file and the precision of the data stored</li>
+<li>Since raster data is powered by GDAL, most raster based software (including R and Python) use the same data types <em>when writing the file to disk</em></li>
+<li>The numeric data types are supported by <code>gdal</code> are summarized in <a href="#tbl-datatypes" class="quarto-xref">Table&nbsp;<span>13.1</span></a></li>
 </ul>
-<section id="import-a-raster-file" class="level2">
-<h2 class="anchored" data-anchor-id="import-a-raster-file">Import a raster file</h2>
+<div id="tbl-datatypes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-datatypes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.1: The possible ranges of different datatypes in <code>gdal</code> <span class="citation" data-cites="amatulli2024">(source: <a href="references.html#ref-amatulli2024" role="doc-biblioref">Amatulli 2024</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-datatypes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 13%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Data type</th>
+<th style="text-align: right;">Minimum</th>
+<th style="text-align: right;">Maximum</th>
+<th style="text-align: right;">Size<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></th>
+<th style="text-align: right;">Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Byte</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">39M</td>
+<td style="text-align: right;">1x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UInt16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">65,535</td>
+<td style="text-align: right;">78M</td>
+<td style="text-align: right;">2x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Int16 / CInt16</td>
+<td style="text-align: right;">-32,768</td>
+<td style="text-align: right;">32,767</td>
+<td style="text-align: right;">78M</td>
+<td style="text-align: right;">2x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UInt32</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4,294,967,295</td>
+<td style="text-align: right;">155M</td>
+<td style="text-align: right;">~4x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Int32 / CInt32</td>
+<td style="text-align: right;">-2,147,483,648</td>
+<td style="text-align: right;">2,147,483,647</td>
+<td style="text-align: right;">155M</td>
+<td style="text-align: right;">~4x</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Float32 / CFloat32</td>
+<td style="text-align: right;">-3.4E38</td>
+<td style="text-align: right;">3.4E38</td>
+<td style="text-align: right;">155M</td>
+<td style="text-align: right;">~4x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Float64 / CFloat64</td>
+<td style="text-align: right;">-1.79E308</td>
+<td style="text-align: right;">1.79E308</td>
+<td style="text-align: right;">309M</td>
+<td style="text-align: right;">~8x</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="notes">
 <ul>
-<li><code>terra</code> uses the function <code>rast()</code> to import raster data</li>
-<li>Printing the object will give you some basic information about the raster
+<li>If you store categorical data, use integer datatype and store the corespondence in the metadata</li>
+<li>Always be minimalistic about which datatype you need.</li>
+<li>Question if you have a continuous value from 0 to 1, which datatype do you use?
 <ul>
-<li>The number of rows and columns, as well as the number of layers</li>
-<li>The resolution of the raster, meter per pixel (25 in our case)</li>
-<li>The extent of the raster, in the coordinate reference system of the raster</li>
-<li>The coordinate reference system (CRS) of the raster</li>
-<li>The source (in memory, or a file path)</li>
-<li>The name(s) of the band(s) (we only have one band in our case)</li>
-<li>The min and max values of the raster</li>
+<li>Not <code>Float32</code>! But Multiply by 100 and use <code>Byte</code> or by 1000 (if you need more precision) and use <code>UInt16</code></li>
 </ul></li>
+<li>Question: if you are measuring temperature, and your values are floating point ranging is -20 to +40 degrees, what datatype are you going to use?
+<ul>
+<li>Not CFloat32!</li>
+<li>Multiply by 100 and use <code>CInt16</code></li>
+</ul></li>
+<li>Question: if you compute NDVI and have values in the range 0 - 1, what datatype do you use?
+<ul>
+<li>Not <code>Float32</code>, but not <code>CInt16</code> either:</li>
+<li>Transform the values to 0 - 255</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="choosing-a-data-type" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-a-data-type">Choosing a data type</h2>
+<ul>
+<li>To minimize file size, it’s important to choose the data type that best fits the range of values in the raster</li>
+<li>At a first glance, it might seem that the numeric values we measured / calculated <em>determine</em> the datatype we use</li>
+<li>However, we can transform the values to a different range to fit a different datatype</li>
+<li>Example 1: Fraction values ranging from 0 to 1
+<ul>
+<li>It might seem that we need to use <code>Float32</code> to store these values.</li>
+<li>However, we can turn fraction into percentages and store them as <code>Byte</code> datatype.</li>
+</ul></li>
+<li>Example 2: NDVI values ranging from -1 to 1
+<ul>
+<li>It might seem that we need to use <code>CFloat32</code> to store these values.</li>
+<li>However, we can <em>transform</em> (rescale) these values to the range 0 - 255 and store them as <code>Byte</code> datatype.</li>
+</ul></li>
+</ul>
+</section>
+<section id="rescaling-transforming-values-to-0---255" class="level2">
+<h2 class="anchored" data-anchor-id="rescaling-transforming-values-to-0---255">Rescaling / Transforming values to 0 - 255</h2>
+<p>From <a href="https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)">Wikipedia</a>:</p>
+<blockquote class="blockquote">
+<p>To rescale a range between an arbitrary set of values [a, b], the formula becomes: <span class="math display">\[x' = a + \frac{(x-min(x))\times(b - a)}{max(x)-min(x)}\]</span></p>
+</blockquote>
+<p>For the NDVI usecase, we can consider:</p>
+<ul>
+<li><span class="math inline">\(x'\)</span> to be the <em>stored</em> value</li>
+<li><span class="math inline">\(x\)</span> to be the measured value</li>
+<li><span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> to be the maximum, minimum value of <code>Byte</code> (0 and 255 respectively)</li>
+<li><span class="math inline">\(min(x)\)</span> and <span class="math inline">\(max(x)\)</span> the maximum and minimum measured values (<code>-1</code> and <code>1</code> respectively)</li>
+</ul>
+<p>We can use these values and simplify the formula as follows:</p>
+<p><span class="math display">\[\begin{align}
+
+x' &amp;= 0 + \frac{(x+1)\times 255}{2} \\
+
+x' &amp;= \frac{255x+255}{2} \\
+
+x' &amp;= 127.5x+127.5 \\
+
+\end{align}\]</span></p>
+</section>
+<section id="rescaling-ndvi-values" class="level2">
+<h2 class="anchored" data-anchor-id="rescaling-ndvi-values">Rescaling NDVI values</h2>
+<ul>
+<li>We can now use this formula <span class="math inline">\(x' = 127.5x+127.5\)</span> to rescale NDVI values to the range 0 - 255</li>
+<li>So, rather than storing the NDVI value 0.2, for example, we store the value 153</li>
+<li>This rescaling is determined by two values: <code>scale</code> and <code>offset</code> (127.5 for both values in our case)</li>
+</ul>
+</section>
+<section id="precision" class="level2">
+<h2 class="anchored" data-anchor-id="precision">Precision</h2>
+<p>Note that this transformation to 255 values limits our precision:</p>
+<ul>
+<li>Our values are now limited to in their precision, since we only have 255 possible values</li>
+<li>We can calculate the available precision like so: <span class="math inline">\(\frac{max(x)-min(x)}{b-a}\)</span></li>
+<li>In our case this is <span class="math inline">\(\frac{1 - (-1)}{255-0} = 0.0078\)</span>.</li>
+<li>Any measured / calculated NDVI value will be rounded to a multiple of 0.0078.</li>
+</ul>
+</section>
+<section id="r-implementation-for-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="r-implementation-for-vectors">R Implementation for vectors</h2>
+<ul>
+<li>A generic way to implement this in R is as follows:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dhm25 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/week3-exercises/dhm25_lu.tif"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dhm25</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>scale_minmax <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    x, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> <span class="dv">0</span>,          <span class="co"># the minimum value of the new range (default 0)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="dv">255</span>         <span class="co"># the maximum value of the new range (default 255)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ){</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  min_x <span class="ot">=</span> <span class="fu">min</span>(x) </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  max_x <span class="ot">=</span> <span class="fu">max</span>(x) </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  a <span class="sc">+</span> (x <span class="sc">-</span> min_x) <span class="sc">*</span> (b <span class="sc">-</span> a) <span class="sc">/</span> (max_x <span class="sc">-</span> min_x)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Take the following example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">552</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this creates 100 random NDVI values between -1 and 1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ndvi_measured <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ndvi_stored <span class="ot">&lt;-</span> <span class="fu">scale_minmax</span>(ndvi_measured)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(ndvi_measured, ndvi_stored) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ndvi_measured, ndvi_stored)) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Measured NDVI (-1 to +1)"</span>, <span class="at">y =</span> <span class="st">"Stored value (0 to 255)"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5-datatypes_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="restoring-the-original-values" class="level2">
+<h2 class="anchored" data-anchor-id="restoring-the-original-values">Restoring the original values</h2>
+<ul>
+<li>Imagine you stored the NDVI values in the range 0 - 255, stored these values in a Geotiff and sent it to a colleague.</li>
+<li>To restore the original NDVI values the transformation (<span class="math inline">\(x' = 127x+127.5\)</span>) needs to be known</li>
+<li>More precisely, the <code>scale</code> and <code>offset</code> values need to be known</li>
+<li>We can simply invert the transformation to get the original values back: <span class="math inline">\(x = \frac{x'-127.5}{127.5}\)</span></li>
+</ul>
+</section>
+<section id="r-implementation-for-rasters-i" class="level2">
+<h2 class="anchored" data-anchor-id="r-implementation-for-rasters-i">R implementation for rasters I</h2>
+<ul>
+<li>Since rescaling values is a common operation, it is supported by GDAL and therefore most raster libraries</li>
+<li>Rather than transforming our values in memory, we can transform them when writing the raster to disk.</li>
+<li>For this, we can use the arguments <code>scale =</code> and <code>offset =</code> in the <code>writeRaster</code> function</li>
+<li>To use these arguments we need to calculate the <code>scale</code> and <code>offset</code> values first</li>
+<li>Rewriting the formula above, we can calculate <code>scale</code> and <code>offset</code>:</li>
+</ul>
+<p><span class="math display">\[\begin{align}
+\text{scale} &amp;= \frac{b - a}{max(x)-min(x)} \\
+\text{offset} &amp;= \frac{a \times max(x) - b \times min(x)}{max(x)-min(x)}
+\end{align}\]</span></p>
+<ul>
+<li>To implement this in R, I create a function: <code>get_scale_offset</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>get_scale_offset <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    x, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> <span class="dv">0</span>,          <span class="co"># the minimum value of the new range (default 0)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="dv">255</span>         <span class="co"># the maximum value of the new range (default 255)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    ){</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  min_x <span class="ot">=</span> <span class="fu">min</span>(x)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  max_x <span class="ot">=</span> <span class="fu">max</span>(x)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  scale <span class="ot">&lt;-</span> (b <span class="sc">-</span> a) <span class="sc">/</span> (max_x <span class="sc">-</span> min_x)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  offset <span class="ot">&lt;-</span> (a <span class="sc">*</span> max_x <span class="sc">-</span> b <span class="sc">*</span> min_x) <span class="sc">/</span> (max_x <span class="sc">-</span> min_x)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"scale"</span> <span class="ot">=</span> scale, <span class="st">"offset"</span> <span class="ot">=</span> offset)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">get_scale_offset</span>(ndvi_measured)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
-dimensions  : 2321, 2161, 1  (nrow, ncol, nlyr)
-resolution  : 25, 25  (x, y)
-extent      : 2628987, 2683012, 1179988, 1238013  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
-source      : dhm25_lu.tif 
-name        : dhm25_lu 
-min value   :    381.1 
-max value   :   3228.3 </code></pre>
+<pre><code>$scale
+[1] 130.0526
+
+$offset
+[1] 129.1798</code></pre>
 </div>
 </div>
 </section>
-<section id="geotiff" class="level2">
-<h2 class="anchored" data-anchor-id="geotiff">GeoTIFF</h2>
+<section id="r-implementation-for-rasters-ii" class="level2">
+<h2 class="anchored" data-anchor-id="r-implementation-for-rasters-ii">R implementation for rasters II</h2>
 <ul>
-<li>GeoTIFF is the most common raster format</li>
-<li>GeoTIFF is an extension to the TIFF format, which includes additional metadata to establish the spatial reference of the file</li>
-<li>This includes the CRS, the extent, the resolution, and the origin of the raster</li>
-<li>The metadata is either stored in the header of the file, or in an accompanying file with the same name, but different extension (<code>.tfw</code> or <code>.aux.xml</code>)</li>
-<li>Other important raster file formats include:
+<li>The new function <code>get_scale_offset</code> works nicely with vectors, but not with rasters</li>
+<li>The reason it does not work for raster is that <code>min(x)</code> (and <code>max(x)</code>) are <em>local</em> and not <em>global</em> functions
 <ul>
-<li>Cloud optimized GeoTIFF (COG): A GeoTIFF file that is optimized for cloud storage which allows for efficient, partial reading of the file over HTTP</li>
-<li>JPG2000 (<code>.jp2</code>) is a compressed raster format that is often used for satellite imagery</li>
-<li>NetCDF (<code>.nc</code>) is a format that is often used for climate data</li>
-<li>HDF5 (<code>.h5</code>) is a format that is often used for remote sensing data</li>
+<li>They return the minimum / maximum value <em>per cell over all bands</em>, not the global minimum / maximum value</li>
+<li>To calculate the global minimum and maximum value, we can either use <code>global</code>, or the slightly faster <code>minmax</code> function</li>
 </ul></li>
-</ul>
-</section>
-<section id="writing-a-raster-file" class="level2">
-<h2 class="anchored" data-anchor-id="writing-a-raster-file">Writing a raster file</h2>
-<ul>
-<li>You can write a raster object to a file using the <code>writeRaster()</code> function</li>
+<li>Additionally, the <code>writeRaster</code> function will <em>divide</em> by <code>scale</code> and <em>subtract</em> <code>offset</code> from the values (see <code>?writeRaster</code>), so we need to invert the two values</li>
+<li>This is how this is implemented in R:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(dhm25, <span class="st">"data-out/dhm25_lu.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>get_scale_offset2 <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    x, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> <span class="dv">0</span>,          </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="dv">255</span>         </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ){</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(terra)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  min_max <span class="ot">=</span> <span class="fu">minmax</span>(x) </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># careful, this function is currently designed for single band rasters only</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  min_x <span class="ot">&lt;-</span> min_max[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  max_x <span class="ot">&lt;-</span> min_max[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  scale <span class="ot">&lt;-</span> (b <span class="sc">-</span> a) <span class="sc">/</span> (max_x <span class="sc">-</span> min_x)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  offset <span class="ot">&lt;-</span> (a <span class="sc">*</span> max_x <span class="sc">-</span> b <span class="sc">*</span> min_x) <span class="sc">/</span> (max_x <span class="sc">-</span> min_x)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  scale_inverted <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>scale           <span class="co"># invert the scale, since writeRaster divides by scale</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  offset_inverted <span class="ot">&lt;-</span> offset <span class="sc">*</span> <span class="sc">-</span><span class="dv">1</span>       <span class="co"># invert the offset, since writeRaster subtracts the offset</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"scale"</span> <span class="ot">=</span> scale, <span class="st">"offset"</span> <span class="ot">=</span> offset, <span class="st">"scale_inverted"</span> <span class="ot">=</span> scale_inverted, <span class="at">offset_inverted =</span> offset_inverted)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-implementation-for-rasters-example" class="level2">
+<h2 class="anchored" data-anchor-id="r-implementation-for-rasters-example">R implementation for rasters: example</h2>
+<ul>
+<li>Let’s import a raster, calculate the <code>scale</code> and <code>offset</code> values and use these values to write to disk</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"ex/elev.tif"</span>, <span class="at">package=</span><span class="st">"terra"</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev, <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">minmax</span>(elev),<span class="at">collapse =</span> <span class="st">"-"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5-datatypes_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>scale_offset <span class="ot">&lt;-</span> <span class="fu">get_scale_offset2</span>(elev)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: this implementation leads to NA's due to floating point errors. </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># I haven't found a solution for this yet.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  elev, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data-out/INT1U.tif"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">datatype =</span> <span class="st">"INT1U"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">overwrite =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> scale_offset<span class="sc">$</span>scale_inverted, </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">offset =</span> scale_offset<span class="sc">$</span>offset_inverted</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-implementation-for-rasters-example-1" class="level2">
+<h2 class="anchored" data-anchor-id="r-implementation-for-rasters-example-1">R implementation for rasters: example</h2>
+<ul>
+<li>Since GDAL stores the <code>scale</code> and <code>offset</code> values in the metadata, any software powered by GDAL will restore the original values on import</li>
+<li>In other words, if you run <code>rast("data-out/INT1U.tif")</code> you will not notice the values were internally stored using 0 - 255. Instead, you will retrieve the original values.</li>
+<li>To finish off, let’s compare the file sizes of the raster stored as <code>INT1U</code> (Byte) and <code>FLT8S</code> (Float32)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  elev, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data-out/FLT8S.tif"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">datatype =</span> <span class="st">"FLT8S"</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">overwrite =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">file.size</span>(<span class="st">"data-out/INT1U.tif"</span>)<span class="sc">/</span><span class="fu">file.size</span>(<span class="st">"data-out/FLT8S.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.537006</code></pre>
+</div>
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-amatulli2024" class="csl-entry" role="listitem">
+Amatulli, Giuseppe. 2024. <span>“Geocomputation and Machine Learning for Environmental Applications.”</span> <a href="http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html" class="uri">http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Difference in file size using constant dataset (same values and resolution) and varying the datatype<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -980,13 +1336,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./week-2.html" class="pagination-link" aria-label="Week 2: Geopython Conference">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Week 2: Geopython Conference</span></span>
+      <a href="./week-4-task.html" class="pagination-link" aria-label="🚀 Tasks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">🚀 Tasks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./week-3-raster-operations.html" class="pagination-link" aria-label="Raster Operations">
-        <span class="nav-page-text"><span class="chapter-title">Raster Operations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./week-5-gdal.html" class="pagination-link" aria-label="GDAL">
+        <span class="nav-page-text"><span class="chapter-title">GDAL</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
