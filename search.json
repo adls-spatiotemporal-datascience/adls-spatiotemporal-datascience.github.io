@@ -1010,11 +1010,88 @@
     ]
   },
   {
+    "objectID": "week-7-density.html",
+    "href": "week-7-density.html",
+    "title": "Density Estimation",
+    "section": "",
+    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-density.html#exercise-1-kernel-density-estimation",
+    "href": "week-7-density.html#exercise-1-kernel-density-estimation",
+    "title": "Density Estimation",
+    "section": "Exercise 1: Kernel Density Estimation",
+    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-density.html#sec-density-voronoi",
+    "href": "week-7-density.html#sec-density-voronoi",
+    "title": "Density Estimation",
+    "section": "Exercise 2: Voronoi",
+    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-interpolation.html",
+    "href": "week-7-interpolation.html",
+    "title": "Interpolation",
+    "section": "",
+    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-interpolation.html#exercise-1-idw",
+    "href": "week-7-interpolation.html#exercise-1-idw",
+    "title": "Interpolation",
+    "section": "Exercise 1: IDW",
+    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-interpolation.html#exercise-2-nearest-neighbour",
+    "href": "week-7-interpolation.html#exercise-2-nearest-neighbour",
+    "title": "Interpolation",
+    "section": "Exercise 2: Nearest Neighbour",
+    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
+    ]
+  },
+  {
+    "objectID": "week-7-task.html",
+    "href": "week-7-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Task 7\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. As always, the task is due the upcoming week.",
+    "crumbs": [
+      "Week 7: Interpolation / Density Estimation",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Amatulli, Giuseppe. 2024. “Geocomputation and Machine Learning for\nEnvironmental Applications.” http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.\n\n\nDorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework\nfor the Definition of Topological Relations.” In Proc. The\nFourth International Symposium on Spatial Data Handing, 803–13.\n\n\nGandhi, Ujaval. 2020. “Mastering GDAL Tools (Full Course).”\nhttps://courses.spatialthoughts.com/gdal-tools.html#compressing-output.\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance\nMap.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019.\nGeocomputation with r. Chapman; Hall/CRC.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
+    "text": "Amatulli, Giuseppe. 2024. “Geocomputation and Machine Learning for\nEnvironmental Applications.” http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.\n\n\nDorman, Michael. 2023. “Spatial Data\nProgramming with Python — Geobgu.xyz.”\nhttps://geobgu.xyz/py/.\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework\nfor the Definition of Topological Relations.” In Proc. The\nFourth International Symposium on Spatial Data Handing, 803–13.\n\n\nGandhi, Ujaval. 2020. “Mastering GDAL Tools (Full Course).”\nhttps://courses.spatialthoughts.com/gdal-tools.html#compressing-output.\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance\nMap.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019.\nGeocomputation with r. Chapman; Hall/CRC.\n\n\nPebesma, Edzer. 2018. “Simple Features for R:\nStandardized Support for Spatial Vector Data.”\nThe R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in\nDispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis,\nUniversity of Zurich.",
     "crumbs": [
       "References"
     ]
