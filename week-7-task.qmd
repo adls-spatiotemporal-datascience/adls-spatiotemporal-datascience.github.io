@@ -1,0 +1,11 @@
+---
+title: "🚀 Tasks"
+---
+
+
+## Task 7 {#sec-task-interp-density}
+
+Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. Do the exercises in @sec-density and @sec-interpolation in a file named `index.qmd`. As always, the task is due the upcoming week.
+
+
+

@@ -41,6 +41,11 @@ book:
       - week-5-compression.qmd
       - week-5-task.qmd
       # - week-5-nodata.qmd     # in FS26, finish this chapter
+    - part: "Week 7: Interpolation / Density Estimation"
+      chapters:
+      - week-7-density.qmd
+      - week-7-interpolation.qmd
+      - week-7-task.qmd
     - references.qmd
 
 

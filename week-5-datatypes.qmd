@@ -1,5 +1,5 @@
 ---
-title: "Data Types, scale and offset"
+title: "Data types / transformations"
 ---
 
 
@@ -25,28 +25,28 @@ library(gt)
 - While R and Python have a variety of data types including character strings, raster data is always stored as numeric
 - However, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required
 - The choice of data type can have a significant impact on the size of the file and the precision of the data stored
-- Since raster data is powered by GDAL, most raster based software (including R and Python) use the same data types
+- Since raster data is powered by GDAL, most raster based software (including R and Python) use the same data types *when writing the file to disk*
 - The numeric data types are supported by `gdal` are summarized in @tbl-datatypes
 
 :::{#tbl-datatypes}
 
-| Data type         | Minimum        | Maximum       | Size[^1]| Factor |
-|:------------------|---------------:|--------------:|--------:|-------:| 
-| Byte              | 0              | 255           | 39M  	 |     1x |
-| UInt16            | 0              | 65,535        | 78M  	 |     2x |
-| Int16, CInt16     | -32,768        | 32,767        | 78M  	 |     2x |
-| UInt32            | 0              | 4,294,967,295 | 155M 	 |    ~4x |
-| Int32, CInt32     | -2,147,483,648 | 2,147,483,647 | 155M 	 |    ~4x |
-| Float32, CFloat32 | -3.4E38        | 3.4E38        | 155M 	 |    ~4x |
-| Float64, CFloat64 | -1.79E308      | 1.79E308      | 309M 	 |    ~8x | 
+| Data type          | Minimum        | Maximum       | Size[^1]| Factor |
+|:-------------------|---------------:|--------------:|--------:|-------:| 
+| Byte               | 0              | 255           | 39M  	  |     1x |
+| UInt16             | 0              | 65,535        | 78M  	  |     2x |
+| Int16 / CInt16     | -32,768        | 32,767        | 78M  	  |     2x |
+| UInt32             | 0              | 4,294,967,295 | 155M 	  |    ~4x |
+| Int32 / CInt32     | -2,147,483,648 | 2,147,483,647 | 155M 	  |    ~4x |
+| Float32 / CFloat32 | -3.4E38        | 3.4E38        | 155M 	  |    ~4x |
+| Float64 / CFloat64 | -1.79E308      | 1.79E308      | 309M 	  |    ~8x | 
 
-The possible ranges of different datatypes in `gdal` (source: @amatulli2024)
+The possible ranges of different datatypes in `gdal` [source: @amatulli2024]
 
 :::
 
 [^1]: Difference in file size using constant dataset (same values and resolution) and varying the datatype
 
-:::{.callout-note .notes collapse="true"}
+:::{.notes}
 
 
 - If you store categorical data, use integer datatype and store the corespondence in the metadata
@@ -70,7 +70,12 @@ The possible ranges of different datatypes in `gdal` (source: @amatulli2024)
 - To minimize file size, it's important to choose the data type that best fits the range of values in the raster
 - At a first glance, it might seem that the numeric values we measured / calculated *determine* the datatype we use
 - However, we can transform the values to a different range to fit a different datatype
-- For example, if we have NDVI values ranging from -1 to 1, it might seem that we need to use `CFloat32` to store these values. However, we can *transform* (rescale) these values to the range 0 - 255 and store them as `Byte` datatype.
+- Example 1: Fraction values ranging from 0 to 1
+  - It might seem that we need to use `Float32` to store these values. 
+  - However, we can turn fraction into percentages and store them as `Byte` datatype.
+- Example 2: NDVI values ranging from -1 to 1
+  - It might seem that we need to use `CFloat32` to store these values. 
+  - However, we can *transform* (rescale) these values to the range 0 - 255 and store them as `Byte` datatype.
 
 
 
@@ -83,7 +88,7 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-ma
 > To rescale a range between an arbitrary set of values [a, b], the formula becomes: 
 > $$x' = a + \frac{(x-min(x))\times(b - a)}{max(x)-min(x)}$$
 
-For our usecase, we can consider: 
+For the NDVI usecase, we can consider: 
 
  - $x'$ to be the *stored* value
  - $x$ to be the measured value
@@ -185,12 +190,12 @@ tibble(ndvi_measured, ndvi_stored) |>
 \text{offset} &= \frac{a \times max(x) - b \times min(x)}{max(x)-min(x)}
 \end{align}
 
-- To implement this in R, I use two functions: `get_scale` and `get_offset`:
+- To implement this in R, I create a function: `get_scale_offset`:
 
 ```{r}
 #| echo: true
 
-get_scale <- function(
+get_scale_offset <- function(
     x, 
     a = 0,          # the minimum value of the new range (default 0)
     b = 255         # the maximum value of the new range (default 255)
@@ -199,24 +204,15 @@ get_scale <- function(
   max_x = max(x)
   
   scale <- (b - a) / (max_x - min_x)
-  
-  scale
-}
-
-get_offset <- function(
-    x, 
-    a = 0,          
-    b = 255
-    ){
-  min_x = min(x)
-  max_x = max(x)
   offset <- (a * max_x - b * min_x) / (max_x - min_x)
+
   
-  offset
+  list("scale" = scale, "offset" = offset)
 }
 
 
-get_scale(ndvi_measured)
+
+get_scale_offset(ndvi_measured)
 
 ```
 
@@ -227,42 +223,37 @@ get_scale(ndvi_measured)
 - The reason it does not work for raster is that `min(x)` (and `max(x)`) are *local* and not *global* functions
   - They return the minimum / maximum value *per cell over all bands*, not the global minimum / maximum value
   - To calculate the global minimum and maximum value, we can either use `global`, or the slightly faster `minmax` function
-- Additionally, the `writeRaster` function will *divide* by `scale` and *subtract* `offset` from the values (see `writeRaster`), so we need to invert the two values
+- Additionally, the `writeRaster` function will *divide* by `scale` and *subtract* `offset` from the values (see `?writeRaster`), so we need to invert the two values
 - This is how this is implemented in R:
 
 ```{r}
 #| echo: true
 
-get_scale2 <- function(
+get_scale_offset2 <- function(
     x, 
     a = 0,          
     b = 255         
     ){
   library(terra)
   min_max = minmax(x) 
+  # careful, this function is currently designed for single band rasters only
   min_x <- min_max[1,1]
   max_x <- min_max[2,1]
 
   scale <- (b - a) / (max_x - min_x)
-  
-  1/scale           # invert the scale, sincd writeRaster divides by scale
-}
-
-
-get_offset2 <- function(
-    x, 
-    a = 0,          
-    b = 255
-    ){
-  library(terra)
-  min_max = minmax(x) 
-  min_x <- min_max[1,1]   
-  max_x <- min_max[2,1]
-  
   offset <- (a * max_x - b * min_x) / (max_x - min_x)
+
   
-  offset * -1       # invert the offset, since writeRaster subtracts the offset
+  scale_inverted <- 1/scale           # invert the scale, since writeRaster divides by scale
+  offset_inverted <- offset * -1       # invert the offset, since writeRaster subtracts the offset
+
+  
+  list("scale" = scale, "offset" = offset, "scale_inverted" = scale_inverted, offset_inverted = offset_inverted)
+
 }
+
+
+
 
 
 ```
@@ -284,19 +275,18 @@ plot(elev, main = paste(minmax(elev),collapse = "-"))
 
 ```{r}
 #| echo: true
-# write to disk with the minimum data type that fits the range 
-# without transformation 
+scale_offset <- get_scale_offset2(elev)
 
-scale <- get_scale2(elev)
-offset <- get_offset2(elev)
-
+# Note: this implementation leads to NA's due to floating point errors. 
+# 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06
+# I haven't found a solution for this yet.
 writeRaster(
   elev, 
   "data-out/INT1U.tif",
-  # datatype = "INT1U", 
+  datatype = "INT1U",
   overwrite = TRUE, 
-  scale = scale, 
-  offset = offset
+  scale = scale_offset$scale_inverted, 
+  offset = scale_offset$offset_inverted
   )
 ```
 

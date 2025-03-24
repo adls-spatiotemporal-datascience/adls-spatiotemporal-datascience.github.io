@@ -208,7 +208,7 @@ gdal_translate data-out/dhm25.tif data-out/dhm25_4.tif  \
 ```{r}
 #| echo: false
 
-size4 <- filesize2df("data-out/dhm25_4.tif", "`TILED=YES`")
+size4 <- filesize2df("data-out/dhm25_4.tif", "`PREDICTOR=3`")
 
 
 

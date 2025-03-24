@@ -1,0 +1,87 @@
+---
+echo: false
+---
+
+# Interpolation {#sec-interpolation}
+
+
+## Data
+
+The airquality dataset (`luftqualitaet.gpkg`) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this [here](https://www.bafu.admin.ch/bafu/de/home/themen/thema-luft/luft--daten--indikatoren-und-karten/luft--indikatoren/indikator-luft.pt.html/aHR0cHM6Ly93d3cuaW5kaWthdG9yZW4uYWRtaW4uY2gvUHVibG/ljL0FlbURldGFpbD9pbmQ9TFUwMjAmbG5nPWRlJlN1Ymo9Tg%3d%3d.html).
+
+
+## Exercise 1: IDW
+
+Use the function `gstat::idw` to interpolate the NO₂ values using the  *inverse distance weighted* method. 
+
+:::{.callout-note}
+
+The function `idw` needs following inputs: `formula`, `locations` and `newdata`
+
+- `formula`: For ordinary, simple kriging use the formula `z~1` where `z` is the column name of the dependent variable
+- `locations`: A `sf` object with the locations of the dependent variable
+- `newdata`:  A `sf` object with the locations for which the dependent variable should be calculated. Can be created with `sf::st_make_grid`. The `cellsize` arugument determins the resolution of the resuting dataset.
+
+
+Optional arguments:
+
+- `maxdist`: Maximum distance to which measurements should be considered
+- `nmin` /`nmax`: Minimum and maxximum number of measurements to consider
+- `idp` the inverse distance weighting power 
+
+:::
+
+Play around with `maxdist`, `nmin` /`nmax`and `idp`. Convert the resulting `sf` object to a raster (find out how!) and visualize the result.
+
+```{r}
+#| eval: false
+library(sf)
+luftqualitaet <- st_read("data/luftqualitaet/luftqualitaet.gpkg")
+samples <- st_make_grid(luftqualitaet,10000,what = "centers")
+
+
+luft_idw <- gstat::idw(formula = value~1,locations = luftqualitaet, newdata = samples) 
+
+
+library(terra)
+
+luft_idw2 <- cbind(st_coordinates(luft_idw), luft_idw$var1.pred) |> 
+  as.data.frame() |> 
+  rast(crs="epsg:2056")
+
+
+plot(luft_idw2)
+
+```
+
+## Exercise 2: Nearest Neighbour
+
+Another simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in @sec-density-voronoi to create voronoi polygons. Turn the resulting `sfc` object to `sf` using `st_as_sf`, then use `st_join` to add the measured NO2 values the polygons. 
+
+Visualize the result.
+
+
+
+```{r}
+#| eval: false
+
+
+thiessenpolygone <- luftqualitaet |>
+  st_union() |>
+  st_voronoi()
+schweiz <- st_union(schweiz)
+
+thiessenpolygone <- st_cast(thiessenpolygone)
+
+thiessenpolygone_clip <- st_intersection(thiessenpolygone, schweiz) |> 
+  st_as_sf()
+
+thiessenpolygone_clip <- st_join(thiessenpolygone_clip, luftqualitaet)
+
+
+tm_shape(thiessenpolygone_clip) + tm_polygons(fill = "value")
+
+```
+
+
+
