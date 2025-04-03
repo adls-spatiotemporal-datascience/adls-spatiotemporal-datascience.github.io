@@ -340,7 +340,7 @@ window.onload = function() {
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-10-task.html">Week 10: Network Analysis I</a></li><li class="breadcrumb-item"><a href="./week-10-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -365,12 +365,22 @@ window.onload = function() {
 <p>This week, you will do your do your own routing using the <em>Veloland</em> dataset from last week and some points of interestes (<em>locations.gpkg</em> on moodle). Import the two datasets and convert the Veloland dataset to an <em>undirected</em> network using <code>sfnetworks</code>, as you did last week.</p>
 <ol type="1">
 <li>Subset a single location and call this <code>origin</code></li>
-<li>Create a second with all the other locations and call this <code>destination</code></li>
-<li>Use the fucntion <code>st_network_paths</code> from <code>sfnetworks</code> to calculate the shortest paths from <code>origin</code>, to <code>destination</code>, using the column <code>length</code> as weight</li>
+<li>Create a second object with all the other locations and call this <code>destination</code></li>
+<li>Use the function <code>st_network_paths</code> from <code>sfnetworks</code> to calculate the shortest paths from <code>origin</code>, to <code>destination</code>, using the column <code>length</code> as weight</li>
 <li>The output returns a two column data.frame. The column <code>edge_paths</code> retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an <code>sf</code> object for each path.<br>
 </li>
-<li>Visualize the result in a map. Include <code>origin</code> and <code>destination</code> in your visualization.</li>
+<li>Visualize the result in a map. Include <code>origin</code> and <code>destination</code> in your visualization. See <a href="#fig-shortest-path" class="quarto-xref">Figure&nbsp;<span>21.1</span></a> for a possible way to visualize your result.</li>
 </ol>
+<div id="fig-shortest-path" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-shortest-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="images/shortest_path.png" class="img-fluid figure-img column-page">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shortest-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.1: A possible way to visualize the results from your shortest path analysis.
+</figcaption>
+</figure>
+</div>
 
 
 

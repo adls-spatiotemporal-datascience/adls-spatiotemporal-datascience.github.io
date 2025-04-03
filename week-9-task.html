@@ -374,7 +374,7 @@ window.onload = function() {
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-9-task.html">Week 9: Network Analysis I</a></li><li class="breadcrumb-item"><a href="./week-9-task.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -410,9 +410,19 @@ window.onload = function() {
 <li><p>Convert the enriched network consisting of edges and nodes back to <code>sf</code> objects consisting of lines and points (using <code>activate</code> and <code>st_as_sf</code>)</p></li>
 <li><p>The centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(veloland_nodes, veloland_edges, <span class="at">FUN =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Visualize the result. If necessary, transform or reasonably categorize the values to make them more comparable</p></li>
-<li><p>Discuss the results</p></li>
+<li><p>Visualize the result (for an example, see <a href="#fig-centrality" class="quarto-xref">Figure&nbsp;<span>20.1</span></a>). If necessary, transform or reasonably categorize the values to make them more comparable</p></li>
+<li><p>Discuss the results: How do you interpret the differences?</p></li>
 </ol>
+<div id="fig-centrality" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-centrality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="images/centrality.png" class="img-fluid figure-img column-page">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centrality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.1: One possible way to visualize the results of your centrality analysis.
+</figcaption>
+</figure>
+</div>
 
 
 
