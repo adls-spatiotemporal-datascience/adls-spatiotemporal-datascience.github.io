@@ -16,7 +16,7 @@
     "section": "",
     "text": "Simple feature standard",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -27,7 +27,7 @@
     "section": "",
     "text": "Simple features is an open standard (ISO 19125-1:2004) developed and endorsed by the Open Geospatial Consortium (OGC)\nThe standard is widely implemented in spatial databases (such as PostGIS), desktop GIS (such as ArcGIS, QGIS) and scripting languages (such as R, Python)\n\n\nThis is the secret message for Area 2",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -38,7 +38,7 @@
     "section": "What is a feature?",
     "text": "What is a feature?\nThe standard says:\n\nA simple feature is defined […] to have both spatial and non-spatial attributes. Spatial attributes are geometry valued, and simple features are based on 2D geometry with linear interpolation between vertices.\n\n\nA feature is thought of as a thing / an object in the real world, such as a building or a tree.\nFeatures have:\n\na geometry describing where on Earth the feature is located\nattributes, which describe other properties.\n\nFor example:\n\nThe geometry of a tree can be the delineation of its crown, of its stem, or the point indicating its center\nattributes (properties) may include its height, color, diameter at breast height at a particular date, and so on",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -49,7 +49,7 @@
     "section": "Simple Feature Model",
     "text": "Simple Feature Model\n\nSimple features is a hierarchical data model that represents a wide range of geometry types.\nAll geometries are composed of points in a 2-, 3- or 4-dimensional space\nOf 18 geometry types supported by the specification, only the following seven (see Figure 1.1 and Table 1.1) are used in the vast majority of geographic research:\n\nThree basic types: points, linestrings, polygons\nThree composite types: mutlipoints, multilinestrings, multipolygons\nOne special case: geometrycollection (which can be a conglomarate of all the afore mentioned)\n\nThese seven core geometry types are fully supported by the R package sf (Pebesma 2018)\n\n\n\n\n\n\n\nFigure 1.1: Image source: Dorman (2023)\n\n\n\n\n\n\n\nTable 1.1: Source: Pebesma (2018)\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n# of Dimension\n\n\n\n\nPOINT\nzero-dimensional geometry containing a single point\n0\n\n\nLINESTRING\nsequence of points connected by straight1 line pieces\n1\n\n\nPOLYGON\nsequence of points form a closed2 ring3\n2\n\n\nMULTIPOINT\nset of points\n0\n\n\nMULTILINESTRING\nset of linestrings\n1\n\n\nMULTIPOLYGON\nset of polygons\n2\n\n\nGEOMETRYCOLLECTION\nset of geometries of any of the above types\nNA",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -60,7 +60,7 @@
     "section": "Simple features in R",
     "text": "Simple features in R\nSimple Features in R is modelled in three levels:\n\nSimple feature geometries (sfg): Individual Simple Feature objects\nSimple Feature geometry columns (sfc): A list column of sfgs\nSimple Features (with attributes): A sfc with attributes, i.e. additional columns",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -71,7 +71,7 @@
     "section": "sfg: simple feature geometry",
     "text": "sfg: simple feature geometry\nSimple feature geometries are implemented as R native data, using the following rules:\n\na single POINT is a numeric vector\na set of points, e.g. in a LINESTRING or ring of a POLYGON is a matrix, each row containing a point\nany other set is a list\n\nLet’s create some simple feature geometries by hand: However, creator functions are rarely used in practice, since we typically bulk read and write spatial data. They are useful for illustration purposes.\n\nPoints\n\nlibrary(sf)\nfracht &lt;- st_point(c(2685374, 1256519))\n\nfracht\n\n\nplot(fracht)\n\n\n\n\n\n\n\n\n\n\nLinestrings\n\ncoords &lt;- c(\n  2684336, 1255553, \n  2682705, 1258929\n  ) |&gt; \n  matrix(ncol = 2, byrow = TRUE)\n\ncoords\n\n        [,1]    [,2]\n[1,] 2684336 1255553\n[2,] 2682705 1258929\n\n\n\npiste &lt;- st_linestring(coords)\n\npiste\n\n\nplot(piste)\n\n\n\n\n\n\n\n\n\n\nPolygons\n\ncoords_2 &lt;- c(\n  2684142, 1255702, # ↰ \n  2685600, 1256958, # start and end must\n  2682534, 1259699, # be identical (closed)\n  2684142, 1255702  # ↲ \n) |&gt; \n  matrix(ncol = 2, byrow = TRUE) |&gt; \n  list()\n\ncoords_2\n\n[[1]]\n        [,1]    [,2]\n[1,] 2684142 1255702\n[2,] 2685600 1256958\n[3,] 2682534 1259699\n[4,] 2684142 1255702\n\n\n\nflughafen &lt;- st_polygon(coords_2)\n\nflughafen\n\n\nBefore we said that the ring of a polygon is a matrix. Now we are turning it into a list. This is because a polygon could contain holes, which are additional rings.\n\n\nplot(flughafen)",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -82,7 +82,7 @@
     "section": "sfc: Simple feature geometry columns",
     "text": "sfc: Simple feature geometry columns\n\nAs you might have noticed, we didn’t specify a CRS when creating the sfg objects. This is because we weren’t able to.\nIf we convert the sfg to sfc, we can (and should) specify a crs.\n(Usually, a sfc contains more than one sfg. This is not mandatory, and for convenience we will just use a single sfg to showcase sfc)\n\n\nfracht_sfc &lt;- st_sfc(fracht, crs = 2056)\n\nfracht_sfc\n\nGeometry set for 1 feature \nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2685374 ymin: 1256519 xmax: 2685374 ymax: 1256519\nProjected CRS: CH1903+ / LV95\n\n\n\n\npiste_sfc &lt;- st_sfc(piste, crs = 2056)\n\npiste_sfc\n\nGeometry set for 1 feature \nGeometry type: LINESTRING\nDimension:     XY\nBounding box:  xmin: 2682705 ymin: 1255553 xmax: 2684336 ymax: 1258929\nProjected CRS: CH1903+ / LV95\n\n\n\n\nflughafen_sfc &lt;- st_sfc(flughafen, crs = 2056)\n\nflughafen_sfc\n\nGeometry set for 1 feature \nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 2682534 ymin: 1255702 xmax: 2685600 ymax: 1259699\nProjected CRS: CH1903+ / LV95",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -93,7 +93,7 @@
     "section": "sf: Simple features",
     "text": "sf: Simple features\n\nSimple features have attributes\nIn order to add attributes to a simple feature column (sfc), we need to convert it to a simple feature (sf)\n\n\nfracht_sf &lt;- st_sf(fracht_sfc)\n\nfracht_sf$name &lt;- \"Ost\"\n\n\nA sf class is a subset (i.e. special case) of the class data.frame.\nMost things which can be done with a data.frame, can be done with an sf object as well\nMany tidyverse functions are implemented to nicely work with sf\n\n\n# sf objects are also dataframes\nis.data.frame(fracht_sf)\n\n[1] TRUE\n\n\n\n\nNote: Geometries are sticky. This means they aren’t dropped implicitly\n\n\n# Geometries are sticky\nfracht_sf[, \"name\"] \n\nSimple feature collection with 1 feature and 1 field\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2685374 ymin: 1256519 xmax: 2685374 ymax: 1256519\nProjected CRS: CH1903+ / LV95\n  name              fracht_sfc\n1  Ost POINT (2685374 1256519)\n\n\n\n\npiste_sf &lt;- st_sf(piste_sfc)\n\npiste_sf$nr &lt;- 34\n\nflughafen_sf &lt;- st_sf(flughafen_sfc)\n\nflughafen_sf$name &lt;- \"Flughafen Zürich\"\n\nflughafen_sf\n\nSimple feature collection with 1 feature and 1 field\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 2682534 ymin: 1255702 xmax: 2685600 ymax: 1259699\nProjected CRS: CH1903+ / LV95\n                   flughafen_sfc             name\n1 POLYGON ((2684142 1255702, ... Flughafen Zürich",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -104,7 +104,7 @@
     "section": "Plotting simple features",
     "text": "Plotting simple features\n\nVarious libraries support plotting sf objects:\n\nbase R (sf provides a plot-method)\nGeneral purpose libraries such as ggplot2\nDedicated geospatial plotting libraries such as tmap\n\nUse:\n\nbase R: If you want to take a quick look at your data. Base R has the most compact syntax and is extremely fast in plotting\nggplot2: If you only have (small-ish) vector data (no raster) and/or want to leverage the power of ggplot2\ntmap: If you want to use all features a dedicated library for geospatial data has to offer: North arrow, scale bar, interactive (web) maps\n\n\n#\n# Using base R\nplot(st_geometry(flughafen_sf))\nplot(piste_sf, add = TRUE)\nplot(fracht_sf, add = TRUE)\n#\n# Using ggplot2\nlibrary(ggplot2)\nggplot() +\n  geom_sf(data = flughafen_sf) +\n  geom_sf(data = piste_sf) +\n  geom_sf(data = fracht_sf)\n#\n# Using tmap\nlibrary(tmap)\ntm_shape(flughafen_sf) + tm_polygons() +\n  tm_shape(piste_sf) + tm_lines() +\n  tm_shape(fracht_sf) + tm_dots()\n\n\n\n\n\n\nbase R\n\n\n\n\n\n\n\nlibrary ggplot2\n\n\n\n\n\n\n\nlibrary tmap",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -115,7 +115,7 @@
     "section": "Interactive maps",
     "text": "Interactive maps\nThe tmap library can render the map either in a static plot as above (the default) or as an interactive web map (see below)\n\n# set tmap_mode to \"view\" for an interactive web map\ntmap_mode(\"view\")\n\ntm_shape(flughafen_sf) + tm_polygons() +\n  tm_shape(piste_sf) + tm_lines() +\n  tm_shape(fracht_sf) + tm_dots()",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -126,7 +126,7 @@
     "section": "Exercises",
     "text": "Exercises\n\nCreate some simple feature geometries (sfg) of objects you know “by hand”\n\n\nCreate at least one POINT, one LINESTRING and one POLYGON geometry\nYou can capture the coordinates of the nodes from map.geo.admin if these are is Switzerland and openstreetmap (or similar) if they aren’t\n\n\nCreate simple feature columns from you sfgs. Make sure that you assign the correct CRS\nCreate simple features (sf) from your sfcs and add some attributes\n\n\n\n\n\nDorman, Michael. 2023. “Spatial Data Programming with Python — Geobgu.xyz.” https://geobgu.xyz/py/.\n\n\nPebesma, Edzer. 2018. “Simple Features for R: Standardized Support for Spatial Vector Data.” The R Journal 10 (1): 439–46. https://doi.org/10.32614/RJ-2018-009.",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -137,7 +137,7 @@
     "section": "",
     "text": "non-selfintersecting↩︎\nnon-selfintersecting↩︎\nthe first ring denotes the exterior ring, zero or more subsequent rings denote holes in this exterior ring↩︎",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Simple Features</span>"
     ]
   },
@@ -148,7 +148,7 @@
     "section": "",
     "text": "GDAL / ogr2ogr\nGDAL:",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -159,7 +159,7 @@
     "section": "",
     "text": "is an open source translator library for raster and vector geospatial data formats.\nstands for Geospatial Data Abstraction Library\nis used in most geospatial software, be it FOSS or proprietary. The list includes: ArcGIS, QGIS, R (sf) and Python (geopandas)",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -170,7 +170,7 @@
     "section": "GDAL Vector drivers (read)",
     "text": "GDAL Vector drivers (read)\n\nSince GDAL supports a long list of different geospatial file formats, all are in turn supported by {sf}\nRun the function st_drivers for a full list\n{sf} tries to guess the correct driver based on the file extension (see below)\n\n\n# sf uses the geojson driver, based on the file extension\nstationen_schweiz &lt;- read_sf(\"data/week1-exercises/stationen_schweiz.geojson\")\n\n\n# sf uses the shapefile driver, based on the file extension\nhoheitsgebiet &lt;- read_sf(\"data/week1-exercises/HOHEITSGEBIET_FR.shp\")\n\n\nThe read_sf() function is a wrapper around the st_read() function, which is the actual function that reads the data. I use read_sf since this wrapper’s default value for the quiet argument is TRUE (less verbose)",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -181,7 +181,7 @@
     "section": "Multiple layers in one file",
     "text": "Multiple layers in one file\n\nSome file formats, e.g. Geopackages (*.gpkg) or Geodatabases (*.gdb) support multiple datasets in a single file.\nIf no specific layer is requested read_sf() will import the first available layer\nIf more than 1 layers are available, read_sf() will return a warning\nThe function st_layers() will list all available layers\n\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\n# Note the warning\ntlm3d &lt;- read_sf(tlm3d_path)\n\nWarning in CPL_read_ogr(dsn, layer, query, as.character(options), quiet, :\nautomatically selected the first layer in a data source containing more than\none.\n\n\n\n\n# This will list all layers, including some metadata\nst_layers(tlm3d_path)\n\nDriver: GPKG \nAvailable layers:\n  layer_name    geometry_type features fields       crs_name\n1     tlm_bb 3D Multi Polygon    49321     14 CH1903+ / LV95\n2      dummy            Point        3      0 CH1903+ / LV95\n\n\n\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -192,7 +192,7 @@
     "section": "SQL queries during import",
     "text": "SQL queries during import\n\nread_sf() understands an Spatialite SQL query provided in the query = argument\nIn case query = is used, the layers = argument should be skipped (since the layers is specified in the query)\n\n\ntlm_seen &lt;- read_sf(\n  tlm3d_path, \n  query = \"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'\"\n  )",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -203,7 +203,7 @@
     "section": "GDAL Vector drivers (write)",
     "text": "GDAL Vector drivers (write)\n\nThe function st_write() is used to export an sf object to file\nMost vector drivers support reading and writing (see st_drivers / column write)\nMany file formats support appending to the dataset (see append =)\n\n\nst_write(tlm_seen, \"data-out/seen.geojson\")\n\nWriting layer `seen' to data source `data-out/seen.geojson' using driver `GeoJSON'\nWriting 1189 features with 1 fields and geometry type 3D Multi Polygon.",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Vector data I/O</span>"
     ]
   },
@@ -214,7 +214,7 @@
     "section": "",
     "text": "Thematic queries\nlibrary(sf)\n\ntlm3d_path &lt;- \"data/week1-exercises/swiss_TLM3D.gpkg\"\n\ntlm_seen &lt;- read_sf(\n  tlm3d_path, \n  query = \"SELECT objektart, geom FROM tlm_bb WHERE objektart = 'Stehende Gewaesser'\"\n  )\ntlm_bb &lt;- read_sf(tlm3d_path, \"tlm_bb\")\n\n# Subsetting with base-R\ntlm_seen &lt;- tlm_bb[tlm_bb$objektart == \"Stehende Gewaesser\", ]\n\n\nlibrary(dplyr)\n\n\n# Subsetting using dplyr::filter\ntlm_seen &lt;- filter(tlm_bb, objektart == \"Stehende Gewaesser\")",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
     ]
   },
@@ -225,7 +225,7 @@
     "section": "",
     "text": "SQL queries can be performed with file import\n\n\n\nHowever, datasets can also be queried after import using data.frame methods (such as [ or dplyr::filter)",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
     ]
   },
@@ -236,7 +236,7 @@
     "section": "Spatial queries using binary predicate functions",
     "text": "Spatial queries using binary predicate functions\nTake the following example:\n\nSelect all forests in the canton of Luzern\n\n\nSpatial query functions include: st_contains(), st_intersects(), st_touches(), st_within(), and many more\nThese spatial queries are called geometric binary predicates\nThis family of functions return so called sparse matrices: a list the same length as x, which, for each element in x, contains the indices of y where the condition is met.\nThey could return cross matrices, but these usually have a larger memory, since they have are \\(x \\times y\\) in size\n\n\n\nluzern &lt;- read_sf(\"data/week1-exercises/luzern.gpkg\")\n\ntlm_wald &lt;- filter(tlm_bb, objektart == \"Wald\")\n\n# The dataset already has this crs (2056), but apparently \n# does not realize this\ntlm_wald &lt;- st_set_crs(tlm_wald, 2056)\n\n\nquery_res &lt;- st_intersects(tlm_wald, luzern)\n\n# Note the length of the output equals nrow(tlm_wald)\nquery_res\n\nSparse geometry binary predicate list of length 8096, where the\npredicate was `intersects'\nfirst 10 elements:\n 1: (empty)\n 2: (empty)\n 3: (empty)\n 4: (empty)\n 5: (empty)\n 6: (empty)\n 7: (empty)\n 8: (empty)\n 9: (empty)\n 10: (empty)\n\n\n\n(The first 10 elements are empty, because to not intersect Luzern)\nThis list can be used to subset x (TRUE where the list is not empty):\n\n\n\n# Note the use of lenghts (with an s) to get the length of each element in the \n# list\nwald_luzern &lt;- tlm_wald[lengths(query_res) &gt; 0,]\n\n\nlibrary(ggplot2)\n\n\nggplot(luzern) + \n  geom_sf(data = wald_luzern, fill = \"darkgreen\") +\n  geom_sf(color = \"red\", fill = NA) \n\n\n\n\n\n\n\nFigure 3.1: Note how some forests are outside the canton’s border. This is the nature of st_intersects. If even a small part of a forest feature is within Luzern, this feature intersects Luzern and is therefore retained. To query only forests that are completly within Luzern, use st_within().",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
     ]
   },
@@ -247,7 +247,7 @@
     "section": "Spatial queries using [ or st_filter",
     "text": "Spatial queries using [ or st_filter\nThe code above was for illustration purposes. The code can be written more concise:\n\n# using sf-methods in base-R\ntlm_wald[luzern,, op = st_intersects]\n\n# using st_filter\nst_filter(tlm_wald, luzern, .predicate = st_intersects)\n\nThe default value for op and .predicate is st_intersects, so these arguments could also have been omitted:\n\n# using sf-methods in base-R\ntlm_wald[luzern,,]\n\n# using st_filter\nst_filter(tlm_wald, luzern)",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
     ]
   },
@@ -258,7 +258,7 @@
     "section": "Overlay Analysis",
     "text": "Overlay Analysis\n\nIn the example illustrated in Figure 3.1, we have the choice of subsetting forests that either intersect Luzern ever so slightly (st_intersects), or that lie completely within Luzern (st_within).\nDepending on the question, both options can be unsatisfactory (e.g. if the question was Which percentage of Luzern is covered by forest?)\nFor some cases, it might be necessary to “cut” the forest area at the cantons border\nThis can be achieved with st_intersection (which is different from intersects)\nThere are several other functions that work on pairs of geometries. See Geometric operations on pairs of simple feature geometry sets\nThere are even more functions that work on single geometries, e.g. st_buffer. See Geometric unary operations on simple feature geometry sets\n\n\n\nlibrary(glue)\nlibrary(scales)\nwald_luzern2 &lt;- st_intersection(luzern, wald_luzern)\n\nggplot(luzern) + \n  geom_sf(fill = \"gray\", color = NA) +\n  geom_sf(data = wald_luzern2, fill = \"darkgreen\", color = NA)\n\n\n\n\n\n\n\n\n\nNow, it’s possible to compute the area of Luzern and the forest that intersects Luzern using the function st_area.\nThere are several functions to compute geometric measurements of sf-objects.\n\n\nsum(st_area(wald_luzern2))/st_area(luzern)\n\n0.2721733 [1]",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Spatial Vector Operation</span>"
     ]
   },
@@ -269,7 +269,7 @@
     "section": "",
     "text": "Task 1.1\nOn GitHub:\nOn your local machine:",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -280,7 +280,7 @@
     "section": "",
     "text": "On GitHub, create a free organisation called ADLS-STDS2025-kuerzel (replace kuerzel with your ZHAW email prefix).\nSubmit the URL to this organisation to us via mail\nIn this Organisation, create a new, blank repository called week-1.\n\n\n\nInstall CLI Software quarto\nCreate a new directory to solve this weeks task.\nMake this folder a git repository (git init) and use the GitHub Repo you created previously as a remote (git remote add origin &lt;URL&gt;)\nCreate a new file called _quarto.yml with the content as shown below\nCreate a new quarto file called index.qmd with the content as shown below\nRun the CLI command quarto preview to preview the document\nRun the CLI command quarto publish gh-pages to publish the document to GitHub Pages\n\n\n\n_quarto.yml\n\nproject:\n  output-dir: _docs\n\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -291,7 +291,7 @@
     "section": "Task 1.2",
     "text": "Task 1.2\n\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo.\nAdd the datasets to the local folder you created above, in a subfolder named data\nAdd the data folder to the .gitignore file.\nIn index.qmd, add a code chunk (R or Python) and solve the following tasks using your preferred language.\nUsing swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton\nVisualize the results (in a map and / or a plot)\nRender the document using quarto preview\nPublish your result using quarto publish gh-pages\n\nA code chunk is added in the following manner. Please consult the Quarto - Getting Started for more information on your local setup.\n\n\nindex.qmd\n\n# Solution for Week1: Vector data processing\n   \nIn this document, I solve the tasks for week 1 of the course \n*Spatiotemporal Datascience*\n\n```{r}\nlibrary(sf)\n\n```",
     "crumbs": [
-      "Week 1: Vector Recap",
+      "W1: Vector Recap",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -312,7 +312,7 @@
     "section": "",
     "text": "Import a raster file\nlibrary(terra)\n\ndhm25 &lt;- rast(\"data/week3-exercises/dhm25_lu.tif\")\ndhm25\n\nclass       : SpatRaster \ndimensions  : 2321, 2161, 1  (nrow, ncol, nlyr)\nresolution  : 25, 25  (x, y)\nextent      : 2628987, 2683012, 1179988, 1238013  (xmin, xmax, ymin, ymax)\ncoord. ref. : CH1903+ / LV95 (EPSG:2056) \nsource      : dhm25_lu.tif \nname        : dhm25_lu \nmin value   :    381.1 \nmax value   :   3228.3",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
     ]
   },
@@ -323,7 +323,7 @@
     "section": "",
     "text": "terra uses the function rast() to import raster data\nPrinting the object will give you some basic information about the raster\n\nThe number of rows and columns, as well as the number of layers\nThe resolution of the raster, meter per pixel (25 in our case)\nThe extent of the raster, in the coordinate reference system of the raster\nThe coordinate reference system (CRS) of the raster\nThe source (in memory, or a file path)\nThe name(s) of the band(s) (we only have one band in our case)\nThe min and max values of the raster",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
     ]
   },
@@ -334,7 +334,7 @@
     "section": "GeoTIFF",
     "text": "GeoTIFF\n\nGeoTIFF is the most common raster format\nGeoTIFF is an extension to the TIFF format, which includes additional metadata to establish the spatial reference of the file\nThis includes the CRS, the extent, the resolution, and the origin of the raster\nThe metadata is either stored in the header of the file, or in an accompanying file with the same name, but different extension (.tfw or .aux.xml)\nOther important raster file formats include:\n\nCloud optimized GeoTIFF (COG): A GeoTIFF file that is optimized for cloud storage which allows for efficient, partial reading of the file over HTTP\nJPG2000 (.jp2) is a compressed raster format that is often used for satellite imagery\nNetCDF (.nc) is a format that is often used for climate data\nHDF5 (.h5) is a format that is often used for remote sensing data",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
     ]
   },
@@ -345,7 +345,7 @@
     "section": "Writing a raster file",
     "text": "Writing a raster file\n\nYou can write a raster object to a file using the writeRaster() function\n\n\nwriteRaster(dhm25, \"data-out/dhm25_lu.tif\", overwrite = TRUE)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Raster Data I/O</span>"
     ]
   },
@@ -356,7 +356,7 @@
     "section": "",
     "text": "Introduction",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -367,7 +367,7 @@
     "section": "",
     "text": "Map algebra can be defined as operations that modify or summarize raster cell values, with reference to surrounding cells, zones, or statistical functions that apply to every cell.\nMap algebra divides raster operations into four subclasses:\n\nLocal or per-cell operations\nFocal or neighborhood operations. Most often the output cell value is the result of a 3 x 3 input cell block\nZonal operations are similar to focal operations, but the surrounding pixel grid on which new values are computed can have irregular sizes and shapes\nGlobal or per-raster operations. That means the output cell derives its value potentially from one or several entire rasters",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -378,7 +378,7 @@
     "section": "Global Operation (1)",
     "text": "Global Operation (1)\n\nThe most common global operations are descriptive statistics for the entire raster dataset such as the minimum, maximum or mean value.\nFor example: What is the mean elevation value for Luxembourg?\n\n\n\n\n\n\n\n\n\nFigure 7.1: Elevation of Luxembourg\n\n\n\n\n\n\n# note: mean(r) does not work, since \"mean\" is used as a local operator\nmean_elev &lt;- global(r, mean, na.rm = TRUE)\n\nmean_elev\n\n              mean\nelevation 347.6488",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -389,7 +389,7 @@
     "section": "Global Operation (2)",
     "text": "Global Operation (2)\n\nAnother type of “global” operation is distance\nThis function calculates the distance from each cell to a specific target cell\nFor example, what is the distance from each cell to Luxembourg City, the capital of Luxembourg?\n\n\n\n\n\n\n\n\n\n\n\nr_dist &lt;- distance(r, luxembourg_city)\nr_dist &lt;- mask(r_dist, r)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -400,7 +400,7 @@
     "section": "Zonal",
     "text": "Zonal\n\nZonal operations apply an aggregation function to multiple raster cells\nA second raster with categorical values define the “zones”\n\nWhat is the mean altitude per municipality?\n\nmean_vals &lt;- zonal(r, zones, fun = mean, na.rm = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.2: The original Zones (E.g. municipalities of Luxembourg)\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.3: Mean elevation per zone / per municipality\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\n\nThe global operation can be seen as a special case of a zonal operation, where the only “Zone” is the entire dataset",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -411,7 +411,7 @@
     "section": "Local (1)",
     "text": "Local (1)\n\nLocal operations comprise all cell-by-cell operations in one or several layers.\nFor example, we can classify the elevation into values above and below a certain threshold\n\n\n# first, create a boolean copy of the raster\nr_bool &lt;- as.logical(r)\n\nmean_elev &lt;- as.numeric(mean_elev)\nmean_elev\n\n[1] 347.6488\n\nr_bool[r &gt; mean_elev] &lt;- FALSE\nr_bool[r &lt;= mean_elev] &lt;- TRUE",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -422,7 +422,7 @@
     "section": "Local (2)",
     "text": "Local (2)\n\nThis type of (re-) classification is a very common operation\nFor more than 2 categories, we can use classify\n\n\ncuts &lt;- global(r, quantile, probs = c(0, .33, .66, 1), na.rm = TRUE)\n\nr_classify &lt;- classify(r, as.numeric(cuts))\n\n# this next line just replaces the default labels with some custom ones\nlevels(r_classify) &lt;- data.frame(ID = 0:2, category = c(\"low\",\"mid\",\"high\"))\n\np + tm_shape(r_classify) +\n    tm_raster(style = \"cat\",legend.show = TRUE, palette = \"viridis\", title = \"Elevation\") +\n    tm_layout(legend.show = TRUE)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -433,7 +433,7 @@
     "section": "Local (3)",
     "text": "Local (3)\n\nLocal operations are often used with multiple bands\nFor example, we could calculate the mean intensity values of red, green and blue:\n\n\nl7 &lt;- rast(system.file(\"tif/L7_ETMs.tif\",package = \"stars\"))\n\nnames(l7) &lt;- c(\"B\", \"G\", \"R\", \"NIR\", \"SWIR\", \"MIR\")\n\nl7_rgb &lt;- l7[[c(\"R\",\"G\", \"B\")]]\n\nplot(l7_rgb, nr = 1)\n\n\n\n\n\n\n\n\n\nl7_rgb_mean &lt;- mean(l7_rgb)\n\nplot(l7_rgb_mean)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -444,7 +444,7 @@
     "section": "Local (4)",
     "text": "Local (4)\n\nIn a more complex usecase, we could use the R, G and B band to calculate a grayscale value (\\(L^*\\)) using the following formula (from here):\n\n\\[\\begin{aligned}\n\nL^* &= 116 \\times Y ^ {\\frac{1}{3}} - 16\\\\\n\nY &= 0.2126 \\times R^\\gamma+0.7152 \\times G^\\gamma+0.0722 \\times B^\\gamma \\\\\n\n\n\\gamma &= 2.2\n\n\\end{aligned}\\]\n\ng &lt;- 2.2\n\nl7 &lt;- l7/255 # scale values to 0-1 (probabbly not necessary)\n\nY &lt;- 0.2126 * l7[[\"R\"]]^g + 0.7152 * l7[[\"G\"]]^g + 0.0722 * l7[[\"B\"]]^g\n\nL &lt;- 116* Y^(1/3)-16\n\n# Plot the result",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -455,7 +455,7 @@
     "section": "Focal",
     "text": "Focal\n\nWhile local functions operate on one cell focal operations take into account a central (focal) cell and its neighbors.\nThe neighborhood (also named kernel, filter or moving window) under consideration is typically of size 3-by-3 cells (that is the central cell and its eight surrounding neighbors), but can take on any other size or shape as defined by the user.\nA focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell\n\n\n\n\n\n\n\nFigure 7.4: Note how, depending on the size of your moving window, NA’s are produced. Source: Lovelace, Nowosad, and Muenchow (2019)\n\n\n\n\nfocal3by3 &lt;- matrix(rep(1,9), ncol = 3)\n\n\nfocal11by11 &lt;- matrix(rep(1,121), ncol = 11)\n\n\nr_foc3 &lt;- focal(r, focal3by3, fun = mean, fillNA = TRUE)\n\nr_foc11 &lt;- focal(r, focal11by11, fun = mean, fillNA = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.5: Original values\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.6: Result of a 3x3 Focal Window\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.7: Result of a 11x11 Focal Window\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\n\nNote how the output raster is smaller as the focal window is larger (edge effect)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -466,7 +466,7 @@
     "section": "Focal weights (1)",
     "text": "Focal weights (1)\n\nThe focal weights we used above were square and evenly weighted\n\n\nfocal3by3\n\n     [,1] [,2] [,3]\n[1,]    1    1    1\n[2,]    1    1    1\n[3,]    1    1    1\n\n\n\nfocal11by11\n\n      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]\n [1,]    1    1    1    1    1    1    1    1    1     1     1\n [2,]    1    1    1    1    1    1    1    1    1     1     1\n [3,]    1    1    1    1    1    1    1    1    1     1     1\n [4,]    1    1    1    1    1    1    1    1    1     1     1\n [5,]    1    1    1    1    1    1    1    1    1     1     1\n [6,]    1    1    1    1    1    1    1    1    1     1     1\n [7,]    1    1    1    1    1    1    1    1    1     1     1\n [8,]    1    1    1    1    1    1    1    1    1     1     1\n [9,]    1    1    1    1    1    1    1    1    1     1     1\n[10,]    1    1    1    1    1    1    1    1    1     1     1\n[11,]    1    1    1    1    1    1    1    1    1     1     1",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -477,7 +477,7 @@
     "section": "Focal weights (2)",
     "text": "Focal weights (2)\n\nHowever, we can also create uneven weights:\n\nFor example, a laplacian filter is commonly used for edge detection.\n\nlaplacian &lt;- matrix(c(0,1,0,1,-4,1,0,1,0), nrow=3) \n\nlaplacian\n\n     [,1] [,2] [,3]\n[1,]    0    1    0\n[2,]    1   -4    1\n[3,]    0    1    0\n\n\nSo are the sobel filters\n\nsobel_x &lt;- matrix(c(-1,-2,-1,0,0,0,1,2,1), nrow=3)\n\nsobel_x\n\n     [,1] [,2] [,3]\n[1,]   -1    0    1\n[2,]   -2    0    2\n[3,]   -1    0    1\n\nsobel_y &lt;- matrix(c(1,0,-1,2,0,-2,1,0,-1), nrow=3)\n\nsobel_y\n\n     [,1] [,2] [,3]\n[1,]    1    2    1\n[2,]    0    0    0\n[3,]   -1   -2   -1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.8: Laplacian Filter\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.9: Sobel (x-direction)\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.10: SObel (y-direction)",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -488,7 +488,7 @@
     "section": "Focal weights (3)",
     "text": "Focal weights (3)\n\nWe can also create specific shapes using weights\nWe don’t need to create these matrices by hand. Rather, we can use the function focalMat to create different shapes automatically\n\n\n# Note \n# - \"d\" is evaluated in the units of \"x\" (in our case: meters)\n# - The sum of all weights equals to 1\n# - Note how the corners receive a value of 0\nfocal_circle3000 &lt;- focalMat(x = r, d = 3000, \"circle\")\n\nfocal_circle3000\n\n           [,1]       [,2]       [,3]       [,4]       [,5]\n[1,] 0.00000000 0.00000000 0.03703704 0.00000000 0.00000000\n[2,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[3,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[4,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[5,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[6,] 0.03703704 0.03703704 0.03703704 0.03703704 0.03703704\n[7,] 0.00000000 0.00000000 0.03703704 0.00000000 0.00000000\n\n\n\n\n\n\n\nA visual representation of the matrix / filter above\n\n\n\n\n\nfocal_gauss1000 &lt;- focalMat(x = r, d = 1000, \"Gauss\")\n\nfocal_gauss1000\n\n            [,1]        [,2]        [,3]        [,4]        [,5]\n[1,] 0.000241551 0.001082556 0.001784834 0.001082556 0.000241551\n[2,] 0.002942693 0.013188236 0.021743725 0.013188236 0.002942693\n[3,] 0.013188236 0.059105572 0.097448614 0.059105572 0.013188236\n[4,] 0.021743725 0.097448614 0.160665602 0.097448614 0.021743725\n[5,] 0.013188236 0.059105572 0.097448614 0.059105572 0.013188236\n[6,] 0.002942693 0.013188236 0.021743725 0.013188236 0.002942693\n[7,] 0.000241551 0.001082556 0.001784834 0.001082556 0.000241551\n\n\n\n\n\n\n\nA visual representation of the matrix / filter above",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -499,7 +499,7 @@
     "section": "Focal functions in terrain processing",
     "text": "Focal functions in terrain processing\n\nFocal functions are used to calculate the slope of a specific location, e.g. using the algorithm by Horn (1981)\nSimilarly, calculating the aspect (azimuth) of a location is a very typical task when dealing with elevation data\nThese algorithms are used so often, that they are implemented in a dedicated function (terrain())\n\nterrain(r, \"slope\") |&gt; plot()\nterrain(r, \"aspect\") |&gt; plot()\n\n\n\n\n\n\n\n\n\nFigure 7.11: Calculating slope using a predefined algorithm\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.12: Calculating aspect\n\n\n\n\n\n\n\n\n\n\nHorn, Berthold KP. 1981. “Hill Shading and the Reflectance Map.” Proceedings of the IEEE 69 (1): 14–47.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. Geocomputation with r. Chapman; Hall/CRC.",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Raster Operations</span>"
     ]
   },
@@ -510,7 +510,7 @@
     "section": "",
     "text": "Two worlds of spatial data",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -521,7 +521,7 @@
     "section": "",
     "text": "Till now, we have treated vector and raster data separately\nHowever, in many cases, you will need to combine both types of data\nFor example, take the Zonal operation we discussed in the chapter Zonal: Typically, your “zones” will be vector polygons",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -532,7 +532,7 @@
     "section": "Zonal operations with vector data",
     "text": "Zonal operations with vector data\n\nThe zonal function in {terra} can handle vector data: however, it requires sf objects to be converted to terra’s own vector format, called SpatVector. - The function vect() can be used to convert sf objects to SpatVector objects:\n\n\nzones\n\nSimple feature collection with 12 features and 1 field\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 49540.31 ymin: 57009.53 xmax: 105922 ymax: 138631.1\nProjected CRS: LUREF / Luxembourg TM\n# A tibble: 12 × 2\n   zone                                                                 geometry\n * &lt;chr&gt;                                                           &lt;POLYGON [m]&gt;\n 1 Capellen         ((67807.54 74157.87, 67831.1 74087.81, 67898.55 73957.4, 67…\n 2 Clervaux         ((76452.54 123066.7, 76921.51 122665.9, 76473.69 122657.2, …\n 3 Diekirch         ((87698.16 101220.4, 87632.77 101114.2, 87519.26 100859, 87…\n 4 Echternach       ((101054.8 98587.69, 101873.3 98671.15, 102308.8 98302.53, …\n 5 Esch-sur-Alzette ((70485.31 57109.03, 70479.23 57110.74, 70124.08 57203.85, …\n 6 Grevenmacher     ((98316.48 77592.6, 98370.24 76804.03, 98372.67 76767.55, 9…\n 7 Luxembourg       ((79432.03 68509.55, 79342.29 68579.14, 79284.43 68609.69, …\n 8 Mersch           ((81080.72 86671, 81039.57 86437.63, 81015.75 86030.31, 810…\n 9 Redange          ((66884.63 90450.9, 66949.54 90334.49, 67033.38 90124.69, 6…\n10 Remich           ((94804.67 63851.75, 94253.56 63591.47, 94439.38 62504.97, …\n11 Vianden          ((84572.47 109652.3, 84752.39 109225.1, 84638.88 108774.4, …\n12 Wiltz            ((69104.29 107418.7, 68964.91 107123.7, 68930.58 106984.6, …\n\nmean_vals &lt;- zonal(r, vect(zones), fun = mean, na.rm = TRUE)\n\n\nzones$mean &lt;- mean_vals$elevation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.1: The original raster data\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.2: The original zones as vector polygons\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.3: The resulting zones (mean elevation per zone), also as vector data",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -543,7 +543,7 @@
     "section": "Extracting raster values at vector points",
     "text": "Extracting raster values at vector points\n\nA another common operation is to extract raster values at specific points\nLet’s take the example of the city of Luxembourg (see Global Operation (2))\nThe function extract() can be used to extract raster values at specific points\nextract returns a data.frame with\n\none column per raster band (1 in our case)\none row per point (also 1 in our case):\n\n\n\n\n\n\n\n\n\n\n\n\nlux_elev &lt;- extract(r, luxembourg_city)\nlux_elev\n\n  ID elevation\n1  1  293.9805",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -554,7 +554,7 @@
     "section": "Vector to raster conversion",
     "text": "Vector to raster conversion\n\nFunctions that combine raster and vector data usually convert vector to raster internally\nSometimes, we might want to do this conversion explicitly. This can be done using the rasterize() function\nThis function takes three arguments:\n\nx: The vector data (either of class sf or SpatVector)\ny: A raster object that defines the extent, resolution, and CRS of the resulting raster (i.e. a “template”)\nfield: The name of the column in the vector data that should be used to fill the raster cells\n\n\n\n# we can create a template using the input vector. All we have to specify \n# is the resolution of the output raster, which is evalutated in the units of\n# the CRS of the input vector data (meters in our case).\n\ntemplate &lt;- rast(zones, resolution = 1000)\n\nzones_raster &lt;- rasterize(zones, template, \"zone\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) The original zones as polygon data\n\n\n\n\n\n\n\n\n\n\n\n(b) The zones as raster data\n\n\n\n\n\n\n\nFigure 8.4: Note how the conversion to polygons results in a loss of detail\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nNote that rasters don’t store character information. The above zones are coded as integers with a corresponding look-up table (see ?terra::levels).",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -565,7 +565,7 @@
     "section": "Raster to vector conversion",
     "text": "Raster to vector conversion\n\nThe opposite operation, converting raster data to vector data, can be done using the {terra} functions as.points, as.lines and as.polygons:\nThe resulting object will be of class SpatVector. This can be converted to the sf class using st_as_sf()\n\n\nzones_poly &lt;- as.polygons(zones_raster) |&gt; \n  st_as_sf()\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) The zones as raster data\n\n\n\n\n\n\n\n\n\n\n\n(b) The zones as polygon data\n\n\n\n\n\n\n\nFigure 8.5: Note how the conversion back to polygons preserves the cell boundaries",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raster-Vector Operations</span>"
     ]
   },
@@ -576,7 +576,7 @@
     "section": "",
     "text": "Task 3.1\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named index.qmd.",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -587,7 +587,7 @@
     "section": "",
     "text": "Redo Task 1.2. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.\nUsing the R package tictoc, measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week.\nCompare the execution times of the two approaches. Which approach is faster? Where is the bottleneck?\nCompare the results of the two approaches. Are they the same? If not, why?",
     "crumbs": [
-      "Week 3: Raster Recap",
+      "W3: Raster Recap",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -598,7 +598,7 @@
     "section": "",
     "text": "Named topological relations",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
@@ -609,7 +609,7 @@
     "section": "",
     "text": "We briefly touched topological relations in Spatial queries using binary predicate functions\nTopological relations describe the spatial relationships between objects.\nThey are also called binary topological relationships or binary predicates\nThey are logical statements (TRUE/FALSE) about the spatial relationships between two objects\nThe two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions (Egenhofer and Herring 1990).\n\n\nUsage\n\nTopological relations can be used to subset or join spatial data\nFor example:\n\nSubsetting: Return all rivers that flow through the canton of Zurich\nJoining: For every train station, give me the name of the municipality it lies within\n\n\n\n\nNamed topological relations (I)\n\nThe most common topological relations are offered as functions / tools in most GIS software\nIn sf, the following topological functions are available:\n\nst_intersects()\nst_disjoint()\nst_touches()\nst_crosses()\nst_within()\nst_contains()\nst_contains_properly()\nst_overlaps()\nst_equals()\nst_covers()\nst_covered_by()\nst_equals_exact()\nst_is_within_distance()\n\nThese all work slightly differently, and are used in different contexts.\nFor example:\n\nst_covers() returns TRUE if no points of x are outside y, and at least one point of x is inside y.\nst_touches() returns TRUE if the geometries have at least one point in common, but their interiors do not intersect.\n\n\n\n\nNamed topological relations (II)\n\nSome of the relations mentioned above are symmetrical (the order of the geometries does not matter)\nFor example, if st_touches(x, y) is TRUE, then st_touches(y, x) is also TRUE\nOthers are not, meaning that the order of the geometries is important.\nFor example, st_contains(x, y) returns TRUE if x contains y, but st_contains(y, x) returns FALSE\nSome of the relations require additional arguments, such as st_is_within_distance(), which requires a distance argument\nYou can find the full list of topological relations in the sf documentation using ?geos_binary_pred\n\n\n\nSubset Examples\n\nLet’s take the example of the playgrounds in Zurich and the public transport stops.\nWe can subset the playground data to only include playgrounds that are close (e.g. 100m) to public transport stops\n\n\nlibrary(sf)\nlibrary(readr)\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\n\n# Using the shorthand notation\nplaygrounds_close &lt;- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]\n\n\n\n\n\n\n\n\n\nFigure 10.1: Note that the playgrounds within 100m of public transport (red dots) are a subset of all the playgrounds\n\n\n\n\n\n\n\nSpatial join Example (I)\n\nIn a spatial join, we want to add information from one dataset to another based on their spatial relationship\nFor example, we can add the name of the nearest public transport stop to each playground.\nFor this, we will use the function st_nearest_feature\nStrictly speaking, this function is not binary predicate, but is very useful for spatial joins\nTo make the example clearer, I will first discard all unnecessary columns from the datasets\n\n\npublictransport &lt;- publictransport[,\"CHSTNAME\"]\n\nplaygrounds &lt;- playgrounds[, \"name\"]\n\n\nplaygrounds_join &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_nearest_feature\n  )\n\n\nplaygrounds_join\n\nSimple feature collection with 184 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 184 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) Zürich, Burgwies\n 2 Buchlern Sportanlage                       (2678406 1248303) Zürich, Friedho…\n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) Zürich, Langens…\n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) Zürich, Brunaus…\n 7 Josefswiese                                (2681846 1248909) Zürich, Schiffb…\n 8 Gertrudplatz                               (2681431 1247583) Zürich, Locherg…\n 9 Wahlenpark                                 (2683172 1252246) Zürich, Max-Bil…\n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 174 more rows\n\n\n\n\nSpatial join Example (II)\n\nIn the previous example, playgrounds_join has the same features as playgrounds, but with an additional column (CHSTNAME)\nThe reason for this, is that there is only one nearest station for every playground\nIn some joins, the number of rows in the joined dataset can be different from the original dataset\nFor example, if we want to join via the method within 100m, the result is different (see below).\nThis is because there can be none, or even multiple public transport stops within 100m of a playground\n\n\nplaygrounds_join2 &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_is_within_distance, \n  dist = 100\n  )\n\nnrow(playgrounds)\n## [1] 184\n\nnrow(playgrounds_join2)\n## [1] 186\n\nplaygrounds_join2\n## Simple feature collection with 186 features and 2 fields\n## Geometry type: POINT\n## Dimension:     XY\n## Bounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\n## Projected CRS: CH1903+ / LV95\n## # A tibble: 186 × 3\n##    name                                                    geom CHSTNAME        \n##  * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n##  1 Buchenweg                                  (2685485 1245793) &lt;NA&gt;            \n##  2 Buchlern Sportanlage                       (2678406 1248303) &lt;NA&gt;            \n##  3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n##  4 Alfred-Altherr-Terrasse                    (2684082 1249963) &lt;NA&gt;            \n##  5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n##  6 Belvoirpark                                (2682665 1245835) &lt;NA&gt;            \n##  7 Josefswiese                                (2681846 1248909) &lt;NA&gt;            \n##  8 Gertrudplatz                               (2681431 1247583) &lt;NA&gt;            \n##  9 Wahlenpark                                 (2683172 1252246) &lt;NA&gt;            \n## 10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n## # ℹ 176 more rows\n\n\n\nSpatial join order\n\nNote that as is the case with all joins, the order of the datasets matters\nst_join by default is a left join (the first dataset is the left dataset)\nThe resulting dataset will have the geometry of the left dataset\nThis is especially noticeable when joining datasets of different types\n\n\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\nkreise &lt;- kreise[,\"STADTKREIS\"]\n\n\npublictransport_join &lt;- st_join(publictransport, kreise)\n\n\n\n\n\n\n\n\n\n\n\nif you reverse the order, each stadtkreis will be duplicated for every point in the publictransport dataset it intersects\n\n\nkreise_join &lt;- st_join(kreise, publictransport)\n\nnrow(kreise)\n## [1] 12\n\nnrow(kreise_join)\n## [1] 477\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Dataset kreise with 12 features\n\n\n\n\n\n\n\n\n\n\n\n(b) Dataset kreise_join with 477 features\n\n\n\n\n\n\n\nFigure 10.2: Note that all the duplicate stadtkreise overlap each other, so when you visualize the data, the issue is not noticeable",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
@@ -620,7 +620,7 @@
     "section": "Custom topological relations",
     "text": "Custom topological relations\n\nIn case the named topological relations (see Named topological relations (I)) do not covery a specific usecase, we can gain more fine grained control using so called DE-9IM strings.\nDE-9IM stands for Dimensionally Extended nine-Intersection Model and is the formal definition of the topological relations between two geometries\nDE-9IM powers all binary predicate functions like st_intersects etc.\nThe concept is a bit complex, but the idea is that it describes the topological relationship between two geometries in a 3x3 matrix.\nThe reasons the matrix is 3x3 is because it considers the intersection of the (1) interior, (2) boundary, and (3) exterior of the geometries.\nTable 10.1 shows how two overlapping polygons are analyzed using DE-9IM\n\n\n\n\n\nTable 10.1: Image source: M. W. Taves commons.wikimedia.org\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\n\n\n\n\n\nBoundary\n\n\n\n\n\nExterior\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn the example in Table 10.1\n\nthe intersection of both interiors results in an area. This is denoted as 2\nthe intersection of interior with boundary results in a line, this is denoted as 1\nthe intersection of boundary with boundary results in two points, this is denoted as 0\n\nOnce all nine intersections have been regarded and encoded, the result is flattened into a string (with nine characters) which describes the topological relationship precisely\nIn the example in Table 10.1, a compact representation as string code is 212101212\nThis concept is especially interesting from the opposite perspective: i.e. we describe the DE-9IM string we are looking for (see next chapter)\n\n\nRook’s case\n\nAs alluded in the last chapter, the DE-9IM string can help us look for specific relations not covered in the named topological relation\nConsider a chessboard like situation with 3x3 fields (see Figure 10.3)\nFrom the origin field, you might be interested to know all fields that share a full edge (i.e. how a rook would move)\nThis relation is not covered by the named topological relations, so we need to model it using a DE-9IM string\n\n\n\n\n\n\n\n\n\nFigure 10.3: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an endge with the origin?\n\n\n\n\n\n\n\nModeling the rook’s case\n\nTo specify our requirement (destination field must share a boundary with the origin) we need to use the 3x3 DE-9IM we discussed in Table 10.1\nThe requirement is, that the interiors should not intersect (F) and the intersection of the boundaries should result in a line (1). All other intersections to not matter (*). This is displayed in Table 10.2\n\n\n\n\n\nTable 10.2: The DE-9IM for the rooks case. This can be flattend into the string F***1****\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\nF\n*\n*\n\n\nBoundary\n*\n1\n*\n\n\nExterior\n*\n*\n*\n\n\n\n\n\n\n\n\n\n\n\n\nImplementation using st_relate\n\nWe can now use this string in the function st_realate to select fields where the condition is met\n\n\nst_relate(grid_orig,grid_dest, pattern = \"F***1****\")\n\nSparse geometry binary predicate list of length 1, where the predicate\nwas `relate_pattern'\n 1: 2, 4, 5, 7\n\n\nWe could also create our custom st_rook function and use this as we use other named predicates\n\nst_rook &lt;- \\(x, y) st_relate(x, y, pattern = \"F***1****\")\n\ngrid_rook &lt;- grid_dest[grid_orig, , op = st_rook] |&gt; \n  st_sample(1000, type = \"hexagonal\",by_polygon = TRUE)\n\n\n\n\n\n\n\n\n\nFigure 10.4: The chessboard situation with the potential fields for the rook highlighted with a red outline\n\n\n\n\n\n\n\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework for the Definition of Topological Relations.” In Proc. The Fourth International Symposium on Spatial Data Handing, 803–13.",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
@@ -631,7 +631,7 @@
     "section": "",
     "text": "OLAP vs. OLTP",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -642,7 +642,7 @@
     "section": "",
     "text": "OLAP:\n\nRead-mostly workloads\nComplex queries\nread large parts of the data\nbulk appends / updates\n\nOLTP:\n\nMany samll writes and updates\nsimple queries\nread only individual rows",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -653,7 +653,7 @@
     "section": "In process vs. standalone",
     "text": "In process vs. standalone\n\nDuckDB is an in process database management system, it is not an external process to which your application connects.\nIn other words: there is no client sending instructions nor a server to read and process them\nSQLite works the same way, while PostgreSQL, MySQL etc. do not\n\n\n\n\n\nTable 11.1: DuckDB fills a niche that no previous software has filled yet\n\n\n\n\n\n\n\n\n\n\nOLTP\nOLAP\n\n\n\n\nIn-Process\n\n\n\n\nStand-Alone",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -664,7 +664,7 @@
     "section": "Duckdb in practice",
     "text": "Duckdb in practice\nWe have prepared a duckdb database (available on moodle) with the data containing the forest in switzerland and the canton boundaries. Download this dataset (wald-kantone.duckdb ) from moodle.",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -675,7 +675,7 @@
     "section": "Install duckdb",
     "text": "Install duckdb\n\nInstall the duckdb CLI and duckdb R package\nInstall the dbeaver Community Version\n\n\nConnect\nUsing dbeaver, connect to the duckdb database\nInstall and load the spatial extension running the following query:\nINSTALL spatial;\nLOAD spatial;\nCheck if you can see both tables stored in the database using the command:\nSHOW TABLES;\nExplore the tables using the basic SQL syntax:\nSELECT * FROM wald;\nSELECT * FROM kantone;\nBefore we proceed, create an R-Tree spatial index for both tables using the following syntax:\nCREATE INDEX kantone_idx ON kantone USING RTREE (geom);\nCREATE INDEX wald_idx ON wald USING RTREE (geom);\n\n\nSQL VIEW\nNow, we would like to recreate Task 1.2 using SQL. To facilitate this, we are going to make extensive use of VIEWs. But what is a VIEW? geeksforgeeks.org explains it like this:\n\nViews in SQL are a type of virtual table that simplifies how users interact with data across one or more tables. Unlike traditional tables, a view in SQL does not store data on disk; instead, it dynamically retrieves data based on a pre-defined query each time it’s accessed.\n\nIn other words, you store a SQL statement with a specific name. This helps us create very complex queries in a concatenated manner (rather than nesting). We could also simply create materialized tables as intermediate results. But not only does this increase the size of our database with duplicate data, the intermediate results do not update when something in our source changes.\nOur first VIEW will be a subset of the forest dataset, so that the execution time in the iterative phase is shorter:\nTo create a subset of our forest dataset, we limit the results to 1’000 rows:\nSELECT * FROM wald LIMIT 1000; \nTo store this as a view, all we need to do is prepend CREATE VIEW somename AS to our query:\n1CREATE VIEW wald2 AS\n2SELECT * FROM wald LIMIT 1000;\n\n1\n\nThis creates a VIEW from…\n\n2\n\n… the preceeding SELECT statement\n\n\nWe can now call the VIEW above with the following query:\nSELECT * FROM wald2; \n\n\nDevelop SQL Code\nThe following SQL statement gets the intersection of forest and kantone (Task 1.2).\nSELECT \n  name, \n2  st_intersection(w.geom, k.geom),\n1FROM wald2 w, kantone k;\n\n1\n\nw and k are aliases…\n\n2\n\n… used in the intersection\n\n\nHowever, we can optimize this query with a WHERE clause:\nSELECT \n  name, \n  st_intersection(w.geom, k.geom),\nFROM wald2 w, kantone k\n1WHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis WHERE clause reduces execution time\n\n\nWe are actually interested in the area of the intersection and the total area of the canton. We can get this information like so:\nSELECT \n  name, \n1  st_area(st_intersection(w.geom, k.geom)) as wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nst_area calculates the are of the intersection\n\n\nThe next step is to aggregate the area per canton. Before we do this, let’s save this query as a VIEW.\n1CREATE VIEW wald_kantone AS\nSELECT \n  name, \n  st_area(st_intersection(w.geom, k.geom)) AS wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis creates a VIEW from the proceeding query\n\n\nWe can now query this VIEW as if it was a table:\nSELECT * FROM wald_kantone; \nTo calculate the total aggregated area per canton, we can use the GROUP BY function:\nSELECT \n3  name,\n2  sum(wald_area) as wald_area\nFROM wald_kantone\n1GROUP BY name;\n\n1\n\nIf we use GROUP BY in a SQL query..\n\n2\n\n… we need to wrap all columns with aggregate function…\n\n3\n\n… except for the columns that we use for grouping\n\n\nLet’s create a VIEW of this as well:\nCREATE VIEW wald_kanton_grp AS\nSELECT \n  name, \n  sum(wald_area) as wald_area\nFROM wald_kantone\nGROUP BY name;\nFinally, we have to join wald_kanton_grp with kantone to get the information of the total size per canton.\nSELECT \n3    kantone.name,\n4    wald_area/area as waldanteil,\nFROM wald_kanton_grp \n1LEFT JOIN kantone\n2ON wald_kanton_grp.name=kantone.name;\n\n1\n\nTO do a join, append the JOIN method after the select statement…\n\n2\n\n… providing the column names on which to Join on\n\n3\n\nIn the resulting table, we only need the canton name…\n\n4\n\n… and the fraction wald_area over area (total area of canton)\n\n\nThis, we can save in a VIEW as well:\nCREATE VIEW kanton_frac AS\nSELECT \n    kantone.name,                 \n    wald_area/area as waldanteil, \nFROM wald_kanton_grp \nLEFT JOIN kantone \nON wald_kanton_grp.name=kantone.name\n1ORDER BY waldanteil DESC;\n\n1\n\nWe can ORDER BY to show us the highest values first\n\n\nTill now, we only worked with the first 1’000 features of our forest dataset, so the results are incorrect. Since we worked with VIEW, it very straightforward to run our analysis on the full dataset. We simply need to replace the VIEW wald2 with the full version of the dataset, (omitting the LIMIT clause).\nWe can’t simply use CREATE VIEW wald2 since wald2 already exists. We therefore need to use CREATE OR REPLACE VIEW:\n\nCREATE OR REPLACE VIEW wald2\nAS\nSELECT * FROM wald;\nNow we can call kanton_frac again, and we will get a query on the full dataset, since all intermediate VIEWs are updated automatically.\nThis method has the downside that now full query takes a while to process (since no intermediate datasets are materialized).\nSELECT * FROM kanton_frac;",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -686,7 +686,7 @@
     "section": "Import results into R",
     "text": "Import results into R\nTo import the data into R (e.g. to create a visualization), we can simply connect to the database, load the spatial extension and the import the VIEW using dbReadTable():\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
@@ -697,7 +697,7 @@
     "section": "",
     "text": "Task 4.1\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named index.qmd.\nWithout consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in Figure 12.1.\nConcentrate on the boundary-boundary intersection. Note: - No intersection: F - Point intersection: 0 - Line intersetion: 1 - Any intersection: *\nThe 3x3 “chessboard” is available on moodle.\n(a) King’s case (all fields)\n\n\n\n\n\n\n\n\n\n\n\n(b) Bishop’s case (diagonal fields)\n\n\n\n\n\n\n\nFigure 12.1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals",
     "crumbs": [
-      "Week 4: Vector Advanced",
+      "W4: Vector Advanced",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -708,7 +708,7 @@
     "section": "",
     "text": "Raster data types",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -719,7 +719,7 @@
     "section": "",
     "text": "While R and Python have a variety of data types including character strings, raster data is always stored as numeric\nHowever, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required\nThe choice of data type can have a significant impact on the size of the file and the precision of the data stored\nSince raster data is powered by GDAL, most raster based software (including R and Python) use the same data types when writing the file to disk\nThe numeric data types are supported by gdal are summarized in Table 13.1\n\n\n\n\nTable 13.1: The possible ranges of different datatypes in gdal (source: Amatulli 2024)\n\n\n\n\n\n\n\n\n\n\n\n\nData type\nMinimum\nMaximum\nSize1\nFactor\n\n\n\n\nByte\n0\n255\n39M\n1x\n\n\nUInt16\n0\n65,535\n78M\n2x\n\n\nInt16 / CInt16\n-32,768\n32,767\n78M\n2x\n\n\nUInt32\n0\n4,294,967,295\n155M\n~4x\n\n\nInt32 / CInt32\n-2,147,483,648\n2,147,483,647\n155M\n~4x\n\n\nFloat32 / CFloat32\n-3.4E38\n3.4E38\n155M\n~4x\n\n\nFloat64 / CFloat64\n-1.79E308\n1.79E308\n309M\n~8x\n\n\n\n\n\n\n\n\nIf you store categorical data, use integer datatype and store the corespondence in the metadata\nAlways be minimalistic about which datatype you need.\nQuestion if you have a continuous value from 0 to 1, which datatype do you use?\n\nNot Float32! But Multiply by 100 and use Byte or by 1000 (if you need more precision) and use UInt16\n\nQuestion: if you are measuring temperature, and your values are floating point ranging is -20 to +40 degrees, what datatype are you going to use?\n\nNot CFloat32!\nMultiply by 100 and use CInt16\n\nQuestion: if you compute NDVI and have values in the range 0 - 1, what datatype do you use?\n\nNot Float32, but not CInt16 either:\nTransform the values to 0 - 255",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -730,7 +730,7 @@
     "section": "Choosing a data type",
     "text": "Choosing a data type\n\nTo minimize file size, it’s important to choose the data type that best fits the range of values in the raster\nAt a first glance, it might seem that the numeric values we measured / calculated determine the datatype we use\nHowever, we can transform the values to a different range to fit a different datatype\nExample 1: Fraction values ranging from 0 to 1\n\nIt might seem that we need to use Float32 to store these values.\nHowever, we can turn fraction into percentages and store them as Byte datatype.\n\nExample 2: NDVI values ranging from -1 to 1\n\nIt might seem that we need to use CFloat32 to store these values.\nHowever, we can transform (rescale) these values to the range 0 - 255 and store them as Byte datatype.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -741,7 +741,7 @@
     "section": "Rescaling / Transforming values to 0 - 255",
     "text": "Rescaling / Transforming values to 0 - 255\nFrom Wikipedia:\n\nTo rescale a range between an arbitrary set of values [a, b], the formula becomes: \\[x' = a + \\frac{(x-min(x))\\times(b - a)}{max(x)-min(x)}\\]\n\nFor the NDVI usecase, we can consider:\n\n\\(x'\\) to be the stored value\n\\(x\\) to be the measured value\n\\(a\\) and \\(b\\) to be the maximum, minimum value of Byte (0 and 255 respectively)\n\\(min(x)\\) and \\(max(x)\\) the maximum and minimum measured values (-1 and 1 respectively)\n\nWe can use these values and simplify the formula as follows:\n\\[\\begin{align}\n\nx' &= 0 + \\frac{(x+1)\\times 255}{2} \\\\\n\nx' &= \\frac{255x+255}{2} \\\\\n\nx' &= 127.5x+127.5 \\\\\n\n\\end{align}\\]",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -752,7 +752,7 @@
     "section": "Rescaling NDVI values",
     "text": "Rescaling NDVI values\n\nWe can now use this formula \\(x' = 127.5x+127.5\\) to rescale NDVI values to the range 0 - 255\nSo, rather than storing the NDVI value 0.2, for example, we store the value 153\nThis rescaling is determined by two values: scale and offset (127.5 for both values in our case)",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -763,7 +763,7 @@
     "section": "Precision",
     "text": "Precision\nNote that this transformation to 255 values limits our precision:\n\nOur values are now limited to in their precision, since we only have 255 possible values\nWe can calculate the available precision like so: \\(\\frac{max(x)-min(x)}{b-a}\\)\nIn our case this is \\(\\frac{1 - (-1)}{255-0} = 0.0078\\).\nAny measured / calculated NDVI value will be rounded to a multiple of 0.0078.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -774,7 +774,7 @@
     "section": "R Implementation for vectors",
     "text": "R Implementation for vectors\n\nA generic way to implement this in R is as follows:\n\n\nscale_minmax &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x) \n  max_x = max(x) \n  a + (x - min_x) * (b - a) / (max_x - min_x)\n}\n\nTake the following example:\n\nset.seed(552)\n\n\n# this creates 100 random NDVI values between -1 and 1\nndvi_measured &lt;- runif(100, -1, 1)\n\nndvi_stored &lt;- scale_minmax(ndvi_measured)\n\ntibble(ndvi_measured, ndvi_stored) |&gt;\n  ggplot(aes(ndvi_measured, ndvi_stored)) + \n  geom_line(col = \"grey\") +\n  geom_point() +\n  labs(x = \"Measured NDVI (-1 to +1)\", y = \"Stored value (0 to 255)\") +\n  theme_minimal()",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -785,7 +785,7 @@
     "section": "Restoring the original values",
     "text": "Restoring the original values\n\nImagine you stored the NDVI values in the range 0 - 255, stored these values in a Geotiff and sent it to a colleague.\nTo restore the original NDVI values the transformation (\\(x' = 127x+127.5\\)) needs to be known\nMore precisely, the scale and offset values need to be known\nWe can simply invert the transformation to get the original values back: \\(x = \\frac{x'-127.5}{127.5}\\)",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -796,7 +796,7 @@
     "section": "R implementation for rasters I",
     "text": "R implementation for rasters I\n\nSince rescaling values is a common operation, it is supported by GDAL and therefore most raster libraries\nRather than transforming our values in memory, we can transform them when writing the raster to disk.\nFor this, we can use the arguments scale = and offset = in the writeRaster function\nTo use these arguments we need to calculate the scale and offset values first\nRewriting the formula above, we can calculate scale and offset:\n\n\\[\\begin{align}\n\\text{scale} &= \\frac{b - a}{max(x)-min(x)} \\\\\n\\text{offset} &= \\frac{a \\times max(x) - b \\times min(x)}{max(x)-min(x)}\n\\end{align}\\]\n\nTo implement this in R, I create a function: get_scale_offset:\n\n\nget_scale_offset &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x)\n  max_x = max(x)\n  \n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  list(\"scale\" = scale, \"offset\" = offset)\n}\n\n\n\nget_scale_offset(ndvi_measured)\n\n$scale\n[1] 130.0526\n\n$offset\n[1] 129.1798",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -807,7 +807,7 @@
     "section": "R implementation for rasters II",
     "text": "R implementation for rasters II\n\nThe new function get_scale_offset works nicely with vectors, but not with rasters\nThe reason it does not work for raster is that min(x) (and max(x)) are local and not global functions\n\nThey return the minimum / maximum value per cell over all bands, not the global minimum / maximum value\nTo calculate the global minimum and maximum value, we can either use global, or the slightly faster minmax function\n\nAdditionally, the writeRaster function will divide by scale and subtract offset from the values (see ?writeRaster), so we need to invert the two values\nThis is how this is implemented in R:\n\n\nget_scale_offset2 &lt;- function(\n    x, \n    a = 0,          \n    b = 255         \n    ){\n  library(terra)\n  min_max = minmax(x) \n  # careful, this function is currently designed for single band rasters only\n  min_x &lt;- min_max[1,1]\n  max_x &lt;- min_max[2,1]\n\n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  scale_inverted &lt;- 1/scale           # invert the scale, since writeRaster divides by scale\n  offset_inverted &lt;- offset * -1       # invert the offset, since writeRaster subtracts the offset\n\n  \n  list(\"scale\" = scale, \"offset\" = offset, \"scale_inverted\" = scale_inverted, offset_inverted = offset_inverted)\n\n}",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -818,7 +818,7 @@
     "section": "R implementation for rasters: example",
     "text": "R implementation for rasters: example\n\nLet’s import a raster, calculate the scale and offset values and use these values to write to disk\n\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package=\"terra\"))\n\nplot(elev, main = paste(minmax(elev),collapse = \"-\"))\n\n\n\n\n\n\n\n\n\nscale_offset &lt;- get_scale_offset2(elev)\n\n# Note: this implementation leads to NA's due to floating point errors. \n# 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06\n# I haven't found a solution for this yet.\nwriteRaster(\n  elev, \n  \"data-out/INT1U.tif\",\n  datatype = \"INT1U\",\n  overwrite = TRUE, \n  scale = scale_offset$scale_inverted, \n  offset = scale_offset$offset_inverted\n  )",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -829,7 +829,7 @@
     "section": "R implementation for rasters: example",
     "text": "R implementation for rasters: example\n\nSince GDAL stores the scale and offset values in the metadata, any software powered by GDAL will restore the original values on import\nIn other words, if you run rast(\"data-out/INT1U.tif\") you will not notice the values were internally stored using 0 - 255. Instead, you will retrieve the original values.\nTo finish off, let’s compare the file sizes of the raster stored as INT1U (Byte) and FLT8S (Float32)\n\n\nwriteRaster(\n  elev, \n  \"data-out/FLT8S.tif\",\n  datatype = \"FLT8S\", \n  overwrite = TRUE\n  )\n\n\nfile.size(\"data-out/INT1U.tif\")/file.size(\"data-out/FLT8S.tif\")\n\n[1] 0.537006\n\n\n\n\n\n\nAmatulli, Giuseppe. 2024. “Geocomputation and Machine Learning for Environmental Applications.” http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -840,7 +840,7 @@
     "section": "",
     "text": "Difference in file size using constant dataset (same values and resolution) and varying the datatype↩︎",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Data types / transformations</span>"
     ]
   },
@@ -851,7 +851,7 @@
     "section": "",
     "text": "GDALInfo\ngdalinfo --version\n\nGDAL 3.9.3, released 2024/10/07",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
     ]
   },
@@ -862,7 +862,7 @@
     "section": "",
     "text": "The simplest program in GDAL is probabbly gdalinfo\nIt lists information about a raster dataset.\nThe simplest command to test if a CLI tool is working, is to get the version number using --version:\n\n\n\nGet help\n\nAll named arguments to gdalinfo are listed with [-argument]\nSome arguments need parameters:\n\nFor example: -if stands for input format\nif Gtiff specifies that the input is a GeoTIFF\nThis allows you to be explicit about your input format, rather than GDAL guessing it from the file extension\nThese inputs are denoted with &lt;&gt; (i.e. [-if &lt;format&gt;])\n\nPositional arguments do not have square brackets\nA positional argument needs to be in a specific position\ngdalinfo only has one position argument: &lt;dataset_name&gt;\n\n\ngdalinfo --help\n\nUsage: gdalinfo [--help] [--long-usage] [--help-general]\n                [-json] [-mm]\n                [[-stats]|[-approx_stats]]\n                [-hist] [-nogcp] [-nomd] [-norat] [-noct] [-nofl] [-checksum] [-listmdd] [-proj4]\n                [-wkt_format &lt;WKT1|WKT2|WKT2_2015|WKT2_2018|WKT2_2019&gt;] [-sd &lt;n&gt;] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-if &lt;format&gt;]... [-mdd &lt;domain&gt;|all]\n                &lt;dataset_name&gt;\n\nNote: gdalinfo --long-usage for full help.\n\n\n\n\nGet basic Information\n\ngdalinfo data/week5-exercises/elev-lux.tif\n\nDriver: GTiff/GeoTIFF\nFiles: data/week5-exercises/elev-lux.tif\n       data/week5-exercises/elev-lux.tif.aux.xml\nSize is 95, 90\nCoordinate System is:\nGEOGCRS[\"WGS 84\",\n    ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n        MEMBER[\"World Geodetic System 1984 (Transit)\"],\n        MEMBER[\"World Geodetic System 1984 (G730)\"],\n        MEMBER[\"World Geodetic System 1984 (G873)\"],\n        MEMBER[\"World Geodetic System 1984 (G1150)\"],\n        MEMBER[\"World Geodetic System 1984 (G1674)\"],\n        MEMBER[\"World Geodetic System 1984 (G1762)\"],\n        MEMBER[\"World Geodetic System 1984 (G2139)\"],\n        MEMBER[\"World Geodetic System 1984 (G2296)\"],\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"World.\"],\n        BBOX[-90,-180,90,180]],\n    ID[\"EPSG\",4326]]\nData axis to CRS axis mapping: 2,1\nOrigin = (5.741666666666666,50.191666666666663)\nPixel Size = (0.008333333333333,-0.008333333333333)\nMetadata:\n  AREA_OR_POINT=Area\nImage Structure Metadata:\n  COMPRESSION=LZW\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (   5.7416667,  50.1916667) (  5d44'30.00\"E, 50d11'30.00\"N)\nLower Left  (   5.7416667,  49.4416667) (  5d44'30.00\"E, 49d26'30.00\"N)\nUpper Right (   6.5333333,  50.1916667) (  6d32' 0.00\"E, 50d11'30.00\"N)\nLower Right (   6.5333333,  49.4416667) (  6d32' 0.00\"E, 49d26'30.00\"N)\nCenter      (   6.1375000,  49.8166667) (  6d 8'15.00\"E, 49d49' 0.00\"N)\nBand 1 Block=95x43 Type=Int16, ColorInterp=Gray\n  Description = elevation\n  Min=141.000 Max=547.000 \n  Minimum=141.000, Maximum=547.000, Mean=-9999.000, StdDev=-9999.000\n  NoData Value=-32768\n  Metadata:\n    STATISTICS_MINIMUM=141\n    STATISTICS_MAXIMUM=547\n    STATISTICS_MEAN=-9999\n    STATISTICS_STDDEV=-9999\n\n\n\n\nGet histogram\n\nTo calculate a histogram, we can use the argument -hist (see the help page)\nNote: I’m piping the output into head and then tail to truncate the result\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2\n\n  256 buckets from 140.204 to 547.796:\n  2 3 1 4 0 0 1 1 1 5 1 0 0 2 1 1 3 5 1 5 4 4 1 4 4 1 1 3 2 0 6 4 0 2 6 7 5 5 6 5 7 8 4 4 3 11 8 2 3 3 10 5 13 14 3 13 4 14 10 6 19 6 12 11 10 18 9 17 26 14 25 8 19 24 10 37 15 30 12 30 37 22 32 18 47 42 23 44 35 48 53 21 56 33 52 59 31 46 33 39 68 27 57 31 44 28 61 64 24 55 32 57 69 30 55 22 52 40 25 51 28 48 52 23 37 20 40 13 42 55 17 39 11 41 37 20 40 22 38 25 25 31 17 21 42 13 30 12 18 27 11 24 10 25 14 19 30 12 19 10 27 28 3 22 10 15 28 9 15 6 20 20 7 9 5 20 12 9 19 6 25 7 18 27 9 21 7 21 19 9 19 8 18 27 9 27 16 17 25 12 31 18 25 26 16 35 14 25 11 36 20 17 35 15 27 27 14 16 6 29 20 7 27 11 28 14 2 12 8 11 3 6 7 6 9 6 4 6 1 3 1 1 5 1 1 1 1 1 0 1 0 2 2 0 0 1 \n\n\n\n\nGet output as JSON\n\nTo get the output as a JSON, use the argument -json\nJSON outputs are much easier to to parse\nThis is especially useful if you want to use the output in a script or program\n\n\n# pipe the output to a JSON file\ngdalinfo -hist -json data/week5-exercises/elev-lux.tif  &gt; data-out/elev-lux.json\n\n\n\nParse JSON output\n\nOpen the file elev-lux.json in a browser to get a good idea of the hierarchy\nUse a tool like jq to parse the JSON in the terminal\njq is a powerful tool for parsing JSON in the terminal\nWe can “climb” down the JSON structure using the . operator and the key names\nTo extract from an array, we can use []\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \\\n  jq \".bands[].min\"\n\n141.0\n\n\n\n\nPlots in bash\n\nTo illustrate, we extract the histogram from the data and visualize it with bashplotlib\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \n1  jq \".bands[].histogram.buckets[]\" |\n2  hist -w 1 -p +\n\n\n1\n\nThis jq filter extracts the raw values from the array\n\n2\n\nhist from bashplotlib creates a histogram: -w 1 sets the width to 1 and -p + creates a + instead of a point\n\n\n\n\n 20|  +                                                                    \n 19|  +                                                                    \n 18|  +                                                                    \n 17|  +                                                                    \n 16|  +                                                                    \n 15|  +                                                                    \n 14|  +                                                                    \n 13|  +                                                                    \n 12|  +    +                                                               \n 11|  +    +                                                               \n 10| ++ ++ +                                                               \n  9| ++ ++++                  + +                                          \n  8| +++++++  +               + +                                          \n  7| ++++++++ ++++ +    ++    + +                                          \n  6| ++++++++ ++++ +   +++    + +                                          \n  5| +++++++++++++ +  ++++    + ++ +                                       \n  4| ++++++++++++++++ ++++++  + ++ ++     +                                \n  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              \n  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            \n  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++\n    ----------------------------------------------------------------------\n\n\nGetting the CRS\n\nTo get the Coordinate Reference System (CRS) of a raster, we can filter for the entry .coordinateSystem\nThe specific raster does not seem to have a CRS assigned, so the output is null\nWe need to consult the metadata provided by the data provider to get the CRS\nAs noted here, the CRS is LV03 LN02, which is the old swiss coordinate system, aka EPSG:21781\n\n\ngdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq \".coordinateSystem\"\n\nnull\n\n\n\nWe can confirm this by geetting the extent of the raster,\nFor this we can use the argument -json and then extract the cornerCoordinates key\n\n\ngdalinfo -json \\\n  data/week5-exercises/dhm25_grid_raster.asc | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
     ]
   },
@@ -873,7 +873,7 @@
     "section": "Gdalwarp",
     "text": "Gdalwarp\n\nThe DHM25 raster is in the old Swiss coordinate system EPSG:21781\nTo transform it to the new Swiss coordinate system EPSG:2056, we can use the gdalwarp program\nNote that gdalwarp has two positional arguments:\n\n&lt;src_dataset_name&gt;... and &lt;dst_dataset_name&gt;\nThe dots indicate that you can input multiple data sources\n\n\n\ngdalwarp --help\n\nUsage: gdalwarp [--help] [--long-usage] [--help-general]\n                [--quiet] [-overwrite] [-of &lt;output_format&gt;] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-s_srs &lt;srs_def&gt;]\n                [-t_srs &lt;srs_def&gt;]\n                [[-srcalpha]|[-nosrcalpha]]\n                [-dstalpha] [-tr &lt;xres&gt; &lt;yres&gt;|square] [-ts &lt;width&gt; &lt;height&gt;] [-te &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;]\n                [-te_srs &lt;srs_def&gt;] [-r near|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum]\n                [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                &lt;src_dataset_name&gt;... &lt;dst_dataset_name&gt;\n\nAdvanced options:\n                [-wo &lt;NAME&gt;=&lt;VALUE&gt;]... [-multi] [-s_coord_epoch &lt;epoch&gt;] [-t_coord_epoch &lt;epoch&gt;] [-ct &lt;string&gt;]\n                [[-tps]|[-rpc]|[-geoloc]]\n                [-order &lt;1|2|3&gt;] [-refine_gcps &lt;tolerance&gt; [&lt;minimum_gcps&gt;]] [-to &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-et &lt;err_threshold&gt;] [-wm &lt;memory_in_mb&gt;] [-srcnodata \"&lt;value&gt;[ &lt;value&gt;]...\"]\n                [-dstnodata \"&lt;value&gt;[ &lt;value&gt;]...\"] [-tap] [-wt Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                [-cutline &lt;datasource&gt;|&lt;WKT&gt;] [-cutline_srs &lt;srs_def&gt;] [-cwhere &lt;expression&gt;]\n                [[-cl &lt;layername&gt;]|[-csql &lt;query&gt;]]\n                [-cblend &lt;distance&gt;] [-crop_to_cutline] [-nomd] [-cvmd &lt;meta_conflict_value&gt;] [-setci]\n                [-oo &lt;NAME&gt;=&lt;VALUE&gt;]... [-doo &lt;NAME&gt;=&lt;VALUE&gt;]... [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE]\n                [[-vshift]|[-novshiftgrid]]\n                [-if &lt;format&gt;]... [-srcband &lt;band&gt;]... [-dstband &lt;band&gt;]...\n\nNote: gdalwarp --long-usage for full help.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
     ]
   },
@@ -884,7 +884,7 @@
     "section": "Reproject / Transform Raster",
     "text": "Reproject / Transform Raster\n\nSince our data has no CRS assigned, we need to specify the source CRS using -s_srs\nThe EPSG code for the new Swiss coordinate system is 2056, which we will provide as the target CRS using -t_srs\nWe recommend using geotiff rather than ascii output\n\n\ngdalwarp -s_srs EPSG:21781 \\\n  -t_srs EPSG:2056 \\ \n  data/week5-exercises/dhm25_grid_raster.asc \\\n  data-out/dhm25.tif\n\n0...10...20...30...40...50...60...70...80...90...100 - done.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
     ]
   },
@@ -895,7 +895,7 @@
     "section": "Check the CRS",
     "text": "Check the CRS\n\nWe can now check the CRS on our created dataset\n\n\ngdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45\n\nCoordinate System is:\nPROJCRS[\"CH1903+ / LV95\",\n    BASEGEOGCRS[\"CH1903+\",\n        DATUM[\"CH1903+\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4150]],\n    CONVERSION[\"Swiss Oblique Mercator 1995\",\n        METHOD[\"Hotine Oblique Mercator (variant B)\",\n            ID[\"EPSG\",9815]],\n        PARAMETER[\"Latitude of projection centre\",46.9524055555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8811]],\n        PARAMETER[\"Longitude of projection centre\",7.43958333333333,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8812]],\n        PARAMETER[\"Azimuth of initial line\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8813]],\n        PARAMETER[\"Angle from Rectified to Skew Grid\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8814]],\n        PARAMETER[\"Scale factor on initial line\",1,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8815]],\n        PARAMETER[\"Easting at projection centre\",2600000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8816]],\n        PARAMETER[\"Northing at projection centre\",1200000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8817]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Cadastre, engineering survey, topographic mapping (large and medium scale).\"],\n        AREA[\"Liechtenstein; Switzerland.\"],\n        BBOX[45.82,5.96,47.81,10.49]],\n    ID[\"EPSG\",2056]]\n\n\n\n\nAs well as the extent\n(note how the values have changed)\n\n\ngdalinfo -json data-out/dhm25.tif | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    2479987.5,\n    1302012.5\n  ],\n  \"lowerLeft\": [\n    2479987.5,\n    1073987.5\n  ],\n  \"lowerRight\": [\n    2865012.5,\n    1073987.5\n  ],\n  \"upperRight\": [\n    2865012.5,\n    1302012.5\n  ],\n  \"center\": [\n    2672500.0,\n    1188000.0\n  ]\n}",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>GDAL</span>"
     ]
   },
@@ -906,7 +906,7 @@
     "section": "",
     "text": "Raster Data Storage Requirements\nMuch of this section was taken from Gandhi (2020). See also this great blog post by Paul Ramsey.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -917,7 +917,7 @@
     "section": "",
     "text": "The storage space required for an image depends on its dimensions and data type.\n\nExample:\n\nAn SRTM tile consists of a single band with a resolution of 3601 × 3601 pixels.\n\nEach pixel is stored as an Int16 (16-bit integer), requiring 2 Bytes (1 Byte = 8 Bits).\n\nThe total storage needed is: \\(3601 \\times 3601 \\times 2 = 25,934,402 \\text{ Bytes} \\approx 25.93 \\text{ MB}\\)\n\nCompression algorithms can be used to reduce the required storage space.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -928,7 +928,7 @@
     "section": "Types of Compression",
     "text": "Types of Compression\n\nLossless Compression\n\nPreserves data quality without any loss.\n\nThe original data can be perfectly reconstructed.\n\nReduces file size by eliminating redundant information.\n\nCommonly used for scientific data such as elevation models and satellite imagery.\n\nExamples: LZW, DEFLATE, PACKBITS, ZSTD, …\n\nLossy Compression\n\nSacrifices some data quality to achieve higher compression.\n\nThe original data is approximated rather than perfectly reconstructed.\n\nAllows for significantly smaller file sizes by discarding less perceptible details.\nCommonly used for photographic data such as aerial and drone imagery.\n\nExamples: JPEG2000, WEBP (supports both lossy and lossless modes), …",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -939,7 +939,7 @@
     "section": "How does compression work?",
     "text": "How does compression work?\n\nGiven the pixel values: 100, 101, 102, 100, 100\n\nInstead of storing each value individually, we can store each unique value once and keep track of its positions.\n\nRepresentation:\n\n100 → Appears at positions [0, 3, 4]\n\n101 → Appears at position [1]\n\n102 → Appears at position [2]",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -950,7 +950,7 @@
     "section": "Use of PREDICTOR",
     "text": "Use of PREDICTOR\n\nSome compression algorithms, such as LZW, DEFLATE, and ZSTD, can utilize a predictor to enhance compression efficiency.\n\nInstead of storing absolute values, a predictor stores only the differences between consecutive values.\n\nAvailable predictor methods:\n\nNo predictor (1, default)\n\nHorizontal differencing (2)\n\nFloating point prediction (3)\n\nExample:\n\nOriginal values: 100, 101, 102, 100, 100\n\nValues with predictor: 100, 1, 1, -2, 0",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -961,7 +961,7 @@
     "section": "Use of Tiling",
     "text": "Use of Tiling\n\nBy default, data is stored line by line.\n\nIn many cases, storing and reading data in blocks of pixels improves efficiency.\n\nWhen the TILED=YES option is enabled, data is stored and compressed in 256 × 256 pixel blocks.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -972,7 +972,7 @@
     "section": "Compression Costs",
     "text": "Compression Costs\n\nCompression adds processing overhead during both data creation and retrieval.\n\nHighly compressed data may result in slower read times.\n\nIn many applications, the reduction in disk space comes at the cost of increased processing time and CPU usage.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -983,7 +983,7 @@
     "section": "Gdal_translate",
     "text": "Gdal_translate\n\ngdal_translate is a program to convert raster data between different formats\nNote how the naming convention differs (snake case). The APIs for all the software vary slightly, always consult the documentation (e.g. using --help)\nSome options are mutually exclusive. These are wrapped in extra []. For example: [[-strict]|[-not_strict]]\nNote how this program has two positional arguments: &lt;input_file&gt; and &lt;output_file&gt;\n\n\ngdal_translate --help\n\nUsage: gdal_translate [--help] [--long-usage] [--help-general]\n                      [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}] [-if &lt;format&gt;]...\n                      [-of &lt;output_format&gt;] [--quiet] [-b &lt;band&gt;]... [-mask &lt;mask&gt;] [-expand gray|rgb|rgba]\n                      [[-strict]|[-not_strict]]\n                      [-outsize &lt;xsize[%]|0&gt; &lt;ysize[%]|0&gt;] [-tr &lt;xres&gt; &lt;yes&gt;] [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE] [-sds]\n                      [-r nearest,bilinear,cubic,cubicspline,lanczos,average,mode]\n                      [[-scale [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-scale_X [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|[-unscale]]\n                      [[-exponent &lt;value&gt;]|[-exponent_X &lt;value&gt;]...]\n                      [-srcwin &lt;xoff&gt; &lt;yoff&gt; &lt;xsize&gt; &lt;ysize&gt;] [-projwin &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-projwin_srs &lt;srs_def&gt;] [-epo] [-eco] [-a_srs &lt;srs_def&gt;] [-a_coord_epoch &lt;epoch&gt;]\n                      [-a_ullr &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;] [-a_nodata &lt;value&gt;|none]\n                      [-a_gt &lt;gt(0)&gt; &lt;gt(1)&gt; &lt;gt(2)&gt; &lt;gt(3)&gt; &lt;gt(4)&gt; &lt;gt(5)&gt;] [-a_scale &lt;value&gt;] [-a_offset &lt;value&gt;]\n                      [-nogcp] [-gcp &lt;pixel&gt; &lt;line&gt; &lt;easting&gt; &lt;northing&gt; [&lt;elevation&gt;]]...\n                      [-colorinterp {red|green|blue|alpha|gray|undefined},...]\n                      [-colorinterp_X {red|green|blue|alpha|gray|undefined}]...\n                      [[-stats]|[-approx_stats]]\n                      [-norat] [-noxmp] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-mo &lt;NAME&gt;=&lt;VALUE&gt;]... [-dmo &lt;DOMAIN&gt;:&lt;KEY&gt;=&lt;VALUE&gt;]...\n                      [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      &lt;input_file&gt; &lt;output_file&gt;\n\nNote: gdal_translate --long-usage for full help.\n\n\n\nConvert to Geotiff\n\nIn the last exercise, we reprojected a raster file to a geotiff file.\nHowever, for this exercise we will ignore this an concentrate on using gdal_translate to create a Geotiff and use compression\n\n\ngdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\nLet’s compare the file sizes:\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\n\n\n\n\n\nCompress DEFLATE\n\nWe can now compress the file using the DEFLATE algorithm with the -co argument\n\n\ngdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif  \\ \n  -co COMPRESS=DEFLATE \n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\n\n\n\n\n\nCompress TILED=YES\n\ntictoc::tic(msg = \"trans\")\n\n\ngdal_translate data-out/dhm25.tif data-out/dhm25_3.tif \\\n  -co COMPRESS=DEFLATE \\\n  -co TILED=YES\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\ntictoc::toc(log = TRUE)\n\ntrans: 5.297 sec elapsed\n\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\n\n\n\n\n\nCompress PREDICTOR=3\n\ngdal_translate data-out/dhm25.tif data-out/dhm25_4.tif  \\ \n  -co COMPRESS=DEFLATE \\\n  -co TILED=YES \\\n  -co PREDICTOR=3\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\nPREDICTOR=3\n150.89\n-82 %\n\n\n\n\n\n\n\n\n\nGandhi, Ujaval. 2020. “Mastering GDAL Tools (Full Course).” https://courses.spatialthoughts.com/gdal-tools.html#compressing-output.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Compression</span>"
     ]
   },
@@ -994,7 +994,7 @@
     "section": "",
     "text": "Task 5.1\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named index.qmd.",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -1005,7 +1005,7 @@
     "section": "",
     "text": "Redo Task 3.1. However, this time use gdal from the command line to to the processing. Note that you can use bash commands in quarto, you just have to\n\nset the language to {bash} in the code chunk and\nthe engine to knitr in the YAML header\n\nAgain, use the R package tictoc to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.\nCompare the execution times of with the terra approach. Which is faster?\n\n```{r}\ntictoc::tic(msg = \"Step 1: Transform the data\")\n```\n\n```{bash}\ngdal_translate input.tif output.tif\n```\n\n```{r}\ntictoc::toc(log = TRUE)\n```\n\n\n```{r}\n# Finally (to get a full log:)\ntictoc::tic.log()\n```",
     "crumbs": [
-      "Week 5: Raster Advanced",
+      "W5: Raster Advanced",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -1016,7 +1016,7 @@
     "section": "",
     "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
     ]
   },
@@ -1027,7 +1027,7 @@
     "section": "Exercise 1: Kernel Density Estimation",
     "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
     ]
   },
@@ -1038,7 +1038,7 @@
     "section": "Exercise 2: Voronoi",
     "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Density Estimation</span>"
     ]
   },
@@ -1049,7 +1049,7 @@
     "section": "",
     "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
     ]
   },
@@ -1060,7 +1060,7 @@
     "section": "Exercise 1: IDW",
     "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
     ]
   },
@@ -1071,7 +1071,7 @@
     "section": "Exercise 2: Nearest Neighbour",
     "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Interpolation</span>"
     ]
   },
@@ -1082,7 +1082,7 @@
     "section": "",
     "text": "Task 7\nFollow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. The task is due in two weeks.",
     "crumbs": [
-      "Week 7: Interpolation / Density Estimation",
+      "W7: Interpolation / Density Estimation",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -1091,9 +1091,9 @@
     "href": "week-9-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "As always, the data for this task is on moodle. Follow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization.\nNon-motorised transport - Veloland Schweiz (Federal Roads Office FEDRO, cantons) In this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the Federal Roads Office FEDRO / ASTRA.\nThe goal is to compute different centrality measures (degree, betweenness and closeness) for the nodes in the network and visualize the results. To do this, follow the following steps:\n\nLoad the rail network data using sf\nConvert the data into an undirected network using sfnetworks\nTo calculate centrality, the edges need to have “weights”. Assuming equal cycling speed on all roads, you can use the edge length (from the column length) as the weight.\nTo compute the centrality measures you will need to\n\nactivate the nodes (using tidygraph::activate())\nUse dplyr::mutate to create new columns and populate these with the centrality measures using the functions centrality_betweenness, centrality_closeness and centrality_degree from tidygraph\n\nConvert the enriched network consisting of edges and nodes back to sf objects consisting of lines and points (using activate and st_as_sf)\nThe centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge\naggregate(veloland_nodes, veloland_edges, FUN = \"mean\")\nVisualize the result (for an example, see Figure 20.1). If necessary, transform or reasonably categorize the values to make them more comparable\nDiscuss the results: How do you interpret the differences?\n\n\n\n\n\n\n\nFigure 20.1: One possible way to visualize the results of your centrality analysis.",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization.\nIn this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the Federal Roads Office FEDRO (ASTRA).\nThe goal is to compute different centrality measures (degree, betweenness and closeness) for the nodes in the network and visualize the results. To do this, follow the following steps:\n\nLoad the rail network data using sf\nConvert the data into an undirected network using sfnetworks\nTo calculate centrality, the edges need to have “weights”. Assuming equal cycling speed on all roads, you can use the edge length (from the column length) as the weight.\nTo compute the centrality measures you will need to\n\nactivate the nodes (using tidygraph::activate())\nUse dplyr::mutate to create new columns and populate these with the centrality measures using the functions centrality_betweenness, centrality_closeness and centrality_degree from tidygraph using the column length as weights.\n\nConvert the enriched network consisting of edges and nodes back to sf objects consisting of lines and points (using activate and st_as_sf)\nThe centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge\naggregate(veloland_nodes, veloland_edges, FUN = \"mean\")\nVisualize the result (for an example, see Figure 20.1). If necessary, transform or reasonably categorize the values to make them more comparable\nDiscuss the results: How do you interpret the differences?\n\n\n\n\n\n\n\nFigure 20.1: One possible way to visualize the results of your centrality analysis.",
     "crumbs": [
-      "Week 9: Network Analysis I",
+      "W9: Network Analysis I",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
@@ -1104,7 +1104,7 @@
     "section": "",
     "text": "As always, the data for this task is on moodle. Follow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 21.1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 21.1: A possible way to visualize the results from your shortest path analysis.",
     "crumbs": [
-      "Week 10: Network Analysis I",
+      "W10: Network Analysis II",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>🚀 Tasks</span>"
     ]
   },
