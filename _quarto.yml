@@ -46,6 +46,9 @@ book:
       - week-7-density.qmd
       - week-7-interpolation.qmd
       - week-7-task.qmd
+    - part: "Week 9: Network Analysis I"
+      chapters:
+      - week-9-task.qmd
     - references.qmd
 
 

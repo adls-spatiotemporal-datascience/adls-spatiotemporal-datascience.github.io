@@ -25,15 +25,29 @@ library(gt)
 ```
 
 
+
 ```{r}
 zeitplan <- readODS::read_ods("Zeitplan.ods")
 
-zeitplan$`Topics (intern)` <- NULL
+
+zeitplan <- zeitplan[,1:5]
+
+df <- tibble(
+  Lecturer = c("rata","laup"),
+  Lecturer_long = c("Nils Ratnaweera", "Patrick Laube")
+)
+
 
 zeitplan |> 
+  left_join(df) |> 
   mutate(across(everything(),\(x)ifelse(is.na(x),"tba",x))) |> 
+  mutate(url = paste0("https://www.zhaw.ch/en/about-us/person/", Lecturer)) |> 
+  mutate(Lecturer = Lecturer_long) |>
+  select(-Lecturer_long, -url) |>
   gt() |> 
-  tab_options(table.width = "100%")
+  tab_options(table.width = "100%") 
+  # fmt_url(columns = url, label = "🔗", ) |> 
+  # cols_merge(c(Lecturer, url))
 
 ```
 
