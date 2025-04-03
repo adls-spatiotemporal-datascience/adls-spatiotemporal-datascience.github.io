@@ -1087,6 +1087,28 @@
     ]
   },
   {
+    "objectID": "week-9-task.html",
+    "href": "week-9-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization.\nNon-motorised transport - Veloland Schweiz (Federal Roads Office FEDRO, cantons) In this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the Federal Roads Office FEDRO / ASTRA.\nThe goal is to compute different centrality measures (degree, betweenness and closeness) for the nodes in the network and visualize the results. To do this, follow the following steps:\n\nLoad the rail network data using sf\nConvert the data into an undirected network using sfnetworks\nTo calculate centrality, the edges need to have “weights”. Assuming equal cycling speed on all roads, you can use the edge length (from the column length) as the weight.\nTo compute the centrality measures you will need to\n\nactivate the nodes (using tidygraph::activate())\nUse dplyr::mutate to create new columns and populate these with the centrality measures using the functions centrality_betweenness, centrality_closeness and centrality_degree from tidygraph\n\nConvert the enriched network consisting of edges and nodes back to sf objects consisting of lines and points (using activate and st_as_sf)\nThe centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge\naggregate(veloland_nodes, veloland_edges, FUN = \"mean\")\nVisualize the result. If necessary, transform or reasonably categorize the values to make them more comparable\nDiscuss the results",
+    "crumbs": [
+      "Week 9: Network Analysis I",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
+    "objectID": "week-10-task.html",
+    "href": "week-10-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Task 1.1 from Week 1 to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second with all the other locations and call this destination\nUse the fucntion st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization.",
+    "crumbs": [
+      "Week 10: Network Analysis I",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>🚀 Tasks</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
