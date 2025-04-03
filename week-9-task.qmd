@@ -5,8 +5,7 @@ title: "🚀 Tasks"
 As always, the data for this task is on moodle. Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization.
 
 
-Non-motorised transport - Veloland Schweiz (Federal Roads Office FEDRO, cantons)
-In this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the [Federal Roads Office FEDRO / ASTRA](https://map.geo.admin.ch/#/map?lang=en&layers=ch.astra.veloland&bgLayer=void). 
+In this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the [Federal Roads Office FEDRO](https://map.geo.admin.ch/#/map?lang=en&layers=ch.astra.veloland&bgLayer=void)  (ASTRA). 
 
 The goal is to compute different centrality measures (*degree*, *betweenness* and *closeness*) for the nodes in the network and visualize the results. To do this, follow the following steps:
 
@@ -14,21 +13,24 @@ The goal is to compute different centrality measures (*degree*, *betweenness* an
 
 1. Load the rail network data using `sf`
 2. Convert the data into an *undirected* network using `sfnetworks`
-3. To calculate centrality, the edges need to have "weights". Assuming equal cycling speed on all roads, you can use the edge length (from the column `length`) as the weight. 
+3. To calculate centrality, the edges need to have "weights". Assuming equal cycling speed on all roads, you can use the edge length (from the column *length*) as the weight. 
 4. To compute the centrality measures you will need to 
    1. activate the *nodes* (using `tidygraph::activate()`) 
-   2. Use `dplyr::mutate` to create new columns and populate these with the centrality measures using the functions `centrality_betweenness`, `centrality_closeness` and `centrality_degree` from `tidygraph`
+   2. Use `dplyr::mutate` to create new columns and populate these with the centrality measures using the functions `centrality_betweenness`, `centrality_closeness` and `centrality_degree` from `tidygraph` using the column *length* as weights.
 4. Convert the enriched network consisting of edges and nodes back to `sf` objects consisting of lines and points (using `activate` and `st_as_sf`)
 5. The centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge
   
    ```{.r}
    aggregate(veloland_nodes, veloland_edges, FUN = "mean")
    ```
-5. Visualize the result. If necessary, transform or reasonably categorize the values to make them more comparable
-6. Discuss the results
+5. Visualize the result (for an example, see @fig-centrality). If necessary, transform or reasonably categorize the values to make them more comparable
+6. Discuss the results: How do you interpret the differences?
 
 
+:::{#fig-centrality .column-page}
 
+![](images/centrality.png)
 
+One possible way to visualize the results of your centrality analysis.
 
-
+:::

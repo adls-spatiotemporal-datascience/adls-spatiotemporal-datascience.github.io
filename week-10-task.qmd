@@ -8,9 +8,15 @@ As always, the data for this task is on moodle. Follow the instructions in @sec-
 This week, you will do your do your own routing using the *Veloland* dataset from last week and some points of interestes (*locations.gpkg* on moodle). Import the two datasets and convert the Veloland dataset to an *undirected* network using `sfnetworks`, as you did last week.
 
 1. Subset a single location and call this `origin`
-2. Create a second with all the other locations and call this `destination`
-3. Use the fucntion `st_network_paths` from `sfnetworks` to calculate the shortest paths from `origin`, to `destination`, using the column `length` as weight
+2. Create a second object with all the other locations and call this `destination`
+3. Use the function `st_network_paths` from `sfnetworks` to calculate the shortest paths from `origin`, to `destination`, using the column `length` as weight
 4. The output returns a two column data.frame. The column `edge_paths` retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an `sf` object for each path.  
-5. Visualize the result in a map. Include `origin` and `destination` in your visualization. 
+5. Visualize the result in a map. Include `origin` and `destination` in your visualization. See @fig-shortest-path for a possible way to visualize your result.
 
 
+:::{#fig-shortest-path .column-page}
+![](images/shortest_path.png)
+
+A possible way to visualize the results from your shortest path analysis.
+
+:::

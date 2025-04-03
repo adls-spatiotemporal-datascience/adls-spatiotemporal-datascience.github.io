@@ -7,6 +7,7 @@ library(purrr)
 
 
 veloland <- read_sf("data/week9-exercises/veloland.gpkg")
+locs <- read_sf("data/week10-exercises/locations.gpkg")
 
 veloland_net <- as_sfnetwork(veloland, directed = FALSE)
 
@@ -29,13 +30,19 @@ edge_paths2 <- imap(edge_paths, \(x,y){
   summarise()
 
 
-tm_shape(veloland) + 
-  tm_lines() +
-  tm_shape(from) + tm_dots(col = "red", size = .5)  + 
+p2 <- tm_shape(veloland) + 
+  tm_lines(col = "grey") +
+  tm_shape(edge_paths2) + 
+  tm_lines(col = "name",lwd = 3, lty = 2, col_alpha = .5, col.legend = tm_legend(show = FALSE)) +
+  tm_shape(origin) + 
+  tm_dots(col = "red", size = .5, shape = 8)  + 
+  tm_labels(text = "Ortschaft", col = "red") +
+  tm_shape(destination) + 
+  tm_dots(col = "blue", size = .5)  +
   tm_labels(text = "Ortschaft") +
-  tm_shape(to) + tm_dots(col = "blue", size = .5)  +
-  tm_shape(edge_paths2) + tm_lines(col = "name",lwd = 3, lty = 2)
+  tm_layout(legend.show = FALSE)
 
 
+tmap_save(p2, "images/shortest_path.png", height = 20, width = 30, units = "cm")
 
 # https://luukvdmeer.github.io/sfnetworks/articles/sfn04_routing.html 

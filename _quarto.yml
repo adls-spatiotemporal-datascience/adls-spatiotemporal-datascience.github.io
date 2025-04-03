@@ -16,39 +16,42 @@ book:
     collapse-level: 1
   chapters:
     - index.qmd
-    - part: "Week 1: Vector Recap"
+    - part: "W1: Vector Recap"
       chapters:
       - week-1-simple-features.qmd
       - week-1-vector-io.qmd
       - week-1-spatial-operations.qmd
       - week-1-task.qmd
     - week-2.qmd
-    - part: "Week 3: Raster Recap"
+    - part: "W3: Raster Recap"
       chapters:
       - week-3-raster-io.qmd
       - week-3-raster-operations.qmd
       - week-3-raster-vector-operations.qmd
       - week-3-task.qmd
-    - part: "Week 4: Vector Advanced"
+    - part: "W4: Vector Advanced"
       chapters:
       - week-4-topological-rel.qmd
       - week-4-duckdb.qmd
       - week-4-task.qmd
-    - part: "Week 5: Raster Advanced"
+    - part: "W5: Raster Advanced"
       chapters:
       - week-5-datatypes.qmd
       - week-5-gdal.qmd
       - week-5-compression.qmd
       - week-5-task.qmd
       # - week-5-nodata.qmd     # in FS26, finish this chapter
-    - part: "Week 7: Interpolation / Density Estimation"
+    - part: "W7: Interpolation / Density Estimation"
       chapters:
       - week-7-density.qmd
       - week-7-interpolation.qmd
       - week-7-task.qmd
-    - part: "Week 9: Network Analysis I"
+    - part: "W9: Network Analysis I"
       chapters:
       - week-9-task.qmd
+    - part: "W10: Network Analysis II"
+      chapters:
+      - week-10-task.qmd
     - references.qmd
 
 
