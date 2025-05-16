@@ -4,6 +4,7 @@ echo: false
 
 # Welcome to the course *Spatiotemporal Datascience* {.unnumbered}
 
+
 ![[Image Source](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals)](images/us-weather.png)
 
 This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW). 
@@ -15,7 +16,6 @@ To start the course, we will recap the following topic from the course *GISc and
 <!-- During the course, we will recap [Image Processing with R](https://adls-image-processing-for-rs.github.io/) from the course *Image Processing for Remote Sensing*.  -->
 
 
-Our *preliminary* schedule is as follows. Please note that this schedule is subject to change!
 
 ```{r}
 #| output: false
@@ -27,14 +27,16 @@ library(gt)
 
 
 ```{r}
+#| label: tbl-schedule
+#| tbl-cap: The course schedule (might be subject to change).
 zeitplan <- readODS::read_ods("Zeitplan.ods")
 
 
 zeitplan <- zeitplan[,1:5]
 
 df <- tibble(
-  Lecturer = c("rata","laup"),
-  Lecturer_long = c("Nils Ratnaweera", "Patrick Laube")
+  Lecturer = c("rata","laup", "-"),
+  Lecturer_long = c("Nils Ratnaweera", "Patrick Laube", "-")
 )
 
 
@@ -48,6 +50,7 @@ zeitplan |>
   tab_options(table.width = "100%") 
   # fmt_url(columns = url, label = "🔗", ) |> 
   # cols_merge(c(Lecturer, url))
+
 
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Week 2: Geopython Conference"
+title: "W2: Geopython Conference"
 ---
 
 The concepts of this course are implemented in the programming language R. However, these concepts can be transferred to other programming languages, such as Python and vice versa. For this reason, we will take the opportunity that the [2025 Geopython conference](https://2025.geopython.net/) is taking place this week, and some talks are during the course time. 

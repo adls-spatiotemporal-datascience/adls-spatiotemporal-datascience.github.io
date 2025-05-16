@@ -52,23 +52,33 @@ book:
     - part: "W10: Network Analysis II"
       chapters:
       - week-10-task.qmd
+    - part: "W12: Movement Analysis I"
+      chapters: 
+      - week-12-task-description.qmd
+      - week-12-data-desciption.qmd
+      - week-12-minimal-example.qmd
+      - week-12-tasks.qmd
+    - part: "W14: Movement Analysis II"
+      chapters:
+      - week-14-adding-context.qmd
+      - week-14-tasks.qmd
     - references.qmd
 
 
-bibliography: aux/references.bib
+bibliography: auxilliary/references.bib
 
 format:
   html:
     theme:
-      dark: [flatly, "aux/custom-dark.scss"]
-      light: [flatly, "aux/custom-light.scss"]
+      dark: [flatly, "auxilliary/custom-dark.scss"]
+      light: [flatly, "auxilliary/custom-light.scss"]
     highlight-style:
-      dark: aux/arrow-light.theme
-      light: aux/arrow-light.theme
-    css: aux/style.css
+      dark: auxilliary/arrow-light.theme
+      light: auxilliary/arrow-light.theme
+    css: auxilliary/style.css
     number-sections: false
     include-in-header:
-      - aux/script.html
+      - auxilliary/script.html
   # pdf:
   #   documentclass: scrreprt
 

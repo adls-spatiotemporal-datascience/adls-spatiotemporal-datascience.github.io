@@ -1,0 +1,18 @@
+---
+title: "Data description"
+---
+
+
+Version 1.2.2 of the original dataset [@zheng2011] was downloaded on the 19.11.2024 and processed it in the following manner:
+
+1. Merged the data of all users into a single dataset
+2. Added transport mode labels and removed all trajectories without a transport mode label.
+3. Split the trajectories into segments based on the user id, transportation mode and time difference between consecutive points. A new segment is created if the time difference is larger than 10 minutes.
+4. Split the segments (from the previous step) further based on the distance between consecutive points. A new segment is created if the distance is larger than 100 meters. The created segment ids are unique across all users.
+5. Removed all segments with less than 100 points.
+6. Projected the data into  UTM zone 50N (EPSG: 32650)
+7. Removed all segments that move outside of the bounding box of Beijing (406993 , 487551 , 4387642, 4463488 in EPSG 32650)
+8. Split the data into 4 sets of training, testing and validation data.  
+
+The full process is documented in [this GitHub Repository](https://github.com/adls-advanced-environmental-statistics/GeoLife_data-preperation). 
+

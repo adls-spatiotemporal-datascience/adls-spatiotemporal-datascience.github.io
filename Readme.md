@@ -95,3 +95,16 @@ Dieser umfassende Kurs soll den Teilnehmern fortgeschrittene Fähigkeiten in der
 - Begleitetes Selbststudium 	14
 - Autonomes Selbststudium 	18
 - Total Workload 	60
+
+
+## Movement Analysis
+
+### Part 1
+
+Theorie: Vor allem Patterns und dann etwas zu Bewegungsparameter und Travel Mode Detection
+Praxis: Travel Mode detection aus Adv. Env. Stat
+
+
+### Part 2
+
+Context: Travel Mode Detection mit Context information

@@ -43,7 +43,7 @@ veloweg <- veloweg |>
   st_cast("MULTILINESTRING") |> 
   st_cast("LINESTRING")
 
-net = as_sfnetwork(veloweg, directed= FALSE)
+net <- as_sfnetwork(veloweg, directed= FALSE)
 
 n_edges <- function(obj){
   obj |> activate("edges") |> st_as_sf() |> nrow()

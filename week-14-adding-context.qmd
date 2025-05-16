@@ -1,0 +1,109 @@
+# Adding Context {#sec-adding-context}
+
+
+[Last Week](#sec-min-ex), we tried to predict travel mode using movement parameters only. This simple approach can potentially already lead to good results, however we're missing out on information readily available: Environmental data. 
+
+Context information such as road type, train lines, bus stops etc. can provide valuable additional information for predicting travel mode. 
+
+We prepared some data from OpenStreetMap, obtained from [extract.bbbike.org/](https://extract.bbbike.org/). The preperation included:
+
+1. Extracting highways and railway lines from the archive. 
+2. Projecting the data to `WGS 84 / UTM zone 50N` (`EPSG:32650 `). 
+3. For highways: Add the column `cycleway` which is `TRUE` if the road segment includes tags related to cycling infrastructure.
+4. Lump the multitude of categories (column `highway` and `railway`for the respective datasets) into the most frequent 6 and 3 categories, respectively
+
+:::{.callout-note}
+
+OSM uses the term *highway* to mean roads in general, not specifically main roads. The column `highway` differentiates different types for road. See the [OSMWiki](https://wiki.openstreetmap.org/wiki/Key:highway) for more details.
+
+
+:::
+
+
+```{r}
+library(sf)
+library(dplyr)
+
+
+gpkg <- "data/week14-exercises/osm.gpkg"
+
+st_layers(gpkg)
+
+
+highway <- read_sf(gpkg, "highway")
+railway <- read_sf(gpkg, "railway")
+```
+
+
+```{r}
+plot(highway["highway"])
+```
+
+
+```{r}
+plot(railway["railway"])
+```
+
+
+To use this context information as additional features, we first need to import our movement data:
+
+```{r}
+# For illustration purposes, we will only use 500 samples
+training_dataset <- read_sf("data/week12-exercises/tracks_1.gpkg", query = "SELECT * FROM training LIMIT 500") |> 
+  mutate(data = "training")
+```
+
+
+Now we can join the movement data with the context information using various methods. A simple approach could be to use the attribute data from the *nearest feature* for each datapoint. 
+
+```{r}
+training_dataset_join <- st_join(training_dataset,highway, join = st_nearest_feature) |> 
+  # Selecting these columns is for illustration purposes
+  select(user_id, datetime, highway, cycleway)
+
+training_dataset_join
+
+```
+
+```{r}
+library(tmap)
+tm_shape(training_dataset_join) + 
+  tm_dots("highway") +
+  tm_shape(highway) +
+  tm_lines() +
+  tm_layout(frame = FALSE)
+```
+
+
+For some datasets, it might make sense to calculate the distance to the closest railway line. We'll illustrate this by using the railway data:
+
+
+```{r}
+
+# First, determine the nearest railway for every moment sample
+nearest_railway <- st_nearest_feature(training_dataset_join, railway)
+
+# Now, we can calculate the distance to the nearest feature
+
+railway_dist <- st_distance(
+  training_dataset_join, 
+  railway[nearest_railway,], 
+  by_element = TRUE
+  )
+
+# Now we can add this as a feature to our training data
+training_dataset_join$distance_to_railway <- as.numeric(railway_dist)
+
+
+tm_shape(training_dataset_join) +
+  tm_dots(fill = "distance_to_railway",fill.scale = tm_scale_continuous(values = "-brewer.spectral"))
+
+```
+
+
+:::{.callout-note}
+
+
+In case of the example above (*distance to the nearest railway*), it would probably make sense to use a threshold value to differentiate *close to railway* vs. *far from railway*. In this case, we could also have just used the function `st_is_within_distance()`.
+
+:::
