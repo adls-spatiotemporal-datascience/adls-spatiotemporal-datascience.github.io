@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Compression – Spatiotemporal Datascience</title>
+<title>🚀 Tasks – Spatiotemporal Datascience</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,61 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -84,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./week-5-task.html" rel="next">
-<link href="./week-5-gdal.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./week-14-adding-context.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -142,35 +88,6 @@ window.onload = function() {
 };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="auxilliary/style.css">
 </head>
@@ -184,7 +101,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">W5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-compression.html"><span class="chapter-title">Compression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-14-adding-context.html">W14: Movement Analysis II</a></li><li class="breadcrumb-item"><a href="./week-14-tasks.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -321,13 +238,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">W5: Raster Advanced</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./week-5-datatypes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data types / transformations</span></a>
@@ -340,7 +257,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-5-compression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Compression</span></a>
+  <a href="./week-5-compression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Compression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -441,13 +358,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">W14: Movement Analysis II</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./week-14-adding-context.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Adding Context</span></a>
@@ -455,7 +372,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week-14-tasks.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Tasks</span></a>
+  <a href="./week-14-tasks.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">🚀 Tasks</span></a>
   </div>
 </li>
       </ul>
@@ -471,33 +388,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#raster-data-storage-requirements" id="toc-raster-data-storage-requirements" class="nav-link active" data-scroll-target="#raster-data-storage-requirements">Raster Data Storage Requirements</a></li>
-  <li><a href="#types-of-compression" id="toc-types-of-compression" class="nav-link" data-scroll-target="#types-of-compression">Types of Compression</a></li>
-  <li><a href="#how-does-compression-work" id="toc-how-does-compression-work" class="nav-link" data-scroll-target="#how-does-compression-work">How does compression work?</a></li>
-  <li><a href="#use-of-predictor" id="toc-use-of-predictor" class="nav-link" data-scroll-target="#use-of-predictor">Use of PREDICTOR</a></li>
-  <li><a href="#use-of-tiling" id="toc-use-of-tiling" class="nav-link" data-scroll-target="#use-of-tiling">Use of Tiling</a></li>
-  <li><a href="#compression-costs" id="toc-compression-costs" class="nav-link" data-scroll-target="#compression-costs">Compression Costs</a></li>
-  <li><a href="#gdal_translate" id="toc-gdal_translate" class="nav-link" data-scroll-target="#gdal_translate">Gdal_translate</a>
-  <ul class="collapse">
-  <li><a href="#convert-to-geotiff" id="toc-convert-to-geotiff" class="nav-link" data-scroll-target="#convert-to-geotiff">Convert to Geotiff</a></li>
-  <li><a href="#compress-deflate" id="toc-compress-deflate" class="nav-link" data-scroll-target="#compress-deflate">Compress <code>DEFLATE</code></a></li>
-  <li><a href="#compress-tiledyes" id="toc-compress-tiledyes" class="nav-link" data-scroll-target="#compress-tiledyes">Compress <code>TILED=YES</code></a></li>
-  <li><a href="#compress-predictor3" id="toc-compress-predictor3" class="nav-link" data-scroll-target="#compress-predictor3">Compress <code>PREDICTOR=3</code></a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-5-datatypes.html">W5: Raster Advanced</a></li><li class="breadcrumb-item"><a href="./week-5-compression.html"><span class="chapter-title">Compression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week-14-adding-context.html">W14: Movement Analysis II</a></li><li class="breadcrumb-item"><a href="./week-14-tasks.html"><span class="chapter-title">🚀 Tasks</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Compression</span></h1>
+<h1 class="title"><span class="chapter-title">🚀 Tasks</span></h1>
 </div>
 
 
@@ -514,343 +413,11 @@ window.Quarto = {
 </header>
 
 
-<p>Much of this section was taken from <span class="citation" data-cites="gandhi2020">Gandhi (<a href="references.html#ref-gandhi2020" role="doc-biblioref">2020</a>)</span>. See also this <a href="https://blog.cleverelephant.ca/2015/02/geotiff-compression-for-dummies.html">great blog post</a> by Paul Ramsey.</p>
-<section id="raster-data-storage-requirements" class="level2">
-<h2 class="anchored" data-anchor-id="raster-data-storage-requirements">Raster Data Storage Requirements</h2>
-<ul>
-<li>The storage space required for an image depends on its dimensions and data type.<br>
-</li>
-<li>Example:
-<ul>
-<li>An SRTM tile consists of a single band with a resolution of 3601 × 3601 pixels.<br>
-</li>
-<li>Each pixel is stored as an Int16 (16-bit integer), requiring 2 Bytes (1 Byte = 8 Bits).<br>
-</li>
-<li>The total storage needed is: <span class="math inline">\(3601 \times 3601 \times 2 = 25,934,402 \text{ Bytes} \approx 25.93 \text{ MB}\)</span></li>
-</ul></li>
-<li>Compression algorithms can be used to reduce the required storage space.</li>
-</ul>
-</section>
-<section id="types-of-compression" class="level2">
-<h2 class="anchored" data-anchor-id="types-of-compression">Types of Compression</h2>
-<ul>
-<li><strong>Lossless Compression</strong>
-<ul>
-<li>Preserves data quality without any loss.<br>
-</li>
-<li>The original data can be perfectly reconstructed.<br>
-</li>
-<li>Reduces file size by eliminating redundant information.<br>
-</li>
-<li>Commonly used for scientific data such as elevation models and satellite imagery.<br>
-</li>
-<li>Examples: LZW, DEFLATE, PACKBITS, ZSTD, …</li>
-</ul></li>
-<li><strong>Lossy Compression</strong>
-<ul>
-<li>Sacrifices some data quality to achieve higher compression.<br>
-</li>
-<li>The original data is approximated rather than perfectly reconstructed.<br>
-</li>
-<li>Allows for significantly smaller file sizes by discarding less perceptible details.</li>
-<li>Commonly used for photographic data such as aerial and drone imagery.<br>
-</li>
-<li>Examples: JPEG2000, WEBP (supports both lossy and lossless modes), …</li>
-</ul></li>
-</ul>
-</section>
-<section id="how-does-compression-work" class="level2">
-<h2 class="anchored" data-anchor-id="how-does-compression-work">How does compression work?</h2>
-<ul>
-<li>Given the pixel values: <code>100</code>, <code>101</code>, <code>102</code>, <code>100</code>, <code>100</code><br>
-</li>
-<li>Instead of storing each value individually, we can store each unique value once and keep track of its positions.<br>
-</li>
-<li>Representation:
-<ul>
-<li><code>100</code> → Appears at positions <code>[0, 3, 4]</code><br>
-</li>
-<li><code>101</code> → Appears at position <code>[1]</code><br>
-</li>
-<li><code>102</code> → Appears at position <code>[2]</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="use-of-predictor" class="level2">
-<h2 class="anchored" data-anchor-id="use-of-predictor">Use of PREDICTOR</h2>
-<ul>
-<li>Some compression algorithms, such as LZW, DEFLATE, and ZSTD, can utilize a <strong>predictor</strong> to enhance compression efficiency.<br>
-</li>
-<li>Instead of storing absolute values, a predictor stores only the differences between consecutive values.<br>
-</li>
-<li>Available predictor methods:
-<ul>
-<li>No predictor (1, default)<br>
-</li>
-<li>Horizontal differencing (2)<br>
-</li>
-<li>Floating point prediction (3)</li>
-</ul></li>
-<li><strong>Example:</strong>
-<ul>
-<li><strong>Original values:</strong> <code>100, 101, 102, 100, 100</code><br>
-</li>
-<li><strong>Values with predictor:</strong> <code>100, 1, 1, -2, 0</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="use-of-tiling" class="level2">
-<h2 class="anchored" data-anchor-id="use-of-tiling">Use of Tiling</h2>
-<ul>
-<li>By default, data is stored line by line.<br>
-</li>
-<li>In many cases, storing and reading data in blocks of pixels improves efficiency.<br>
-</li>
-<li>When the <code>TILED=YES</code> option is enabled, data is stored and compressed in <strong>256 × 256 pixel</strong> blocks.</li>
-</ul>
-</section>
-<section id="compression-costs" class="level2">
-<h2 class="anchored" data-anchor-id="compression-costs">Compression Costs</h2>
-<ul>
-<li>Compression adds processing overhead during both data creation and retrieval.<br>
-</li>
-<li>Highly compressed data may result in slower read times.<br>
-</li>
-<li>In many applications, the reduction in disk space comes at the cost of increased processing time and CPU usage.</li>
-</ul>
-</section>
-<section id="gdal_translate" class="level2">
-<h2 class="anchored" data-anchor-id="gdal_translate">Gdal_translate</h2>
-<ul>
-<li><a href="https://gdal.org/en/stable/programs/gdal_translate.html"><code>gdal_translate</code></a> is a program to convert raster data between different formats</li>
-<li>Note how the naming convention differs (snake case). The APIs for all the software vary slightly, always consult the documentation (e.g.&nbsp;using <code>--help</code>)</li>
-<li>Some options are mutually exclusive. These are wrapped in extra <code>[]</code>. For example: <code>[[-strict]|[-not_strict]]</code></li>
-<li>Note how this program has two positional arguments: <code>&lt;input_file&gt;</code> and <code>&lt;output_file&gt;</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Usage: gdal_translate [--help] [--long-usage] [--help-general]
-                      [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}] [-if &lt;format&gt;]...
-                      [-of &lt;output_format&gt;] [--quiet] [-b &lt;band&gt;]... [-mask &lt;mask&gt;] [-expand gray|rgb|rgba]
-                      [[-strict]|[-not_strict]]
-                      [-outsize &lt;xsize[%]|0&gt; &lt;ysize[%]|0&gt;] [-tr &lt;xres&gt; &lt;yes&gt;] [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE] [-sds]
-                      [-r nearest,bilinear,cubic,cubicspline,lanczos,average,mode]
-                      [[-scale [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|
-                      [-scale_X [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|[-unscale]]
-                      [[-exponent &lt;value&gt;]|[-exponent_X &lt;value&gt;]...]
-                      [-srcwin &lt;xoff&gt; &lt;yoff&gt; &lt;xsize&gt; &lt;ysize&gt;] [-projwin &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]
-                      [-projwin_srs &lt;srs_def&gt;] [-epo] [-eco] [-a_srs &lt;srs_def&gt;] [-a_coord_epoch &lt;epoch&gt;]
-                      [-a_ullr &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;] [-a_nodata &lt;value&gt;|none]
-                      [-a_gt &lt;gt(0)&gt; &lt;gt(1)&gt; &lt;gt(2)&gt; &lt;gt(3)&gt; &lt;gt(4)&gt; &lt;gt(5)&gt;] [-a_scale &lt;value&gt;] [-a_offset &lt;value&gt;]
-                      [-nogcp] [-gcp &lt;pixel&gt; &lt;line&gt; &lt;easting&gt; &lt;northing&gt; [&lt;elevation&gt;]]...
-                      [-colorinterp {red|green|blue|alpha|gray|undefined},...]
-                      [-colorinterp_X {red|green|blue|alpha|gray|undefined}]...
-                      [[-stats]|[-approx_stats]]
-                      [-norat] [-noxmp] [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-mo &lt;NAME&gt;=&lt;VALUE&gt;]... [-dmo &lt;DOMAIN&gt;:&lt;KEY&gt;=&lt;VALUE&gt;]...
-                      [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...
-                      &lt;input_file&gt; &lt;output_file&gt;
-
-Note: gdal_translate --long-usage for full help.</code></pre>
-</div>
-</div>
-<section id="convert-to-geotiff" class="level3">
-<h3 class="anchored" data-anchor-id="convert-to-geotiff">Convert to Geotiff</h3>
-<ul>
-<li>In the last exercise, we reprojected a raster file to a geotiff file.</li>
-<li>However, for this exercise we will ignore this an concentrate on using <code>gdal_translate</code> to create a Geotiff and use compression</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Input file size is 15401, 9121
-0...10...20...30...40...50...60...70...80...90...100 - done.</code></pre>
-</div>
-</div>
-<ul>
-<li>Let’s compare the file sizes:</li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: right;">Size (MB)</th>
-<th style="text-align: right;">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Original File (ASCII)</td>
-<td style="text-align: right;">824.43</td>
-<td style="text-align: right;">0 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GeoTIFF (without compression)</td>
-<td style="text-align: right;">535.91</td>
-<td style="text-align: right;">-35 %</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="compress-deflate" class="level3">
-<h3 class="anchored" data-anchor-id="compress-deflate">Compress <code>DEFLATE</code></h3>
-<ul>
-<li>We can now compress the file using the <code>DEFLATE</code> algorithm with the <code>-co</code> argument</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif  <span class="dt">\ </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-co</span> COMPRESS=DEFLATE </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>Input file size is 15401, 9121
-0...10...20...30...40...50...60...70...80...90...100 - done.</code></pre>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: right;">Size (MB)</th>
-<th style="text-align: right;">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Original File (ASCII)</td>
-<td style="text-align: right;">824.43</td>
-<td style="text-align: right;">0 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GeoTIFF (without compression)</td>
-<td style="text-align: right;">535.91</td>
-<td style="text-align: right;">-35 %</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>COMPRESS=DEFLATE</code></td>
-<td style="text-align: right;">208.24</td>
-<td style="text-align: right;">-75 %</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="compress-tiledyes" class="level3">
-<h3 class="anchored" data-anchor-id="compress-tiledyes">Compress <code>TILED=YES</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="at">msg =</span> <span class="st">"trans"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> data-out/dhm25.tif data-out/dhm25_3.tif <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-co</span> COMPRESS=DEFLATE <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-co</span> TILED=YES</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Input file size is 15401, 9121
-0...10...20...30...40...50...60...70...80...90...100 - done.</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>(<span class="at">log =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>trans: 5.297 sec elapsed</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: right;">Size (MB)</th>
-<th style="text-align: right;">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Original File (ASCII)</td>
-<td style="text-align: right;">824.43</td>
-<td style="text-align: right;">0 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GeoTIFF (without compression)</td>
-<td style="text-align: right;">535.91</td>
-<td style="text-align: right;">-35 %</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>COMPRESS=DEFLATE</code></td>
-<td style="text-align: right;">208.24</td>
-<td style="text-align: right;">-75 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>TILED=YES</code></td>
-<td style="text-align: right;">177.50</td>
-<td style="text-align: right;">-78 %</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="compress-predictor3" class="level3">
-<h3 class="anchored" data-anchor-id="compress-predictor3">Compress <code>PREDICTOR=3</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> data-out/dhm25.tif data-out/dhm25_4.tif  <span class="dt">\ </span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-co</span> COMPRESS=DEFLATE <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-co</span> TILED=YES <span class="dt">\</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-co</span> PREDICTOR=3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: right;">Size (MB)</th>
-<th style="text-align: right;">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Original File (ASCII)</td>
-<td style="text-align: right;">824.43</td>
-<td style="text-align: right;">0 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GeoTIFF (without compression)</td>
-<td style="text-align: right;">535.91</td>
-<td style="text-align: right;">-35 %</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>COMPRESS=DEFLATE</code></td>
-<td style="text-align: right;">208.24</td>
-<td style="text-align: right;">-75 %</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>TILED=YES</code></td>
-<td style="text-align: right;">177.50</td>
-<td style="text-align: right;">-78 %</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>PREDICTOR=3</code></td>
-<td style="text-align: right;">150.89</td>
-<td style="text-align: right;">-82 %</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p>As always, the data for this task is on moodle. Follow the instructions in <a href="week-1-task.html#sec-gh-pages" class="quarto-xref"><span>Task 1.1</span></a> from Week 1 to create a new repo in the existing organization.</p>
+<p>Redo you task from <a href="week-12-minimal-example.html">last Week</a>, but further extend your features by using the approach described in <a href="week-14-adding-context.html" class="quarto-xref"><span>Adding Context</span></a>. Add at least 2, to 3 features of your own.</p>
+<p>Compare your results to the ones you got last week. Does your model perform better if context information is added?</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-gandhi2020" class="csl-entry" role="listitem">
-Gandhi, Ujaval. 2020. <span>“Mastering GDAL Tools (Full Course).”</span> <a href="https://courses.spatialthoughts.com/gdal-tools.html#compressing-output" class="uri">https://courses.spatialthoughts.com/gdal-tools.html#compressing-output</a>.
-</div>
-</div>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1416,13 +983,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./week-5-gdal.html" class="pagination-link" aria-label="GDAL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">GDAL</span></span>
+      <a href="./week-14-adding-context.html" class="pagination-link" aria-label="Adding Context">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Adding Context</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./week-5-task.html" class="pagination-link" aria-label="🚀 Tasks">
-        <span class="nav-page-text"><span class="chapter-title">🚀 Tasks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
