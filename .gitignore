@@ -9,3 +9,4 @@ _book
 _freeze
 data-out
 zsh
+**/*.quarto_ipynb
