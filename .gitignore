@@ -10,3 +10,5 @@ _freeze
 data-out
 zsh
 **/*.quarto_ipynb
+_site
+*_files
