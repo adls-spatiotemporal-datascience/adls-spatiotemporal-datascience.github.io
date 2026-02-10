@@ -1,0 +1,15 @@
+
+# Preperation Tasks
+
+Follow the instructions in @sec-gh-pages to create a new repo in the existing organization. Solve the next task in a file named `index.qmd`.
+
+
+
+
+
+## Raster Basics {#sec-task-rast-basic}
+
+1. Redo @sec-vec-basic. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.
+2. Using the R package [`tictoc`](http://jabiru.github.io/tictoc/), measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week. 
+3. Compare the execution times of the two approaches. Which approach is faster? Where is the bottleneck? 
+4. Compare the results of the two approaches. Are they the same? If not, why?

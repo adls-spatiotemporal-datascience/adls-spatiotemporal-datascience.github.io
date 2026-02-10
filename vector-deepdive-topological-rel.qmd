@@ -4,7 +4,7 @@ title: "Topological relations"
 
 ## Named topological relations
 
-- We briefly touched topological relations in @sec-spatiao-queries
+- We briefly touched topological relations in [GIScience and Geodatabases](https://zhaw-giscience-geodatabases.github.io)
 - Topological relations describe the spatial relationships between objects. 
 - They are also called *binary topological relationships* or *binary predicates*
 - They are logical statements (`TRUE`/`FALSE`) about the spatial relationships between two objects

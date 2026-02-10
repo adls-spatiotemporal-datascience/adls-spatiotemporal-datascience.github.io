@@ -1,86 +1,12 @@
-project:
-  type: book
+project: 
+  title: "Spatiotemporal Datascience"
+  output-dir: _site/slides
 
-# 
+format: revealjs-clean
+    
+bibliography: auxilliary/references.bib
 execute: 
   warning: false
-  freeze: true
-  
-book:
-  title: "Spatiotemporal Datascience"
-  subtitle: "Bachelor ADLS / FS25"
-  author: "Nils Ratnaweera"
-  reader-mode: true
-  sidebar: 
-    logo: images/zhaw_sw_pos.png
-    collapse-level: 1
-  chapters:
-    - index.qmd
-    - part: "W1: Vector Recap"
-      chapters:
-      - week-1-simple-features.qmd
-      - week-1-vector-io.qmd
-      - week-1-spatial-operations.qmd
-      - week-1-task.qmd
-    - week-2.qmd
-    - part: "W3: Raster Recap"
-      chapters:
-      - week-3-raster-io.qmd
-      - week-3-raster-operations.qmd
-      - week-3-raster-vector-operations.qmd
-      - week-3-task.qmd
-    - part: "W4: Vector Advanced"
-      chapters:
-      - week-4-topological-rel.qmd
-      - week-4-duckdb.qmd
-      - week-4-task.qmd
-    - part: "W5: Raster Advanced"
-      chapters:
-      - week-5-datatypes.qmd
-      - week-5-gdal.qmd
-      - week-5-compression.qmd
-      - week-5-task.qmd
-      # - week-5-nodata.qmd     # in FS26, finish this chapter
-    - part: "W7: Interpolation / Density Estimation"
-      chapters:
-      - week-7-density.qmd
-      - week-7-interpolation.qmd
-      - week-7-task.qmd
-    - part: "W9: Network Analysis I"
-      chapters:
-      - week-9-task.qmd
-    - part: "W10: Network Analysis II"
-      chapters:
-      - week-10-task.qmd
-    - part: "W12: Movement Analysis I"
-      chapters: 
-      - week-12-task-description.qmd
-      - week-12-data-desciption.qmd
-      - week-12-minimal-example.qmd
-      - week-12-tasks.qmd
-    - part: "W14: Movement Analysis II"
-      chapters:
-      - week-14-adding-context.qmd
-      - week-14-tasks.qmd
-    - references.qmd
-
-
-bibliography: auxilliary/references.bib
-
-format:
-  html:
-    theme:
-      dark: [flatly, "auxilliary/custom-dark.scss"]
-      light: [flatly, "auxilliary/custom-light.scss"]
-    highlight-style:
-      dark: auxilliary/arrow-light.theme
-      light: auxilliary/arrow-light.theme
-    css: auxilliary/style.css
-    number-sections: false
-    include-in-header:
-      - auxilliary/script.html
-  # pdf:
-  #   documentclass: scrreprt
-
-
-
+  message: false
+  echo: false
+freeze: true

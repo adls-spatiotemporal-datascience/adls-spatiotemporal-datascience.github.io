@@ -5,16 +5,34 @@ musterloesung: false
 
 
 :::{.callout-important}
-Due date for the tasks is the next lesson
+Due date for the tasks are listed in @tbl-schedule
 :::
 
-Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named `index.qmd`.
+Follow the instructions in @sec-gh-pages to create a new repo in the existing organization. Solve the tasks in a file named `index.qmd`.
 
-## Task 4.1
+## Task 1 {#sec-vec-basic}
+
+Download the datasets [swissTLM3D](https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d) and [swissboundaries3d](https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d) from swisstopo.
+Using `swissTLM3d` and `swissboundaries3d`, calculate the percentage of area covered by forest *per canton*. Visualize the results (in a map and / or a plot).
+
+Render the document using `quarto preview`. Publish your result using `quarto publish gh-pages`
+
+
+
+# Task 2
+
+We have prepared a duckdb database on moodle (`wald-kantone.duckdb`). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D. 
+
+Use this dataset and with the help of @sec-duckdb-practice, recreate @sec-vec-basic and measure the execution time using the R package [`tictoc`](http://jabiru.github.io/tictoc/). 
+
+Compare the execution time with (@sec-vec-basic). Discuss!
+
+## Task 3
 
 Without consulting external help, try and specify the DE-9IM string for the queen and bishop's case as shown in @fig-chessboard-2. 
 
 Concentrate on the boundary-boundary intersection. Note:
+
    - No intersection: `F`
    - Point intersection: `0`
    - Line intersetion: `1`
@@ -79,12 +97,5 @@ chessplot +
 ```
 
 
-# Task 4.2
-
-We have prepared a duckdb database on moodle (`wald-kantone.duckdb`). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D. 
-
-Use this dataset and with the help of @sec-duckdb-practice, recreate @sec-vec-basic and measure the execution time using the R package [`tictoc`](http://jabiru.github.io/tictoc/). 
-
-Compare the execution times of all three approaches (@sec-vec-basic, @sec-task-rast-basic and the duckdb approach). Which approach is fastest?
   
 

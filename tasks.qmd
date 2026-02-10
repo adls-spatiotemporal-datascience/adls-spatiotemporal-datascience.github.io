@@ -1,0 +1,117 @@
+---
+title: "Syllabus"
+---
+
+# Syllabus
+
+## Prerequisites
+
+- Completion of the course *GISc and Geodatabases* or equivalent experience with:
+  - R programming (tidyverse, basic data wrangling)
+  - Vector data handling with `sf`
+  - Raster data handling with `terra`
+- Basic familiarity with Git and GitHub
+- Familiarity with the command line
+
+## Assessment
+
+This module is graded with a so called *Erfahrungsnote*, based on your solutions to the tasks provided throughout the course.
+
+### What to Submit
+
+<!-- TODO: Which tasks are mandatory? Options:
+     - All tasks mandatory
+     - A fixed selection of core tasks (e.g., one per topic)
+     - "Submit X of Y" with free choice
+     - Mandatory core tasks + elective tasks
+-->
+
+You must submit solutions for the following tasks:
+
+| Task   | Topic                  | Due Date   |
+|--------|------------------------|------------|
+| 4.1    | Topological Relations  | Week 3     |
+| 5.1    | Raster / GDAL          | Week 5     |
+| 7.1    | Interpolation          | Week 8     |
+| ...    | ...                    | ...        |
+
+### Grading Criteria
+
+Each task is evaluated on three dimensions:
+
+| Criterion              | Weight | Description |
+|------------------------|--------|-------------|
+| **Correctness**        | 40%    | Code runs without errors and produces the expected output |
+| **Documentation**      | 30%    | Clear explanations of your approach, code is readable and commented where necessary |
+| **Reflection**         | 30%    | Discussion of limitations, alternatives considered, or lessons learned |
+
+A working solution alone is not sufficient for a top grade. We expect you to demonstrate understanding, not just output.
+
+### Use of AI Tools
+
+You may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:
+
+- Your submission must reflect *your* understanding
+- The documentation and reflection sections are where you demonstrate this
+- Copy-pasting AI output without comprehension will be evident and graded accordingly
+
+We treat AI tools like any other resource: useful, but not a substitute for learning.
+
+<!-- TODO: Do you want to include an oral component (spot-check / defense)?
+     This would help verify understanding but scales poorly with class size.
+-->
+
+## Deadlines
+
+<!-- TODO: Deadline policy - choose one:
+     - Fixed per task (due before next task session)
+     - Rolling deadlines (e.g., 2 weeks after topic)
+     - Single end-of-semester deadline for all tasks
+-->
+
+Task solutions are due **before the next task session** (typically two weeks after the topic is introduced). Late submissions will be accepted but may receive reduced feedback.
+
+<!-- TODO: Feedback policy:
+     - Do you provide feedback on each submission?
+     - Only a final grade at the end?
+     - Feedback only on request?
+-->
+
+## Submission via GitHub Pages {#sec-gh-pages}
+
+Each task is submitted as a rendered Quarto document hosted on GitHub Pages.
+
+### Initial Setup (Week 1)
+
+On GitHub:
+
+1. [Create a free organisation](https://github.com/organizations/plan) named `ADLS-STDS2025-kuerzel` (replace `kuerzel` with your ZHAW email prefix)
+2. Submit the URL to this organisation via email
+3. In this organisation, create a new, blank repository called `ADLS-STDS2025-kuerzel.github.io`
+
+On your local machine:
+
+1. Install the CLI tool [Quarto](https://quarto.org/)
+2. Create a new directory for this week's task
+3. Initialize a Git repository and link it to your GitHub repo:
+   ```bash
+   git init
+   git remote add origin <URL>
+   ```
+4. Create `_quarto.yml`:
+   ```{.yaml filename="_quarto.yml"}
+   project:
+     output-dir: _docs
+   ```
+5. Create `index.qmd`:
+   ```{.markdown filename="index.qmd"}
+   # Solutions for the course *Spatiotemporal DataScience*
+
+   Here are my solutions to the tasks in *Spatiotemporal Datascience*.
+   ```
+6. Preview locally: `quarto preview`
+7. Publish: `quarto publish gh-pages`
+
+### Subsequent Weeks
+
+For each new task week, create a new repository in your organisation (e.g., `week-4`, `week-5`) and follow the same workflow.

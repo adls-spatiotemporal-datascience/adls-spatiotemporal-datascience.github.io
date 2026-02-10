@@ -21,6 +21,7 @@ engine: knitr
 
 
 ```{bash}
+#| echo: true
 gdalinfo --version
 ```
 
@@ -40,6 +41,7 @@ gdalinfo --version
 
 
 ```{bash}
+#| echo: true
 gdalinfo --help
 ```
 
@@ -51,6 +53,7 @@ gdalinfo --help
 
 
 ```{bash}
+#| echo: true
 gdalinfo data/week5-exercises/elev-lux.tif
 ```
 
@@ -61,6 +64,7 @@ gdalinfo data/week5-exercises/elev-lux.tif
 - Note: I'm piping the output into `head` and then `tail` to truncate the result
 
 ```{bash}
+#| echo: true
 gdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2
 ```
 
@@ -74,7 +78,7 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2
 
 ```{bash}
 #| output: false
-
+#| echo: true
 # pipe the output to a JSON file
 gdalinfo -hist -json data/week5-exercises/elev-lux.tif  > data-out/elev-lux.json
 
@@ -92,6 +96,7 @@ gdalinfo -hist -json data/week5-exercises/elev-lux.tif  > data-out/elev-lux.json
 
 
 ```{bash}
+#| echo: true
 gdalinfo -hist data/week5-exercises/elev-lux.tif -json | \
   jq ".bands[].min"
 ```
@@ -104,11 +109,9 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif -json | \
 
 - To illustrate, we extract the histogram from the data and visualize it with [bashplotlib](https://github.com/glamp/bashplotlib)
 
-
-
 ```{bash}
 #| output: false
-
+#| echo: true
 gdalinfo -hist data/week5-exercises/elev-lux.tif -json | 
   jq ".bands[].histogram.buckets[]" | # <1>
   hist -w 1 -p +                      # <2>
@@ -151,6 +154,7 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
 - As noted [here](https://www.swisstopo.admin.ch/de/hoehenmodell-dhm25#DHM25---Download), the CRS is `LV03 LN02`, which is the old swiss coordinate system, aka [`EPSG:21781`](https://epsg.io/21781)
 
 ```{bash}
+#| echo: true
 gdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq ".coordinateSystem"
 ```
 
@@ -161,6 +165,7 @@ gdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq ".coordinateSyste
 
 
 ```{bash}
+#| echo: true
 gdalinfo -json \
   data/week5-exercises/dhm25_grid_raster.asc | 
   jq ".cornerCoordinates"
@@ -180,6 +185,7 @@ gdalinfo -json \
 
 
 ```{bash}
+#| echo: true
 gdalwarp --help
 ```
 
@@ -193,6 +199,7 @@ gdalwarp --help
 
 ```{bash}
 #| eval: false
+#| echo: true
 gdalwarp -s_srs EPSG:21781 \
   -t_srs EPSG:2056 \ 
   data/week5-exercises/dhm25_grid_raster.asc \
@@ -211,6 +218,7 @@ gdalwarp -s_srs EPSG:21781 \
 - We can now check the CRS on our created dataset
 
 ```{bash}
+#| echo: true
 gdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45
 ```
 
@@ -220,6 +228,7 @@ gdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45
 - (note how the values have changed)
 
 ```{bash}
+#| echo: true
 gdalinfo -json data-out/dhm25.tif | 
   jq ".cornerCoordinates"
 ```

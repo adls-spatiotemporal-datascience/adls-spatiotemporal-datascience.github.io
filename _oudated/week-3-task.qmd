@@ -4,13 +4,13 @@ musterloesung: false
 ---
 
 :::{.callout-important}
-Due date for the tasks is the next lesson
+Due date for the tasks are listed in @tbl-schedule
 :::
 
 
-## Task 3.1 {#sec-task-rast-basic}
+## Task 1 {#sec-task-rast-basic}
 
-Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. As you did last week, solve the next task in a file named `index.qmd`.
+Follow the instructions in @sec-gh-pages to create a new repo in the existing organization. As you did last week, solve the next task in a file named `index.qmd`.
 
 
 1. Redo @sec-vec-basic. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.

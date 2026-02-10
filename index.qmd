@@ -2,8 +2,7 @@
 echo: false
 ---
 
-# Welcome to the course *Spatiotemporal Datascience* {.unnumbered}
-
+# Welcome {.unnumbered}
 
 ![[Image Source](https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals)](images/us-weather.png)
 
@@ -19,7 +18,7 @@ To start the course, we will recap the following topic from the course *GISc and
 
 ```{r}
 #| output: false
-library(readODS)
+library(readxl)
 library(dplyr)
 library(gt)
 ```
@@ -29,27 +28,36 @@ library(gt)
 ```{r}
 #| label: tbl-schedule
 #| tbl-cap: The course schedule (might be subject to change).
-zeitplan <- readODS::read_ods("Zeitplan.ods")
+zeitplan <- read_xlsx("ADLS_Spatiotemporal_DataScience.xlsx")
 
 
-zeitplan <- zeitplan[,1:5]
+
+zeitplan <- zeitplan[,3:8]
 
 df <- tibble(
-  Lecturer = c("rata","laup", "-"),
-  Lecturer_long = c("Nils Ratnaweera", "Patrick Laube", "-")
+  Lecturer = c("rata","laup"),
+  Lecturer_long = c("Nils Ratnaweera", "Patrick Laube")
 )
 
-
+library(glue)
+library(stringr)
 zeitplan |> 
   left_join(df) |> 
-  mutate(across(everything(),\(x)ifelse(is.na(x),"tba",x))) |> 
-  mutate(url = paste0("https://www.zhaw.ch/en/about-us/person/", Lecturer)) |> 
-  mutate(Lecturer = Lecturer_long) |>
-  select(-Lecturer_long, -url) |>
+  mutate(
+    Date = as.Date(Date),
+    Lecturer = Lecturer_long
+    ) |> 
+  mutate(
+    topic_lecturer = glue("{Topic} ({Lecturer})"),
+    Method = ifelse(str_detect(Method, "Task"), glue("{Method}, due: {Date+6}"), Method),
+    .before = 1
+  ) |> 
+  select(-c(Topic, Lecturer, Lecturer_long)) |>
+  group_by(topic_lecturer) |>
   gt() |> 
-  tab_options(table.width = "100%") 
-  # fmt_url(columns = url, label = "🔗", ) |> 
-  # cols_merge(c(Lecturer, url))
+  tab_options(table.width = "100%") |> 
+  cols_label(Method~"") |> 
+  tab_style(style = cell_text(weight = "bold"), locations = cells_row_groups())
 
 
 ```
@@ -59,5 +67,4 @@ zeitplan |>
 
 
 
-<div style="padding-bottom: 100px"></div>
 

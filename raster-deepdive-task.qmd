@@ -3,9 +3,9 @@ title: "🚀 Tasks"
 ---
 
 
-## Task 5.1 {#sec-task-rast-advanced}
+## Task 1 {#sec-task-rast-advanced}
 
-Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named `index.qmd`.
+Follow the instructions in @sec-gh-pages to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named `index.qmd`.
 
 1. Redo @sec-task-rast-basic. However, this time use `gdal` from the command line to to the processing. Note that you can use `bash` commands in quarto, you just have to 
    - set the language to `{bash}` in the code chunk and 

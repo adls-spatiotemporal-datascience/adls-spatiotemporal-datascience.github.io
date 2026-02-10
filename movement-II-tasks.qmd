@@ -3,7 +3,7 @@ title: "🚀 Tasks"
 ---
 
 
-As always, the data for this task is on moodle. Follow the instructions in @sec-gh-pages from Week 1 to create a new repo in the existing organization.
+As always, the data for this task is on moodle. Follow the instructions in @sec-gh-pages to create a new repo in the existing organization.
 
 
 Redo you task from [last Week](#sec-min-ex), but further extend your features by using the approach described in @sec-adding-context. Add at least 2, to 3 features of your own.

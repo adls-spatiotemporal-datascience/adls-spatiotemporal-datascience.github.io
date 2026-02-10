@@ -1,0 +1,73 @@
+project:
+  type: book
+  output-dir: _site/
+# 
+execute: 
+  warning: false
+  freeze: true
+
+book:
+  title: "Spatiotemporal Datascience"
+  subtitle: "Bachelor ADLS / FS26"
+  author: "Nils Ratnaweera"
+  reader-mode: true
+  sidebar: 
+    logo: images/zhaw_sw_pos.png
+    collapse-level: 1
+  chapters:
+    - index.qmd
+    - syllabus.qmd
+    - part: "Vector Deepdive"
+      chapters:
+      - vector-deepdive-topological-rel.qmd
+      - vector-deepdive-duckdb.qmd
+      - vector-deepdive-task.qmd
+    # - part: "Raster Deepdive"
+    #   chapters:
+    #   - raster-deepdive-datatypes.qmd
+    #   - raster-deepdive-gdal.qmd
+    #   - raster-deepdive-compression.qmd
+    #   - raster-deepdive-task.qmd
+    #   # - raster-deepdive-nodata.qmd     # in FS26, finish this chapter
+    # - part: "Web Mapping"
+    # - part: "Interpolation / Density Estimation"
+    #   chapters:
+    #   - interpolation-density.qmd
+    #   - interpolation-methods.qmd
+    #   - interpolation-task.qmd
+    # - part: "Network Analysis"
+    #   chapters:
+    #   - network-centrality-task.qmd
+    #   - network-routing-task.qmd
+    # - part: "Movement Analysis I"
+    #   chapters:
+    #   - movement-I-task-description.qmd
+    #   - movement-I-data-description.qmd
+    #   - movement-I-minimal-example.qmd
+    #   - movement-I-tasks.qmd
+    # - part: "Movement Analysis II"
+    #   chapters:
+    #   - movement-II-adding-context.qmd
+    #   - movement-II-tasks.qmd
+    - references.qmd
+
+
+
+
+format:
+  html:
+    theme:
+      # dark: [flatly, "auxilliary/custom-dark.scss"]
+      light: [flatly, "auxilliary/custom-light.scss"]
+    highlight-style:
+      # dark: auxilliary/arrow-light.theme
+      light: auxilliary/arrow-light.theme
+    css: auxilliary/style.css
+    number-sections: false
+    include-in-header:
+      - auxilliary/script.html
+  # pdf:
+  #   documentclass: scrreprt
+
+
+
