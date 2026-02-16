@@ -2,21 +2,32 @@
 title: Topological relations 
 ---
 
-# Named topological relations
-
-
-
----
+## Quick recap: vector data
 
 []{.lts .content-hidden unless-profile="book"}
 
+- In *GIScience and Geodatabases*, you learned about the **Simple Features** standard (ISO 19125)
+- Features = **geometry** (point, line, polygon) + **attributes** (columns)
+- In R: `sf` objects are data frames with a geometry column
+
+. . .
+
+- So far, we've worked with features mostly in **isolation** — reading, plotting, transforming
+- But often we need to ask: *how do two features relate to each other spatially?*
+  - Does this river flow *through* this canton?
+  - Which bus stops are *within* this district?
+- This is where **topological relations** come in
+
+# Named topological relations
+
+---
 
 :::{.incremental}
 
-- Topological relations describe the spatial relationships between objects. 
-- They are also called *binary topological relationships* or *binary predicates*
-- They are logical statements (`TRUE`/`FALSE`) about the spatial relationships between two objects
-- The two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions [@egenhofer1990]. 
+- Topological relations describe the spatial relationships between objects
+- Also called *binary topological relationships* or *binary predicates*
+- Logical statements (`TRUE`/`FALSE`) about two objects
+- The two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions [@egenhofer1990]
 
 :::
 
@@ -95,7 +106,7 @@ plot_pair(rect_sfc(0, 0, 3, 2), rect_sfc(0.5, 0.3, 2.5, 1.7))
   - `st_is_within_distance()` needs a `dist` argument
 - Full list: `?geos_binary_pred`
 
-## Contains, covers, within
+## Contains, covers, within{visibility="hidden"}
 
 - Easily confused — here's the distinction:
   - `st_contains(x, y)`: is `y` inside `x`, with ≥1 point in the **interior**?
@@ -128,17 +139,35 @@ The same naming pattern applies to other pairs: `st_difference` (operation) has 
 
 ## Predicate return types
 
+```{r}
+#| echo: false
+#| label: fig-predicate-return
+#| fig-cap: "Polygon **a** (purple) overlaps **b1** but is disjoint from **b2**"
+#| fig-width: 8
+#| fig-height: 3
+
+a <- rect_sfc(0, 0, 1, 1)
+b <- c(
+  rect_sfc(0.5, 0, 1.5, 1),
+  rect_sfc(2, 0, 3, 1)
+)
+
+da <- st_sf(geometry = a, label = "a")
+db <- st_sf(geometry = b, label = c("b1", "b2"))
+
+ggplot() +
+  geom_sf(data = da, fill = "#beaed4", alpha = 0.6) +
+  geom_sf(data = db, fill = "#7fc97f", alpha = 0.6) +
+  geom_sf_text(data = da, aes(label = label), size = 6) +
+  geom_sf_text(data = db, aes(label = label), size = 6) +
+  theme_void()
+```
+
 - `st_intersects(x, y)` does **not** return a simple `TRUE`/`FALSE` vector
 - Returns a *sparse geometry binary predicate* (`sgbp`) — a list of **matching indices**
 
 ```{r}
 #| collapse: true
-a <- rect_sfc(0, 0, 1, 1)          # one polygon
-b <- c(
-  rect_sfc(0.5, 0, 1.5, 1),        # overlaps a
-  rect_sfc(2, 0, 3, 1)             # disjoint from a
-)
-
 st_intersects(a, b)
 ```
 
