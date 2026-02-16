@@ -2,23 +2,55 @@
 title: "DuckDB"
 ---
 
+[]{.lts .content-hidden unless-profile="book"}
+
+
 - DuckDB is a relatively new, open-source, column-oriented relational database management system (RDBMS)
 - It is designed to provide high performance on complex queries against large databases in embedded configuration
 - It has a flexible [extension](https://duckdb.org/docs/stable/extensions/overview) mechanism consisting of *core* and *community* extensions
 - [spatial](https://duckdb.org/docs/stable/extensions/spatial/overview.html) is a core extension
 - DuckDB is a *OLAP*, *in process* RDBMS (see below)
 
-<!-- todo: add https://youtu.be/Z-6SnP6yzgo?si=qWkNw2fw1cq6IgGF -->
+- For a great introduction by DuckDB's co-creator, watch [Hannes Mühleisen — DuckDB, an in-process analytical DBMS](https://www.youtube.com/watch?v=Z-6SnP6yzgo) (NY Open Statistical Programming Meetup, 2022)
+
+---
+
+### Why DuckDB for spatial data?
+
+- Tools like R/`sf` load entire datasets into memory — this becomes a bottleneck with large spatial datasets
+- DuckDB can process data that exceeds available RAM by streaming from disk
+- SQL is a widely used, declarative language — you describe *what* you want, not *how* to compute it
+- The spatial extension provides familiar functions (`st_intersects`, `st_intersection`, `st_area`, ...) — the same names as in `sf`
+- Combined with spatial indexing (R-Tree), DuckDB can execute spatial queries on large datasets much faster than in-memory approaches
+
+---
+
+### Data science tools are reinventing DBMS
+
+- Tools like `dplyr`, `data.table`, and `arrow` perform relational data transformations (select, join, aggregate, ...) — this is core DBMS functionality
+- But compared to a real DBMS, they lack:
+  - **Holistic query optimization** across a multi-step pipeline
+  - **Out-of-memory computation** — when intermediates exceed RAM, things break
+  - **Parallelism and pipelining** — limited use of multiple CPU cores
+- DuckDB brings these DBMS capabilities directly into your R/Python session
+- DuckDB is designed for analytical usecases (OLAP)
+
+:::{.notes}
+> The data science community is reinventing database management systems, but rather poorly." If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results. Combined with no out-of-memory support, things simply stop working. DuckDB solves this by bringing 50+ years of DBMS research into an embeddable package.
+
+Hannes Mühleisen (DuckDB co-creator) makes this point in his [talk](https://www.youtube.com/watch?v=Z-6SnP6yzgo): "
+
+:::
 
 ## OLAP vs. OLTP
 
-- OLAP:
+- OLAP (Online Analytical Processing)
   - Read-mostly workloads
   - Complex queries
   - read large parts of the data
   - bulk appends / updates
-- OLTP:
-  - Many samll writes and updates
+- OLTP (Online Transaction Processing)
+  - Many small writes and updates
   - simple queries
   - read only individual rows
 
@@ -44,94 +76,88 @@ df2 <- c("sqlite","duckdb","postgres","clickhouse") |>
   
 df2 |> 
   gt(rownames_to_stub = TRUE) |> 
-  fmt_image(columns = c(OLTP, OLAP),width = "30%") 
+  fmt_image(columns = c(OLTP, OLAP), width = "10em")
 
 ```
 
 
 ## Duckdb in practice {#sec-duckdb-practice}
 
-
-We have prepared a duckdb database (available on moodle) with the data containing the forest in switzerland and the canton boundaries. Download this dataset (`wald-kantone.duckdb` ) from moodle.
-
-## Install duckdb
-
+- Download `wald-kantone.duckdb` from moodle (forest + canton boundaries)
 - Install the [duckdb CLI](duckdb.org/docs/installation/?version=stable&environment=cli) and [duckdb R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
-
 - Install the [dbeaver Community Version](https://dbeaver.io/download/)
-
-
-### Connect
-
-Using *dbeaver*, connect to the duckdb database
-
-
-Install and load the spatial extension running the following query:
+- Using *dbeaver*, connect to the duckdb database
+- Install and load the spatial extension:
    
 ```{.sql}
 INSTALL spatial;
 LOAD spatial;
 ```
-   
-Check if you can see both tables stored in the database using the command:
+
+---
+
+- Verify both tables are present and explore them:
 
 ```{.sql}
 SHOW TABLES;
-```
-
-Explore the tables using the basic SQL syntax:
-
-
-```{.sql}
 SELECT * FROM wald;
 SELECT * FROM kantone;
 ```
 
-Before we proceed, create an R-Tree spatial index for both tables using the following syntax:
+- Create an R-Tree spatial index for both tables:
 
 ```{.sql}
 CREATE INDEX kantone_idx ON kantone USING RTREE (geom);
 CREATE INDEX wald_idx ON wald USING RTREE (geom);
 ```
 
+---
+
+### Why spatial indices?
+
+- Without an index, a spatial query like `WHERE st_intersects(a, b)` must check **every** pair of geometries — this is very slow on large datasets
+- An **R-Tree** index organizes geometries by their *bounding boxes* in a tree structure
+- When querying, the R-Tree quickly eliminates geometries whose bounding boxes don't overlap — only the remaining candidates are checked with the exact (expensive) geometry test
+- This reduces the number of comparisons dramatically (e.g. from millions to thousands)
+- R-Trees are the standard spatial index in most databases (PostGIS, SpatiaLite, DuckDB) and also power `sf`'s spatial predicates internally
+
+---
+
 ### SQL `VIEW`
 
-Now, we would like to recreate @sec-vec-basic using SQL. To facilitate this, we are going to make extensive use of `VIEW`s. But what is a `VIEW`? [geeksforgeeks.org](https://www.geeksforgeeks.org/sql-views/) explains it like this:
+- A `VIEW` is a **named SQL query** — it acts like a virtual table
+- Every time you access a `VIEW`, the underlying query is re-executed
+- This lets us build complex analyses step-by-step (rather than nesting queries)
 
-> Views in SQL are a type of virtual table that simplifies how users interact with data across one or more tables. Unlike traditional tables, a view in SQL does not store data on disk; instead, it dynamically retrieves data based on a pre-defined query each time it’s accessed. 
+:::{.notes}
+Unlike materialized tables, VIEWs don't store data on disk. This means they don't take up extra space and always reflect the current state of the source data. The trade-off is that they are re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.
+:::
 
+- Our first `VIEW`: a subset of the forest dataset (for faster iteration)
 
-In other words, you store a SQL statement with a specific name. This helps us create very complex queries in a concatenated manner (rather than nesting). We *could* also simply create materialized tables as intermediate results. But not only does this increase the size of our database with duplicate data, the intermediate results do not update when something in our source changes.
+---
 
-Our first `VIEW` will be a subset of the forest dataset, so that the execution time in the iterative phase is shorter:
-
-To create a subset of our forest dataset, we limit the results to 1'000 rows:
-
-```{.sql}
-SELECT * FROM wald LIMIT 1000; 
-```
-
-To store this as a view, all we need to do is prepend `CREATE VIEW somename AS` to our query:
+- Limit to 1'000 rows and store as a `VIEW`:
 
 ```{.sql}
 CREATE VIEW wald2 AS            -- <1>
 SELECT * FROM wald LIMIT 1000;  -- <2>
 ```
 
-1. This creates a `VIEW` from...
-2. ... the preceeding `SELECT` statement
+1. Prepend `CREATE VIEW name AS` to any `SELECT`...
+2. ... to store it as a reusable virtual table
 
-We can now call the `VIEW` above with the following query:
+- Query it like a regular table:
 
 ```{.sql}
-SELECT * FROM wald2; 
+SELECT * FROM wald2;
 ```
 
+---
 
 ### Develop SQL Code
 
-The following SQL statement gets the intersection of forest and kantone (@sec-vec-basic).
-
+- Intersect forest polygons with canton boundaries:
 
 ```{.sql}
 SELECT 
@@ -144,19 +170,51 @@ FROM wald2 w, kantone k;            -- <1>
 2. ... used in the intersection
 
 
-However, we can optimize this query with a `WHERE` clause:
+---
+
+- Problem: this computes a **cross join** — *every* forest polygon x *every* canton (1'000 x 26 = 26'000 pairs)
+- Solution: add a `WHERE` clause to filter early:
 
 ```{.sql}
-SELECT 
-  name, 
+SELECT
+  name,
   st_intersection(w.geom, k.geom),
 FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom); -- <1>
 ```
 
-1. This `WHERE` clause reduces execution time
+1. Only compute the intersection for pairs that actually overlap
 
-We are actually interested in the area of the intersection and the total area of the canton. We can get this information like so:
+- This is where the **R-Tree index** pays off — DuckDB discards non-overlapping pairs without checking every combination
+
+:::{.callout-note}
+## `st_intersects` vs `st_intersection`
+Note how this query uses both: `st_intersects` in the `WHERE` clause is a **predicate** (returns true/false to filter rows), while `st_intersection` in the `SELECT` clause is a geometric **operation** (computes the overlapping geometry). Same pattern as in R/`sf`!
+:::
+
+---
+
+### Inspecting query plans with `EXPLAIN`
+
+- You can prepend `EXPLAIN` to any query to see *how* DuckDB will execute it, without actually running it
+- Try comparing the two versions in dbeaver:
+
+```{.sql}
+-- Without WHERE: cross join of all pairs
+EXPLAIN SELECT name, st_intersection(w.geom, k.geom)
+FROM wald2 w, kantone k;
+
+-- With WHERE: only matching pairs (uses R-Tree index)
+EXPLAIN SELECT name, st_intersection(w.geom, k.geom)
+FROM wald2 w, kantone k
+WHERE st_intersects(w.geom, k.geom);
+```
+
+- In the second plan, look for an `INDEX SCAN` or `INDEX JOIN` — this confirms the R-Tree is being used
+
+---
+
+- We need the **area** of each intersection, not the geometry itself:
 
 
 ```{.sql}
@@ -167,11 +225,11 @@ FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom);
 ```
 
-1. `st_area` calculates the are of the intersection
+1. `st_area` calculates the area of the intersection
 
-The next step is to aggregate the area per canton. Before we do this, let's save this query as a `VIEW`.
+---
 
-
+- Save this as a `VIEW` before aggregating:
 
 ```{.sql}
 CREATE VIEW wald_kantone AS            -- <1>
@@ -182,16 +240,11 @@ FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom);
 ```
 
-1. This creates a `VIEW` from the proceeding query
+1. This creates a `VIEW` from the preceding query
 
+---
 
-We can now query this `VIEW` as if it was a table:
-
-```{.sql}
-SELECT * FROM wald_kantone; 
-```
-
-To calculate the total aggregated area per canton, we can use the `GROUP BY` function:
+- Query the `VIEW` like a table, then aggregate with `GROUP BY`:
 
 ```{.sql}
 SELECT 
@@ -205,7 +258,9 @@ GROUP BY name;                  -- <1>
 2. ... we need to wrap all columns with aggregate function...
 3. ... except for the columns that we use for grouping
 
-Let's create a `VIEW` of this as well:
+---
+
+- Save the aggregation as a `VIEW`:
 
 ```{.sql}
 CREATE VIEW wald_kanton_grp AS
@@ -214,9 +269,11 @@ SELECT
   sum(wald_area) as wald_area
 FROM wald_kantone
 GROUP BY name;
-``` 
+```
 
-Finally, we have to join `wald_kanton_grp` with `kantone` to get the information of the total size per canton.
+---
+
+- Join with `kantone` to get the total canton area and compute the fraction:
 
 ```{.sql}
 SELECT 
@@ -227,14 +284,14 @@ LEFT JOIN kantone                        -- <1>
 ON wald_kanton_grp.name=kantone.name;    -- <2>
 ```
 
-1. TO do a join, append the `JOIN` method after the select statement...
-2. ... providing the column names on which to Join on 
-3. In the resulting table, we only need the canton name...
-4. ... and the fraction `wald_area` over `area` (total area of canton)
+1. `LEFT JOIN` appends columns from another table...
+2. ... matched by the `ON` condition
+3. We only need the canton name...
+4. ... and the fraction `wald_area / area`
 
+---
 
-
-This, we can save in a `VIEW` as well:
+- Save as a final `VIEW`, ordered by forest share:
 
 ```{.sql}
 CREATE VIEW kanton_frac AS
@@ -249,29 +306,52 @@ ORDER BY waldanteil DESC;           -- <1>
 
 1. We can `ORDER BY` to show us the highest values first
 
-Till now, we only worked with the first 1'000 features of our forest dataset, so the results are incorrect. Since we worked with `VIEW`, it very straightforward to run our analysis on the full dataset. We simply need to replace the `VIEW wald2` with the full version of the dataset, (omitting the `LIMIT` clause).
+---
 
-We can't simply use `CREATE VIEW wald2` since `wald2` already exists. We therefore need to use `CREATE OR REPLACE VIEW`:
+### Scaling up: from subset to full dataset
 
+- So far we only used 1'000 forest features — results are incomplete
+- Since we used `VIEW`s, switching to the full dataset is trivial:
 
 ```{.sql}
-
-CREATE OR REPLACE VIEW wald2
-AS
+CREATE OR REPLACE VIEW wald2 AS
 SELECT * FROM wald;
 ```
 
-Now we can call `kanton_frac` again, and we will get a query on the full dataset, since all intermediate `VIEW`s are updated automatically. 
-
-This method has the downside that now full query takes a while to process (since no intermediate datasets are materialized). 
+- Now every downstream `VIEW` automatically uses the full data:
 
 ```{.sql}
 SELECT * FROM kanton_frac;
 ```
 
+:::{.notes}
+`CREATE OR REPLACE VIEW` is needed because `wald2` already exists. This is the key advantage of VIEWs: by replacing just one definition, the entire chain of dependent queries updates automatically. The downside is that the full query now takes longer since nothing is materialized.
+:::
+
+---
+
+### `VIEW` vs `CREATE TABLE ... AS`
+
+- A `VIEW` is lazy — the query is re-executed every time you access it
+- If performance matters, you can **materialize** intermediate results using `CREATE TABLE ... AS`:
+
+```{.sql}
+CREATE TABLE wald_kantone_mat AS           -- <1>
+SELECT
+  name,
+  st_area(st_intersection(w.geom, k.geom)) AS wald_area
+FROM wald2 w, kantone k
+WHERE st_intersects(w.geom, k.geom);
+```
+
+1. This stores the result as an actual table on disk
+
+- Trade-off: materialized tables are faster to query, but they take up disk space and do **not** update automatically when the source data changes
+- VIEWs are the opposite: no extra storage, always up-to-date, but slower to query
+
 ## Import results into R
 
-To import the data into R (e.g. to create a visualization), we can simply connect to the database, load the spatial extension and the import the `VIEW` using `dbReadTable()`:
+- Connect from R, load the spatial extension, and read the `VIEW`:
 
 ```{r}
 #| eval: false
@@ -285,5 +365,7 @@ con <- dbConnect(
 
 dbExecute(con, "LOAD spatial;")
 kanton_frac <- dbReadTable(con, "kanton_frac")
+
+dbDisconnect(con)
 ```
 
