@@ -2,11 +2,14 @@ project:
   title: "Spatiotemporal Datascience"
   output-dir: _site/slides
 
-format: revealjs-clean
+format: 
+  revealjs-clean:
+    smaller: true
+    slide-number: c/t
     
 bibliography: auxilliary/references.bib
 execute: 
   warning: false
   message: false
-  echo: false
+  echo: true
 freeze: true
