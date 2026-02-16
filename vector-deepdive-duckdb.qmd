@@ -5,61 +5,52 @@ title: "DuckDB"
 []{.lts .content-hidden unless-profile="book"}
 
 
-- DuckDB is a relatively new, open-source, column-oriented relational database management system (RDBMS)
-- It is designed to provide high performance on complex queries against large databases in embedded configuration
-- It has a flexible [extension](https://duckdb.org/docs/stable/extensions/overview) mechanism consisting of *core* and *community* extensions
-- [spatial](https://duckdb.org/docs/stable/extensions/spatial/overview.html) is a core extension
-- DuckDB is a *OLAP*, *in process* RDBMS (see below)
 
-- For a great introduction by DuckDB's co-creator, watch [Hannes Mühleisen — DuckDB, an in-process analytical DBMS](https://www.youtube.com/watch?v=Z-6SnP6yzgo) (NY Open Statistical Programming Meetup, 2022)
-
----
-
-### Why DuckDB for spatial data?
-
-- Tools like R/`sf` load entire datasets into memory — this becomes a bottleneck with large spatial datasets
-- DuckDB can process data that exceeds available RAM by streaming from disk
-- SQL is a widely used, declarative language — you describe *what* you want, not *how* to compute it
-- The spatial extension provides familiar functions (`st_intersects`, `st_intersection`, `st_area`, ...) — the same names as in `sf`
-- Combined with spatial indexing (R-Tree), DuckDB can execute spatial queries on large datasets much faster than in-memory approaches
-
----
-
-### Data science tools are reinventing DBMS
-
-- Tools like `dplyr`, `data.table`, and `arrow` perform relational data transformations (select, join, aggregate, ...) — this is core DBMS functionality
-- But compared to a real DBMS, they lack:
-  - **Holistic query optimization** across a multi-step pipeline
-  - **Out-of-memory computation** — when intermediates exceed RAM, things break
-  - **Parallelism and pipelining** — limited use of multiple CPU cores
-- DuckDB brings these DBMS capabilities directly into your R/Python session
-- DuckDB is designed for analytical usecases (OLAP)
+- Open-source, column-oriented **RDBMS** (relational database management system)
+- High performance on complex queries, even on large datasets
+- Flexible [extension](https://duckdb.org/docs/stable/extensions/overview) system — [spatial](https://duckdb.org/docs/stable/extensions/spatial/overview.html) is a core extension
 
 :::{.notes}
-> The data science community is reinventing database management systems, but rather poorly." If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results. Combined with no out-of-memory support, things simply stop working. DuckDB solves this by bringing 50+ years of DBMS research into an embeddable package.
+For a great introduction by DuckDB's co-creator, watch [Hannes Mühleisen — DuckDB, an in-process analytical DBMS](https://www.youtube.com/watch?v=Z-6SnP6yzgo) (NY Open Statistical Programming Meetup, 2022).
+:::
 
-Hannes Mühleisen (DuckDB co-creator) makes this point in his [talk](https://www.youtube.com/watch?v=Z-6SnP6yzgo): "
+## Why DuckDB for spatial data?
 
+- R/`sf` loads entire datasets into memory → bottleneck with large data
+- DuckDB can **stream from disk** — processes data exceeding available RAM
+- SQL: declarative language — describe *what* you want, not *how*
+- Spatial extension uses familiar function names (`st_intersects`, `st_area`, ...)
+- **Spatial indexing** (R-Tree) makes large-scale spatial queries fast
+
+## Reinventing DBMS?
+
+- `dplyr`, `data.table`, `arrow` do relational transformations (select, join, aggregate, ...)
+- But compared to a real DBMS, they lack:
+  - **Holistic query optimization** across a pipeline
+  - **Out-of-memory computation**
+  - **Parallelism and pipelining**
+- DuckDB brings 50+ years of DBMS research into your R/Python session
+
+:::{.notes}
+Hannes Mühleisen (DuckDB co-creator) makes this point in his [talk](https://www.youtube.com/watch?v=Z-6SnP6yzgo): "The data science community is reinventing database management systems, but rather poorly." If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results.
 :::
 
 ## OLAP vs. OLTP
 
-- OLAP (Online Analytical Processing)
-  - Read-mostly workloads
-  - Complex queries
-  - read large parts of the data
-  - bulk appends / updates
-- OLTP (Online Transaction Processing)
-  - Many small writes and updates
-  - simple queries
-  - read only individual rows
+| | **OLAP** (Analytical) | **OLTP** (Transactional) |
+|---|---|---|
+| Workload | Read-mostly | Many small writes |
+| Queries | Complex, scan large parts | Simple, touch individual rows |
+| Updates | Bulk appends | Frequent row-level updates |
 
+- DuckDB = **OLAP**
 
-## In process vs. standalone
+## In-process vs. standalone
 
-- DuckDB is an *in process* database management system, it is not an external process to which your application connects. 
-- In other words: there is no client sending instructions nor a server to read and process them
-- SQLite works the same way, while PostgreSQL, MySQL etc. do not
+- **In-process**: runs inside your application (no separate server)
+  - DuckDB, SQLite
+- **Standalone**: separate server process, client connects over network
+  - PostgreSQL, MySQL
 
 
 ```{r}
@@ -81,12 +72,14 @@ df2 |>
 ```
 
 
-## Duckdb in practice {#sec-duckdb-practice}
+## Let's put DuckDB to work {.center}
 
-- Download `wald-kantone.duckdb` from moodle (forest + canton boundaries)
-- Install the [duckdb CLI](duckdb.org/docs/installation/?version=stable&environment=cli) and [duckdb R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
-- Install the [dbeaver Community Version](https://dbeaver.io/download/)
-- Using *dbeaver*, connect to the duckdb database
+## DuckDB in practice {#sec-duckdb-practice}
+
+- Download `wald-kantone.duckdb` from Moodle (forest + canton boundaries)
+- Install [DuckDB CLI](duckdb.org/docs/installation/?version=stable&environment=cli) + [R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
+- Install [DBeaver Community](https://dbeaver.io/download/)
+- Connect to the database in DBeaver
 - Install and load the spatial extension:
    
 ```{.sql}
@@ -113,24 +106,33 @@ CREATE INDEX wald_idx ON wald USING RTREE (geom);
 
 ---
 
-### Why spatial indices?
+## Why spatial indices?
 
-- Without an index, a spatial query like `WHERE st_intersects(a, b)` must check **every** pair of geometries — this is very slow on large datasets
-- An **R-Tree** index organizes geometries by their *bounding boxes* in a tree structure
-- When querying, the R-Tree quickly eliminates geometries whose bounding boxes don't overlap — only the remaining candidates are checked with the exact (expensive) geometry test
-- This reduces the number of comparisons dramatically (e.g. from millions to thousands)
-- R-Trees are the standard spatial index in most databases (PostGIS, SpatiaLite, DuckDB) and also power `sf`'s spatial predicates internally
+- Without an index: `WHERE st_intersects(a, b)` checks **every** pair → slow
+- **R-Tree** index organizes geometries by bounding boxes
+- Eliminates non-overlapping pairs cheaply → only candidates get the expensive exact test
+- Reduces comparisons dramatically (e.g. millions → thousands)
+
+:::{.notes}
+R-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also power `sf`'s spatial predicates internally.
+:::
 
 ---
 
-### SQL `VIEW`
+## Building an analysis step-by-step
 
-- A `VIEW` is a **named SQL query** — it acts like a virtual table
-- Every time you access a `VIEW`, the underlying query is re-executed
-- This lets us build complex analyses step-by-step (rather than nesting queries)
+- Indices speed up queries — but we still need to **compose** the analysis
+- Goal: compute **forest share per canton** (same as Task 1, but in SQL)
+- Strategy: break it into small, reusable pieces using SQL `VIEW`s
+
+## SQL `VIEW`s
+
+- A `VIEW` = a **named SQL query** (virtual table)
+- Re-executed every time you access it
+- Lets us build complex analyses **step-by-step**
 
 :::{.notes}
-Unlike materialized tables, VIEWs don't store data on disk. This means they don't take up extra space and always reflect the current state of the source data. The trade-off is that they are re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.
+Unlike materialized tables, VIEWs don't store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.
 :::
 
 - Our first `VIEW`: a subset of the forest dataset (for faster iteration)
@@ -155,9 +157,9 @@ SELECT * FROM wald2;
 
 ---
 
-### Develop SQL Code
+## Spatial intersection in SQL
 
-- Intersect forest polygons with canton boundaries:
+- Step 1 of the pipeline: intersect forest polygons with canton boundaries
 
 ```{.sql}
 SELECT 
@@ -172,8 +174,8 @@ FROM wald2 w, kantone k;            -- <1>
 
 ---
 
-- Problem: this computes a **cross join** — *every* forest polygon x *every* canton (1'000 x 26 = 26'000 pairs)
-- Solution: add a `WHERE` clause to filter early:
+- Problem: **cross join** — every forest polygon × every canton (1'000 × 26 = 26'000 pairs)
+- Solution: add `WHERE` to filter early:
 
 ```{.sql}
 SELECT
@@ -185,19 +187,19 @@ WHERE st_intersects(w.geom, k.geom); -- <1>
 
 1. Only compute the intersection for pairs that actually overlap
 
-- This is where the **R-Tree index** pays off — DuckDB discards non-overlapping pairs without checking every combination
+- **R-Tree index** pays off here — non-overlapping pairs discarded without exact check
 
 :::{.callout-note}
 ## `st_intersects` vs `st_intersection`
-Note how this query uses both: `st_intersects` in the `WHERE` clause is a **predicate** (returns true/false to filter rows), while `st_intersection` in the `SELECT` clause is a geometric **operation** (computes the overlapping geometry). Same pattern as in R/`sf`!
+This query uses both: `st_intersects` in `WHERE` = **predicate** (true/false filter), `st_intersection` in `SELECT` = **operation** (computes geometry). Same pattern as in R/`sf`!
 :::
 
 ---
 
-### Inspecting query plans with `EXPLAIN`
+## Query plans with `EXPLAIN`
 
-- You can prepend `EXPLAIN` to any query to see *how* DuckDB will execute it, without actually running it
-- Try comparing the two versions in dbeaver:
+- Prepend `EXPLAIN` to see *how* DuckDB will execute a query (without running it)
+- Compare both versions in DBeaver:
 
 ```{.sql}
 -- Without WHERE: cross join of all pairs
@@ -210,11 +212,11 @@ FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom);
 ```
 
-- In the second plan, look for an `INDEX SCAN` or `INDEX JOIN` — this confirms the R-Tree is being used
+- Look for `INDEX SCAN` or `INDEX JOIN` in the second plan → R-Tree is being used
 
 ---
 
-- We need the **area** of each intersection, not the geometry itself:
+- We need the **area**, not the geometry itself:
 
 
 ```{.sql}
@@ -308,9 +310,9 @@ ORDER BY waldanteil DESC;           -- <1>
 
 ---
 
-### Scaling up: from subset to full dataset
+## Scaling up
 
-- So far we only used 1'000 forest features — results are incomplete
+- So far: only 1'000 forest features → incomplete results
 - Since we used `VIEW`s, switching to the full dataset is trivial:
 
 ```{.sql}
@@ -318,22 +320,22 @@ CREATE OR REPLACE VIEW wald2 AS
 SELECT * FROM wald;
 ```
 
-- Now every downstream `VIEW` automatically uses the full data:
+- Every downstream `VIEW` now automatically uses the full data:
 
 ```{.sql}
 SELECT * FROM kanton_frac;
 ```
 
 :::{.notes}
-`CREATE OR REPLACE VIEW` is needed because `wald2` already exists. This is the key advantage of VIEWs: by replacing just one definition, the entire chain of dependent queries updates automatically. The downside is that the full query now takes longer since nothing is materialized.
+`CREATE OR REPLACE VIEW` is needed because `wald2` already exists. Key advantage of VIEWs: replace one definition, the entire chain updates. Downside: full query now takes longer since nothing is materialized.
 :::
 
 ---
 
-### `VIEW` vs `CREATE TABLE ... AS`
+## `VIEW` vs `CREATE TABLE ... AS`
 
-- A `VIEW` is lazy — the query is re-executed every time you access it
-- If performance matters, you can **materialize** intermediate results using `CREATE TABLE ... AS`:
+- `VIEW` = lazy (re-executed on every access)
+- `CREATE TABLE ... AS` = **materialized** (stored on disk):
 
 ```{.sql}
 CREATE TABLE wald_kantone_mat AS           -- <1>
@@ -346,12 +348,13 @@ WHERE st_intersects(w.geom, k.geom);
 
 1. This stores the result as an actual table on disk
 
-- Trade-off: materialized tables are faster to query, but they take up disk space and do **not** update automatically when the source data changes
-- VIEWs are the opposite: no extra storage, always up-to-date, but slower to query
+- Trade-off:
+  - **Materialized**: faster to query, takes disk space, does **not** auto-update
+  - **VIEW**: no extra storage, always current, slower to query
 
-## Import results into R
+## Import into R
 
-- Connect from R, load the spatial extension, and read the `VIEW`:
+- Connect, load spatial extension, read the `VIEW`:
 
 ```{r}
 #| eval: false
@@ -368,4 +371,12 @@ kanton_frac <- dbReadTable(con, "kanton_frac")
 
 dbDisconnect(con)
 ```
+
+## Wrap-up
+
+- DuckDB = **in-process OLAP** database with a spatial extension
+- SQL lets you express spatial analyses declaratively
+- **R-Tree indices** make spatial predicates fast
+- **VIEWs** let you build analyses incrementally — easy to iterate and scale
+- Results flow back into R for further analysis or visualization
 
