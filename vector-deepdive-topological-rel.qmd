@@ -425,6 +425,16 @@ st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append =
 
 ---
 
+:::{.notes}
+- Rows = parts of geometry A (blue), 
+- columns = parts of geometry B (red). 
+- Each cell shows what the intersection of that row-part with that column-part looks like. 
+- The dark shading in each cell is the resulting intersection. 
+- Walk through a few cells: 
+  - top-left (Interior ∩ Interior) yields an area, 
+  - top-middle (Interior ∩ Boundary) yields a line, 
+  - middle-middle (Boundary ∩ Boundary) yields two points.
+:::
 
 ```{r}
 #| echo: false
@@ -481,6 +491,12 @@ The DE-9IM string is read row by row from the 3×3 matrix. The encoding is: F = 
 
 - `st_contains` and `st_within` are mirror images (swap rows ↔ columns)
 - `*` = wildcard, matches `F`, `0`, `1`, or `2`
+
+:::{.notes}
+- The exact values `0`, `1`, `2` describe the *dimension* of the intersection (point, line, area). 
+- In patterns, `T` means "any non-empty intersection" - i.e. it matches `0`, `1`, or `2` but not `F`. 
+- So `T` is used when you *care that something intersects* but don't care *how* (point vs line vs area), while `0`/`1`/`2` pin down the exact dimension.
+:::
 
 ## Back to the rook
 
