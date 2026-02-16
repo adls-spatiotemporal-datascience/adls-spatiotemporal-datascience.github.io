@@ -73,25 +73,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-window.onload = function() {
-  // Select all clickable areas
-  const clickableAreas = document.querySelectorAll(".level2,.level3");
-
-  clickableAreas.forEach(area => {
-    area.addEventListener('click', function() {
-      // Find the secretContent child within the clicked area
-      const secret = this.querySelector('.notes');
-      if (secret) {
-        console.log(secret.textContent.trim());
-      }
-    });
-  });
-};
-</script>
 
 
 <link rel="stylesheet" href="auxilliary/style.css">
+<link rel="stylesheet" href="auxilliary/style-book.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -826,6 +811,12 @@ Table&nbsp;1: The course schedule (might be subject to change).
 </section>
 
 </main> <!-- /main -->
+<script>
+  const currentFile = window.location.pathname.split('/').pop();
+  console.log(currentFile);
+  const span = document.querySelector('.lts');
+  span.outerHTML = `<p class="lts">↪ <a href="slides/${currentFile}" target="_blank">slides</a></p>`;
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
