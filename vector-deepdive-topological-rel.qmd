@@ -1,8 +1,12 @@
 ---
-title: "Topological relations" 
+title: Topological relations 
 ---
 
-## Named topological relations 
+# Named topological relations
+
+
+
+---
 
 []{.lts .content-hidden unless-profile="book"}
 
@@ -16,29 +20,23 @@ title: "Topological relations"
 
 :::
 
----
-
-### Usage
+## Usage
 
 - Topological relations can be used to subset or join spatial data
 - For example:
   - Subsetting: *Return all rivers that flow through the canton of Zurich*
   - Joining: *For every train station, give me the name of the municipality it lies within*
 
----
+## Common predicates in `sf` {#sec-named-topological-relations}
 
-### Named topological relations (I) {#sec-named-topological-relations}
-
-- The most common topological relations are offered as functions / tools in most GIS software
-- In `sf`, there are a multitude of topological functions available:, `st_intersects()`, `st_disjoint()`, `st_touches()`, `st_crosses()`
-- These all work slightly differently, and are used in different contexts.
-- For example: 
-  - `st_covers()` returns `TRUE` if no points of `x` are outside `y`, and at least one point of `x` is inside `y`.
-  - `st_touches()` returns `TRUE` if the geometries have at least one point in common, but their interiors do not intersect.
+- Most GIS software offers common topological relations as functions
+- `sf` provides many: `st_intersects()`, `st_disjoint()`, `st_touches()`, `st_crosses()`, ...
+- Each works slightly differently and fits different contexts
+- Examples:
+  - `st_covers(x, y)` → `TRUE` if no points of `x` are outside `y`
+  - `st_touches(x, y)` → `TRUE` if geometries share boundary points but interiors don't intersect
   
----
-
-### Key predicates visualized
+## Key predicates visualized
 
 ```{r}
 #| echo: false
@@ -87,26 +85,24 @@ plot_pair(rect_sfc(0, 0, 1.5, 1), rect_sfc(1, 0, 2.5, 1))
 plot_pair(rect_sfc(0, 0, 3, 2), rect_sfc(0.5, 0.3, 2.5, 1.7))
 ```
 
----
+## Symmetry and order
 
-### Named topological relations (II)
+- Some relations are **symmetrical** (order doesn't matter)
+  - `st_touches(x, y)` = `st_touches(y, x)`
+- Others are **asymmetrical** (order matters!)
+  - `st_contains(x, y)` ≠ `st_contains(y, x)`
+- Some require extra arguments
+  - `st_is_within_distance()` needs a `dist` argument
+- Full list: `?geos_binary_pred`
 
-- Some of the relations mentioned above are symmetrical (the order of the geometries does not matter)
-- For example, if `st_touches(x, y)` is `TRUE`, then `st_touches(y, x)` is also `TRUE`
-- Others are not, meaning that the order of the geometries is important. 
-- For example, `st_contains(x, y)` returns `TRUE` if `x` contains `y`, but `st_contains(y, x)` returns `FALSE`
-- Some of the relations require additional arguments, such as `st_is_within_distance()`, which requires a distance argument
-- You can find the full list of topological relations in the `sf` documentation using `?geos_binary_pred`
+## Contains, covers, within
 
----
-
-### `st_contains` vs `st_covers` vs `st_within`
-
-- These three are easily confused:
-  - `st_contains(x, y)`: is `y` inside `x`, with at least one point of `y` in the **interior** of `x`?
+- Easily confused — here's the distinction:
+  - `st_contains(x, y)`: is `y` inside `x`, with ≥1 point in the **interior**?
   - `st_covers(x, y)`: is every point of `y` inside **or on the boundary** of `x`?
-  - `st_within(x, y)`: the inverse of `st_contains` — is `x` inside `y`?
-- The subtle difference between `st_contains` and `st_covers`: a point lying *exactly on the boundary* of a polygon is **covered** but not **contained**
+  - `st_within(x, y)`: inverse of `st_contains` — is `x` inside `y`?
+- Key difference: a point *on the boundary* is **covered** but not **contained**
+- **Tip**: for point-in-polygon queries, prefer `st_covers` — `st_contains` misses points exactly on the boundary
 
 ```{r}
 #| collapse: true
@@ -119,9 +115,7 @@ st_contains(polygon, point_on_boundary, sparse = FALSE)  # FALSE
 st_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE
 ```
 
----
-
-### Predicates vs. operations
+## Predicates vs. operations
 
 :::{.callout-important}
 ## Don't confuse predicates with operations!
@@ -132,12 +126,10 @@ st_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE
 The same naming pattern applies to other pairs: `st_difference` (operation) has no corresponding predicate, while `st_touches` (predicate) has no corresponding operation.
 :::
 
----
+## Predicate return types
 
-### What do predicates return?
-
-- Calling e.g. `st_intersects(x, y)` does **not** return a simple `TRUE`/`FALSE` vector
-- It returns a *sparse geometry binary predicate* (`sgbp`) object — essentially a list where each element contains the **indices** of `y` that match
+- `st_intersects(x, y)` does **not** return a simple `TRUE`/`FALSE` vector
+- Returns a *sparse geometry binary predicate* (`sgbp`) — a list of **matching indices**
 
 ```{r}
 #| collapse: true
@@ -158,12 +150,14 @@ st_intersects(a, b)
 st_intersects(a, b, sparse = FALSE)
 ```
 
----
+## Applying predicates: subsetting {.center}
 
-### Subset Examples
+Now that we know how predicates work, let's use them to **subset** and **join** spatial data.
 
-- Let's take the example of playgrounds, public transport stops and Stadtkreise in Zurich
-- We can use topological predicates to subset one dataset based on another
+## Spatial subsetting
+
+- Predicates can be used to **subset** one dataset based on another
+- Example data: playgrounds, public transport stops, and Stadtkreise in Zurich
 
 ```{r}
 library(sf)
@@ -175,12 +169,8 @@ publictransport <- read_sf("data/week4-exercises/public_transport.gpkg")
 kreise <- read_sf("data/week4-exercises/stadtkreise-zh.gpkg")
 ```
 
----
-
-### Subset with `st_intersects` (default)
-
-- The default predicate is `st_intersects` — this is the most common case
-- For example: *which playgrounds lie within Stadtkreis 1?*
+- Default predicate: `st_intersects`
+- Example: *which playgrounds lie within Stadtkreis 1?*
 
 ```{r}
 #| collapse: true
@@ -191,19 +181,17 @@ playgrounds_k1 <- playgrounds[kreis1, ]  # st_intersects is the default
 nrow(playgrounds_k1)
 ```
 
----
+## Distance-based subsetting
 
-### Subset with a distance-based predicate
-
-- We can also use predicates that are not purely topological, such as `st_is_within_distance`
-- For example: *which playgrounds are within 100m of a public transport stop?*
+- Not limited to topological predicates — can also use distance-based ones
+- Example: *which playgrounds are within 100m of a public transport stop?*
 
 ```{r}
 # Using the shorthand notation
 playgrounds_close <- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]
 ```
 
-The same can be written more readably with `st_filter()`:
+Same thing, more readable with `st_filter()`:
 
 ```{r}
 playgrounds_close <- st_filter(playgrounds, publictransport, .predicate = st_is_within_distance, dist = 100)
@@ -226,15 +214,19 @@ tm_shape(playgrounds) + tm_dots(shape = 16, fill = "darkgreen", size = .5)  +
 
 ```
 
----
+## From subsetting to joining {.center}
 
-### Spatial join Example (I)
+Subsetting *filters* features — what if we want to *transfer attributes* instead?
 
-- In a spatial join, we want to add information from one dataset to another based on their spatial relationship
-- For example, we can add the name of the *nearest* public transport stop to each playground.
-- For this, we will use the function `st_nearest_feature`
-- Strictly speaking, this function is not *binary predicate*, but is very useful for spatial joins
-- To make the example clearer, I will first discard all unnecessary columns from the datasets
+## Spatial joins
+
+- **Joins** transfer attributes from one dataset to another based on spatial relationship
+- `st_join(x, y)`: for each feature in `x`, find matching features in `y` and attach their columns
+- Example: add the name of the *nearest* public transport stop to each playground
+
+:::{.notes}
+`st_nearest_feature` is not strictly a binary predicate, but is very useful for spatial joins. To make the example clearer, we first discard all unnecessary columns from the datasets.
+:::
 
 ---
 
@@ -252,21 +244,17 @@ playgrounds_join <- st_join(
   )
 ```
 
----
 
 ```{r}
 playgrounds_join
 ```
 
----
+## Join cardinality
 
-### Spatial join Example (II)
-
-- In the previous example, `playgrounds_join` has the same features as `playgrounds`, but with an additional column (`CHSTNAME`)
-- The reason for this, is that there is only one *nearest station* for every playground
-- In some joins, the number of rows in the joined dataset can be different from the original dataset
-- For example, if we want to join via the method *within 100m*, the result is different (see below). 
-- This is because there can be none, or even multiple public transport stops within 100m of a playground
+- `playgrounds_join` has the same rows as `playgrounds` + extra column `CHSTNAME`
+  - Why? Each playground has exactly **one** nearest station
+- But row count can change with other join predicates!
+  - *Within 100m*: a playground may match **zero or multiple** stops
 
 ---
 
@@ -291,14 +279,11 @@ nrow(playgrounds_join2)
 playgrounds_join2
 ```
 
----
+## Join order
 
-### Spatial join order
-
-- Note that as is the case with all joins, the order of the datasets matters
-- `st_join` by default is a left join (the first dataset is the left dataset)
-- The resulting dataset will have the geometry of the left dataset
-- This is especially noticeable when joining datasets of different types
+- Order matters (just like regular joins)
+- `st_join` = **left join** by default
+- Result keeps the **geometry of the left dataset**
 
 ---
 
@@ -315,7 +300,7 @@ tm_shape(publictransport_join) + tm_dots(fill = "STADTKREIS")
 
 ---
 
-- if you reverse the order, each `stadtkreis` will be duplicated for every point in the `publictransport` dataset it intersects
+- Reverse order → each `stadtkreis` gets **duplicated** for every intersecting point
 
 ```{r}
 #| collapse: true
@@ -342,90 +327,32 @@ tm_shape(kreise) + tm_polygons("STADTKREIS") + tm_layout(legend.show = FALSE)
 
 ```
 
+## Summary
 
-## Custom topological relations
+| Task | Function | Key arguments |
+|---|---|---|
+| Test a relationship | `st_intersects()`, `st_covers()`, ... | `sparse = FALSE` for logical matrix |
+| Subset by predicate | `x[y, ]` or `st_filter()` | `op` / `.predicate`, `dist` |
+| Join by predicate | `st_join(x, y)` | `join`, `left = TRUE` |
 
-- In case the named topological relations (see @sec-named-topological-relations) do not covery a specific usecase, we can gain more fine grained control using so called *DE-9IM strings*. 
-- DE-9IM stands for *Dimensionally Extended nine-Intersection Model* and is the formal definition of the topological relations between two geometries
-- DE-9IM powers all binary predicate functions like `st_intersects` etc.
-- The concept is a bit complex, but the idea is that it describes the topological relationship between two geometries in a 3x3 matrix. 
-- The reasons the matrix is 3x3 is because it considers the intersection of the (1) interior, (2) boundary, and (3) exterior of the geometries.
-- @tbl-de9im shows how two overlapping polygons are analyzed using DE-9IM 
+- Default predicate is always `st_intersects`
+- Prefer `st_covers` over `st_contains` for point-in-polygon
+- Join order determines geometry and potential row duplication
 
----
+# Custom topological relations
 
+## A motivating problem
 
-```{r}
-#| echo: false
-#| label: tbl-de9im
-#| tbl-cap: "Image source: M. W. Taves [commons.wikimedia.org](https://commons.wikimedia.org/wiki/File:DE9IM_II.svg)"
-
-
-library(dplyr)
-library(tidyr)
-
-
-perspec <- c("Interior", "Boundary", "Exterior")
-perspec2 <- c("I","B","E")
-
-df <-cbind(rep(perspec2, each = 3), rep(perspec2, 3)) |> 
-  apply(1, \(x)paste(x,collapse = "")) |> 
-  (\(x)file.path("images","DE9IM",paste0("DE9IM_",x,".svg.png")))() |> 
-  matrix(ncol = 3, byrow = TRUE) |> 
-  as.data.frame()
-
-colnames(df) <- perspec
-rownames(df) <- perspec
-
-library(gt)
-df |> 
-  gt::gt(rownames_to_stub = TRUE) |> 
-  fmt_image(columns = c(Interior,Boundary,Exterior),height = "4em") 
-  
-```
-
----
-  
-- In the example in @tbl-de9im
-  - the intersection of both *interiors* results in an area. This is denoted as `2`
-  - the intersection of *interior* with *boundary* results in a line, this is denoted as `1`
-  - the intersection of *boundary* with *boundary* results in two points, this is denoted as `0`
-- Once all nine intersections have been regarded and encoded, the result is flattened into a string (with nine characters) which describes the topological relationship precisely
-- In the example in @tbl-de9im, a compact representation as string code is `212101212`
-- This concept is especially interesting from the opposite perspective: i.e. we describe the DE-9IM string we are looking for (see next chapter)
-
----
-
-### Named predicates are DE-9IM patterns
-
-- Every named predicate corresponds to one or more DE-9IM patterns
-- For example:
-
-| Predicate | DE-9IM pattern(s) |
-|---|---|
-| `st_intersects` | `T********`, `*T*******`, `***T*****`, `****T****` (any non-empty intersection) |
-| `st_touches` | `FT*******`, `F**T*****`, `F***T****` |
-| `st_contains` | `T*****FF*` |
-| `st_within` | `T*F**F***` |
-
-- Note how `st_contains` and `st_within` are mirror images of each other (swap rows and columns)
-- The wildcard `*` means "any value" — matching `F`, `0`, `1`, or `2`
-
----
-
-### Rook's case
-
-- As alluded in the last chapter, the DE-9IM string can help us look for specific relations not covered in the named topological relation
-- Consider a chessboard like situation with 3x3 fields (see @fig-chessboard)
-- From the *origin* field, you might be interested to know all fields that share a full edge (i.e. how a [rook](https://en.wikipedia.org/wiki/Rook_(chess)) would move)
-- This relation is not covered by the named topological relations, so we need to model it using a DE-9IM string
-
+- Consider a 3×3 chessboard (@fig-chessboard)
+- Which fields share a **full edge** with the origin? (like a rook's move)
+- `st_touches` won't work — it also matches **diagonal** neighbours (shared point)
+- We need a way to express: *"shared boundary must be a line, not just a point"*
 
 ```{r}
 #| echo: false
 #| out-width: "80%"
 #| label: fig-chessboard
-#| fig-cap: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an endge with the origin?
+#| fig-cap: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an edge with the origin?
 xy2sfc = function(x, y) st_sfc(st_polygon(list(cbind(x, y))))
 x = xy2sfc(x = c(0, 0, 1, 1, 0), y = c(0, 1, 1, 0, 0))
 
@@ -436,7 +363,7 @@ grid_orig <- grid[5]
 
 chessplot <- tm_shape(grid_dest) + tm_polygons(fill = "#7fc97f") +
   tm_shape(grid_orig) + tm_polygons(fill = "#beaed4") +
-  tm_shape((x)) + 
+  tm_shape((x)) +
   tm_dots(shape =tmap_icons("images/rook.png"),size = 1.2) +
     tm_layout(frame = FALSE) +
   tm_add_legend(
@@ -460,15 +387,80 @@ st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append =
 
 ```
 
+## The DE-9IM
+
+- **DE-9IM** (*Dimensionally Extended nine-Intersection Model*) gives fine-grained control
+- DE-9IM is the formal model **behind** all named predicates
+- Describes the relationship as a **3×3 matrix**: interior, boundary, exterior of each geometry
+- @tbl-de9im shows the analysis for two overlapping polygons
+
 ---
 
 
+```{r}
+#| echo: false
+#| label: tbl-de9im
+#| tbl-cap: "Image source: M. W. Taves [commons.wikimedia.org](https://commons.wikimedia.org/wiki/File:DE9IM_II.svg)"
 
-### Modeling the rook's case
+
+library(dplyr)
+library(tidyr)
 
 
-- To specify our requirement (destination field must share a boundary with the origin) we need to use the 3x3 DE-9IM we discussed in @tbl-de9im
-- The requirement is, that the interiors should *not* intersect (`F`) and the intersection of the boundaries should result in a *line* (`1`). All other intersections to not matter (`*`). This is displayed in @tbl-rook
+perspec <- c("Interior", "Boundary", "Exterior")
+perspec2 <- c("I","B","E")
+
+df <-cbind(rep(perspec2, each = 3), rep(perspec2, 3)) |>
+  apply(1, \(x)paste(x,collapse = "")) |>
+  (\(x)file.path("images","DE9IM",paste0("DE9IM_",x,".svg.png")))() |>
+  matrix(ncol = 3, byrow = TRUE) |>
+  as.data.frame()
+
+colnames(df) <- perspec
+rownames(df) <- perspec
+
+library(gt)
+df |>
+  gt::gt(rownames_to_stub = TRUE) |>
+  fmt_image(columns = c(Interior,Boundary,Exterior),height = "4em")
+
+```
+
+---
+
+- Reading @tbl-de9im:
+  - Interior ∩ Interior → area → `2`
+  - Interior ∩ Boundary → line → `1`
+  - Boundary ∩ Boundary → points → `0`
+- Flatten all nine cells into a string → `212101212`
+- The power: **specify the pattern you want** and match geometries against it
+
+:::{.notes}
+The DE-9IM string is read row by row from the 3×3 matrix. The encoding is: F = empty, 0 = point, 1 = line, 2 = area. This concept is especially useful from the "opposite" perspective: we describe the DE-9IM pattern we are looking for and use `st_relate` to find matching pairs.
+:::
+
+## Predicates as patterns
+
+- Every named predicate = one or more DE-9IM patterns
+
+| Predicate | DE-9IM pattern(s) |
+|---|---|
+| `st_intersects` | `T********`, `*T*******`, `***T*****`, `****T****` (any non-empty intersection) |
+| `st_touches` | `FT*******`, `F**T*****`, `F***T****` |
+| `st_contains` | `T*****FF*` |
+| `st_within` | `T*F**F***` |
+
+- `st_contains` and `st_within` are mirror images (swap rows ↔ columns)
+- `*` = wildcard, matches `F`, `0`, `1`, or `2`
+
+## Back to the rook
+
+- Now we can express our rook requirement as a DE-9IM pattern
+- Shared boundary = **line**, interiors **don't** intersect
+- DE-9IM encoding (@tbl-rook):
+  - Interior ∩ Interior = `F` (no overlap)
+  - Boundary ∩ Boundary = `1` (shared edge = line)
+  - Everything else = `*` (don't care)
 
 ```{r}
 #| label: tbl-rook
@@ -483,25 +475,18 @@ df_rook <- stringr::str_split("F***1****","")[[1]] |>
 gt(df_rook,rownames_to_stub = TRUE)
 ```
 
----
+## `st_relate`: explore
 
-
-
-### Exploring with `st_relate`
-
-- Without a `pattern` argument, `st_relate` returns the **actual DE-9IM string** for each pair of geometries
-- This is useful for exploration: you can inspect the strings and then decide which pattern to match
+- Without `pattern`: returns the **actual DE-9IM string** for each pair
+- Useful for exploration → inspect strings, then decide which pattern to match
 
 ```{r}
 st_relate(grid_orig, grid_dest)
 ```
 
----
+## `st_relate`: match
 
-### Matching with `st_relate`
-
-- Once we know the pattern we are looking for, we can pass it as the `pattern` argument
-- `st_relate` then returns a logical (`TRUE`/`FALSE`) sparse matrix, just like the named predicates
+- Pass a `pattern` argument → returns `TRUE`/`FALSE` (sparse matrix, like named predicates)
 
 ```{r}
 st_relate(grid_orig, grid_dest, pattern = "F***1****")
@@ -509,7 +494,7 @@ st_relate(grid_orig, grid_dest, pattern = "F***1****")
 
 ---
 
-We could also create our custom `st_rook` function and use this as we use other named predicates
+Create a custom `st_rook` function and use it like any named predicate:
 
 ```{r}
 st_rook <- \(x, y) st_relate(x, y, pattern = "F***1****")
@@ -535,4 +520,4 @@ chessplot +
 ```
 
 
-## References
+# References
