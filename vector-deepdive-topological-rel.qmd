@@ -421,9 +421,9 @@ st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append =
 - **DE-9IM** (*Dimensionally Extended nine-Intersection Model*) gives fine-grained control
 - DE-9IM is the formal model **behind** all named predicates
 - Describes the relationship as a **3×3 matrix**: interior, boundary, exterior of each geometry
-- @tbl-de9im shows the analysis for two overlapping polygons
+- @tbl-de9im-rook shows the analysis for two overlapping polygons
 
----
+## {visibility="hidden"}
 
 :::{.notes}
 - Rows = parts of geometry A (blue), 
@@ -436,10 +436,12 @@ st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append =
   - middle-middle (Boundary ∩ Boundary) yields two points.
 :::
 
+
 ```{r}
 #| echo: false
-#| label: tbl-de9im
-#| tbl-cap: "Image source: M. W. Taves [commons.wikimedia.org](https://commons.wikimedia.org/wiki/File:DE9IM_II.svg)"
+#| eval: false
+# label: tbl-de9im
+# tbl-cap: "Image source: M. W. Taves [commons.wikimedia.org](https://commons.wikimedia.org/wiki/File:DE9IM_II.svg)"
 
 
 library(dplyr)
@@ -467,15 +469,102 @@ df |>
 
 ---
 
-- Reading @tbl-de9im:
-  - Interior ∩ Interior → area → `2`
-  - Interior ∩ Boundary → line → `1`
-  - Boundary ∩ Boundary → points → `0`
-- Flatten all nine cells into a string → `212101212`
-- The power: **specify the pattern you want** and match geometries against it
+```{r}
+#| echo: false
+#| label: tbl-de9im-rook
+#| tbl-cap: "DE-9IM for two edge-sharing squares (A in purple, B in green). Red shading/line = intersection result."
+
+perspec <- c("Interior", "Boundary", "Exterior")
+
+# Two adjacent squares sharing an edge at x = 1
+sq_a <- st_polygon(list(cbind(c(0,1,1,0,0), c(0,0,1,1,0))))
+sq_b <- st_polygon(list(cbind(c(1,2,2,1,1), c(0,0,1,1,0))))
+
+# Intersection geometries
+shared_edge <- st_sfc(st_linestring(cbind(c(1,1), c(0,1))))
+bnd_a_rest  <- st_sfc(st_linestring(cbind(c(1,0,0,1), c(1,1,0,0))))
+bnd_b_rest  <- st_sfc(st_linestring(cbind(c(1,2,2,1), c(0,0,1,1))))
+box <- st_polygon(list(cbind(c(-0.3,2.3,2.3,-0.3,-0.3), c(-0.3,-0.3,1.3,1.3,-0.3))))
+ee <- st_difference(st_sfc(box), st_union(st_sfc(sq_a), st_sfc(sq_b)))
+
+# Base plot with both squares
+base <- ggplot() +
+  geom_sf(data = st_sfc(sq_a), fill = "#beaed4", alpha = 0.2, color = "#beaed4", linewidth = 0.8) +
+  geom_sf(data = st_sfc(sq_b), fill = "#7fc97f", alpha = 0.2, color = "#7fc97f", linewidth = 0.8) +
+  coord_sf(xlim = c(-0.3, 2.3), ylim = c(-0.35, 1.3)) +
+  theme_void()
+
+add_label <- function(p, label) {
+  p + annotate("text", x = 1, y = -0.2, label = label, size = 5, fontface = "bold")
+}
+
+# 9 cells: rows = parts of A, cols = parts of B
+# Actual DE-9IM: FF2F11212, but rook pattern is F***1****
+# Labels show the PATTERN value: F and 1 where we care, * where we don't
+plots <- list(
+  add_label(base, "F"),                                                                      # II: must be empty
+  add_label(base, "*"),                                                                      # IB: don't care
+  add_label(base + geom_sf(data = st_sfc(sq_a), fill = "#e41a1c", alpha = 0.4, color = NA), "*"),  # IE: don't care
+  add_label(base, "*"),                                                                      # BI: don't care
+  add_label(base + geom_sf(data = shared_edge, color = "#e41a1c", linewidth = 2.5), "1"),    # BB: must be a line
+  add_label(base + geom_sf(data = bnd_a_rest, color = "#e41a1c", linewidth = 2.5), "*"),     # BE: don't care
+  add_label(base + geom_sf(data = st_sfc(sq_b), fill = "#e41a1c", alpha = 0.4, color = NA), "*"),  # EI: don't care
+  add_label(base + geom_sf(data = bnd_b_rest, color = "#e41a1c", linewidth = 2.5), "*"),     # EB: don't care
+  add_label(base + geom_sf(data = ee, fill = "#e41a1c", alpha = 0.4, color = NA), "*")       # EE: don't care
+)
+
+# Save to temp files
+tmpdir <- "images/DE9IM_rook"
+paths <- vapply(seq_along(plots), function(i) {
+  path <- file.path(tmpdir, paste0("rook_", i, ".png"))
+  ggsave(path, plots[[i]], width = 2, height = 1.5, dpi = 100, bg = "white")
+  path
+}, character(1))
+
+# Build gt table
+df_rook_viz <- matrix(paths, ncol = 3, byrow = TRUE) |>
+  as.data.frame()
+colnames(df_rook_viz) <- paste0(perspec, " (B)")
+rownames(df_rook_viz) <- paste0(perspec, " (A)")
+
+library(gt)
+df_rook_viz |>
+  gt(rownames_to_stub = TRUE) |>
+  fmt_image(columns = ends_with("(B)"), height = "8em")
+```
+
+---
+
+
+<!-- - Now we can express our rook requirement as a DE-9IM pattern
+- Shared boundary = **line**, interiors **don't** intersect
+- DE-9IM encoding (@tbl-rook):
+  - Interior ∩ Interior = `F` (no overlap)
+  - Boundary ∩ Boundary = `1` (shared edge = line)
+  - Everything else = `*` (don't care) -->
+
+```{r}
+#| label: tbl-rook
+#| tbl-cap: "The DE-9IM for the *rooks* case. This can be flattend into the string `F***1****`"
+#| echo: false
+
+
+df_rook <- stringr::str_split("F***1****","")[[1]] |> 
+  matrix(ncol = 3, byrow = TRUE,dimnames = list(perspec,perspec)) |> 
+  as.data.frame()
+
+gt(df_rook,rownames_to_stub = TRUE)
+```
+
+- Each cell shows the intersection of a **part of A** (row) with a **part of B** (column)
+- For the rook, we only care about **two** cells:
+  - Interior ∩ Interior = `F` (no overlap)
+  - Boundary ∩ Boundary = `1` (shared edge = a **line**, not just a point)
+- Everything else = `*` (don't care)
+- Flatten row by row into the pattern → `F***1****`
 
 :::{.notes}
-The DE-9IM string is read row by row from the 3×3 matrix. The encoding is: F = empty, 0 = point, 1 = line, 2 = area. This concept is especially useful from the "opposite" perspective: we describe the DE-9IM pattern we are looking for and use `st_relate` to find matching pairs.
+This is what distinguishes edge-sharing (rook) from corner-sharing (bishop) neighbours: for a bishop, Boundary ∩ Boundary = 0 (a point), while for the rook it must be 1 (a line). The encoding is: F = empty, 0 = point, 1 = line, 2 = area. `*` means "any value" and `T` means "any non-empty value" (i.e. 0, 1, or 2).
 :::
 
 ## Predicates as patterns
@@ -498,29 +587,9 @@ The DE-9IM string is read row by row from the 3×3 matrix. The encoding is: F = 
 - So `T` is used when you *care that something intersects* but don't care *how* (point vs line vs area), while `0`/`1`/`2` pin down the exact dimension.
 :::
 
-## Back to the rook
-
-- Now we can express our rook requirement as a DE-9IM pattern
-- Shared boundary = **line**, interiors **don't** intersect
-- DE-9IM encoding (@tbl-rook):
-  - Interior ∩ Interior = `F` (no overlap)
-  - Boundary ∩ Boundary = `1` (shared edge = line)
-  - Everything else = `*` (don't care)
-
-```{r}
-#| label: tbl-rook
-#| tbl-cap: "The DE-9IM for the *rooks* case. This can be flattend into the string `F***1****`"
-#| echo: false
 
 
-df_rook <- stringr::str_split("F***1****","")[[1]] |> 
-  matrix(ncol = 3, byrow = TRUE,dimnames = list(perspec,perspec)) |> 
-  as.data.frame()
-
-gt(df_rook,rownames_to_stub = TRUE)
-```
-
-## `st_relate`: explore
+## `st_relate`: explore {visibility="hidden"}
 
 - Without `pattern`: returns the **actual DE-9IM string** for each pair
 - Useful for exploration → inspect strings, then decide which pattern to match
@@ -529,7 +598,7 @@ gt(df_rook,rownames_to_stub = TRUE)
 st_relate(grid_orig, grid_dest)
 ```
 
-## `st_relate`: match
+## `st_relate`: match{visibility="hidden"}
 
 - Pass a `pattern` argument → returns `TRUE`/`FALSE` (sparse matrix, like named predicates)
 
