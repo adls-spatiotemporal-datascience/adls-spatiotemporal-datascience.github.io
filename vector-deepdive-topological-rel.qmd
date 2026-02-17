@@ -106,25 +106,7 @@ plot_pair(rect_sfc(0, 0, 3, 2), rect_sfc(0.5, 0.3, 2.5, 1.7))
   - `st_is_within_distance()` needs a `dist` argument
 - Full list: `?geos_binary_pred`
 
-## Contains, covers, within{visibility="hidden"}
 
-- Easily confused — here's the distinction:
-  - `st_contains(x, y)`: is `y` inside `x`, with ≥1 point in the **interior**?
-  - `st_covers(x, y)`: is every point of `y` inside **or on the boundary** of `x`?
-  - `st_within(x, y)`: inverse of `st_contains` — is `x` inside `y`?
-- Key difference: a point *on the boundary* is **covered** but not **contained**
-- **Tip**: for point-in-polygon queries, prefer `st_covers` — `st_contains` misses points exactly on the boundary
-
-```{r}
-#| collapse: true
-polygon <- st_sfc(st_polygon(list(cbind(c(0,1,1,0,0), c(0,0,1,1,0)))))
-point_inside <- st_sfc(st_point(c(0.5, 0.5)))
-point_on_boundary <- st_sfc(st_point(c(0, 0.5)))
-
-st_contains(polygon, point_inside, sparse = FALSE)      # TRUE
-st_contains(polygon, point_on_boundary, sparse = FALSE)  # FALSE
-st_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE
-```
 
 ## Predicates vs. operations
 
@@ -423,50 +405,6 @@ st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append =
 - Describes the relationship as a **3×3 matrix**: interior, boundary, exterior of each geometry
 - @tbl-de9im-rook shows the analysis for two overlapping polygons
 
-## {visibility="hidden"}
-
-:::{.notes}
-- Rows = parts of geometry A (blue), 
-- columns = parts of geometry B (red). 
-- Each cell shows what the intersection of that row-part with that column-part looks like. 
-- The dark shading in each cell is the resulting intersection. 
-- Walk through a few cells: 
-  - top-left (Interior ∩ Interior) yields an area, 
-  - top-middle (Interior ∩ Boundary) yields a line, 
-  - middle-middle (Boundary ∩ Boundary) yields two points.
-:::
-
-
-```{r}
-#| echo: false
-#| eval: false
-# label: tbl-de9im
-# tbl-cap: "Image source: M. W. Taves [commons.wikimedia.org](https://commons.wikimedia.org/wiki/File:DE9IM_II.svg)"
-
-
-library(dplyr)
-library(tidyr)
-
-
-perspec <- c("Interior", "Boundary", "Exterior")
-perspec2 <- c("I","B","E")
-
-df <-cbind(rep(perspec2, each = 3), rep(perspec2, 3)) |>
-  apply(1, \(x)paste(x,collapse = "")) |>
-  (\(x)file.path("images","DE9IM",paste0("DE9IM_",x,".svg.png")))() |>
-  matrix(ncol = 3, byrow = TRUE) |>
-  as.data.frame()
-
-colnames(df) <- perspec
-rownames(df) <- perspec
-
-library(gt)
-df |>
-  gt::gt(rownames_to_stub = TRUE) |>
-  fmt_image(columns = c(Interior,Boundary,Exterior),height = "4em")
-
-```
-
 ---
 
 ```{r}
@@ -587,24 +525,6 @@ This is what distinguishes edge-sharing (rook) from corner-sharing (bishop) neig
 - So `T` is used when you *care that something intersects* but don't care *how* (point vs line vs area), while `0`/`1`/`2` pin down the exact dimension.
 :::
 
-
-
-## `st_relate`: explore {visibility="hidden"}
-
-- Without `pattern`: returns the **actual DE-9IM string** for each pair
-- Useful for exploration → inspect strings, then decide which pattern to match
-
-```{r}
-st_relate(grid_orig, grid_dest)
-```
-
-## `st_relate`: match{visibility="hidden"}
-
-- Pass a `pattern` argument → returns `TRUE`/`FALSE` (sparse matrix, like named predicates)
-
-```{r}
-st_relate(grid_orig, grid_dest, pattern = "F***1****")
-```
 
 ---
 
