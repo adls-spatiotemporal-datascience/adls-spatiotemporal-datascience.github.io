@@ -1,28 +1,14 @@
 # ADLS Spatiotemporal Data Science
 
-Quarto book for the Spatiotemporal Data Science course.
+Quarto website for the Spatiotemporal Data Science course.
 
-## Quarto book + slides
+## Project structure
 
-This set of qmd source files produce a web book layout (as a reference) as well as slides (for presentation in course). Add the following to add a link to the slides from the book.
+The project is a single Quarto **website** (`project.type: website` in `_quarto.yml`).
 
-```{.markdown}
-[]{.lts .content-hidden unless-profile="book"}
-``` 
-
-
-## Publishing book + slides
-
-Rather than using classic `quarto publish` commands, I created a Makefile to simplify the publishing pipeline. 
-
-```bash
-make publish   # render book + slides, deploy to GitHub Pages
-```
-
-Look at the makefile to see the exact commands run.
-
-
-
+- `index.qmd`, `syllabus.qmd`, `submission.qmd`, `slides.qmd` — regular HTML pages (navbar)
+- Lecture `.qmd` files — rendered as RevealJS slides (the project default)
+- Task/description `.qmd` files — rendered as HTML pages (`format: html` in front matter)
 
 ## Git Workflow
 

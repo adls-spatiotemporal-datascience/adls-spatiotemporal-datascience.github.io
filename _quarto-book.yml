@@ -62,9 +62,8 @@ format:
     highlight-style:
       # dark: auxilliary/arrow-light.theme
       light: auxilliary/arrow-light.theme
-    css: 
+    css:
       - auxilliary/style.css
-      - auxilliary/style-book.css
     number-sections: false
     include-after-body: auxilliary/script.html
     # include-in-header:

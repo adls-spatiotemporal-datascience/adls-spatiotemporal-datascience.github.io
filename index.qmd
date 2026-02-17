@@ -1,5 +1,6 @@
 ---
 echo: false
+format: html
 ---
 
 # Welcome {.unnumbered}
@@ -8,12 +9,11 @@ echo: false
 
 ---
 
-This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW). 
+This course is taught in the Bachelor Degree [Applied Digital Life Sciences](https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/) at the Zurich University of Applied Sciences (ZHAW).
 
 
-In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. 
+In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming.
 To start the course, we will recap the following topic from the course *GISc and Geodatabases*: [Geocomputation with R](https://zhaw-giscience-geodatabases.github.io) with raster and vector data
-
 
 
 
@@ -44,30 +44,23 @@ df <- tibble(
 
 library(glue)
 library(stringr)
-zeitplan |> 
-  left_join(df) |> 
+zeitplan |>
+  left_join(df) |>
   mutate(
     Date = as.Date(Date),
     Lecturer = Lecturer_long
-    ) |> 
+    ) |>
   mutate(
     topic_lecturer = glue("{Topic} ({Lecturer})"),
     Method = ifelse(str_detect(Method, "Task"), glue("{Method}, due: {Date+6}"), Method),
     .before = 1
-  ) |> 
+  ) |>
   select(-c(Topic, Lecturer, Lecturer_long)) |>
   group_by(topic_lecturer) |>
-  gt() |> 
-  tab_options(table.width = "100%") |> 
-  cols_label(Method~"") |> 
+  gt() |>
+  tab_options(table.width = "100%") |>
+  cols_label(Method~"") |>
   tab_style(style = cell_text(weight = "bold"), locations = cells_row_groups())
 
 
 ```
-
-
-
-
-
-
-

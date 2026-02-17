@@ -1,11 +1,12 @@
 ---
 title: "🚀 Tasks"
+format: html
 ---
 
-As always, the data for this task is on moodle. Follow the instructions in @sec-gh-pages to create a new repo in the existing organization.
+As always, the data for this task is on moodle. Follow the instructions in [Submission via GitHub Pages](submission.qmd#sec-gh-pages) to create a new repo in the existing organization.
 
 
-Your task is to improve upon the simple model we have built in the chapter @sec-min-ex. You can do this by:
+Your task is to improve upon the simple model we have built in the chapter [Minimal example](movement-I-minimal-example.qmd#sec-min-ex). You can do this by:
 
 
 1. **Feature Engineering**: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows

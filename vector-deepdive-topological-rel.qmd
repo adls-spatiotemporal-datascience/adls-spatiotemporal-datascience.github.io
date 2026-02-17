@@ -4,8 +4,6 @@ title: Topological relations
 
 ## Quick recap: vector data
 
-[]{.lts .content-hidden unless-profile="book"}
-
 - In *GIScience and Geodatabases*, you learned about the **Simple Features** standard (ISO 19125)
 - Features = **geometry** (point, line, polygon) + **attributes** (columns)
 - In R: `sf` objects are data frames with a geometry column

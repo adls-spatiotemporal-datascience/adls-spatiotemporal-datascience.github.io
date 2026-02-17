@@ -2,8 +2,6 @@
 title: "DuckDB"
 ---
 
-[]{.lts .content-hidden unless-profile="book"}
-
 
 
 - Open-source, column-oriented **RDBMS** (relational database management system)

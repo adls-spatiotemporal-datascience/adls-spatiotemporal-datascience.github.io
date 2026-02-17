@@ -1,14 +1,15 @@
 ---
 title: "🚀 Tasks"
 musterloesung: false
+format: html
 ---
 
 
 :::{.callout-important}
-Due date for the tasks are listed in @tbl-schedule
+Due date for the tasks are listed in [the schedule](index.qmd#tbl-schedule)
 :::
 
-Follow the instructions in @sec-gh-pages to create a new repo in the existing organization. Solve the tasks in a file named `index.qmd`.
+Follow the instructions in [Submission via GitHub Pages](submission.qmd#sec-gh-pages) to create a new repo in the existing organization. Solve the tasks in a file named `index.qmd`.
 
 ## Task 1 {#sec-vec-basic}
 
@@ -23,9 +24,9 @@ Render the document using `quarto preview`. Publish your result using `quarto pu
 
 We have prepared a duckdb database on moodle (`wald-kantone.duckdb`). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D. 
 
-Use this dataset and with the help of @sec-duckdb-practice, recreate @sec-vec-basic and measure the execution time using the R package [`tictoc`](http://jabiru.github.io/tictoc/). 
+Use this dataset and with the help of [DuckDB in practice](vector-deepdive-duckdb.qmd#sec-duckdb-practice), recreate [Task 1](#sec-vec-basic) and measure the execution time using the R package [`tictoc`](http://jabiru.github.io/tictoc/). 
 
-Compare the execution time with (@sec-vec-basic). Discuss!
+Compare the execution time with [Task 1](#sec-vec-basic). Discuss!
 
 ## Task 3
 

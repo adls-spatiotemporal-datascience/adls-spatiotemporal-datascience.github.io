@@ -1,14 +1,29 @@
-project: 
-  title: "Spatiotemporal Datascience"
-  output-dir: _site/slides
+project:
+  type: website
+  output-dir: _site
 
-format: 
+website:
+  title: "Spatiotemporal Datascience"
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Syllabus
+        href: syllabus.qmd
+      - text: Submission
+        href: submission.qmd
+      - text: Slides
+        href: slides.qmd
+      - text: Tasks
+        href: tasks.qmd
+
+format:
   revealjs-clean:
     smaller: true
     slide-number: c/t
-    
+
 bibliography: auxilliary/references.bib
-execute: 
+execute:
   warning: false
   message: false
   echo: true

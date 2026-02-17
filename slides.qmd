@@ -1,0 +1,9 @@
+---
+title: "Slides"
+format: html
+---
+
+## Vector Deepdive
+
+- [Topological Relations](vector-deepdive-topological-rel.qmd){target="_blank"}
+- [DuckDB](vector-deepdive-duckdb.qmd){target="_blank"}

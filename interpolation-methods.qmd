@@ -56,7 +56,7 @@ plot(luft_idw2)
 
 ## Exercise 2: Nearest Neighbour
 
-Another simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in @sec-density-voronoi to create voronoi polygons. Turn the resulting `sfc` object to `sf` using `st_as_sf`, then use `st_join` to add the measured NO2 values the polygons. 
+Another simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in [Exercise 2: Voronoi](interpolation-density.qmd#sec-density-voronoi) to create voronoi polygons. Turn the resulting `sfc` object to `sf` using `st_as_sf`, then use `st_join` to add the measured NO2 values the polygons. 
 
 Visualize the result.
 

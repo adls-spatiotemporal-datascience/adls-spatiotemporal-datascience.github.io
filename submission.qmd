@@ -1,0 +1,45 @@
+---
+title: "Submission"
+format: html
+---
+
+## Submission via GitHub Pages {#sec-gh-pages}
+
+Each task is submitted as a rendered Quarto document hosted on GitHub Pages.
+
+### Initial Setup
+
+On GitHub:
+
+1. [Create a free organisation](https://github.com/organizations/plan) with a name of your choice and submit the URL to this organisation via email.
+
+   **You need to do this only once, the rest of the steps are done for each task.**
+3. In this organisation, create a new, blank repository called `vector-deepdive`
+
+On your local machine:
+
+1. Install the CLI tool [Quarto](https://quarto.org/)
+2. Create a new directory for this week's task
+3. Initialize a Git repository and link it to your GitHub repo:
+   ```bash
+   git init
+   git remote add origin <URL>
+   ```
+4. Create `_quarto.yml`:
+   ```{.yaml filename="_quarto.yml"}
+   project:
+     output-dir: _docs
+   ```
+5. Create `index.qmd`:
+   ```{.markdown filename="index.qmd"}
+   # Solution for Vector Deepdive
+
+   In this document, I solve the tasks for *vector deepdive* of the course
+   *Spatiotemporal Datascience*.
+   ```
+6. Preview locally: `quarto preview`
+7. Publish: `quarto publish gh-pages`
+
+### Subsequent Weeks
+
+For each new task week, create a new repository in your organisation and follow the same workflow.

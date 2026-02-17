@@ -4,7 +4,7 @@ engine: knitr
 ---
 
 
-- As mentioned in @sec-gdal-ogr2ogr, GDAL is the basis for most GIS Software
+- As mentioned previously, GDAL is the basis for most GIS Software
 - Rather than using GDAL through R or Python, we can use the GDAL CLI tool instead
 - GDAL is a software suite containing several so called [Raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
 - These are especially useful if you need faster data processing, e.g. if you have large raster files or a lot of small ones
