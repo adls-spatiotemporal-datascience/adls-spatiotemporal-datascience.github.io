@@ -77,7 +77,7 @@ df2 |>
 ## DuckDB in practice {#sec-duckdb-practice}
 
 - Download `wald-kantone.duckdb` from Moodle (forest + canton boundaries)
-- Install [DuckDB CLI](duckdb.org/docs/installation/?version=stable&environment=cli) + [R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
+- Install [DuckDB CLI](https://duckdb.org/docs/installation/?version=stable&environment=cli) + [R package](https://duckdb.org/docs/installation/?version=stable&environment=r)
 - Install [DBeaver Community](https://dbeaver.io/download/)
 - Connect to the database in DBeaver
 - Install and load the spatial extension:
@@ -132,7 +132,7 @@ R-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also 
 - Lets us build complex analyses **step-by-step**
 
 :::{.notes}
-Unlike materialized tables, VIEWs don't store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.
+Unlike materialized tables, VIEWs don't store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to build a forest-per-canton analysis in SQL.
 :::
 
 - Our first `VIEW`: a subset of the forest dataset (for faster iteration)
@@ -246,7 +246,7 @@ This query uses both: `st_intersects` in `WHERE` = **predicate** (true/false fil
 :::
 
 
---- 
+---
 
 - We need the **area**, not the geometry itself:
 
@@ -314,7 +314,7 @@ FROM wald_kantone
 GROUP BY name;                  -- <1>
 ``` 
 
-1. If we use `GROUP BY` in a SQL query..
+1. If we use `GROUP BY` in a SQL query...
 2. ... we need to wrap all columns with aggregate function...
 3. ... except for the columns that we use for grouping
 
