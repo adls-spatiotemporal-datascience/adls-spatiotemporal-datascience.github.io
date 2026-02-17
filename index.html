@@ -177,7 +177,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
+  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -218,9 +221,11 @@ ul.task-list li input[type="checkbox"] {
 <figcaption><a href="https://www.climate.gov/news-features/understanding-climate/climate-change-and-1991-2020-us-climate-normals">Image Source</a></figcaption>
 </figure>
 </div>
+<hr>
 <p>This course is taught in the Bachelor Degree <a href="https://www.zhaw.ch/en/lsfm/studies/bachelor/applied-digital-life-sciences/">Applied Digital Life Sciences</a> at the Zurich University of Applied Sciences (ZHAW).</p>
 <p>In this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course <em>GISc and Geodatabases</em>: <a href="https://zhaw-giscience-geodatabases.github.io">Geocomputation with R</a> with raster and vector data</p>
-<!-- During the course, we will recap [Image Processing with R](https://adls-image-processing-for-rs.github.io/) from the course *Image Processing for Remote Sensing*.  -->
+<section id="section" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="section"></h2>
 <div class="cell">
 <div id="tbl-schedule" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -229,23 +234,23 @@ Table&nbsp;1: The course schedule (might be subject to change).
 </figcaption>
 <div aria-describedby="tbl-schedule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="zcneajqxwh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zcneajqxwh table {
+<div id="ikgvsfunev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ikgvsfunev table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zcneajqxwh thead, #zcneajqxwh tbody, #zcneajqxwh tfoot, #zcneajqxwh tr, #zcneajqxwh td, #zcneajqxwh th {
+#ikgvsfunev thead, #ikgvsfunev tbody, #ikgvsfunev tfoot, #ikgvsfunev tr, #ikgvsfunev td, #ikgvsfunev th {
   border-style: none;
 }
 
-#zcneajqxwh p {
+#ikgvsfunev p {
   margin: 0;
   padding: 0;
 }
 
-#zcneajqxwh .gt_table {
+#ikgvsfunev .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -271,12 +276,12 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-left-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_caption {
+#ikgvsfunev .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zcneajqxwh .gt_title {
+#ikgvsfunev .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -288,7 +293,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-width: 0;
 }
 
-#zcneajqxwh .gt_subtitle {
+#ikgvsfunev .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -300,7 +305,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-top-width: 0;
 }
 
-#zcneajqxwh .gt_heading {
+#ikgvsfunev .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -312,13 +317,13 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_bottom_border {
+#ikgvsfunev .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_col_headings {
+#ikgvsfunev .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -333,7 +338,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_col_heading {
+#ikgvsfunev .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -353,7 +358,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   overflow-x: hidden;
 }
 
-#zcneajqxwh .gt_column_spanner_outer {
+#ikgvsfunev .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -365,15 +370,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 4px;
 }
 
-#zcneajqxwh .gt_column_spanner_outer:first-child {
+#ikgvsfunev .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zcneajqxwh .gt_column_spanner_outer:last-child {
+#ikgvsfunev .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zcneajqxwh .gt_column_spanner {
+#ikgvsfunev .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -385,11 +390,11 @@ Table&nbsp;1: The course schedule (might be subject to change).
   width: 100%;
 }
 
-#zcneajqxwh .gt_spanner_row {
+#ikgvsfunev .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zcneajqxwh .gt_group_heading {
+#ikgvsfunev .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -415,7 +420,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   text-align: left;
 }
 
-#zcneajqxwh .gt_empty_group_heading {
+#ikgvsfunev .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -430,15 +435,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   vertical-align: middle;
 }
 
-#zcneajqxwh .gt_from_md > :first-child {
+#ikgvsfunev .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zcneajqxwh .gt_from_md > :last-child {
+#ikgvsfunev .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zcneajqxwh .gt_row {
+#ikgvsfunev .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -457,7 +462,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   overflow-x: hidden;
 }
 
-#zcneajqxwh .gt_stub {
+#ikgvsfunev .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -470,7 +475,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#zcneajqxwh .gt_stub_row_group {
+#ikgvsfunev .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -484,15 +489,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   vertical-align: top;
 }
 
-#zcneajqxwh .gt_row_group_first td {
+#ikgvsfunev .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zcneajqxwh .gt_row_group_first th {
+#ikgvsfunev .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zcneajqxwh .gt_summary_row {
+#ikgvsfunev .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -502,16 +507,16 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#zcneajqxwh .gt_first_summary_row {
+#ikgvsfunev .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_first_summary_row.thick {
+#ikgvsfunev .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zcneajqxwh .gt_last_summary_row {
+#ikgvsfunev .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -521,7 +526,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_grand_summary_row {
+#ikgvsfunev .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -531,7 +536,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#zcneajqxwh .gt_first_grand_summary_row {
+#ikgvsfunev .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -541,7 +546,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-top-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_last_grand_summary_row_top {
+#ikgvsfunev .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -551,11 +556,11 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_striped {
+#ikgvsfunev .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zcneajqxwh .gt_table_body {
+#ikgvsfunev .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -564,7 +569,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_footnotes {
+#ikgvsfunev .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -578,7 +583,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_footnote {
+#ikgvsfunev .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -587,7 +592,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#zcneajqxwh .gt_sourcenotes {
+#ikgvsfunev .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -601,7 +606,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#zcneajqxwh .gt_sourcenote {
+#ikgvsfunev .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -609,72 +614,72 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#zcneajqxwh .gt_left {
+#ikgvsfunev .gt_left {
   text-align: left;
 }
 
-#zcneajqxwh .gt_center {
+#ikgvsfunev .gt_center {
   text-align: center;
 }
 
-#zcneajqxwh .gt_right {
+#ikgvsfunev .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zcneajqxwh .gt_font_normal {
+#ikgvsfunev .gt_font_normal {
   font-weight: normal;
 }
 
-#zcneajqxwh .gt_font_bold {
+#ikgvsfunev .gt_font_bold {
   font-weight: bold;
 }
 
-#zcneajqxwh .gt_font_italic {
+#ikgvsfunev .gt_font_italic {
   font-style: italic;
 }
 
-#zcneajqxwh .gt_super {
+#ikgvsfunev .gt_super {
   font-size: 65%;
 }
 
-#zcneajqxwh .gt_footnote_marks {
+#ikgvsfunev .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zcneajqxwh .gt_asterisk {
+#ikgvsfunev .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zcneajqxwh .gt_indent_1 {
+#ikgvsfunev .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zcneajqxwh .gt_indent_2 {
+#ikgvsfunev .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zcneajqxwh .gt_indent_3 {
+#ikgvsfunev .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zcneajqxwh .gt_indent_4 {
+#ikgvsfunev .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zcneajqxwh .gt_indent_5 {
+#ikgvsfunev .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zcneajqxwh .katex-display {
+#ikgvsfunev .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zcneajqxwh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ikgvsfunev div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -809,6 +814,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
 
 
 </section>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -817,6 +823,44 @@ Table&nbsp;1: The course schedule (might be subject to change).
   const span = document.querySelector('.lts');
   span.outerHTML = `<p class="lts">↪ <a href="slides/${currentFile}" target="_blank">slides</a></p>`;
 </script>
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

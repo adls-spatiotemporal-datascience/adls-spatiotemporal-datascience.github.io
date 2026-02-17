@@ -4,7 +4,17 @@
     "href": "index.html",
     "title": "Spatiotemporal Datascience",
     "section": "",
-    "text": "Welcome\n\n\n\nImage Source\n\n\nThis course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data\n\n\n\n\n\nTable 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19",
+    "text": "Welcome\nThis course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Spatiotemporal Datascience",
+    "section": "",
+    "text": "Table 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19",
     "crumbs": [
       "Welcome"
     ]
@@ -34,7 +44,7 @@
     "href": "syllabus.html#assessment",
     "title": "Syllabus",
     "section": "Assessment",
-    "text": "Assessment\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\nWhat to Submit\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in Table 1.\n\n\nOral Review\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\nGrading Criteria\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\nUse of AI Tools\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature.",
+    "text": "Assessment\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\nWhat to Submit\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in Table tbl-schedule.\n\n\nOral Review\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\nGrading Criteria\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\nUse of AI Tools\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
     ]
@@ -64,40 +74,260 @@
     "href": "vector-deepdive-topological-rel.html",
     "title": "Topological relations",
     "section": "",
-    "text": "Named topological relations",
+    "text": "Quick recap: vector data\n. . .",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
   {
-    "objectID": "vector-deepdive-topological-rel.html#named-topological-relations",
-    "href": "vector-deepdive-topological-rel.html#named-topological-relations",
+    "objectID": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
+    "href": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
     "title": "Topological relations",
     "section": "",
-    "text": "Topological relations describe the spatial relationships between objects.\nThey are also called binary topological relationships or binary predicates\nThey are logical statements (TRUE/FALSE) about the spatial relationships between two objects\nThe two objects are defined by ordered sets of points (typically forming points, lines and polygons) in two or more dimensions (Egenhofer and Herring 1990).\n\n\n\n\nUsage\n\nTopological relations can be used to subset or join spatial data\nFor example:\n\nSubsetting: Return all rivers that flow through the canton of Zurich\nJoining: For every train station, give me the name of the municipality it lies within\n\n\n\n\n\nNamed topological relations (I)\n\nThe most common topological relations are offered as functions / tools in most GIS software\nIn sf, there are a multitude of topological functions available:, st_intersects(), st_disjoint(), st_touches(), st_crosses()\nThese all work slightly differently, and are used in different contexts.\nFor example:\n\nst_covers() returns TRUE if no points of x are outside y, and at least one point of x is inside y.\nst_touches() returns TRUE if the geometries have at least one point in common, but their interiors do not intersect.\n\n\n\n\n\nKey predicates visualized\n\n\n\n\n\n\n\n\n\n\n\n(a) st_disjoint: no shared points\n\n\n\n\n\n\n\n\n\n\n\n(b) st_touches: shared boundary only\n\n\n\n\n\n\n\n\n\n\n\n\n\n(c) st_intersects: any shared points (here with overlap)\n\n\n\n\n\n\n\n\n\n\n\n(d) st_contains: B entirely within A\n\n\n\n\n\n\n\nFigure 2.1: Key topological relations between two polygons (A in purple, B in green)\n\n\n\n\n\n\nNamed topological relations (II)\n\nSome of the relations mentioned above are symmetrical (the order of the geometries does not matter)\nFor example, if st_touches(x, y) is TRUE, then st_touches(y, x) is also TRUE\nOthers are not, meaning that the order of the geometries is important.\nFor example, st_contains(x, y) returns TRUE if x contains y, but st_contains(y, x) returns FALSE\nSome of the relations require additional arguments, such as st_is_within_distance(), which requires a distance argument\nYou can find the full list of topological relations in the sf documentation using ?geos_binary_pred\n\n\n\n\nst_contains vs st_covers vs st_within\n\nThese three are easily confused:\n\nst_contains(x, y): is y inside x, with at least one point of y in the interior of x?\nst_covers(x, y): is every point of y inside or on the boundary of x?\nst_within(x, y): the inverse of st_contains — is x inside y?\n\nThe subtle difference between st_contains and st_covers: a point lying exactly on the boundary of a polygon is covered but not contained\n\n\npolygon &lt;- st_sfc(st_polygon(list(cbind(c(0,1,1,0,0), c(0,0,1,1,0)))))\npoint_inside &lt;- st_sfc(st_point(c(0.5, 0.5)))\npoint_on_boundary &lt;- st_sfc(st_point(c(0, 0.5)))\n\nst_contains(polygon, point_inside, sparse = FALSE)      # TRUE\n##      [,1]\n## [1,] TRUE\nst_contains(polygon, point_on_boundary, sparse = FALSE)  # FALSE\n##       [,1]\n## [1,] FALSE\nst_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE\n##      [,1]\n## [1,] TRUE\n\n\n\n\nPredicates vs. operations\n\n\n\n\n\n\nImportantDon’t confuse predicates with operations!\n\n\n\n\nPredicate (e.g. st_intersects): “Do these geometries intersect?” → returns TRUE/FALSE\nOperation (e.g. st_intersection): “Give me the geometry where they overlap” → returns a new geometry\n\nThe same naming pattern applies to other pairs: st_difference (operation) has no corresponding predicate, while st_touches (predicate) has no corresponding operation.\n\n\n\n\n\nWhat do predicates return?\n\nCalling e.g. st_intersects(x, y) does not return a simple TRUE/FALSE vector\nIt returns a sparse geometry binary predicate (sgbp) object — essentially a list where each element contains the indices of y that match\n\n\na &lt;- rect_sfc(0, 0, 1, 1)          # one polygon\nb &lt;- c(\n  rect_sfc(0.5, 0, 1.5, 1),        # overlaps a\n  rect_sfc(2, 0, 3, 1)             # disjoint from a\n)\n\nst_intersects(a, b)\n## Sparse geometry binary predicate list of length 1, where the predicate\n## was `intersects'\n##  1: 1\n\n\nlengths() counts the number of matches per feature\nUse sparse = FALSE to get a dense logical matrix instead\n\n\nst_intersects(a, b, sparse = FALSE)\n##      [,1]  [,2]\n## [1,] TRUE FALSE\n\n\n\n\nSubset Examples\n\nLet’s take the example of playgrounds, public transport stops and Stadtkreise in Zurich\nWe can use topological predicates to subset one dataset based on another\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\n\n\n\nSubset with st_intersects (default)\n\nThe default predicate is st_intersects — this is the most common case\nFor example: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6\n\n\n\n\nSubset with a distance-based predicate\n\nWe can also use predicates that are not purely topological, such as st_is_within_distance\nFor example: which playgrounds are within 100m of a public transport stop?\n\n\n# Using the shorthand notation\nplaygrounds_close &lt;- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]\n\nThe same can be written more readably with st_filter():\n\nplaygrounds_close &lt;- st_filter(playgrounds, publictransport, .predicate = st_is_within_distance, dist = 100)\n\n\n\n\n\n\n\n\n\n\nFigure 2.2: Note that the playgrounds within 100m of public transport (red dots) are a subset of all the playgrounds\n\n\n\n\n\n\n\n\nSpatial join Example (I)\n\nIn a spatial join, we want to add information from one dataset to another based on their spatial relationship\nFor example, we can add the name of the nearest public transport stop to each playground.\nFor this, we will use the function st_nearest_feature\nStrictly speaking, this function is not binary predicate, but is very useful for spatial joins\nTo make the example clearer, I will first discard all unnecessary columns from the datasets\n\n\n\npublictransport &lt;- publictransport[,\"CHSTNAME\"]\n\nplaygrounds &lt;- playgrounds[, \"name\"]\n\n\nplaygrounds_join &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_nearest_feature\n  )\n\n\n\nplaygrounds_join\n\nSimple feature collection with 184 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 184 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) Zürich, Burgwies\n 2 Buchlern Sportanlage                       (2678406 1248303) Zürich, Friedho…\n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) Zürich, Langens…\n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) Zürich, Brunaus…\n 7 Josefswiese                                (2681846 1248909) Zürich, Schiffb…\n 8 Gertrudplatz                               (2681431 1247583) Zürich, Locherg…\n 9 Wahlenpark                                 (2683172 1252246) Zürich, Max-Bil…\n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 174 more rows\n\n\n\n\n\nSpatial join Example (II)\n\nIn the previous example, playgrounds_join has the same features as playgrounds, but with an additional column (CHSTNAME)\nThe reason for this, is that there is only one nearest station for every playground\nIn some joins, the number of rows in the joined dataset can be different from the original dataset\nFor example, if we want to join via the method within 100m, the result is different (see below).\nThis is because there can be none, or even multiple public transport stops within 100m of a playground\n\n\n\nplaygrounds_join2 &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_is_within_distance, \n  dist = 100\n  )\n\nnrow(playgrounds)\n## [1] 184\n\nnrow(playgrounds_join2)\n## [1] 186\n\n\n\nplaygrounds_join2\n\nSimple feature collection with 186 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 186 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) &lt;NA&gt;            \n 2 Buchlern Sportanlage                       (2678406 1248303) &lt;NA&gt;            \n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) &lt;NA&gt;            \n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) &lt;NA&gt;            \n 7 Josefswiese                                (2681846 1248909) &lt;NA&gt;            \n 8 Gertrudplatz                               (2681431 1247583) &lt;NA&gt;            \n 9 Wahlenpark                                 (2683172 1252246) &lt;NA&gt;            \n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 176 more rows\n\n\n\n\n\nSpatial join order\n\nNote that as is the case with all joins, the order of the datasets matters\nst_join by default is a left join (the first dataset is the left dataset)\nThe resulting dataset will have the geometry of the left dataset\nThis is especially noticeable when joining datasets of different types\n\n\n\nkreise &lt;- kreise[,\"STADTKREIS\"]\n\npublictransport_join &lt;- st_join(publictransport, kreise)\n\n\n\n\n\n\n\n\n\n\n\n\nif you reverse the order, each stadtkreis will be duplicated for every point in the publictransport dataset it intersects\n\n\nkreise_join &lt;- st_join(kreise, publictransport)\n\nnrow(kreise)\n## [1] 12\n\nnrow(kreise_join)\n## [1] 477\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Dataset kreise with 12 features\n\n\n\n\n\n\n\n\n\n\n\n(b) Dataset kreise_join with 477 features\n\n\n\n\n\n\n\nFigure 2.3: Note that all the duplicate stadtkreise overlap each other, so when you visualize the data, the issue is not noticeable",
+    "text": "In GIScience and Geodatabases, you learned about the Simple Features standard (ISO 19125)\nFeatures = geometry (point, line, polygon) + attributes (columns)\nIn R: sf objects are data frames with a geometry column\n\n\n\nSo far, we’ve worked with features mostly in isolation — reading, plotting, transforming\nBut often we need to ask: how do two features relate to each other spatially?\n\nDoes this river flow through this canton?\nWhich bus stops are within this district?\n\nThis is where topological relations come in",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
   {
-    "objectID": "vector-deepdive-topological-rel.html#custom-topological-relations",
-    "href": "vector-deepdive-topological-rel.html#custom-topological-relations",
+    "objectID": "vector-deepdive-topological-rel.html#usage",
+    "href": "vector-deepdive-topological-rel.html#usage",
     "title": "Topological relations",
-    "section": "Custom topological relations",
-    "text": "Custom topological relations\n\nIn case the named topological relations (see Named topological relations (I)) do not covery a specific usecase, we can gain more fine grained control using so called DE-9IM strings.\nDE-9IM stands for Dimensionally Extended nine-Intersection Model and is the formal definition of the topological relations between two geometries\nDE-9IM powers all binary predicate functions like st_intersects etc.\nThe concept is a bit complex, but the idea is that it describes the topological relationship between two geometries in a 3x3 matrix.\nThe reasons the matrix is 3x3 is because it considers the intersection of the (1) interior, (2) boundary, and (3) exterior of the geometries.\nTable 2.1 shows how two overlapping polygons are analyzed using DE-9IM\n\n\n\n\n\n\nTable 2.1: Image source: M. W. Taves commons.wikimedia.org\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\n\n\n\n\n\nBoundary\n\n\n\n\n\nExterior\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn the example in Table 2.1\n\nthe intersection of both interiors results in an area. This is denoted as 2\nthe intersection of interior with boundary results in a line, this is denoted as 1\nthe intersection of boundary with boundary results in two points, this is denoted as 0\n\nOnce all nine intersections have been regarded and encoded, the result is flattened into a string (with nine characters) which describes the topological relationship precisely\nIn the example in Table 2.1, a compact representation as string code is 212101212\nThis concept is especially interesting from the opposite perspective: i.e. we describe the DE-9IM string we are looking for (see next chapter)\n\n\n\nNamed predicates are DE-9IM patterns\n\nEvery named predicate corresponds to one or more DE-9IM patterns\nFor example:\n\n\n\n\n\n\n\n\nPredicate\nDE-9IM pattern(s)\n\n\n\n\nst_intersects\nT********, *T*******, ***T*****, ****T**** (any non-empty intersection)\n\n\nst_touches\nFT*******, F**T*****, F***T****\n\n\nst_contains\nT*****FF*\n\n\nst_within\nT*F**F***\n\n\n\n\nNote how st_contains and st_within are mirror images of each other (swap rows and columns)\nThe wildcard * means “any value” — matching F, 0, 1, or 2\n\n\n\n\nRook’s case\n\nAs alluded in the last chapter, the DE-9IM string can help us look for specific relations not covered in the named topological relation\nConsider a chessboard like situation with 3x3 fields (see Figure 2.4)\nFrom the origin field, you might be interested to know all fields that share a full edge (i.e. how a rook would move)\nThis relation is not covered by the named topological relations, so we need to model it using a DE-9IM string\n\n\n\n\n\n\n\n\n\nFigure 2.4: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an endge with the origin?\n\n\n\n\n\n\n\n\nModeling the rook’s case\n\nTo specify our requirement (destination field must share a boundary with the origin) we need to use the 3x3 DE-9IM we discussed in Table 2.1\nThe requirement is, that the interiors should not intersect (F) and the intersection of the boundaries should result in a line (1). All other intersections to not matter (*). This is displayed in Table 2.2\n\n\n\n\n\nTable 2.2: The DE-9IM for the rooks case. This can be flattend into the string F***1****\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\nF\n*\n*\n\n\nBoundary\n*\n1\n*\n\n\nExterior\n*\n*\n*\n\n\n\n\n\n\n\n\n\n\n\n\n\nExploring with st_relate\n\nWithout a pattern argument, st_relate returns the actual DE-9IM string for each pair of geometries\nThis is useful for exploration: you can inspect the strings and then decide which pattern to match\n\n\nst_relate(grid_orig, grid_dest)\n\n     [,1]        [,2]        [,3]        [,4]        [,5]        [,6]       \n[1,] \"FF2F01212\" \"FF2F11212\" \"FF2F01212\" \"FF2F11212\" \"FF2F11212\" \"FF2F01212\"\n     [,7]        [,8]       \n[1,] \"FF2F11212\" \"FF2F01212\"\n\n\n\n\n\nMatching with st_relate\n\nOnce we know the pattern we are looking for, we can pass it as the pattern argument\nst_relate then returns a logical (TRUE/FALSE) sparse matrix, just like the named predicates\n\n\nst_relate(grid_orig, grid_dest, pattern = \"F***1****\")\n\nSparse geometry binary predicate list of length 1, where the predicate\nwas `relate_pattern'\n 1: 2, 4, 5, 7\n\n\n\nWe could also create our custom st_rook function and use this as we use other named predicates\n\nst_rook &lt;- \\(x, y) st_relate(x, y, pattern = \"F***1****\")\n\ngrid_rook &lt;- grid_dest[grid_orig, , op = st_rook] |&gt; \n  st_sample(1000, type = \"hexagonal\",by_polygon = TRUE)\n\n\n\n\n\n\n\n\n\nFigure 2.5: The chessboard situation with the potential fields for the rook highlighted with a red outline",
+    "section": "Usage",
+    "text": "Usage\n\nTopological relations can be used to subset or join spatial data\nFor example:\n\nSubsetting: Return all rivers that flow through the canton of Zurich\nJoining: For every train station, give me the name of the municipality it lies within",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
     ]
   },
   {
-    "objectID": "vector-deepdive-topological-rel.html#references",
-    "href": "vector-deepdive-topological-rel.html#references",
+    "objectID": "vector-deepdive-topological-rel.html#sec-named-topological-relations",
+    "href": "vector-deepdive-topological-rel.html#sec-named-topological-relations",
     "title": "Topological relations",
-    "section": "References",
-    "text": "References\n\n\n\n\nEgenhofer, Max, and John Herring. 1990. “A Mathematical Framework for the Definition of Topological Relations.” Proc. The Fourth International Symposium on Spatial Data Handing, 803–13.",
+    "section": "Common predicates in sf",
+    "text": "Common predicates in sf\n\nMost GIS software offers common topological relations as functions\nsf provides many: st_intersects(), st_disjoint(), st_touches(), st_crosses(), …\nEach works slightly differently and fits different contexts\nExamples:\n\nst_covers(x, y) → TRUE if no points of x are outside y\nst_touches(x, y) → TRUE if geometries share boundary points but interiors don’t intersect",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#key-predicates-visualized",
+    "href": "vector-deepdive-topological-rel.html#key-predicates-visualized",
+    "title": "Topological relations",
+    "section": "Key predicates visualized",
+    "text": "Key predicates visualized\n\n\n\n\n\n\n\n\n\n\n\n(a) st_disjoint: no shared points\n\n\n\n\n\n\n\n\n\n\n\n(b) st_touches: shared boundary only\n\n\n\n\n\n\n\n\n\n\n\n\n\n(c) st_intersects: any shared points (here with overlap)\n\n\n\n\n\n\n\n\n\n\n\n(d) st_contains: B entirely within A\n\n\n\n\n\n\n\nFigure 3.1: Key topological relations between two polygons (A in purple, B in green)",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#symmetry-and-order",
+    "href": "vector-deepdive-topological-rel.html#symmetry-and-order",
+    "title": "Topological relations",
+    "section": "Symmetry and order",
+    "text": "Symmetry and order\n\nSome relations are symmetrical (order doesn’t matter)\n\nst_touches(x, y) = st_touches(y, x)\n\nOthers are asymmetrical (order matters!)\n\nst_contains(x, y) ≠ st_contains(y, x)\n\nSome require extra arguments\n\nst_is_within_distance() needs a dist argument\n\nFull list: ?geos_binary_pred",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#contains-covers-within",
+    "href": "vector-deepdive-topological-rel.html#contains-covers-within",
+    "title": "Topological relations",
+    "section": "Contains, covers, within",
+    "text": "Contains, covers, within\n\nEasily confused — here’s the distinction:\n\nst_contains(x, y): is y inside x, with ≥1 point in the interior?\nst_covers(x, y): is every point of y inside or on the boundary of x?\nst_within(x, y): inverse of st_contains — is x inside y?\n\nKey difference: a point on the boundary is covered but not contained\nTip: for point-in-polygon queries, prefer st_covers — st_contains misses points exactly on the boundary\n\n\npolygon &lt;- st_sfc(st_polygon(list(cbind(c(0,1,1,0,0), c(0,0,1,1,0)))))\npoint_inside &lt;- st_sfc(st_point(c(0.5, 0.5)))\npoint_on_boundary &lt;- st_sfc(st_point(c(0, 0.5)))\n\nst_contains(polygon, point_inside, sparse = FALSE)      # TRUE\n##      [,1]\n## [1,] TRUE\nst_contains(polygon, point_on_boundary, sparse = FALSE)  # FALSE\n##       [,1]\n## [1,] FALSE\nst_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE\n##      [,1]\n## [1,] TRUE",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#predicates-vs.-operations",
+    "href": "vector-deepdive-topological-rel.html#predicates-vs.-operations",
+    "title": "Topological relations",
+    "section": "Predicates vs. operations",
+    "text": "Predicates vs. operations\n\n\n\n\n\n\nImportantDon’t confuse predicates with operations!\n\n\n\n\nPredicate (e.g. st_intersects): “Do these geometries intersect?” → returns TRUE/FALSE\nOperation (e.g. st_intersection): “Give me the geometry where they overlap” → returns a new geometry\n\nThe same naming pattern applies to other pairs: st_difference (operation) has no corresponding predicate, while st_touches (predicate) has no corresponding operation.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#predicate-return-types",
+    "href": "vector-deepdive-topological-rel.html#predicate-return-types",
+    "title": "Topological relations",
+    "section": "Predicate return types",
+    "text": "Predicate return types\n\n\n\n\n\n\n\n\nFigure 3.2: Polygon a (purple) overlaps b1 but is disjoint from b2\n\n\n\n\n\n\nst_intersects(x, y) does not return a simple TRUE/FALSE vector\nReturns a sparse geometry binary predicate (sgbp) — a list of matching indices\n\n\nst_intersects(a, b)\n## Sparse geometry binary predicate list of length 1, where the predicate\n## was `intersects'\n##  1: 1\n\n\nlengths() counts the number of matches per feature\nUse sparse = FALSE to get a dense logical matrix instead\n\n\nst_intersects(a, b, sparse = FALSE)\n##      [,1]  [,2]\n## [1,] TRUE FALSE",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#applying-predicates-subsetting",
+    "href": "vector-deepdive-topological-rel.html#applying-predicates-subsetting",
+    "title": "Topological relations",
+    "section": "Applying predicates: subsetting",
+    "text": "Applying predicates: subsetting\nNow that we know how predicates work, let’s use them to subset and join spatial data.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#spatial-subsetting",
+    "href": "vector-deepdive-topological-rel.html#spatial-subsetting",
+    "title": "Topological relations",
+    "section": "Spatial subsetting",
+    "text": "Spatial subsetting\n\nPredicates can be used to subset one dataset based on another\nExample data: playgrounds, public transport stops, and Stadtkreise in Zurich\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\n\nDefault predicate: st_intersects\nExample: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#distance-based-subsetting",
+    "href": "vector-deepdive-topological-rel.html#distance-based-subsetting",
+    "title": "Topological relations",
+    "section": "Distance-based subsetting",
+    "text": "Distance-based subsetting\n\nNot limited to topological predicates — can also use distance-based ones\nExample: which playgrounds are within 100m of a public transport stop?\n\n\n# Using the shorthand notation\nplaygrounds_close &lt;- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]\n\nSame thing, more readable with st_filter():\n\nplaygrounds_close &lt;- st_filter(playgrounds, publictransport, .predicate = st_is_within_distance, dist = 100)\n\n\n\n\n\n\n\n\n\n\nFigure 3.3: Note that the playgrounds within 100m of public transport (red dots) are a subset of all the playgrounds",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#from-subsetting-to-joining",
+    "href": "vector-deepdive-topological-rel.html#from-subsetting-to-joining",
+    "title": "Topological relations",
+    "section": "From subsetting to joining",
+    "text": "From subsetting to joining\nSubsetting filters features — what if we want to transfer attributes instead?",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#spatial-joins",
+    "href": "vector-deepdive-topological-rel.html#spatial-joins",
+    "title": "Topological relations",
+    "section": "Spatial joins",
+    "text": "Spatial joins\n\nJoins transfer attributes from one dataset to another based on spatial relationship\nst_join(x, y): for each feature in x, find matching features in y and attach their columns\nExample: add the name of the nearest public transport stop to each playground\n\n\nst_nearest_feature is not strictly a binary predicate, but is very useful for spatial joins. To make the example clearer, we first discard all unnecessary columns from the datasets.\n\n\n\npublictransport &lt;- publictransport[,\"CHSTNAME\"]\n\nplaygrounds &lt;- playgrounds[, \"name\"]\n\n\nplaygrounds_join &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_nearest_feature\n  )\n\n\nplaygrounds_join\n\nSimple feature collection with 184 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 184 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) Zürich, Burgwies\n 2 Buchlern Sportanlage                       (2678406 1248303) Zürich, Friedho…\n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) Zürich, Langens…\n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) Zürich, Brunaus…\n 7 Josefswiese                                (2681846 1248909) Zürich, Schiffb…\n 8 Gertrudplatz                               (2681431 1247583) Zürich, Locherg…\n 9 Wahlenpark                                 (2683172 1252246) Zürich, Max-Bil…\n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 174 more rows",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#join-cardinality",
+    "href": "vector-deepdive-topological-rel.html#join-cardinality",
+    "title": "Topological relations",
+    "section": "Join cardinality",
+    "text": "Join cardinality\n\nplaygrounds_join has the same rows as playgrounds + extra column CHSTNAME\n\nWhy? Each playground has exactly one nearest station\n\nBut row count can change with other join predicates!\n\nWithin 100m: a playground may match zero or multiple stops\n\n\n\n\nplaygrounds_join2 &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_is_within_distance, \n  dist = 100\n  )\n\nnrow(playgrounds)\n## [1] 184\n\nnrow(playgrounds_join2)\n## [1] 186\n\n\n\nplaygrounds_join2\n\nSimple feature collection with 186 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 186 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) &lt;NA&gt;            \n 2 Buchlern Sportanlage                       (2678406 1248303) &lt;NA&gt;            \n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) &lt;NA&gt;            \n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) &lt;NA&gt;            \n 7 Josefswiese                                (2681846 1248909) &lt;NA&gt;            \n 8 Gertrudplatz                               (2681431 1247583) &lt;NA&gt;            \n 9 Wahlenpark                                 (2683172 1252246) &lt;NA&gt;            \n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 176 more rows",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#join-order",
+    "href": "vector-deepdive-topological-rel.html#join-order",
+    "title": "Topological relations",
+    "section": "Join order",
+    "text": "Join order\n\nOrder matters (just like regular joins)\nst_join = left join by default\nResult keeps the geometry of the left dataset\n\n\n\nkreise &lt;- kreise[,\"STADTKREIS\"]\n\npublictransport_join &lt;- st_join(publictransport, kreise)\n\n\n\n\n\n\n\n\n\n\n\n\nReverse order → each stadtkreis gets duplicated for every intersecting point\n\n\nkreise_join &lt;- st_join(kreise, publictransport)\n\nnrow(kreise)\n## [1] 12\n\nnrow(kreise_join)\n## [1] 477\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Dataset kreise with 12 features\n\n\n\n\n\n\n\n\n\n\n\n(b) Dataset kreise_join with 477 features\n\n\n\n\n\n\n\nFigure 3.4: Note that all the duplicate stadtkreise overlap each other, so when you visualize the data, the issue is not noticeable",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#summary",
+    "href": "vector-deepdive-topological-rel.html#summary",
+    "title": "Topological relations",
+    "section": "Summary",
+    "text": "Summary\n\n\n\n\n\n\n\n\nTask\nFunction\nKey arguments\n\n\n\n\nTest a relationship\nst_intersects(), st_covers(), …\nsparse = FALSE for logical matrix\n\n\nSubset by predicate\nx[y, ] or st_filter()\nop / .predicate, dist\n\n\nJoin by predicate\nst_join(x, y)\njoin, left = TRUE\n\n\n\n\nDefault predicate is always st_intersects\nPrefer st_covers over st_contains for point-in-polygon\nJoin order determines geometry and potential row duplication",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#a-motivating-problem",
+    "href": "vector-deepdive-topological-rel.html#a-motivating-problem",
+    "title": "Topological relations",
+    "section": "A motivating problem",
+    "text": "A motivating problem\n\nConsider a 3×3 chessboard (Figure 4.1)\nWhich fields share a full edge with the origin? (like a rook’s move)\nst_touches won’t work — it also matches diagonal neighbours (shared point)\nWe need a way to express: “shared boundary must be a line, not just a point”\n\n\n\n\n\n\n\n\n\nFigure 4.1: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an edge with the origin?",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#the-de-9im",
+    "href": "vector-deepdive-topological-rel.html#the-de-9im",
+    "title": "Topological relations",
+    "section": "The DE-9IM",
+    "text": "The DE-9IM\n\nDE-9IM (Dimensionally Extended nine-Intersection Model) gives fine-grained control\nDE-9IM is the formal model behind all named predicates\nDescribes the relationship as a 3×3 matrix: interior, boundary, exterior of each geometry\nTable 4.1 shows the analysis for two overlapping polygons",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#section",
+    "href": "vector-deepdive-topological-rel.html#section",
+    "title": "Topological relations",
+    "section": "",
+    "text": "Rows = parts of geometry A (blue),\ncolumns = parts of geometry B (red).\nEach cell shows what the intersection of that row-part with that column-part looks like.\nThe dark shading in each cell is the resulting intersection.\nWalk through a few cells:\n\ntop-left (Interior ∩ Interior) yields an area,\ntop-middle (Interior ∩ Boundary) yields a line,\nmiddle-middle (Boundary ∩ Boundary) yields two points.\n\n\n\n\n\n\n\n\nTable 4.1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red shading/line = intersection result.\n\n\n\n\n\n\n\n\n\n\nInterior (B)\nBoundary (B)\nExterior (B)\n\n\n\n\nInterior (A)\n\n\n\n\n\nBoundary (A)\n\n\n\n\n\nExterior (A)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTable 4.2: The DE-9IM for the rooks case. This can be flattend into the string F***1****\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\nF\n*\n*\n\n\nBoundary\n*\n1\n*\n\n\nExterior\n*\n*\n*\n\n\n\n\n\n\n\n\n\n\n\nEach cell shows the intersection of a part of A (row) with a part of B (column)\nFor the rook, we only care about two cells:\n\nInterior ∩ Interior = F (no overlap)\nBoundary ∩ Boundary = 1 (shared edge = a line, not just a point)\n\nEverything else = * (don’t care)\nFlatten row by row into the pattern → F***1****\n\n\nThis is what distinguishes edge-sharing (rook) from corner-sharing (bishop) neighbours: for a bishop, Boundary ∩ Boundary = 0 (a point), while for the rook it must be 1 (a line). The encoding is: F = empty, 0 = point, 1 = line, 2 = area. * means “any value” and T means “any non-empty value” (i.e. 0, 1, or 2).",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#predicates-as-patterns",
+    "href": "vector-deepdive-topological-rel.html#predicates-as-patterns",
+    "title": "Topological relations",
+    "section": "Predicates as patterns",
+    "text": "Predicates as patterns\n\nEvery named predicate = one or more DE-9IM patterns\n\n\n\n\n\n\n\n\nPredicate\nDE-9IM pattern(s)\n\n\n\n\nst_intersects\nT********, *T*******, ***T*****, ****T**** (any non-empty intersection)\n\n\nst_touches\nFT*******, F**T*****, F***T****\n\n\nst_contains\nT*****FF*\n\n\nst_within\nT*F**F***\n\n\n\n\nst_contains and st_within are mirror images (swap rows ↔︎ columns)\n* = wildcard, matches F, 0, 1, or 2\n\n\n\nThe exact values 0, 1, 2 describe the dimension of the intersection (point, line, area).\nIn patterns, T means “any non-empty intersection” - i.e. it matches 0, 1, or 2 but not F.\nSo T is used when you care that something intersects but don’t care how (point vs line vs area), while 0/1/2 pin down the exact dimension.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#st_relate-explore",
+    "href": "vector-deepdive-topological-rel.html#st_relate-explore",
+    "title": "Topological relations",
+    "section": "st_relate: explore",
+    "text": "st_relate: explore\n\nWithout pattern: returns the actual DE-9IM string for each pair\nUseful for exploration → inspect strings, then decide which pattern to match\n\n\nst_relate(grid_orig, grid_dest)\n\n     [,1]        [,2]        [,3]        [,4]        [,5]        [,6]       \n[1,] \"FF2F01212\" \"FF2F11212\" \"FF2F01212\" \"FF2F11212\" \"FF2F11212\" \"FF2F01212\"\n     [,7]        [,8]       \n[1,] \"FF2F11212\" \"FF2F01212\"",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#st_relate-match",
+    "href": "vector-deepdive-topological-rel.html#st_relate-match",
+    "title": "Topological relations",
+    "section": "st_relate: match",
+    "text": "st_relate: match\n\nPass a pattern argument → returns TRUE/FALSE (sparse matrix, like named predicates)\n\n\nst_relate(grid_orig, grid_dest, pattern = \"F***1****\")\n\nSparse geometry binary predicate list of length 1, where the predicate\nwas `relate_pattern'\n 1: 2, 4, 5, 7\n\n\n\nCreate a custom st_rook function and use it like any named predicate:\n\nst_rook &lt;- \\(x, y) st_relate(x, y, pattern = \"F***1****\")\n\ngrid_rook &lt;- grid_dest[grid_orig, , op = st_rook] |&gt; \n  st_sample(1000, type = \"hexagonal\",by_polygon = TRUE)\n\n\n\n\n\n\n\n\n\nFigure 4.2: The chessboard situation with the potential fields for the rook highlighted with a red outline",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-topological-rel.html#wrap-up",
+    "href": "vector-deepdive-topological-rel.html#wrap-up",
+    "title": "Topological relations",
+    "section": "Wrap-up",
+    "text": "Wrap-up\n\nNamed predicates (st_intersects, st_covers, …) cover most use cases for subsetting and joining\nWhen they don’t suffice, DE-9IM patterns let you define custom relations (st_relate)\nKey pitfalls to remember:\n\nst_contains vs st_covers (boundary matters!)\nJoin order determines geometry and row count\nPredicates return sparse index lists, not logical vectors (use sparse = FALSE if needed)",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
@@ -115,11 +345,33 @@
     ]
   },
   {
+    "objectID": "vector-deepdive-duckdb.html#why-duckdb-for-spatial-data",
+    "href": "vector-deepdive-duckdb.html#why-duckdb-for-spatial-data",
+    "title": "DuckDB",
+    "section": "",
+    "text": "R/sf loads entire datasets into memory → bottleneck with large data\nDuckDB can stream from disk — processes data exceeding available RAM\nSQL: declarative language — describe what you want, not how\nSpatial extension uses familiar function names (st_intersects, st_area, …)\nSpatial indexing (R-Tree) makes large-scale spatial queries fast",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#reinventing-dbms",
+    "href": "vector-deepdive-duckdb.html#reinventing-dbms",
+    "title": "DuckDB",
+    "section": "Reinventing DBMS?",
+    "text": "Reinventing DBMS?\n\ndplyr, data.table, arrow do relational transformations (select, join, aggregate, …)\nBut compared to a real DBMS, they lack:\n\nHolistic query optimization across a pipeline\nOut-of-memory computation\nParallelism and pipelining\n\nDuckDB brings 50+ years of DBMS research into your R/Python session\n\n\nHannes Mühleisen (DuckDB co-creator) makes this point in his talk: “The data science community is reinventing database management systems, but rather poorly.” If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
     "objectID": "vector-deepdive-duckdb.html#olap-vs.-oltp",
     "href": "vector-deepdive-duckdb.html#olap-vs.-oltp",
     "title": "DuckDB",
     "section": "OLAP vs. OLTP",
-    "text": "OLAP vs. OLTP\n\nOLAP (Online Analytical Processing)\n\nRead-mostly workloads\nComplex queries\nread large parts of the data\nbulk appends / updates\n\nOLTP (Online Transaction Processing)\n\nMany small writes and updates\nsimple queries\nread only individual rows",
+    "text": "OLAP vs. OLTP\n\n\n\n\nOLAP (Analytical)\nOLTP (Transactional)\n\n\n\n\nWorkload\nRead-mostly\nMany small writes\n\n\nQueries\nComplex, scan large parts\nSimple, touch individual rows\n\n\nUpdates\nBulk appends\nFrequent row-level updates\n\n\n\n\nDuckDB = OLAP",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
@@ -129,8 +381,19 @@
     "objectID": "vector-deepdive-duckdb.html#in-process-vs.-standalone",
     "href": "vector-deepdive-duckdb.html#in-process-vs.-standalone",
     "title": "DuckDB",
-    "section": "In process vs. standalone",
-    "text": "In process vs. standalone\n\nDuckDB is an in process database management system, it is not an external process to which your application connects.\nIn other words: there is no client sending instructions nor a server to read and process them\nSQLite works the same way, while PostgreSQL, MySQL etc. do not\n\n\n\n\n\nTable 3.1: DuckDB fills a niche that no previous software has filled yet\n\n\n\n\n\n\n\n\n\n\nOLTP\nOLAP\n\n\n\n\nIn-Process\n\n\n\n\nStand-Alone",
+    "section": "In-process vs. standalone",
+    "text": "In-process vs. standalone\n\nIn-process: runs inside your application (no separate server)\n\nDuckDB, SQLite\n\nStandalone: separate server process, client connects over network\n\nPostgreSQL, MySQL\n\n\n\n\n\n\nTable 3.1: DuckDB fills a niche that no previous software has filled yet\n\n\n\n\n\n\n\n\n\n\nOLTP\nOLAP\n\n\n\n\nIn-Process\n\n\n\n\nStand-Alone",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#lets-put-duckdb-to-work",
+    "href": "vector-deepdive-duckdb.html#lets-put-duckdb-to-work",
+    "title": "DuckDB",
+    "section": "Let’s put DuckDB to work",
+    "text": "Let’s put DuckDB to work",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
@@ -140,19 +403,118 @@
     "objectID": "vector-deepdive-duckdb.html#sec-duckdb-practice",
     "href": "vector-deepdive-duckdb.html#sec-duckdb-practice",
     "title": "DuckDB",
-    "section": "Duckdb in practice",
-    "text": "Duckdb in practice\n\nDownload wald-kantone.duckdb from moodle (forest + canton boundaries)\nInstall the duckdb CLI and duckdb R package\nInstall the dbeaver Community Version\nUsing dbeaver, connect to the duckdb database\nInstall and load the spatial extension:\n\nINSTALL spatial;\nLOAD spatial;\n\n\nVerify both tables are present and explore them:\n\nSHOW TABLES;\nSELECT * FROM wald;\nSELECT * FROM kantone;\n\nCreate an R-Tree spatial index for both tables:\n\nCREATE INDEX kantone_idx ON kantone USING RTREE (geom);\nCREATE INDEX wald_idx ON wald USING RTREE (geom);\n\n\nWhy spatial indices?\n\nWithout an index, a spatial query like WHERE st_intersects(a, b) must check every pair of geometries — this is very slow on large datasets\nAn R-Tree index organizes geometries by their bounding boxes in a tree structure\nWhen querying, the R-Tree quickly eliminates geometries whose bounding boxes don’t overlap — only the remaining candidates are checked with the exact (expensive) geometry test\nThis reduces the number of comparisons dramatically (e.g. from millions to thousands)\nR-Trees are the standard spatial index in most databases (PostGIS, SpatiaLite, DuckDB) and also power sf’s spatial predicates internally\n\n\n\n\nSQL VIEW\n\nA VIEW is a named SQL query — it acts like a virtual table\nEvery time you access a VIEW, the underlying query is re-executed\nThis lets us build complex analyses step-by-step (rather than nesting queries)\n\n\nUnlike materialized tables, VIEWs don’t store data on disk. This means they don’t take up extra space and always reflect the current state of the source data. The trade-off is that they are re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.\n\n\nOur first VIEW: a subset of the forest dataset (for faster iteration)\n\n\n\nLimit to 1’000 rows and store as a VIEW:\n\n1CREATE VIEW wald2 AS\n2SELECT * FROM wald LIMIT 1000;\n\n1\n\nPrepend CREATE VIEW name AS to any SELECT…\n\n2\n\n… to store it as a reusable virtual table\n\n\n\nQuery it like a regular table:\n\nSELECT * FROM wald2;\n\n\n\nDevelop SQL Code\n\nIntersect forest polygons with canton boundaries:\n\nSELECT \n  name, \n2  st_intersection(w.geom, k.geom),\n1FROM wald2 w, kantone k;\n\n1\n\nw and k are aliases…\n\n2\n\n… used in the intersection\n\n\n\n\nProblem: this computes a cross join — every forest polygon x every canton (1’000 x 26 = 26’000 pairs)\nSolution: add a WHERE clause to filter early:\n\nSELECT\n  name,\n  st_intersection(w.geom, k.geom),\nFROM wald2 w, kantone k\n1WHERE st_intersects(w.geom, k.geom);\n\n1\n\nOnly compute the intersection for pairs that actually overlap\n\n\n\nThis is where the R-Tree index pays off — DuckDB discards non-overlapping pairs without checking every combination\n\n\n\n\n\n\n\nNotest_intersects vs st_intersection\n\n\n\nNote how this query uses both: st_intersects in the WHERE clause is a predicate (returns true/false to filter rows), while st_intersection in the SELECT clause is a geometric operation (computes the overlapping geometry). Same pattern as in R/sf!\n\n\n\n\n\nInspecting query plans with EXPLAIN\n\nYou can prepend EXPLAIN to any query to see how DuckDB will execute it, without actually running it\nTry comparing the two versions in dbeaver:\n\n-- Without WHERE: cross join of all pairs\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k;\n\n-- With WHERE: only matching pairs (uses R-Tree index)\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\nIn the second plan, look for an INDEX SCAN or INDEX JOIN — this confirms the R-Tree is being used\n\n\n\nWe need the area of each intersection, not the geometry itself:\n\nSELECT \n  name, \n1  st_area(st_intersection(w.geom, k.geom)) as wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nst_area calculates the area of the intersection\n\n\n\n\nSave this as a VIEW before aggregating:\n\n1CREATE VIEW wald_kantone AS\nSELECT \n  name, \n  st_area(st_intersection(w.geom, k.geom)) AS wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis creates a VIEW from the preceding query\n\n\n\n\nQuery the VIEW like a table, then aggregate with GROUP BY:\n\nSELECT \n3  name,\n2  sum(wald_area) as wald_area\nFROM wald_kantone\n1GROUP BY name;\n\n1\n\nIf we use GROUP BY in a SQL query..\n\n2\n\n… we need to wrap all columns with aggregate function…\n\n3\n\n… except for the columns that we use for grouping\n\n\n\n\nSave the aggregation as a VIEW:\n\nCREATE VIEW wald_kanton_grp AS\nSELECT \n  name, \n  sum(wald_area) as wald_area\nFROM wald_kantone\nGROUP BY name;\n\n\nJoin with kantone to get the total canton area and compute the fraction:\n\nSELECT \n3    kantone.name,\n4    wald_area/area as waldanteil,\nFROM wald_kanton_grp \n1LEFT JOIN kantone\n2ON wald_kanton_grp.name=kantone.name;\n\n1\n\nLEFT JOIN appends columns from another table…\n\n2\n\n… matched by the ON condition\n\n3\n\nWe only need the canton name…\n\n4\n\n… and the fraction wald_area / area\n\n\n\n\nSave as a final VIEW, ordered by forest share:\n\nCREATE VIEW kanton_frac AS\nSELECT \n    kantone.name,                 \n    wald_area/area as waldanteil, \nFROM wald_kanton_grp \nLEFT JOIN kantone \nON wald_kanton_grp.name=kantone.name\n1ORDER BY waldanteil DESC;\n\n1\n\nWe can ORDER BY to show us the highest values first\n\n\n\n\n\nScaling up: from subset to full dataset\n\nSo far we only used 1’000 forest features — results are incomplete\nSince we used VIEWs, switching to the full dataset is trivial:\n\nCREATE OR REPLACE VIEW wald2 AS\nSELECT * FROM wald;\n\nNow every downstream VIEW automatically uses the full data:\n\nSELECT * FROM kanton_frac;\n\nCREATE OR REPLACE VIEW is needed because wald2 already exists. This is the key advantage of VIEWs: by replacing just one definition, the entire chain of dependent queries updates automatically. The downside is that the full query now takes longer since nothing is materialized.\n\n\n\n\nVIEW vs CREATE TABLE ... AS\n\nA VIEW is lazy — the query is re-executed every time you access it\nIf performance matters, you can materialize intermediate results using CREATE TABLE ... AS:\n\n1CREATE TABLE wald_kantone_mat AS\nSELECT\n  name,\n  st_area(st_intersection(w.geom, k.geom)) AS wald_area\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis stores the result as an actual table on disk\n\n\n\nTrade-off: materialized tables are faster to query, but they take up disk space and do not update automatically when the source data changes\nVIEWs are the opposite: no extra storage, always up-to-date, but slower to query",
+    "section": "DuckDB in practice",
+    "text": "DuckDB in practice\n\nDownload wald-kantone.duckdb from Moodle (forest + canton boundaries)\nInstall DuckDB CLI + R package\nInstall DBeaver Community\nConnect to the database in DBeaver\nInstall and load the spatial extension:\n\nINSTALL spatial;\nLOAD spatial;\n\n\nVerify both tables are present and explore them:\n\nSHOW TABLES;\nSELECT * FROM wald;\nSELECT * FROM kantone;\n\nCreate an R-Tree spatial index for both tables:\n\nCREATE INDEX kantone_idx ON kantone USING RTREE (geom);\nCREATE INDEX wald_idx ON wald USING RTREE (geom);",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
     ]
   },
   {
-    "objectID": "vector-deepdive-duckdb.html#import-results-into-r",
-    "href": "vector-deepdive-duckdb.html#import-results-into-r",
+    "objectID": "vector-deepdive-duckdb.html#why-spatial-indices",
+    "href": "vector-deepdive-duckdb.html#why-spatial-indices",
     "title": "DuckDB",
-    "section": "Import results into R",
-    "text": "Import results into R\n\nConnect from R, load the spatial extension, and read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)",
+    "section": "Why spatial indices?",
+    "text": "Why spatial indices?\n\nWithout an index: WHERE st_intersects(a, b) checks every pair → slow\nR-Tree index organizes geometries by bounding boxes\nEliminates non-overlapping pairs cheaply → only candidates get the expensive exact test\nReduces comparisons dramatically (e.g. millions → thousands)\n\n\nR-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also power sf’s spatial predicates internally.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#building-an-analysis-step-by-step",
+    "href": "vector-deepdive-duckdb.html#building-an-analysis-step-by-step",
+    "title": "DuckDB",
+    "section": "Building an analysis step-by-step",
+    "text": "Building an analysis step-by-step\n\nIndices speed up queries — but we still need to compose the analysis\nGoal: compute forest share per canton — intersect forest polygons with canton boundaries, then aggregate areas\nStrategy: break it into small, reusable pieces using SQL VIEWs",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#sql-views",
+    "href": "vector-deepdive-duckdb.html#sql-views",
+    "title": "DuckDB",
+    "section": "SQL VIEWs",
+    "text": "SQL VIEWs\n\nA VIEW = a named SQL query (virtual table)\nRe-executed every time you access it\nLets us build complex analyses step-by-step\n\n\nUnlike materialized tables, VIEWs don’t store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.\n\n\nOur first VIEW: a subset of the forest dataset (for faster iteration)\n\n\n\nLimit to 1’000 rows and store as a VIEW:\n\n1CREATE VIEW wald2 AS\n2SELECT * FROM wald LIMIT 1000;\n\n1\n\nPrepend CREATE VIEW name AS to any SELECT…\n\n2\n\n… to store it as a reusable virtual table\n\n\n\nQuery it like a regular table:\n\nSELECT * FROM wald2;",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#spatial-intersection-in-sql",
+    "href": "vector-deepdive-duckdb.html#spatial-intersection-in-sql",
+    "title": "DuckDB",
+    "section": "Spatial intersection in SQL",
+    "text": "Spatial intersection in SQL\n\nStep 1 of the pipeline: intersect forest polygons with canton boundaries\n\nSELECT \n  name, \n2  st_intersection(w.geom, k.geom),\n1FROM wald2 w, kantone k;\n\n1\n\nw and k are aliases…\n\n2\n\n… used in the intersection\n\n\n┌──────────────────────┬───────────────────────────────────────────────────────┐\n│         name         │            st_intersection(w.geom, k.geom)            │\n│       varchar        │                       geometry                        │\n├──────────────────────┼───────────────────────────────────────────────────────┤\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n├──────────────────────┴───────────────────────────────────────────────────────┤\n│ 26000 rows (10 shown)                                              2 columns │\n└──────────────────────────────────────────────────────────────────────────────┘\nRun Time (s): real 1.292 user 1.293885 sys 0.005016\n\n\n\nProblem: cross join — every forest polygon × every canton (1’000 × 26 = 26’000 pairs)\nSolution: add WHERE to filter early:\n\nSELECT\n  name,\n  st_intersection(w.geom, k.geom),\nFROM wald2 w, kantone k\n1WHERE st_intersects(w.geom, k.geom);\n\n1\n\nOnly compute the intersection for pairs that actually overlap (R-Tree!)\n\n\n┌──────────────────────┬───────────────────────────────────────────────────────┐\n│         name         │            st_intersection(w.geom, k.geom)            │\n│       varchar        │                       geometry                        │\n├──────────────────────┼───────────────────────────────────────────────────────┤\n│ Appenzell Innerrho…  │ POLYGON Z ((2750577.8690000786 1236499.1299968604 1…  │\n│ St. Gallen           │ POLYGON Z ((2733301.3710000697 1235901.1909968755 1…  │\n│ St. Gallen           │ POLYGON Z ((2730828.668000072 1236533.6979968112 10…  │\n│ Appenzell Innerrho…  │ POLYGON Z ((2751117.7790000793 1236511.4949968604 1…  │\n│ Zürich               │ POLYGON Z ((2712200.8850000626 1236517.2959967866 6…  │\n│   ·                  │                           ·                           │\n│   ·                  │                           ·                           │\n│   ·                  │                           ·                           │\n│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │\n│ Zürich               │ POLYGON Z ((2684156.710000051 1239693.0049964704 51…  │\n│ St. Gallen           │ POLYGON Z ((2734307.2300000787 1239757.5959965463 1…  │\n│ Appenzell Ausserrh…  │ POLYGON Z ((2735958.5650000805 1239767.1879965463 1…  │\n│ Appenzell Ausserrh…  │ POLYGON Z ((2738798.7040000805 1239749.8799965512 8…  │\n├──────────────────────┴───────────────────────────────────────────────────────┤\n│ 1027 rows (10 shown)                                               2 columns │\n└──────────────────────────────────────────────────────────────────────────────┘\nRun Time (s): real 0.818 user 0.823316 sys 0.006000",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#st_intersects-vs-st_intersection",
+    "href": "vector-deepdive-duckdb.html#st_intersects-vs-st_intersection",
+    "title": "DuckDB",
+    "section": "st_intersects vs st_intersection",
+    "text": "st_intersects vs st_intersection\nThis query uses both: st_intersects in WHERE = predicate (true/false filter), st_intersection in SELECT = operation (computes geometry). Same pattern as in R/sf!",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#query-plans-with-explain",
+    "href": "vector-deepdive-duckdb.html#query-plans-with-explain",
+    "title": "DuckDB",
+    "section": "Query plans with EXPLAIN",
+    "text": "Query plans with EXPLAIN\n\nPrepend EXPLAIN to see how DuckDB will execute a query (without running it)\nCompare both versions in DBeaver:\n\n-- Without WHERE: cross join of all pairs\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k;\n\n-- With WHERE: only matching pairs (uses R-Tree index)\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\nLook for INDEX SCAN or INDEX JOIN in the second plan → R-Tree is being used\n\n\n\nWe need the area, not the geometry itself:\n\nSELECT \n  name, \n1  st_area(st_intersection(w.geom, k.geom)) as wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nst_area calculates the area of the intersection\n\n\n┌────────────────────────┬────────────────────┐\n│          name          │     wald_area      │\n│        varchar         │       double       │\n├────────────────────────┼────────────────────┤\n│ Appenzell Innerrhoden  │  3223.381481670876 │\n│ St. Gallen             │ 490040.98548061884 │\n│ St. Gallen             │ 1515.7608568453097 │\n│ Appenzell Innerrhoden  │ 5697.7576364166425 │\n│ Zürich                 │  9248.165822466484 │\n│   ·                    │          ·         │\n│   ·                    │          ·         │\n│   ·                    │          ·         │\n│ Appenzell Innerrhoden  │ 31971.908096492414 │\n│ Zürich                 │ 11339.135541535818 │\n│ St. Gallen             │ 11570.958247649043 │\n│ Appenzell Ausserrhoden │ 3659.7222327571385 │\n│ Appenzell Ausserrhoden │ 1371.8734574811795 │\n├────────────────────────┴────────────────────┤\n│ 1027 rows (10 shown)              2 columns │\n└─────────────────────────────────────────────┘\nRun Time (s): real 0.810 user 0.811628 sys 0.018473\n\n\nSave this as a VIEW before aggregating:\n\n1CREATE VIEW wald_kantone AS\nSELECT \n  name, \n  st_area(st_intersection(w.geom, k.geom)) AS wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis creates a VIEW from the preceding query\n\n\n\n\nQuery the VIEW like a table, then aggregate with GROUP BY:\n\nSELECT \n3  name,\n2  sum(wald_area) as wald_area\nFROM wald_kantone\n1GROUP BY name;\n\n1\n\nIf we use GROUP BY in a SQL query..\n\n2\n\n… we need to wrap all columns with aggregate function…\n\n3\n\n… except for the columns that we use for grouping\n\n\n\n\nSave the aggregation as a VIEW:\n\nCREATE VIEW wald_kanton_grp AS\nSELECT \n  name, \n  sum(wald_area) as wald_area\nFROM wald_kantone\nGROUP BY name;\n\n\nJoin with kantone to get the total canton area and compute the fraction:\n\nSELECT \n3    kantone.name,\n4    wald_area/area as waldanteil,\nFROM wald_kanton_grp \n1LEFT JOIN kantone\n2ON wald_kanton_grp.name=kantone.name;\n\n1\n\nLEFT JOIN appends columns from another table…\n\n2\n\n… matched by the ON condition\n\n3\n\nWe only need the canton name…\n\n4\n\n… and the fraction wald_area / area\n\n\n\n\nSave as a final VIEW, ordered by forest share:\n\nCREATE VIEW kanton_frac AS\nSELECT \n    kantone.name,                 \n    wald_area/area as waldanteil, \nFROM wald_kanton_grp \nLEFT JOIN kantone \nON wald_kanton_grp.name=kantone.name\n1ORDER BY waldanteil DESC;\n\n1\n\nWe can ORDER BY to show us the highest values first",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#scaling-up",
+    "href": "vector-deepdive-duckdb.html#scaling-up",
+    "title": "DuckDB",
+    "section": "Scaling up",
+    "text": "Scaling up\n\nSo far: only 1’000 forest features → incomplete results\nSince we used VIEWs, switching to the full dataset is trivial:\n\nCREATE OR REPLACE VIEW wald2 AS\nSELECT * FROM wald;\n\nEvery downstream VIEW now automatically uses the full data:\n\nSELECT * FROM kanton_frac;\n\nCREATE OR REPLACE VIEW is needed because wald2 already exists. Key advantage of VIEWs: replace one definition, the entire chain updates. Downside: full query now takes longer since nothing is materialized.",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#view-vs-create-table-...-as",
+    "href": "vector-deepdive-duckdb.html#view-vs-create-table-...-as",
+    "title": "DuckDB",
+    "section": "VIEW vs CREATE TABLE ... AS",
+    "text": "VIEW vs CREATE TABLE ... AS\n\nVIEW = lazy (re-executed on every access)\nCREATE TABLE ... AS = materialized (stored on disk):\n\n1CREATE TABLE wald_kantone_mat AS\nSELECT\n  name,\n  st_area(st_intersection(w.geom, k.geom)) AS wald_area\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis stores the result as an actual table on disk\n\n\n\nTrade-off:\n\nMaterialized: faster to query, takes disk space, does not auto-update\nVIEW: no extra storage, always current, slower to query",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#import-into-r",
+    "href": "vector-deepdive-duckdb.html#import-into-r",
+    "title": "DuckDB",
+    "section": "Import into R",
+    "text": "Import into R\n\nConnect, load spatial extension, read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)",
+    "crumbs": [
+      "Vector Deepdive",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
+    ]
+  },
+  {
+    "objectID": "vector-deepdive-duckdb.html#wrap-up",
+    "href": "vector-deepdive-duckdb.html#wrap-up",
+    "title": "DuckDB",
+    "section": "Wrap-up",
+    "text": "Wrap-up\n\nDuckDB = in-process OLAP database with a spatial extension\nSQL lets you express spatial analyses declaratively\nR-Tree indices make spatial predicates fast\nVIEWs let you build analyses incrementally — easy to iterate and scale\nResults flow back into R for further analysis or visualization",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
@@ -163,7 +525,7 @@
     "href": "vector-deepdive-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "Task 1\nFollow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Solve the tasks in a file named index.qmd.\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo. Using swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton. Visualize the results (in a map and / or a plot).\nRender the document using quarto preview. Publish your result using quarto publish gh-pages",
+    "text": "Task 1\nFollow the instructions in sec-gh-pages to create a new repo in the existing organization. Solve the tasks in a file named index.qmd.\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo. Using swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton. Visualize the results (in a map and / or a plot).\nRender the document using quarto preview. Publish your result using quarto publish gh-pages",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
@@ -174,7 +536,7 @@
     "href": "vector-deepdive-task.html#task-3",
     "title": "🚀 Tasks",
     "section": "Task 3",
-    "text": "Task 3\nWithout consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in Figure 5.1.\nConcentrate on the boundary-boundary intersection. Note:\n\nNo intersection: F\nPoint intersection: 0\nLine intersetion: 1\nAny intersection: *\n\nThe 3x3 “chessboard” is available on moodle.\n\n\n\n\n\n\n\n\n\n\n\n\n(a) King’s case (all fields)\n\n\n\n\n\n\n\n\n\n\n\n(b) Bishop’s case (diagonal fields)\n\n\n\n\n\n\n\nFigure 5.1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals",
+    "text": "Task 3\nWithout consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in Figure fig-chessboard-2.\nConcentrate on the boundary-boundary intersection. Note:\n\nNo intersection: F\nPoint intersection: 0\nLine intersetion: 1\nAny intersection: *\n\nThe 3x3 “chessboard” is available on moodle.\n\n\n\n\n\n\n\n\n\n\n\n\n(a) King’s case (all fields)\n\n\n\n\n\n\n\n\n\n\n\n(b) Bishop’s case (diagonal fields)\n\n\n\n\n\n\n\nFigure 5.1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals",
     "crumbs": [
       "Vector Deepdive",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
