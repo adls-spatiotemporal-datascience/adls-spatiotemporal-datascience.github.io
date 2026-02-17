@@ -122,7 +122,7 @@ R-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also 
 ## Building an analysis step-by-step
 
 - Indices speed up queries — but we still need to **compose** the analysis
-- Goal: compute **forest share per canton** (same as Task 1, but in SQL)
+- Goal: compute **forest share per canton** — intersect forest polygons with canton boundaries, then aggregate areas
 - Strategy: break it into small, reusable pieces using SQL `VIEW`s
 
 ## SQL `VIEW`s
@@ -171,6 +171,32 @@ FROM wald2 w, kantone k;            -- <1>
 1. `w` and `k` are aliases...
 2. ... used in the intersection
 
+```{.txt}
+┌──────────────────────┬───────────────────────────────────────────────────────┐
+│         name         │            st_intersection(w.geom, k.geom)            │
+│       varchar        │                       geometry                        │
+├──────────────────────┼───────────────────────────────────────────────────────┤
+│ Genève               │ POLYGON EMPTY                                         │
+│ Genève               │ POLYGON EMPTY                                         │
+│ Genève               │ POLYGON EMPTY                                         │
+│ Genève               │ POLYGON EMPTY                                         │
+│ Genève               │ POLYGON EMPTY                                         │
+│   ·                  │       ·                                               │
+│   ·                  │       ·                                               │
+│   ·                  │       ·                                               │
+│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │
+│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │
+│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │
+│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │
+│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │
+├──────────────────────┴───────────────────────────────────────────────────────┤
+│ 26000 rows (10 shown)                                              2 columns │
+└──────────────────────────────────────────────────────────────────────────────┘
+Run Time (s): real 1.292 user 1.293885 sys 0.005016
+
+
+```
+
 
 ---
 
@@ -185,36 +211,42 @@ FROM wald2 w, kantone k
 WHERE st_intersects(w.geom, k.geom); -- <1>
 ```
 
-1. Only compute the intersection for pairs that actually overlap
+1. Only compute the intersection for pairs that actually overlap (R-Tree!)
 
-- **R-Tree index** pays off here — non-overlapping pairs discarded without exact check
 
-:::{.callout-note}
+```{.txt}
+┌──────────────────────┬───────────────────────────────────────────────────────┐
+│         name         │            st_intersection(w.geom, k.geom)            │
+│       varchar        │                       geometry                        │
+├──────────────────────┼───────────────────────────────────────────────────────┤
+│ Appenzell Innerrho…  │ POLYGON Z ((2750577.8690000786 1236499.1299968604 1…  │
+│ St. Gallen           │ POLYGON Z ((2733301.3710000697 1235901.1909968755 1…  │
+│ St. Gallen           │ POLYGON Z ((2730828.668000072 1236533.6979968112 10…  │
+│ Appenzell Innerrho…  │ POLYGON Z ((2751117.7790000793 1236511.4949968604 1…  │
+│ Zürich               │ POLYGON Z ((2712200.8850000626 1236517.2959967866 6…  │
+│   ·                  │                           ·                           │
+│   ·                  │                           ·                           │
+│   ·                  │                           ·                           │
+│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │
+│ Zürich               │ POLYGON Z ((2684156.710000051 1239693.0049964704 51…  │
+│ St. Gallen           │ POLYGON Z ((2734307.2300000787 1239757.5959965463 1…  │
+│ Appenzell Ausserrh…  │ POLYGON Z ((2735958.5650000805 1239767.1879965463 1…  │
+│ Appenzell Ausserrh…  │ POLYGON Z ((2738798.7040000805 1239749.8799965512 8…  │
+├──────────────────────┴───────────────────────────────────────────────────────┤
+│ 1027 rows (10 shown)                                               2 columns │
+└──────────────────────────────────────────────────────────────────────────────┘
+Run Time (s): real 0.818 user 0.823316 sys 0.006000
+
+```
+
+
+:::{.note}
 ## `st_intersects` vs `st_intersection`
 This query uses both: `st_intersects` in `WHERE` = **predicate** (true/false filter), `st_intersection` in `SELECT` = **operation** (computes geometry). Same pattern as in R/`sf`!
 :::
 
----
 
-## Query plans with `EXPLAIN`
-
-- Prepend `EXPLAIN` to see *how* DuckDB will execute a query (without running it)
-- Compare both versions in DBeaver:
-
-```{.sql}
--- Without WHERE: cross join of all pairs
-EXPLAIN SELECT name, st_intersection(w.geom, k.geom)
-FROM wald2 w, kantone k;
-
--- With WHERE: only matching pairs (uses R-Tree index)
-EXPLAIN SELECT name, st_intersection(w.geom, k.geom)
-FROM wald2 w, kantone k
-WHERE st_intersects(w.geom, k.geom);
-```
-
-- Look for `INDEX SCAN` or `INDEX JOIN` in the second plan → R-Tree is being used
-
----
+--- 
 
 - We need the **area**, not the geometry itself:
 
@@ -228,6 +260,32 @@ WHERE st_intersects(w.geom, k.geom);
 ```
 
 1. `st_area` calculates the area of the intersection
+
+
+```{.txt}
+┌────────────────────────┬────────────────────┐
+│          name          │     wald_area      │
+│        varchar         │       double       │
+├────────────────────────┼────────────────────┤
+│ Appenzell Innerrhoden  │  3223.381481670876 │
+│ St. Gallen             │ 490040.98548061884 │
+│ St. Gallen             │ 1515.7608568453097 │
+│ Appenzell Innerrhoden  │ 5697.7576364166425 │
+│ Zürich                 │  9248.165822466484 │
+│   ·                    │          ·         │
+│   ·                    │          ·         │
+│   ·                    │          ·         │
+│ Appenzell Innerrhoden  │ 31971.908096492414 │
+│ Zürich                 │ 11339.135541535818 │
+│ St. Gallen             │ 11570.958247649043 │
+│ Appenzell Ausserrhoden │ 3659.7222327571385 │
+│ Appenzell Ausserrhoden │ 1371.8734574811795 │
+├────────────────────────┴────────────────────┤
+│ 1027 rows (10 shown)              2 columns │
+└─────────────────────────────────────────────┘
+Run Time (s): real 0.810 user 0.811628 sys 0.018473
+
+```
 
 ---
 
