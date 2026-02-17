@@ -142,81 +142,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Due date for the tasks are listed in <a href="./index.html#tbl-schedule">the schedule</a></p>
-</div>
-</div>
-<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Solve the tasks in a file named <code>index.qmd</code>.</p>
-<section id="sec-vec-basic" class="level2">
-<h2 class="anchored" data-anchor-id="sec-vec-basic">Task 1</h2>
-<p>Download the datasets <a href="https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d">swissTLM3D</a> and <a href="https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d">swissboundaries3d</a> from swisstopo. Using <code>swissTLM3d</code> and <code>swissboundaries3d</code>, calculate the percentage of area covered by forest <em>per canton</em>. Visualize the results (in a map and / or a plot).</p>
-<p>Render the document using <code>quarto preview</code>. Publish your result using <code>quarto publish gh-pages</code></p>
-</section>
-<section id="task-2" class="level1">
-<h1>Task 2</h1>
-<p>We have prepared a duckdb database on moodle (<code>wald-kantone.duckdb</code>). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D.</p>
-<p>Use this dataset and with the help of <a href="./vector-deepdive-duckdb.html#sec-duckdb-practice">DuckDB in practice</a>, recreate <a href="#sec-vec-basic">Task 1</a> and measure the execution time using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>.</p>
-<p>Compare the execution time with <a href="#sec-vec-basic">Task 1</a>. Discuss!</p>
-<section id="task-3" class="level2">
-<h2 class="anchored" data-anchor-id="task-3">Task 3</h2>
-<p>Without consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in <a href="#fig-chessboard-2" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<p>Concentrate on the boundary-boundary intersection. Note:</p>
-<ul>
-<li>No intersection: <code>F</code></li>
-<li>Point intersection: <code>0</code></li>
-<li>Line intersetion: <code>1</code></li>
-<li>Any intersection: <code>*</code></li>
-</ul>
-<p>The 3x3 “chessboard” is available on moodle.</p>
-<div class="cell" data-layout-nrow="1">
-<div id="fig-chessboard-2" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-1.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) King’s case (all fields)
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-2.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Bishop’s case (diagonal fields)
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals
-</figcaption>
-</figure>
-</div>
-</div>
+<section id="sec-task-interp-density" class="level2">
+<h2 class="anchored" data-anchor-id="sec-task-interp-density">Task 7</h2>
+<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Do the exercises in <a href="./interpolation-density.html#sec-density">Density Estimation</a> and <a href="./interpolation-methods.html#sec-interpolation">Interpolation</a> in a file named <code>index.qmd</code>. The task is due in two weeks.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

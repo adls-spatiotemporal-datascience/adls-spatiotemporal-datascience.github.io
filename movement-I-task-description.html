@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>🚀 Tasks – Spatiotemporal Datascience</title>
+<title>Task description – Spatiotemporal Datascience</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -125,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">🚀 Tasks</h1>
+<h1 class="title">Task description</h1>
 </div>
 
 
@@ -142,84 +161,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Due date for the tasks are listed in <a href="./index.html#tbl-schedule">the schedule</a></p>
-</div>
-</div>
-<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Solve the tasks in a file named <code>index.qmd</code>.</p>
-<section id="sec-vec-basic" class="level2">
-<h2 class="anchored" data-anchor-id="sec-vec-basic">Task 1</h2>
-<p>Download the datasets <a href="https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d">swissTLM3D</a> and <a href="https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d">swissboundaries3d</a> from swisstopo. Using <code>swissTLM3d</code> and <code>swissboundaries3d</code>, calculate the percentage of area covered by forest <em>per canton</em>. Visualize the results (in a map and / or a plot).</p>
-<p>Render the document using <code>quarto preview</code>. Publish your result using <code>quarto publish gh-pages</code></p>
-</section>
-<section id="task-2" class="level1">
-<h1>Task 2</h1>
-<p>We have prepared a duckdb database on moodle (<code>wald-kantone.duckdb</code>). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D.</p>
-<p>Use this dataset and with the help of <a href="./vector-deepdive-duckdb.html#sec-duckdb-practice">DuckDB in practice</a>, recreate <a href="#sec-vec-basic">Task 1</a> and measure the execution time using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>.</p>
-<p>Compare the execution time with <a href="#sec-vec-basic">Task 1</a>. Discuss!</p>
-<section id="task-3" class="level2">
-<h2 class="anchored" data-anchor-id="task-3">Task 3</h2>
-<p>Without consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in <a href="#fig-chessboard-2" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<p>Concentrate on the boundary-boundary intersection. Note:</p>
-<ul>
-<li>No intersection: <code>F</code></li>
-<li>Point intersection: <code>0</code></li>
-<li>Line intersetion: <code>1</code></li>
-<li>Any intersection: <code>*</code></li>
-</ul>
-<p>The 3x3 “chessboard” is available on moodle.</p>
-<div class="cell" data-layout-nrow="1">
-<div id="fig-chessboard-2" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-1.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) King’s case (all fields)
-</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-2.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Bishop’s case (diagonal fields)
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals
-</figcaption>
-</figure>
-</div>
-</div>
+<p>Understanding human mobility is a key challenge in many fields, including transportation planning, epidemiology, and environmental science. Movement data is collected in various ways, including GPS data from smartphones, GPS trackers, or other devices.</p>
+<p>A key insight into human movement is method of transport. This information often needs to be inferred, since its not provided by the device.</p>
+<p>In this task, you will use movement data from the project by <span class="citation" data-cites="zheng2011">Zheng et al. (<a href="#ref-zheng2011" role="doc-biblioref">2011</a>)</span>. The original dataset was collected in the GeoLife project (Microsoft Research Asia) by 182 users in a period of over three years (from April 2007 to August 2012). A GPS trajectory of this dataset is represented by a sequence of time-stamped points, each of which contains the information of latitude, longitude and altitude. This dataset contains 17’621 trajectories with a total distance of about 1.2 million kilometers and a total duration of 48,000+ hours. These trajectories were recorded by different GPS loggers and GPS-phones, and have a variety of sampling rates. 91 percent of the trajectories are logged in a dense representation, e.g.&nbsp;every 1~5 seconds or every 5~10 meters per point.</p>
+<p>This dataset consists of a broad range of users’ outdoor movements, including not only life routines like go home and go to work but also some entertainments and sports activities, such as shopping, sightseeing, dining, hiking, and cycling.</p>
+<p>The goal is to build a model that can predict the transportation mode of a trajectory based on the GPS data. To build this model, you will use the a labelled subset of the data:</p>
+<p>73 users have labeled their trajectories with transportation mode, such as driving, taking a bus, riding a bike and walking. You will use these as labels, and build features to predict these labels from the movement parameters (such as speed, acceleration, sinuosity).</p>
 
 
-</section>
-</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-zheng2011" class="csl-entry" role="listitem">
+Zheng, Yu, Hao Fu, Xing Xie, Wei-Ying Ma, and Quannan Li. 2011. <em>Geolife GPS Trajectory Dataset - User Guide</em>. Geolife GPS trajectories 1.1. <a href="https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/">https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

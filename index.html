@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Nils Ratnaweera">
 
 <title>Spatiotemporal Datascience</title>
 <style>
@@ -34,7 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./syllabus.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -45,13 +43,13 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-3f61aac59b63c3a2d0e87c59ee7d0662.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b9064d4bee7a1b639724231802a0f115.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7013eb072be138bb66cb423e394fb174.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -75,142 +73,57 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="auxilliary/style.css">
-<link rel="stylesheet" href="auxilliary/style-book.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Spatiotemporal Datascience</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./submission.html"> 
+<span class="menu-text">Submission</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./slides-tasks.html"> 
+<span class="menu-text">Slides + Tasks</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/zhaw_sw_pos.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="./images/zhaw_sw_pos.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">Spatiotemporal Datascience</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Welcome</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./syllabus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Syllabus</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Vector Deepdive</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./vector-deepdive-topological-rel.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Topological relations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./vector-deepdive-duckdb.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DuckDB</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./vector-deepdive-task.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🚀 Tasks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a>
-  <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Spatiotemporal Datascience</h1>
-<p class="subtitle lead">Bachelor ADLS / FS26</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Nils Ratnaweera </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 <section id="welcome" class="level1 unnumbered">
@@ -234,23 +147,23 @@ Table&nbsp;1: The course schedule (might be subject to change).
 </figcaption>
 <div aria-describedby="tbl-schedule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ikgvsfunev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ikgvsfunev table {
+<div id="pzjtrzryie" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pzjtrzryie table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ikgvsfunev thead, #ikgvsfunev tbody, #ikgvsfunev tfoot, #ikgvsfunev tr, #ikgvsfunev td, #ikgvsfunev th {
+#pzjtrzryie thead, #pzjtrzryie tbody, #pzjtrzryie tfoot, #pzjtrzryie tr, #pzjtrzryie td, #pzjtrzryie th {
   border-style: none;
 }
 
-#ikgvsfunev p {
+#pzjtrzryie p {
   margin: 0;
   padding: 0;
 }
 
-#ikgvsfunev .gt_table {
+#pzjtrzryie .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -276,12 +189,12 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-left-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_caption {
+#pzjtrzryie .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ikgvsfunev .gt_title {
+#pzjtrzryie .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -293,7 +206,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-width: 0;
 }
 
-#ikgvsfunev .gt_subtitle {
+#pzjtrzryie .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -305,7 +218,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-top-width: 0;
 }
 
-#ikgvsfunev .gt_heading {
+#pzjtrzryie .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -317,13 +230,13 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_bottom_border {
+#pzjtrzryie .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_col_headings {
+#pzjtrzryie .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -338,7 +251,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_col_heading {
+#pzjtrzryie .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -358,7 +271,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   overflow-x: hidden;
 }
 
-#ikgvsfunev .gt_column_spanner_outer {
+#pzjtrzryie .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -370,15 +283,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 4px;
 }
 
-#ikgvsfunev .gt_column_spanner_outer:first-child {
+#pzjtrzryie .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ikgvsfunev .gt_column_spanner_outer:last-child {
+#pzjtrzryie .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ikgvsfunev .gt_column_spanner {
+#pzjtrzryie .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -390,11 +303,11 @@ Table&nbsp;1: The course schedule (might be subject to change).
   width: 100%;
 }
 
-#ikgvsfunev .gt_spanner_row {
+#pzjtrzryie .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ikgvsfunev .gt_group_heading {
+#pzjtrzryie .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -420,7 +333,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   text-align: left;
 }
 
-#ikgvsfunev .gt_empty_group_heading {
+#pzjtrzryie .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -435,15 +348,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   vertical-align: middle;
 }
 
-#ikgvsfunev .gt_from_md > :first-child {
+#pzjtrzryie .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ikgvsfunev .gt_from_md > :last-child {
+#pzjtrzryie .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ikgvsfunev .gt_row {
+#pzjtrzryie .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -462,7 +375,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   overflow-x: hidden;
 }
 
-#ikgvsfunev .gt_stub {
+#pzjtrzryie .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -475,7 +388,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#ikgvsfunev .gt_stub_row_group {
+#pzjtrzryie .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -489,15 +402,15 @@ Table&nbsp;1: The course schedule (might be subject to change).
   vertical-align: top;
 }
 
-#ikgvsfunev .gt_row_group_first td {
+#pzjtrzryie .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ikgvsfunev .gt_row_group_first th {
+#pzjtrzryie .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ikgvsfunev .gt_summary_row {
+#pzjtrzryie .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -507,16 +420,16 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#ikgvsfunev .gt_first_summary_row {
+#pzjtrzryie .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_first_summary_row.thick {
+#pzjtrzryie .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ikgvsfunev .gt_last_summary_row {
+#pzjtrzryie .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +439,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_grand_summary_row {
+#pzjtrzryie .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -536,7 +449,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#ikgvsfunev .gt_first_grand_summary_row {
+#pzjtrzryie .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +459,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-top-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_last_grand_summary_row_top {
+#pzjtrzryie .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -556,11 +469,11 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_striped {
+#pzjtrzryie .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ikgvsfunev .gt_table_body {
+#pzjtrzryie .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -569,7 +482,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-bottom-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_footnotes {
+#pzjtrzryie .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -583,7 +496,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_footnote {
+#pzjtrzryie .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -592,7 +505,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#ikgvsfunev .gt_sourcenotes {
+#pzjtrzryie .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -606,7 +519,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
   border-right-color: #D3D3D3;
 }
 
-#ikgvsfunev .gt_sourcenote {
+#pzjtrzryie .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -614,72 +527,72 @@ Table&nbsp;1: The course schedule (might be subject to change).
   padding-right: 5px;
 }
 
-#ikgvsfunev .gt_left {
+#pzjtrzryie .gt_left {
   text-align: left;
 }
 
-#ikgvsfunev .gt_center {
+#pzjtrzryie .gt_center {
   text-align: center;
 }
 
-#ikgvsfunev .gt_right {
+#pzjtrzryie .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ikgvsfunev .gt_font_normal {
+#pzjtrzryie .gt_font_normal {
   font-weight: normal;
 }
 
-#ikgvsfunev .gt_font_bold {
+#pzjtrzryie .gt_font_bold {
   font-weight: bold;
 }
 
-#ikgvsfunev .gt_font_italic {
+#pzjtrzryie .gt_font_italic {
   font-style: italic;
 }
 
-#ikgvsfunev .gt_super {
+#pzjtrzryie .gt_super {
   font-size: 65%;
 }
 
-#ikgvsfunev .gt_footnote_marks {
+#pzjtrzryie .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ikgvsfunev .gt_asterisk {
+#pzjtrzryie .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ikgvsfunev .gt_indent_1 {
+#pzjtrzryie .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ikgvsfunev .gt_indent_2 {
+#pzjtrzryie .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ikgvsfunev .gt_indent_3 {
+#pzjtrzryie .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ikgvsfunev .gt_indent_4 {
+#pzjtrzryie .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ikgvsfunev .gt_indent_5 {
+#pzjtrzryie .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ikgvsfunev .katex-display {
+#pzjtrzryie .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ikgvsfunev div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pzjtrzryie div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -817,50 +730,6 @@ Table&nbsp;1: The course schedule (might be subject to change).
 </section>
 
 </main> <!-- /main -->
-<script>
-  const currentFile = window.location.pathname.split('/').pop();
-  console.log(currentFile);
-  const span = document.querySelector('.lts');
-  span.outerHTML = `<p class="lts">↪ <a href="slides/${currentFile}" target="_blank">slides</a></p>`;
-</script>
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -934,7 +803,7 @@ Table&nbsp;1: The course schedule (might be subject to change).
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/adls-spatiotemporal-datascience\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1261,15 +1130,6 @@ Table&nbsp;1: The course schedule (might be subject to change).
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./syllabus.html" class="pagination-link" aria-label="Syllabus">
-        <span class="nav-page-text"><span class="chapter-title">Syllabus</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

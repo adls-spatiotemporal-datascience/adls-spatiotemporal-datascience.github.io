@@ -1,555 +1,695 @@
 [
   {
+    "objectID": "preperation.html#sec-task-rast-basic",
+    "href": "preperation.html#sec-task-rast-basic",
+    "title": "Spatiotemporal Datascience",
+    "section": "Raster Basics",
+    "text": "Raster Basics\n\nRedo Task 1. However, rather than doing it using vector data, convert the data to raster and do the calculations in raster format.\nUsing the R package tictoc, measure the execute time of each step in the process. Do this for the raster approach and for the vector approach from last week.\nCompare the execution times of the two approaches. Which approach is faster? Where is the bottleneck?\nCompare the results of the two approaches. Are they the same? If not, why?"
+  },
+  {
+    "objectID": "movement-II-tasks.html",
+    "href": "movement-II-tasks.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nRedo you task from last Week, but further extend your features by using the approach described in Adding Context. Add at least 2, to 3 features of your own.\nCompare your results to the ones you got last week. Does your model perform better if context information is added?"
+  },
+  {
+    "objectID": "raster-deepdive-gdal.html#gdalinfo",
+    "href": "raster-deepdive-gdal.html#gdalinfo",
+    "title": "GDAL",
+    "section": "GDALInfo",
+    "text": "GDALInfo\n\nThe simplest program in GDAL is probabbly gdalinfo\nIt lists information about a raster dataset.\nThe simplest command to test if a CLI tool is working, is to get the version number using --version:\n\n\ngdalinfo --version\n\nGDAL 3.11.4 \"Eganville\", released 2025/09/04\n\n\nGet help\n\nAll named arguments to gdalinfo are listed with [-argument]\nSome arguments need parameters:\n\nFor example: -if stands for input format\nif Gtiff specifies that the input is a GeoTIFF\nThis allows you to be explicit about your input format, rather than GDAL guessing it from the file extension\nThese inputs are denoted with &lt;&gt; (i.e. [-if &lt;format&gt;])\n\nPositional arguments do not have square brackets\nA positional argument needs to be in a specific position\ngdalinfo only has one position argument: &lt;dataset_name&gt;\n\n\ngdalinfo --help\n\nUsage: gdalinfo [--help] [--long-usage] [--help-general]\n                [-json] [-mm]\n                [[-stats]|[-approx_stats]]\n                [-hist]\n                [-nogcp] [-nomd] [-norat] [-noct] [-nofl] [-nonodata] [-nomask]\n                [-checksum] [-listmdd] [-proj4]\n                [-wkt_format &lt;WKT1|WKT2|WKT2_2015|WKT2_2018|WKT2_2019&gt;]\n                [-sd &lt;n&gt;] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]... [-if &lt;format&gt;]...\n                [-mdd &lt;domain&gt;|all]\n                &lt;dataset_name&gt;\n\nNote: gdalinfo --long-usage for full help.\n\n\nGet basic Information\n\ngdalinfo data/week5-exercises/elev-lux.tif\n\nDriver: GTiff/GeoTIFF\nFiles: data/week5-exercises/elev-lux.tif\n       data/week5-exercises/elev-lux.tif.aux.xml\nSize is 95, 90\nCoordinate System is:\nGEOGCRS[\"WGS 84\",\n    ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n        MEMBER[\"World Geodetic System 1984 (Transit)\"],\n        MEMBER[\"World Geodetic System 1984 (G730)\"],\n        MEMBER[\"World Geodetic System 1984 (G873)\"],\n        MEMBER[\"World Geodetic System 1984 (G1150)\"],\n        MEMBER[\"World Geodetic System 1984 (G1674)\"],\n        MEMBER[\"World Geodetic System 1984 (G1762)\"],\n        MEMBER[\"World Geodetic System 1984 (G2139)\"],\n        MEMBER[\"World Geodetic System 1984 (G2296)\"],\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"World.\"],\n        BBOX[-90,-180,90,180]],\n    ID[\"EPSG\",4326]]\nData axis to CRS axis mapping: 2,1\nOrigin = (5.741666666666666,50.191666666666663)\nPixel Size = (0.008333333333333,-0.008333333333333)\nMetadata:\n  AREA_OR_POINT=Area\nImage Structure Metadata:\n  COMPRESSION=LZW\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (   5.7416667,  50.1916667) (  5d44'30.00\"E, 50d11'30.00\"N)\nLower Left  (   5.7416667,  49.4416667) (  5d44'30.00\"E, 49d26'30.00\"N)\nUpper Right (   6.5333333,  50.1916667) (  6d32' 0.00\"E, 50d11'30.00\"N)\nLower Right (   6.5333333,  49.4416667) (  6d32' 0.00\"E, 49d26'30.00\"N)\nCenter      (   6.1375000,  49.8166667) (  6d 8'15.00\"E, 49d49' 0.00\"N)\nBand 1 Block=95x43 Type=Int16, ColorInterp=Gray\n  Description = elevation\n  Min=141.000 Max=547.000 \n  Minimum=141.000, Maximum=547.000, Mean=-9999.000, StdDev=-9999.000\n  NoData Value=-32768\n  Metadata:\n    STATISTICS_MINIMUM=141\n    STATISTICS_MAXIMUM=547\n    STATISTICS_MEAN=-9999\n    STATISTICS_STDDEV=-9999\n\n\nGet histogram\n\nTo calculate a histogram, we can use the argument -hist (see the help page)\nNote: I’m piping the output into head and then tail to truncate the result\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2\n\n  256 buckets from 140.204 to 547.796:\n  2 3 1 4 0 0 1 1 1 5 1 0 0 2 1 1 3 5 1 5 4 4 1 4 4 1 1 3 2 0 6 4 0 2 6 7 5 5 6 5 7 8 4 4 3 11 8 2 3 3 10 5 13 14 3 13 4 14 10 6 19 6 12 11 10 18 9 17 26 14 25 8 19 24 10 37 15 30 12 30 37 22 32 18 47 42 23 44 35 48 53 21 56 33 52 59 31 46 33 39 68 27 57 31 44 28 61 64 24 55 32 57 69 30 55 22 52 40 25 51 28 48 52 23 37 20 40 13 42 55 17 39 11 41 37 20 40 22 38 25 25 31 17 21 42 13 30 12 18 27 11 24 10 25 14 19 30 12 19 10 27 28 3 22 10 15 28 9 15 6 20 20 7 9 5 20 12 9 19 6 25 7 18 27 9 21 7 21 19 9 19 8 18 27 9 27 16 17 25 12 31 18 25 26 16 35 14 25 11 36 20 17 35 15 27 27 14 16 6 29 20 7 27 11 28 14 2 12 8 11 3 6 7 6 9 6 4 6 1 3 1 1 5 1 1 1 1 1 0 1 0 2 2 0 0 1 \n\n\nGet output as JSON\n\nTo get the output as a JSON, use the argument -json\nJSON outputs are much easier to to parse\nThis is especially useful if you want to use the output in a script or program\n\n\n# pipe the output to a JSON file\ngdalinfo -hist -json data/week5-exercises/elev-lux.tif  &gt; data-out/elev-lux.json\n\nParse JSON output\n\nOpen the file elev-lux.json in a browser to get a good idea of the hierarchy\nUse a tool like jq to parse the JSON in the terminal\njq is a powerful tool for parsing JSON in the terminal\nWe can “climb” down the JSON structure using the . operator and the key names\nTo extract from an array, we can use []\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \\\n  jq \".bands[].min\"\n\n141.0\n\n\nPlots in bash\n\nTo illustrate, we extract the histogram from the data and visualize it with bashplotlib\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \n1  jq \".bands[].histogram.buckets[]\" |\n2  hist -w 1 -p +\n\n\n1\n\nThis jq filter extracts the raw values from the array\n\n2\n\nhist from bashplotlib creates a histogram: -w 1 sets the width to 1 and -p + creates a + instead of a point\n\n\n\n\n 20|  +                                                                    \n 19|  +                                                                    \n 18|  +                                                                    \n 17|  +                                                                    \n 16|  +                                                                    \n 15|  +                                                                    \n 14|  +                                                                    \n 13|  +                                                                    \n 12|  +    +                                                               \n 11|  +    +                                                               \n 10| ++ ++ +                                                               \n  9| ++ ++++                  + +                                          \n  8| +++++++  +               + +                                          \n  7| ++++++++ ++++ +    ++    + +                                          \n  6| ++++++++ ++++ +   +++    + +                                          \n  5| +++++++++++++ +  ++++    + ++ +                                       \n  4| ++++++++++++++++ ++++++  + ++ ++     +                                \n  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              \n  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            \n  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++\n    ----------------------------------------------------------------------\nGetting the CRS\n\nTo get the Coordinate Reference System (CRS) of a raster, we can filter for the entry .coordinateSystem\nThe specific raster does not seem to have a CRS assigned, so the output is null\nWe need to consult the metadata provided by the data provider to get the CRS\nAs noted here, the CRS is LV03 LN02, which is the old swiss coordinate system, aka EPSG:21781\n\n\ngdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq \".coordinateSystem\"\n\nnull\n\n\n\nWe can confirm this by geetting the extent of the raster,\nFor this we can use the argument -json and then extract the cornerCoordinates key\n\n\ngdalinfo -json \\\n  data/week5-exercises/dhm25_grid_raster.asc | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}"
+  },
+  {
+    "objectID": "raster-deepdive-gdal.html#gdalwarp",
+    "href": "raster-deepdive-gdal.html#gdalwarp",
+    "title": "GDAL",
+    "section": "Gdalwarp",
+    "text": "Gdalwarp\n\nThe DHM25 raster is in the old Swiss coordinate system EPSG:21781\nTo transform it to the new Swiss coordinate system EPSG:2056, we can use the gdalwarp program\nNote that gdalwarp has two positional arguments:\n\n&lt;src_dataset_name&gt;... and &lt;dst_dataset_name&gt;\nThe dots indicate that you can input multiple data sources\n\n\n\ngdalwarp --help\n\nUsage: gdalwarp [--help] [--long-usage] [--help-general]\n                [--quiet] [-overwrite] [-of &lt;output_format&gt;]\n                [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-s_srs &lt;srs_def&gt;] [-t_srs &lt;srs_def&gt;]\n                [[-srcalpha]|[-nosrcalpha]]\n                [-dstalpha] [-tr &lt;xres&gt; &lt;yres&gt;|square] [-ts &lt;width&gt; &lt;height&gt;]\n                [-te &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;] [-te_srs &lt;srs_def&gt;]\n                [-r near|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum]\n                [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                &lt;src_dataset_name&gt;... &lt;dst_dataset_name&gt;\n\nAdvanced options:\n                [-wo &lt;NAME&gt;=&lt;VALUE&gt;]... [-multi] [-s_coord_epoch &lt;epoch&gt;]\n                [-t_coord_epoch &lt;epoch&gt;] [-ct &lt;string&gt;]\n                [[-tps]|[-rpc]|[-geoloc]]\n                [-order &lt;1|2|3&gt;] [-refine_gcps &lt;tolerance&gt; [&lt;minimum_gcps&gt;]]\n                [-to &lt;NAME&gt;=&lt;VALUE&gt;]... [-et &lt;err_threshold&gt;]\n                [-wm &lt;memory_in_mb&gt;] [-srcnodata \"&lt;value&gt;[ &lt;value&gt;]...\"]\n                [-dstnodata \"&lt;value&gt;[ &lt;value&gt;]...\"] [-tap]\n                [-wt Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                [-cutline &lt;datasource&gt;|&lt;WKT&gt;] [-cutline_srs &lt;srs_def&gt;]\n                [-cwhere &lt;expression&gt;]\n                [[-cl &lt;layername&gt;]|[-csql &lt;query&gt;]]\n                [-cblend &lt;distance&gt;] [-crop_to_cutline] [-nomd]\n                [-cvmd &lt;meta_conflict_value&gt;] [-setci] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-doo &lt;NAME&gt;=&lt;VALUE&gt;]... [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE]\n                [[-vshift]|[-novshiftgrid]]\n                [-if &lt;format&gt;]... [-srcband &lt;band&gt;]... [-dstband &lt;band&gt;]...\n\nNote: gdalwarp --long-usage for full help."
+  },
+  {
+    "objectID": "raster-deepdive-gdal.html#reproject-transform-raster",
+    "href": "raster-deepdive-gdal.html#reproject-transform-raster",
+    "title": "GDAL",
+    "section": "Reproject / Transform Raster",
+    "text": "Reproject / Transform Raster\n\nSince our data has no CRS assigned, we need to specify the source CRS using -s_srs\nThe EPSG code for the new Swiss coordinate system is 2056, which we will provide as the target CRS using -t_srs\nWe recommend using geotiff rather than ascii output\n\n\ngdalwarp -s_srs EPSG:21781 \\\n  -t_srs EPSG:2056 \\ \n  data/week5-exercises/dhm25_grid_raster.asc \\\n  data-out/dhm25.tif\n\n0...10...20...30...40...50...60...70...80...90...100 - done."
+  },
+  {
+    "objectID": "raster-deepdive-gdal.html#check-the-crs",
+    "href": "raster-deepdive-gdal.html#check-the-crs",
+    "title": "GDAL",
+    "section": "Check the CRS",
+    "text": "Check the CRS\n\nWe can now check the CRS on our created dataset\n\n\ngdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45\n\nDriver: GTiff/GeoTIFF\nFiles: data-out/dhm25.tif\nSize is 15401, 9121\nOrigin = (479987.500000000000000,302012.500000000000000)\nPixel Size = (25.000000000000000,-25.000000000000000)\nImage Structure Metadata:\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (  479987.500,  302012.500) \nLower Left  (  479987.500,   73987.500) \nUpper Right (  865012.500,  302012.500) \nLower Right (  865012.500,   73987.500) \nCenter      (  672500.000,  188000.000) \nBand 1 Block=15401x1 Type=Float32, ColorInterp=Gray\n  Min=193.000 Max=4629.000 \n  Minimum=193.000, Maximum=4629.000, Mean=1277.369, StdDev=806.323\n  NoData Value=-9999\n  Metadata:\n    STATISTICS_MAXIMUM=4629\n    STATISTICS_MEAN=1277.3686534266\n    STATISTICS_MINIMUM=193\n    STATISTICS_STDDEV=806.32292704492\n\n\n\n\nAs well as the extent\n(note how the values have changed)\n\n\ngdalinfo -json data-out/dhm25.tif | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}"
+  },
+  {
+    "objectID": "network-centrality-task.html",
+    "href": "network-centrality-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nIn this task, you will analyze the cycle network of Switzerland using R. The dataset comes from the Federal Roads Office FEDRO (ASTRA).\nThe goal is to compute different centrality measures (degree, betweenness and closeness) for the nodes in the network and visualize the results. To do this, follow the following steps:\n\nLoad the rail network data using sf\nConvert the data into an undirected network using sfnetworks\nTo calculate centrality, the edges need to have “weights”. Assuming equal cycling speed on all roads, you can use the edge length (from the column length) as the weight.\nTo compute the centrality measures you will need to\n\nactivate the nodes (using tidygraph::activate())\nUse dplyr::mutate to create new columns and populate these with the centrality measures using the functions centrality_betweenness, centrality_closeness and centrality_degree from tidygraph using the column length as weights.\n\nConvert the enriched network consisting of edges and nodes back to sf objects consisting of lines and points (using activate and st_as_sf)\nThe centrality values are attached to the points. Transfer the values to the lines by using the following function, which takes the mean centrality values over all nodes for each edge\naggregate(veloland_nodes, veloland_edges, FUN = \"mean\")\nVisualize the result (for an example, see Figure 1). If necessary, transform or reasonably categorize the values to make them more comparable\nDiscuss the results: How do you interpret the differences?\n\n\n\n\n\n\n\nFigure 1: One possible way to visualize the results of your centrality analysis."
+  },
+  {
+    "objectID": "interpolation-task.html",
+    "href": "interpolation-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. The task is due in two weeks."
+  },
+  {
+    "objectID": "interpolation-task.html#sec-task-interp-density",
+    "href": "interpolation-task.html#sec-task-interp-density",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. The task is due in two weeks."
+  },
+  {
+    "objectID": "movement-I-data-description.html",
+    "href": "movement-I-data-description.html",
+    "title": "Data description",
+    "section": "",
+    "text": "Version 1.2.2 of the original dataset (Zheng et al. 2011) was downloaded on the 19.11.2024 and processed it in the following manner:\n\nMerged the data of all users into a single dataset\nAdded transport mode labels and removed all trajectories without a transport mode label.\nSplit the trajectories into segments based on the user id, transportation mode and time difference between consecutive points. A new segment is created if the time difference is larger than 10 minutes.\nSplit the segments (from the previous step) further based on the distance between consecutive points. A new segment is created if the distance is larger than 100 meters. The created segment ids are unique across all users.\nRemoved all segments with less than 100 points.\nProjected the data into UTM zone 50N (EPSG: 32650)\nRemoved all segments that move outside of the bounding box of Beijing (406993 , 487551 , 4387642, 4463488 in EPSG 32650)\nSplit the data into 4 sets of training, testing and validation data.\n\nThe full process is documented in this GitHub Repository.\n\n\n\n\nReferences\n\nZheng, Yu, Hao Fu, Xing Xie, Wei-Ying Ma, and Quannan Li. 2011. Geolife GPS Trajectory Dataset - User Guide. Geolife GPS trajectories 1.1. https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Spatiotemporal Datascience",
+    "title": "Welcome",
     "section": "",
-    "text": "Welcome\nThis course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data",
-    "crumbs": [
-      "Welcome"
-    ]
+    "text": "Image Source\n\n\n\nThis course is taught in the Bachelor Degree Applied Digital Life Sciences at the Zurich University of Applied Sciences (ZHAW).\nIn this course, we will learn about methods and tools to analyze spatiotemporal data. We expect that you already have had some experience with spatial data and programming. To start the course, we will recap the following topic from the course GISc and Geodatabases: Geocomputation with R with raster and vector data\n\n\n\n\n\n\nTable 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19"
   },
   {
     "objectID": "index.html#section",
     "href": "index.html#section",
-    "title": "Spatiotemporal Datascience",
+    "title": "Welcome",
     "section": "",
-    "text": "Table 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19",
-    "crumbs": [
-      "Welcome"
-    ]
+    "text": "Table 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19"
   },
   {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "Syllabus",
+    "objectID": "raster-deepdive-task.html",
+    "href": "raster-deepdive-task.html",
+    "title": "🚀 Tasks",
     "section": "",
-    "text": "Syllabus",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
-    ]
+    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named index.qmd.\n\nRedo Raster Basics. However, this time use gdal from the command line to to the processing. Note that you can use bash commands in quarto, you just have to\n\nset the language to {bash} in the code chunk and\nthe engine to knitr in the YAML header\n\nAgain, use the R package tictoc to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.\nCompare the execution times of with the terra approach. Which is faster?\n\n```{r}\ntictoc::tic(msg = \"Step 1: Transform the data\")\n```\n\n```{bash}\ngdal_translate input.tif output.tif\n```\n\n```{r}\ntictoc::toc(log = TRUE)\n```\n\n\n```{r}\n# Finally (to get a full log:)\ntictoc::tic.log()\n```"
   },
   {
-    "objectID": "syllabus.html#prerequisites",
-    "href": "syllabus.html#prerequisites",
-    "title": "Syllabus",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nCompletion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#assessment",
-    "href": "syllabus.html#assessment",
-    "title": "Syllabus",
-    "section": "Assessment",
-    "text": "Assessment\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\nWhat to Submit\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in Table 1.\n\n\nOral Review\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\nGrading Criteria\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\nUse of AI Tools\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#sec-gh-pages",
-    "href": "syllabus.html#sec-gh-pages",
-    "title": "Syllabus",
-    "section": "Submission via GitHub Pages",
-    "text": "Submission via GitHub Pages\nEach task is submitted as a rendered Quarto document hosted on GitHub Pages.\n\nInitial Setup\nOn GitHub:\n\nCreate a free organisation with a name of your choice and submit the URL to this organisation via email.\nYou need to do this only once, the rest of the steps are done for each task.\nIn this organisation, create a new, blank repository called vector-deepdive\n\nOn your local machine:\n\nInstall the CLI tool Quarto\nCreate a new directory for this week’s task\nInitialize a Git repository and link it to your GitHub repo:\ngit init\ngit remote add origin &lt;URL&gt;\nCreate _quarto.yml:\n\n\n_quarto.yml\n\nproject:\n  output-dir: _docs\n\nCreate index.qmd:\n\n\nindex.qmd\n\n# Solution for Vector Deepdive\n\nIn this document, I solve the tasks for *vector deepdive* of the course\n*Spatiotemporal Datascience*.\n\nPreview locally: quarto preview\nPublish: quarto publish gh-pages\n\n\n\nSubsequent Weeks\nFor each new task week, create a new repository in your organisation and follow the same workflow.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
-    ]
-  },
-  {
-    "objectID": "syllabus.html#footnotes",
-    "href": "syllabus.html#footnotes",
-    "title": "Syllabus",
+    "objectID": "raster-deepdive-task.html#sec-task-rast-advanced",
+    "href": "raster-deepdive-task.html#sec-task-rast-advanced",
+    "title": "🚀 Tasks",
     "section": "",
-    "text": "The provisions specified in the Annex thus serve as an “alternative” if no others have been specified.↩︎",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Syllabus</span>"
-    ]
+    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named index.qmd.\n\nRedo Raster Basics. However, this time use gdal from the command line to to the processing. Note that you can use bash commands in quarto, you just have to\n\nset the language to {bash} in the code chunk and\nthe engine to knitr in the YAML header\n\nAgain, use the R package tictoc to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.\nCompare the execution times of with the terra approach. Which is faster?\n\n```{r}\ntictoc::tic(msg = \"Step 1: Transform the data\")\n```\n\n```{bash}\ngdal_translate input.tif output.tif\n```\n\n```{r}\ntictoc::toc(log = TRUE)\n```\n\n\n```{r}\n# Finally (to get a full log:)\ntictoc::tic.log()\n```"
   },
   {
-    "objectID": "vector-deepdive-topological-rel.html",
-    "href": "vector-deepdive-topological-rel.html",
-    "title": "Topological relations",
+    "objectID": "movement-II-adding-context.html",
+    "href": "movement-II-adding-context.html",
+    "title": "Adding Context",
     "section": "",
-    "text": "Quick recap: vector data\n. . .",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Adding Context\nLast Week, we tried to predict travel mode using movement parameters only. This simple approach can potentially already lead to good results, however we’re missing out on information readily available: Environmental data.\nContext information such as road type, train lines, bus stops etc. can provide valuable additional information for predicting travel mode.\nWe prepared some data from OpenStreetMap, obtained from extract.bbbike.org/. The preperation included:\n\nExtracting highways and railway lines from the archive.\nProjecting the data to WGS 84 / UTM zone 50N (EPSG:32650).\nFor highways: Add the column cycleway which is TRUE if the road segment includes tags related to cycling infrastructure.\nLump the multitude of categories (column highway and railwayfor the respective datasets) into the most frequent 6 and 3 categories, respectively\n\n\n\n\n\n\n\nNote\n\n\n\nOSM uses the term highway to mean roads in general, not specifically main roads. The column highway differentiates different types for road. See the OSMWiki for more details.\n\n\n\nlibrary(sf)\nlibrary(dplyr)\n\n\ngpkg &lt;- \"data/week14-exercises/osm.gpkg\"\n\nst_layers(gpkg)\n\nDriver: GPKG \nAvailable layers:\n  layer_name geometry_type features fields              crs_name\n1    highway   Line String    43376      8 WGS 84 / UTM zone 50N\n2    railway   Line String     4095      7 WGS 84 / UTM zone 50N\n\nhighway &lt;- read_sf(gpkg, \"highway\")\nrailway &lt;- read_sf(gpkg, \"railway\")\n\n\nplot(highway[\"highway\"])\n\n\n\n\n\n\n\n\n\nplot(railway[\"railway\"])\n\n\n\n\n\n\n\n\nTo use this context information as additional features, we first need to import our movement data:\n\n# For illustration purposes, we will only use 500 samples\ntraining_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", query = \"SELECT * FROM training LIMIT 500\") |&gt; \n  mutate(data = \"training\")\n\nNow we can join the movement data with the context information using various methods. A simple approach could be to use the attribute data from the nearest feature for each datapoint.\n\ntraining_dataset_join &lt;- st_join(training_dataset,highway, join = st_nearest_feature) |&gt; \n  # Selecting these columns is for illustration purposes\n  select(user_id, datetime, highway, cycleway)\n\ntraining_dataset_join\n\nSimple feature collection with 500 features and 4 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 452732.2 ymin: 4417605 xmax: 454778.1 ymax: 4419221\nProjected CRS: WGS 84 / UTM zone 50N\n# A tibble: 500 × 5\n   user_id datetime            highway cycleway               geom\n     &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;   &lt;lgl&gt;           &lt;POINT [m]&gt;\n 1      10 2008-06-18 16:47:35 primary NA       (454778.1 4419210)\n 2      10 2008-06-18 16:47:37 primary NA         (454775 4419210)\n 3      10 2008-06-18 16:47:38 primary NA       (454772.7 4419209)\n 4      10 2008-06-18 16:47:39 primary NA       (454769.7 4419208)\n 5      10 2008-06-18 16:47:40 primary NA       (454765.2 4419207)\n 6      10 2008-06-18 16:47:41 primary NA         (454760 4419205)\n 7      10 2008-06-18 16:47:42 primary NA       (454754.7 4419204)\n 8      10 2008-06-18 16:47:43 primary NA       (454749.4 4419203)\n 9      10 2008-06-18 16:47:44 primary NA       (454743.9 4419204)\n10      10 2008-06-18 16:47:45 primary NA       (454737.8 4419204)\n# ℹ 490 more rows\n\n\n\nlibrary(tmap)\ntm_shape(training_dataset_join) + \n  tm_dots(\"highway\") +\n  tm_shape(highway) +\n  tm_lines() +\n  tm_layout(frame = FALSE)\n\n\n\n\n\n\n\n\nFor some datasets, it might make sense to calculate the distance to the closest railway line. We’ll illustrate this by using the railway data:\n\n# First, determine the nearest railway for every moment sample\nnearest_railway &lt;- st_nearest_feature(training_dataset_join, railway)\n\n# Now, we can calculate the distance to the nearest feature\n\nrailway_dist &lt;- st_distance(\n  training_dataset_join, \n  railway[nearest_railway,], \n  by_element = TRUE\n  )\n\n# Now we can add this as a feature to our training data\ntraining_dataset_join$distance_to_railway &lt;- as.numeric(railway_dist)\n\n\ntm_shape(training_dataset_join) +\n  tm_dots(fill = \"distance_to_railway\",fill.scale = tm_scale_continuous(values = \"-brewer.spectral\"))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn case of the example above (distance to the nearest railway), it would probably make sense to use a threshold value to differentiate close to railway vs. far from railway. In this case, we could also have just used the function st_is_within_distance()."
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#raster-data-storage-requirements",
+    "href": "raster-deepdive-compression.html#raster-data-storage-requirements",
+    "title": "Compression",
+    "section": "Raster Data Storage Requirements",
+    "text": "Raster Data Storage Requirements\n\nThe storage space required for an image depends on its dimensions and data type.\n\nExample:\n\nAn SRTM tile consists of a single band with a resolution of 3601 × 3601 pixels.\n\nEach pixel is stored as an Int16 (16-bit integer), requiring 2 Bytes (1 Byte = 8 Bits).\n\nThe total storage needed is: \\(3601 \\times 3601 \\times 2 = 25,934,402 \\text{ Bytes} \\approx 25.93 \\text{ MB}\\)\n\nCompression algorithms can be used to reduce the required storage space."
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#types-of-compression",
+    "href": "raster-deepdive-compression.html#types-of-compression",
+    "title": "Compression",
+    "section": "Types of Compression",
+    "text": "Types of Compression\n\nLossless Compression\n\nPreserves data quality without any loss.\n\nThe original data can be perfectly reconstructed.\n\nReduces file size by eliminating redundant information.\n\nCommonly used for scientific data such as elevation models and satellite imagery.\n\nExamples: LZW, DEFLATE, PACKBITS, ZSTD, …\n\nLossy Compression\n\nSacrifices some data quality to achieve higher compression.\n\nThe original data is approximated rather than perfectly reconstructed.\n\nAllows for significantly smaller file sizes by discarding less perceptible details.\nCommonly used for photographic data such as aerial and drone imagery.\n\nExamples: JPEG2000, WEBP (supports both lossy and lossless modes), …"
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#how-does-compression-work",
+    "href": "raster-deepdive-compression.html#how-does-compression-work",
+    "title": "Compression",
+    "section": "How does compression work?",
+    "text": "How does compression work?\n\nGiven the pixel values: 100, 101, 102, 100, 100\n\nInstead of storing each value individually, we can store each unique value once and keep track of its positions.\n\nRepresentation:\n\n100 → Appears at positions [0, 3, 4]\n\n101 → Appears at position [1]\n\n102 → Appears at position [2]"
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#use-of-predictor",
+    "href": "raster-deepdive-compression.html#use-of-predictor",
+    "title": "Compression",
+    "section": "Use of PREDICTOR",
+    "text": "Use of PREDICTOR\n\nSome compression algorithms, such as LZW, DEFLATE, and ZSTD, can utilize a predictor to enhance compression efficiency.\n\nInstead of storing absolute values, a predictor stores only the differences between consecutive values.\n\nAvailable predictor methods:\n\nNo predictor (1, default)\n\nHorizontal differencing (2)\n\nFloating point prediction (3)\n\nExample:\n\nOriginal values: 100, 101, 102, 100, 100\n\nValues with predictor: 100, 1, 1, -2, 0"
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#use-of-tiling",
+    "href": "raster-deepdive-compression.html#use-of-tiling",
+    "title": "Compression",
+    "section": "Use of Tiling",
+    "text": "Use of Tiling\n\nBy default, data is stored line by line.\n\nIn many cases, storing and reading data in blocks of pixels improves efficiency.\n\nWhen the TILED=YES option is enabled, data is stored and compressed in 256 × 256 pixel blocks."
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#compression-costs",
+    "href": "raster-deepdive-compression.html#compression-costs",
+    "title": "Compression",
+    "section": "Compression Costs",
+    "text": "Compression Costs\n\nCompression adds processing overhead during both data creation and retrieval.\n\nHighly compressed data may result in slower read times.\n\nIn many applications, the reduction in disk space comes at the cost of increased processing time and CPU usage."
+  },
+  {
+    "objectID": "raster-deepdive-compression.html#gdal_translate",
+    "href": "raster-deepdive-compression.html#gdal_translate",
+    "title": "Compression",
+    "section": "Gdal_translate",
+    "text": "Gdal_translate\n\ngdal_translate is a program to convert raster data between different formats\nNote how the naming convention differs (snake case). The APIs for all the software vary slightly, always consult the documentation (e.g. using --help)\nSome options are mutually exclusive. These are wrapped in extra []. For example: [[-strict]|[-not_strict]]\nNote how this program has two positional arguments: &lt;input_file&gt; and &lt;output_file&gt;\n\n\n\nUsage: gdal_translate [--help] [--long-usage] [--help-general]\n                      [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                      [-if &lt;format&gt;]... [-of &lt;output_format&gt;] [--quiet]\n                      [-b &lt;band&gt;]... [-mask &lt;mask&gt;] [-expand gray|rgb|rgba]\n                      [[-strict]|[-not_strict]]\n                      [-outsize &lt;xsize[%]|0&gt; &lt;ysize[%]|0&gt;] [-tr &lt;xres&gt; &lt;yes&gt;]\n                      [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE] [-sds]\n                      [-r nearest,bilinear,cubic,cubicspline,lanczos,average,mode]\n                      [[-scale [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-scale_X [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-unscale]]\n                      [[-exponent &lt;value&gt;]|[-exponent_X &lt;value&gt;]...]\n                      [-srcwin &lt;xoff&gt; &lt;yoff&gt; &lt;xsize&gt; &lt;ysize&gt;]\n                      [-projwin &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-projwin_srs &lt;srs_def&gt;] [-epo] [-eco] [-a_srs &lt;srs_def&gt;]\n                      [-a_coord_epoch &lt;epoch&gt;] [-a_ullr &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-a_nodata &lt;value&gt;|none]\n                      [-a_gt &lt;gt(0)&gt; &lt;gt(1)&gt; &lt;gt(2)&gt; &lt;gt(3)&gt; &lt;gt(4)&gt; &lt;gt(5)&gt;]\n                      [-a_scale &lt;value&gt;] [-a_offset &lt;value&gt;] [-nogcp]\n                      [-gcp &lt;pixel&gt; &lt;line&gt; &lt;easting&gt; &lt;northing&gt; [&lt;elevation&gt;]]...\n                      [-colorinterp {red|green|blue|alpha|gray|undefined|pan|coastal|rededge|nir|swir|mwir|lwir|...},...]\n                      [-colorinterp_X {red|green|blue|alpha|gray|undefined|pan|coastal|rededge|nir|swir|mwir|lwir|...}]...\n                      [[-stats]|[-approx_stats]]\n                      [-norat] [-noxmp] [-co &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      [-mo &lt;NAME&gt;=&lt;VALUE&gt;]... [-dmo &lt;DOMAIN&gt;:&lt;KEY&gt;=&lt;VALUE&gt;]...\n                      [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      &lt;input_file&gt; &lt;output_file&gt;\n\nNote: gdal_translate --long-usage for full help.\n\n\nConvert to Geotiff\n\nIn the last exercise, we reprojected a raster file to a geotiff file.\nHowever, for this exercise we will ignore this an concentrate on using gdal_translate to create a Geotiff and use compression\n\n\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done in 00:00:07.\n\n\n\nLet’s compare the file sizes:\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\n\n\n\nCompress DEFLATE\n\nWe can now compress the file using the DEFLATE algorithm with the -co argument\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\n\n\n\nCompress TILED=YES\n\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done in 00:00:06.\n\n\n\n\ntrans: 5.24 sec elapsed\n\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\n\n\n\nCompress PREDICTOR=3\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\nPREDICTOR=3\n150.89\n-82 %\n\n\n\n\n\n\n\n\n\nGandhi, Ujaval. 2020. Mastering GDAL Tools (Full Course). Https://courses.spatialthoughts.com/gdal-tools.html#compressing-output."
+  },
+  {
+    "objectID": "network-routing-task.html",
+    "href": "network-routing-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 1: A possible way to visualize the results from your shortest path analysis."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
     "href": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
     "title": "Topological relations",
-    "section": "",
-    "text": "In GIScience and Geodatabases, you learned about the Simple Features standard (ISO 19125)\nFeatures = geometry (point, line, polygon) + attributes (columns)\nIn R: sf objects are data frames with a geometry column\n\n\n\nSo far, we’ve worked with features mostly in isolation — reading, plotting, transforming\nBut often we need to ask: how do two features relate to each other spatially?\n\nDoes this river flow through this canton?\nWhich bus stops are within this district?\n\nThis is where topological relations come in",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "section": "Quick recap: vector data",
+    "text": "Quick recap: vector data\n\nIn GIScience and Geodatabases, you learned about the Simple Features standard (ISO 19125)\nFeatures = geometry (point, line, polygon) + attributes (columns)\nIn R: sf objects are data frames with a geometry column\n\n\n\nSo far, we’ve worked with features mostly in isolation — reading, plotting, transforming\nBut often we need to ask: how do two features relate to each other spatially?\n\nDoes this river flow through this canton?\nWhich bus stops are within this district?\n\nThis is where topological relations come in"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#usage",
     "href": "vector-deepdive-topological-rel.html#usage",
     "title": "Topological relations",
     "section": "Usage",
-    "text": "Usage\n\nTopological relations can be used to subset or join spatial data\nFor example:\n\nSubsetting: Return all rivers that flow through the canton of Zurich\nJoining: For every train station, give me the name of the municipality it lies within",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Usage\n\nTopological relations can be used to subset or join spatial data\nFor example:\n\nSubsetting: Return all rivers that flow through the canton of Zurich\nJoining: For every train station, give me the name of the municipality it lies within"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#sec-named-topological-relations",
     "href": "vector-deepdive-topological-rel.html#sec-named-topological-relations",
     "title": "Topological relations",
     "section": "Common predicates in sf",
-    "text": "Common predicates in sf\n\nMost GIS software offers common topological relations as functions\nsf provides many: st_intersects(), st_disjoint(), st_touches(), st_crosses(), …\nEach works slightly differently and fits different contexts\nExamples:\n\nst_covers(x, y) → TRUE if no points of x are outside y\nst_touches(x, y) → TRUE if geometries share boundary points but interiors don’t intersect",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Common predicates in sf\n\nMost GIS software offers common topological relations as functions\nsf provides many: st_intersects(), st_disjoint(), st_touches(), st_crosses(), …\nEach works slightly differently and fits different contexts\nExamples:\n\nst_covers(x, y) → TRUE if no points of x are outside y\nst_touches(x, y) → TRUE if geometries share boundary points but interiors don’t intersect"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#key-predicates-visualized",
     "href": "vector-deepdive-topological-rel.html#key-predicates-visualized",
     "title": "Topological relations",
     "section": "Key predicates visualized",
-    "text": "Key predicates visualized\n\n\n\n\n\n\n\n\n\n\n\n(a) st_disjoint: no shared points\n\n\n\n\n\n\n\n\n\n\n\n(b) st_touches: shared boundary only\n\n\n\n\n\n\n\n\n\n\n\n\n\n(c) st_intersects: any shared points (here with overlap)\n\n\n\n\n\n\n\n\n\n\n\n(d) st_contains: B entirely within A\n\n\n\n\n\n\n\nFigure 3.1: Key topological relations between two polygons (A in purple, B in green)",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Key predicates visualized\n\n\n\n\n\n\n\n\n\n\n\n(a) st_disjoint: no shared points\n\n\n\n\n\n\n\n\n\n\n\n(b) st_touches: shared boundary only\n\n\n\n\n\n\n\n\n\n\n\n\n\n(c) st_intersects: any shared points (here with overlap)\n\n\n\n\n\n\n\n\n\n\n\n(d) st_contains: B entirely within A\n\n\n\n\n\n\n\nFigure 1: Key topological relations between two polygons (A in purple, B in green)"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#symmetry-and-order",
     "href": "vector-deepdive-topological-rel.html#symmetry-and-order",
     "title": "Topological relations",
     "section": "Symmetry and order",
-    "text": "Symmetry and order\n\nSome relations are symmetrical (order doesn’t matter)\n\nst_touches(x, y) = st_touches(y, x)\n\nOthers are asymmetrical (order matters!)\n\nst_contains(x, y) ≠ st_contains(y, x)\n\nSome require extra arguments\n\nst_is_within_distance() needs a dist argument\n\nFull list: ?geos_binary_pred",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
-  },
-  {
-    "objectID": "vector-deepdive-topological-rel.html#contains-covers-within",
-    "href": "vector-deepdive-topological-rel.html#contains-covers-within",
-    "title": "Topological relations",
-    "section": "Contains, covers, within",
-    "text": "Contains, covers, within\n\nEasily confused — here’s the distinction:\n\nst_contains(x, y): is y inside x, with ≥1 point in the interior?\nst_covers(x, y): is every point of y inside or on the boundary of x?\nst_within(x, y): inverse of st_contains — is x inside y?\n\nKey difference: a point on the boundary is covered but not contained\nTip: for point-in-polygon queries, prefer st_covers — st_contains misses points exactly on the boundary\n\n\npolygon &lt;- st_sfc(st_polygon(list(cbind(c(0,1,1,0,0), c(0,0,1,1,0)))))\npoint_inside &lt;- st_sfc(st_point(c(0.5, 0.5)))\npoint_on_boundary &lt;- st_sfc(st_point(c(0, 0.5)))\n\nst_contains(polygon, point_inside, sparse = FALSE)      # TRUE\n##      [,1]\n## [1,] TRUE\nst_contains(polygon, point_on_boundary, sparse = FALSE)  # FALSE\n##       [,1]\n## [1,] FALSE\nst_covers(polygon, point_on_boundary, sparse = FALSE)    # TRUE\n##      [,1]\n## [1,] TRUE",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Symmetry and order\n\nSome relations are symmetrical (order doesn’t matter)\n\nst_touches(x, y) = st_touches(y, x)\n\nOthers are asymmetrical (order matters!)\n\nst_contains(x, y) ≠ st_contains(y, x)\n\nSome require extra arguments\n\nst_is_within_distance() needs a dist argument\n\nFull list: ?geos_binary_pred"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#predicates-vs.-operations",
     "href": "vector-deepdive-topological-rel.html#predicates-vs.-operations",
     "title": "Topological relations",
     "section": "Predicates vs. operations",
-    "text": "Predicates vs. operations\n\n\n\n\n\n\nImportantDon’t confuse predicates with operations!\n\n\n\n\nPredicate (e.g. st_intersects): “Do these geometries intersect?” → returns TRUE/FALSE\nOperation (e.g. st_intersection): “Give me the geometry where they overlap” → returns a new geometry\n\nThe same naming pattern applies to other pairs: st_difference (operation) has no corresponding predicate, while st_touches (predicate) has no corresponding operation.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Predicates vs. operations\n\n\n\n\n\n\nDon’t confuse predicates with operations!\n\n\n\nPredicate (e.g. st_intersects): “Do these geometries intersect?” → returns TRUE/FALSE\nOperation (e.g. st_intersection): “Give me the geometry where they overlap” → returns a new geometry\n\nThe same naming pattern applies to other pairs: st_difference (operation) has no corresponding predicate, while st_touches (predicate) has no corresponding operation."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#predicate-return-types",
     "href": "vector-deepdive-topological-rel.html#predicate-return-types",
     "title": "Topological relations",
     "section": "Predicate return types",
-    "text": "Predicate return types\n\n\n\n\n\n\n\n\nFigure 3.2: Polygon a (purple) overlaps b1 but is disjoint from b2\n\n\n\n\n\n\nst_intersects(x, y) does not return a simple TRUE/FALSE vector\nReturns a sparse geometry binary predicate (sgbp) — a list of matching indices\n\n\nst_intersects(a, b)\n## Sparse geometry binary predicate list of length 1, where the predicate\n## was `intersects'\n##  1: 1\n\n\nlengths() counts the number of matches per feature\nUse sparse = FALSE to get a dense logical matrix instead\n\n\nst_intersects(a, b, sparse = FALSE)\n##      [,1]  [,2]\n## [1,] TRUE FALSE",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Predicate return types\n\n\nFigure 2: Polygon a (purple) overlaps b1 but is disjoint from b2\n\nst_intersects(x, y) does not return a simple TRUE/FALSE vector\nReturns a sparse geometry binary predicate (sgbp) — a list of matching indices\n\n\nst_intersects(a, b)\n## Sparse geometry binary predicate list of length 1, where the predicate\n## was `intersects'\n##  1: 1\n\n\nlengths() counts the number of matches per feature\nUse sparse = FALSE to get a dense logical matrix instead\n\n\nst_intersects(a, b, sparse = FALSE)\n##      [,1]  [,2]\n## [1,] TRUE FALSE"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#applying-predicates-subsetting",
     "href": "vector-deepdive-topological-rel.html#applying-predicates-subsetting",
     "title": "Topological relations",
     "section": "Applying predicates: subsetting",
-    "text": "Applying predicates: subsetting\nNow that we know how predicates work, let’s use them to subset and join spatial data.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Applying predicates: subsetting\nNow that we know how predicates work, let’s use them to subset and join spatial data."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#spatial-subsetting",
     "href": "vector-deepdive-topological-rel.html#spatial-subsetting",
     "title": "Topological relations",
     "section": "Spatial subsetting",
-    "text": "Spatial subsetting\n\nPredicates can be used to subset one dataset based on another\nExample data: playgrounds, public transport stops, and Stadtkreise in Zurich\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\n\nDefault predicate: st_intersects\nExample: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Spatial subsetting\n\nPredicates can be used to subset one dataset based on another\nExample data: playgrounds, public transport stops, and Stadtkreise in Zurich\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\n\nDefault predicate: st_intersects\nExample: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#distance-based-subsetting",
     "href": "vector-deepdive-topological-rel.html#distance-based-subsetting",
     "title": "Topological relations",
     "section": "Distance-based subsetting",
-    "text": "Distance-based subsetting\n\nNot limited to topological predicates — can also use distance-based ones\nExample: which playgrounds are within 100m of a public transport stop?\n\n\n# Using the shorthand notation\nplaygrounds_close &lt;- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]\n\nSame thing, more readable with st_filter():\n\nplaygrounds_close &lt;- st_filter(playgrounds, publictransport, .predicate = st_is_within_distance, dist = 100)\n\n\n\n\n\n\n\n\n\n\nFigure 3.3: Note that the playgrounds within 100m of public transport (red dots) are a subset of all the playgrounds",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Distance-based subsetting\n\nNot limited to topological predicates — can also use distance-based ones\nExample: which playgrounds are within 100m of a public transport stop?\n\n\n# Using the shorthand notation\nplaygrounds_close &lt;- playgrounds[publictransport,,op = st_is_within_distance, dist = 100]\n\nSame thing, more readable with st_filter():\n\nplaygrounds_close &lt;- st_filter(playgrounds, publictransport, .predicate = st_is_within_distance, dist = 100)"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#from-subsetting-to-joining",
     "href": "vector-deepdive-topological-rel.html#from-subsetting-to-joining",
     "title": "Topological relations",
     "section": "From subsetting to joining",
-    "text": "From subsetting to joining\nSubsetting filters features — what if we want to transfer attributes instead?",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "From subsetting to joining\nSubsetting filters features — what if we want to transfer attributes instead?"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#spatial-joins",
     "href": "vector-deepdive-topological-rel.html#spatial-joins",
     "title": "Topological relations",
     "section": "Spatial joins",
-    "text": "Spatial joins\n\nJoins transfer attributes from one dataset to another based on spatial relationship\nst_join(x, y): for each feature in x, find matching features in y and attach their columns\nExample: add the name of the nearest public transport stop to each playground\n\n\nst_nearest_feature is not strictly a binary predicate, but is very useful for spatial joins. To make the example clearer, we first discard all unnecessary columns from the datasets.\n\n\n\npublictransport &lt;- publictransport[,\"CHSTNAME\"]\n\nplaygrounds &lt;- playgrounds[, \"name\"]\n\n\nplaygrounds_join &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_nearest_feature\n  )\n\n\nplaygrounds_join\n\nSimple feature collection with 184 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 184 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) Zürich, Burgwies\n 2 Buchlern Sportanlage                       (2678406 1248303) Zürich, Friedho…\n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) Zürich, Langens…\n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) Zürich, Brunaus…\n 7 Josefswiese                                (2681846 1248909) Zürich, Schiffb…\n 8 Gertrudplatz                               (2681431 1247583) Zürich, Locherg…\n 9 Wahlenpark                                 (2683172 1252246) Zürich, Max-Bil…\n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 174 more rows",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Spatial joins\n\nJoins transfer attributes from one dataset to another based on spatial relationship\nst_join(x, y): for each feature in x, find matching features in y and attach their columns\nExample: add the name of the nearest public transport stop to each playground\n\n\nst_nearest_feature is not strictly a binary predicate, but is very useful for spatial joins. To make the example clearer, we first discard all unnecessary columns from the datasets."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#join-cardinality",
     "href": "vector-deepdive-topological-rel.html#join-cardinality",
     "title": "Topological relations",
     "section": "Join cardinality",
-    "text": "Join cardinality\n\nplaygrounds_join has the same rows as playgrounds + extra column CHSTNAME\n\nWhy? Each playground has exactly one nearest station\n\nBut row count can change with other join predicates!\n\nWithin 100m: a playground may match zero or multiple stops\n\n\n\n\nplaygrounds_join2 &lt;- st_join(\n  playgrounds, \n  publictransport, \n  join = st_is_within_distance, \n  dist = 100\n  )\n\nnrow(playgrounds)\n## [1] 184\n\nnrow(playgrounds_join2)\n## [1] 186\n\n\n\nplaygrounds_join2\n\nSimple feature collection with 186 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 2677632 ymin: 1242927 xmax: 2687639 ymax: 1253914\nProjected CRS: CH1903+ / LV95\n# A tibble: 186 × 3\n   name                                                    geom CHSTNAME        \n * &lt;chr&gt;                                            &lt;POINT [m]&gt; &lt;chr&gt;           \n 1 Buchenweg                                  (2685485 1245793) &lt;NA&gt;            \n 2 Buchlern Sportanlage                       (2678406 1248303) &lt;NA&gt;            \n 3 Mobile Spielanimation PAZMobile Spielanim… (2682898 1244212) Zürich, Rote Fa…\n 4 Alfred-Altherr-Terrasse                    (2684082 1249963) &lt;NA&gt;            \n 5 Auf der Egg                                (2682672 1243867) Zürich, Kalchbü…\n 6 Belvoirpark                                (2682665 1245835) &lt;NA&gt;            \n 7 Josefswiese                                (2681846 1248909) &lt;NA&gt;            \n 8 Gertrudplatz                               (2681431 1247583) &lt;NA&gt;            \n 9 Wahlenpark                                 (2683172 1252246) &lt;NA&gt;            \n10 Rote Fabrik                                (2683004 1244150) Zürich, Rote Fa…\n# ℹ 176 more rows",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Join cardinality\n\nplaygrounds_join has the same rows as playgrounds + extra column CHSTNAME\n\nWhy? Each playground has exactly one nearest station\n\nBut row count can change with other join predicates!\n\nWithin 100m: a playground may match zero or multiple stops"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#join-order",
     "href": "vector-deepdive-topological-rel.html#join-order",
     "title": "Topological relations",
     "section": "Join order",
-    "text": "Join order\n\nOrder matters (just like regular joins)\nst_join = left join by default\nResult keeps the geometry of the left dataset\n\n\n\nkreise &lt;- kreise[,\"STADTKREIS\"]\n\npublictransport_join &lt;- st_join(publictransport, kreise)\n\n\n\n\n\n\n\n\n\n\n\n\nReverse order → each stadtkreis gets duplicated for every intersecting point\n\n\nkreise_join &lt;- st_join(kreise, publictransport)\n\nnrow(kreise)\n## [1] 12\n\nnrow(kreise_join)\n## [1] 477\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Dataset kreise with 12 features\n\n\n\n\n\n\n\n\n\n\n\n(b) Dataset kreise_join with 477 features\n\n\n\n\n\n\n\nFigure 3.4: Note that all the duplicate stadtkreise overlap each other, so when you visualize the data, the issue is not noticeable",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Join order\n\nOrder matters (just like regular joins)\nst_join = left join by default\nResult keeps the geometry of the left dataset"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#summary",
     "href": "vector-deepdive-topological-rel.html#summary",
     "title": "Topological relations",
     "section": "Summary",
-    "text": "Summary\n\n\n\n\n\n\n\n\nTask\nFunction\nKey arguments\n\n\n\n\nTest a relationship\nst_intersects(), st_covers(), …\nsparse = FALSE for logical matrix\n\n\nSubset by predicate\nx[y, ] or st_filter()\nop / .predicate, dist\n\n\nJoin by predicate\nst_join(x, y)\njoin, left = TRUE\n\n\n\n\nDefault predicate is always st_intersects\nPrefer st_covers over st_contains for point-in-polygon\nJoin order determines geometry and potential row duplication",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Summary\n\n\n\n\n\n\n\n\nTask\nFunction\nKey arguments\n\n\n\n\nTest a relationship\nst_intersects(), st_covers(), …\nsparse = FALSE for logical matrix\n\n\nSubset by predicate\nx[y, ] or st_filter()\nop / .predicate, dist\n\n\nJoin by predicate\nst_join(x, y)\njoin, left = TRUE\n\n\n\n\nDefault predicate is always st_intersects\nPrefer st_covers over st_contains for point-in-polygon\nJoin order determines geometry and potential row duplication"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#a-motivating-problem",
     "href": "vector-deepdive-topological-rel.html#a-motivating-problem",
     "title": "Topological relations",
     "section": "A motivating problem",
-    "text": "A motivating problem\n\nConsider a 3×3 chessboard (Figure 4.1)\nWhich fields share a full edge with the origin? (like a rook’s move)\nst_touches won’t work — it also matches diagonal neighbours (shared point)\nWe need a way to express: “shared boundary must be a line, not just a point”\n\n\n\n\n\n\n\n\n\nFigure 4.1: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an edge with the origin?",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "A motivating problem\n\nConsider a 3×3 chessboard (Figure 5)\nWhich fields share a full edge with the origin? (like a rook’s move)\nst_touches won’t work — it also matches diagonal neighbours (shared point)\nWe need a way to express: “shared boundary must be a line, not just a point”\n\n\n\nFigure 5: A 3x3 chessboard with a rook in the center field (origin). Which fields can the rook reach, if the constraint is that the destination field need to share an edge with the origin?"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#the-de-9im",
     "href": "vector-deepdive-topological-rel.html#the-de-9im",
     "title": "Topological relations",
     "section": "The DE-9IM",
-    "text": "The DE-9IM\n\nDE-9IM (Dimensionally Extended nine-Intersection Model) gives fine-grained control\nDE-9IM is the formal model behind all named predicates\nDescribes the relationship as a 3×3 matrix: interior, boundary, exterior of each geometry\nTable 4.1 shows the analysis for two overlapping polygons",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
-  },
-  {
-    "objectID": "vector-deepdive-topological-rel.html#section",
-    "href": "vector-deepdive-topological-rel.html#section",
-    "title": "Topological relations",
-    "section": "",
-    "text": "Rows = parts of geometry A (blue),\ncolumns = parts of geometry B (red).\nEach cell shows what the intersection of that row-part with that column-part looks like.\nThe dark shading in each cell is the resulting intersection.\nWalk through a few cells:\n\ntop-left (Interior ∩ Interior) yields an area,\ntop-middle (Interior ∩ Boundary) yields a line,\nmiddle-middle (Boundary ∩ Boundary) yields two points.\n\n\n\n\n\n\n\n\nTable 4.1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red shading/line = intersection result.\n\n\n\n\n\n\n\n\n\n\nInterior (B)\nBoundary (B)\nExterior (B)\n\n\n\n\nInterior (A)\n\n\n\n\n\nBoundary (A)\n\n\n\n\n\nExterior (A)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTable 4.2: The DE-9IM for the rooks case. This can be flattend into the string F***1****\n\n\n\n\n\n\n\n\n\n\nInterior\nBoundary\nExterior\n\n\n\n\nInterior\nF\n*\n*\n\n\nBoundary\n*\n1\n*\n\n\nExterior\n*\n*\n*\n\n\n\n\n\n\n\n\n\n\n\nEach cell shows the intersection of a part of A (row) with a part of B (column)\nFor the rook, we only care about two cells:\n\nInterior ∩ Interior = F (no overlap)\nBoundary ∩ Boundary = 1 (shared edge = a line, not just a point)\n\nEverything else = * (don’t care)\nFlatten row by row into the pattern → F***1****\n\n\nThis is what distinguishes edge-sharing (rook) from corner-sharing (bishop) neighbours: for a bishop, Boundary ∩ Boundary = 0 (a point), while for the rook it must be 1 (a line). The encoding is: F = empty, 0 = point, 1 = line, 2 = area. * means “any value” and T means “any non-empty value” (i.e. 0, 1, or 2).",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "The DE-9IM\n\nDE-9IM (Dimensionally Extended nine-Intersection Model) gives fine-grained control\nDE-9IM is the formal model behind all named predicates\nDescribes the relationship as a 3×3 matrix: interior, boundary, exterior of each geometry\nTable 1 shows the analysis for two overlapping polygons"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#predicates-as-patterns",
     "href": "vector-deepdive-topological-rel.html#predicates-as-patterns",
     "title": "Topological relations",
     "section": "Predicates as patterns",
-    "text": "Predicates as patterns\n\nEvery named predicate = one or more DE-9IM patterns\n\n\n\n\n\n\n\n\nPredicate\nDE-9IM pattern(s)\n\n\n\n\nst_intersects\nT********, *T*******, ***T*****, ****T**** (any non-empty intersection)\n\n\nst_touches\nFT*******, F**T*****, F***T****\n\n\nst_contains\nT*****FF*\n\n\nst_within\nT*F**F***\n\n\n\n\nst_contains and st_within are mirror images (swap rows ↔︎ columns)\n* = wildcard, matches F, 0, 1, or 2\n\n\n\nThe exact values 0, 1, 2 describe the dimension of the intersection (point, line, area).\nIn patterns, T means “any non-empty intersection” - i.e. it matches 0, 1, or 2 but not F.\nSo T is used when you care that something intersects but don’t care how (point vs line vs area), while 0/1/2 pin down the exact dimension.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
-  },
-  {
-    "objectID": "vector-deepdive-topological-rel.html#st_relate-explore",
-    "href": "vector-deepdive-topological-rel.html#st_relate-explore",
-    "title": "Topological relations",
-    "section": "st_relate: explore",
-    "text": "st_relate: explore\n\nWithout pattern: returns the actual DE-9IM string for each pair\nUseful for exploration → inspect strings, then decide which pattern to match\n\n\nst_relate(grid_orig, grid_dest)\n\n     [,1]        [,2]        [,3]        [,4]        [,5]        [,6]       \n[1,] \"FF2F01212\" \"FF2F11212\" \"FF2F01212\" \"FF2F11212\" \"FF2F11212\" \"FF2F01212\"\n     [,7]        [,8]       \n[1,] \"FF2F11212\" \"FF2F01212\"",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
-  },
-  {
-    "objectID": "vector-deepdive-topological-rel.html#st_relate-match",
-    "href": "vector-deepdive-topological-rel.html#st_relate-match",
-    "title": "Topological relations",
-    "section": "st_relate: match",
-    "text": "st_relate: match\n\nPass a pattern argument → returns TRUE/FALSE (sparse matrix, like named predicates)\n\n\nst_relate(grid_orig, grid_dest, pattern = \"F***1****\")\n\nSparse geometry binary predicate list of length 1, where the predicate\nwas `relate_pattern'\n 1: 2, 4, 5, 7\n\n\n\nCreate a custom st_rook function and use it like any named predicate:\n\nst_rook &lt;- \\(x, y) st_relate(x, y, pattern = \"F***1****\")\n\ngrid_rook &lt;- grid_dest[grid_orig, , op = st_rook] |&gt; \n  st_sample(1000, type = \"hexagonal\",by_polygon = TRUE)\n\n\n\n\n\n\n\n\n\nFigure 4.2: The chessboard situation with the potential fields for the rook highlighted with a red outline",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Predicates as patterns\n\nEvery named predicate = one or more DE-9IM patterns\n\n\n\n\n\n\n\n\nPredicate\nDE-9IM pattern(s)\n\n\n\n\nst_intersects\nT********, *T*******, ***T*****, ****T**** (any non-empty intersection)\n\n\nst_touches\nFT*******, F**T*****, F***T****\n\n\nst_contains\nT*****FF*\n\n\nst_within\nT*F**F***\n\n\n\n\nst_contains and st_within are mirror images (swap rows ↔︎ columns)\n* = wildcard, matches F, 0, 1, or 2\n\n\n\nThe exact values 0, 1, 2 describe the dimension of the intersection (point, line, area).\nIn patterns, T means “any non-empty intersection” - i.e. it matches 0, 1, or 2 but not F.\nSo T is used when you care that something intersects but don’t care how (point vs line vs area), while 0/1/2 pin down the exact dimension."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#wrap-up",
     "href": "vector-deepdive-topological-rel.html#wrap-up",
     "title": "Topological relations",
     "section": "Wrap-up",
-    "text": "Wrap-up\n\nNamed predicates (st_intersects, st_covers, …) cover most use cases for subsetting and joining\nWhen they don’t suffice, DE-9IM patterns let you define custom relations (st_relate)\nKey pitfalls to remember:\n\nst_contains vs st_covers (boundary matters!)\nJoin order determines geometry and row count\nPredicates return sparse index lists, not logical vectors (use sparse = FALSE if needed)",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Topological relations</span>"
-    ]
+    "text": "Wrap-up\n\nNamed predicates (st_intersects, st_covers, …) cover most use cases for subsetting and joining\nWhen they don’t suffice, DE-9IM patterns let you define custom relations (st_relate)\nKey pitfalls to remember:\n\nst_contains vs st_covers (boundary matters!)\nJoin order determines geometry and row count\nPredicates return sparse index lists, not logical vectors (use sparse = FALSE if needed)"
   },
   {
-    "objectID": "vector-deepdive-duckdb.html",
-    "href": "vector-deepdive-duckdb.html",
-    "title": "DuckDB",
+    "objectID": "movement-I-tasks.html",
+    "href": "movement-I-tasks.html",
+    "title": "🚀 Tasks",
     "section": "",
-    "text": "Why DuckDB for spatial data?",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nYour task is to improve upon the simple model we have built in the chapter Minimal example. You can do this by:\n\nFeature Engineering: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows\nModel Selection: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.\nPer point prediction: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.\n\nUsing one or more of these approaches, predict the transportation mode for the validation dataset."
+  },
+  {
+    "objectID": "interpolation-methods.html#data",
+    "href": "interpolation-methods.html#data",
+    "title": "Spatiotemporal Datascience",
+    "section": "Data",
+    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here."
+  },
+  {
+    "objectID": "interpolation-methods.html#exercise-1-idw",
+    "href": "interpolation-methods.html#exercise-1-idw",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 1: IDW",
+    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result."
+  },
+  {
+    "objectID": "interpolation-methods.html#exercise-2-nearest-neighbour",
+    "href": "interpolation-methods.html#exercise-2-nearest-neighbour",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 2: Nearest Neighbour",
+    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result."
   },
   {
     "objectID": "vector-deepdive-duckdb.html#why-duckdb-for-spatial-data",
     "href": "vector-deepdive-duckdb.html#why-duckdb-for-spatial-data",
     "title": "DuckDB",
-    "section": "",
-    "text": "R/sf loads entire datasets into memory → bottleneck with large data\nDuckDB can stream from disk — processes data exceeding available RAM\nSQL: declarative language — describe what you want, not how\nSpatial extension uses familiar function names (st_intersects, st_area, …)\nSpatial indexing (R-Tree) makes large-scale spatial queries fast",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "section": "Why DuckDB for spatial data?",
+    "text": "Why DuckDB for spatial data?\n\nR/sf loads entire datasets into memory → bottleneck with large data\nDuckDB can stream from disk — processes data exceeding available RAM\nSQL: declarative language — describe what you want, not how\nSpatial extension uses familiar function names (st_intersects, st_area, …)\nSpatial indexing (R-Tree) makes large-scale spatial queries fast"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#reinventing-dbms",
     "href": "vector-deepdive-duckdb.html#reinventing-dbms",
     "title": "DuckDB",
     "section": "Reinventing DBMS?",
-    "text": "Reinventing DBMS?\n\ndplyr, data.table, arrow do relational transformations (select, join, aggregate, …)\nBut compared to a real DBMS, they lack:\n\nHolistic query optimization across a pipeline\nOut-of-memory computation\nParallelism and pipelining\n\nDuckDB brings 50+ years of DBMS research into your R/Python session\n\n\nHannes Mühleisen (DuckDB co-creator) makes this point in his talk: “The data science community is reinventing database management systems, but rather poorly.” If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Reinventing DBMS?\n\ndplyr, data.table, arrow do relational transformations (select, join, aggregate, …)\nBut compared to a real DBMS, they lack:\n\nHolistic query optimization across a pipeline\nOut-of-memory computation\nParallelism and pipelining\n\nDuckDB brings 50+ years of DBMS research into your R/Python session\n\n\nHannes Mühleisen (DuckDB co-creator) makes this point in his talk: “The data science community is reinventing database management systems, but rather poorly.” If you build a dplyr or data.table pipeline, there is no optimization step that looks at the entire pipeline — it just materializes after each step, leading to potentially huge intermediate results."
   },
   {
     "objectID": "vector-deepdive-duckdb.html#olap-vs.-oltp",
     "href": "vector-deepdive-duckdb.html#olap-vs.-oltp",
     "title": "DuckDB",
     "section": "OLAP vs. OLTP",
-    "text": "OLAP vs. OLTP\n\n\n\n\nOLAP (Analytical)\nOLTP (Transactional)\n\n\n\n\nWorkload\nRead-mostly\nMany small writes\n\n\nQueries\nComplex, scan large parts\nSimple, touch individual rows\n\n\nUpdates\nBulk appends\nFrequent row-level updates\n\n\n\n\nDuckDB = OLAP",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "OLAP vs. OLTP\n\n\n\n\nOLAP (Analytical)\nOLTP (Transactional)\n\n\n\n\nWorkload\nRead-mostly\nMany small writes\n\n\nQueries\nComplex, scan large parts\nSimple, touch individual rows\n\n\nUpdates\nBulk appends\nFrequent row-level updates\n\n\n\n\nDuckDB = OLAP"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#in-process-vs.-standalone",
     "href": "vector-deepdive-duckdb.html#in-process-vs.-standalone",
     "title": "DuckDB",
     "section": "In-process vs. standalone",
-    "text": "In-process vs. standalone\n\nIn-process: runs inside your application (no separate server)\n\nDuckDB, SQLite\n\nStandalone: separate server process, client connects over network\n\nPostgreSQL, MySQL\n\n\n\n\n\n\nTable 3.1: DuckDB fills a niche that no previous software has filled yet\n\n\n\n\n\n\n\n\n\n\nOLTP\nOLAP\n\n\n\n\nIn-Process\n\n\n\n\nStand-Alone",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "In-process vs. standalone\n\nIn-process: runs inside your application (no separate server)\n\nDuckDB, SQLite\n\nStandalone: separate server process, client connects over network\n\nPostgreSQL, MySQL\n\n\n\n\n\n\nTable 1: DuckDB fills a niche that no previous software has filled yet\n\n\n\n\n\n\n\n\n\n\nOLTP\nOLAP\n\n\n\n\nIn-Process\n\n\n\n\nStand-Alone"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#lets-put-duckdb-to-work",
     "href": "vector-deepdive-duckdb.html#lets-put-duckdb-to-work",
     "title": "DuckDB",
     "section": "Let’s put DuckDB to work",
-    "text": "Let’s put DuckDB to work",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Let’s put DuckDB to work"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#sec-duckdb-practice",
     "href": "vector-deepdive-duckdb.html#sec-duckdb-practice",
     "title": "DuckDB",
     "section": "DuckDB in practice",
-    "text": "DuckDB in practice\n\nDownload wald-kantone.duckdb from Moodle (forest + canton boundaries)\nInstall DuckDB CLI + R package\nInstall DBeaver Community\nConnect to the database in DBeaver\nInstall and load the spatial extension:\n\nINSTALL spatial;\nLOAD spatial;\n\n\nVerify both tables are present and explore them:\n\nSHOW TABLES;\nSELECT * FROM wald;\nSELECT * FROM kantone;\n\nCreate an R-Tree spatial index for both tables:\n\nCREATE INDEX kantone_idx ON kantone USING RTREE (geom);\nCREATE INDEX wald_idx ON wald USING RTREE (geom);",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "DuckDB in practice\n\nDownload wald-kantone.duckdb from Moodle (forest + canton boundaries)\nInstall DuckDB CLI + R package\nInstall DBeaver Community\nConnect to the database in DBeaver\nInstall and load the spatial extension:\n\nINSTALL spatial;\nLOAD spatial;"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#why-spatial-indices",
     "href": "vector-deepdive-duckdb.html#why-spatial-indices",
     "title": "DuckDB",
     "section": "Why spatial indices?",
-    "text": "Why spatial indices?\n\nWithout an index: WHERE st_intersects(a, b) checks every pair → slow\nR-Tree index organizes geometries by bounding boxes\nEliminates non-overlapping pairs cheaply → only candidates get the expensive exact test\nReduces comparisons dramatically (e.g. millions → thousands)\n\n\nR-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also power sf’s spatial predicates internally.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Why spatial indices?\n\nWithout an index: WHERE st_intersects(a, b) checks every pair → slow\nR-Tree index organizes geometries by bounding boxes\nEliminates non-overlapping pairs cheaply → only candidates get the expensive exact test\nReduces comparisons dramatically (e.g. millions → thousands)\n\n\nR-Trees are the standard spatial index in PostGIS, SpatiaLite, DuckDB, and also power sf’s spatial predicates internally."
   },
   {
     "objectID": "vector-deepdive-duckdb.html#building-an-analysis-step-by-step",
     "href": "vector-deepdive-duckdb.html#building-an-analysis-step-by-step",
     "title": "DuckDB",
     "section": "Building an analysis step-by-step",
-    "text": "Building an analysis step-by-step\n\nIndices speed up queries — but we still need to compose the analysis\nGoal: compute forest share per canton — intersect forest polygons with canton boundaries, then aggregate areas\nStrategy: break it into small, reusable pieces using SQL VIEWs",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Building an analysis step-by-step\n\nIndices speed up queries — but we still need to compose the analysis\nGoal: compute forest share per canton — intersect forest polygons with canton boundaries, then aggregate areas\nStrategy: break it into small, reusable pieces using SQL VIEWs"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#sql-views",
     "href": "vector-deepdive-duckdb.html#sql-views",
     "title": "DuckDB",
     "section": "SQL VIEWs",
-    "text": "SQL VIEWs\n\nA VIEW = a named SQL query (virtual table)\nRe-executed every time you access it\nLets us build complex analyses step-by-step\n\n\nUnlike materialized tables, VIEWs don’t store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to recreate the forest-per-canton analysis from Task 1 in SQL.\n\n\nOur first VIEW: a subset of the forest dataset (for faster iteration)\n\n\n\nLimit to 1’000 rows and store as a VIEW:\n\n1CREATE VIEW wald2 AS\n2SELECT * FROM wald LIMIT 1000;\n\n1\n\nPrepend CREATE VIEW name AS to any SELECT…\n\n2\n\n… to store it as a reusable virtual table\n\n\n\nQuery it like a regular table:\n\nSELECT * FROM wald2;",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "SQL VIEWs\n\nA VIEW = a named SQL query (virtual table)\nRe-executed every time you access it\nLets us build complex analyses step-by-step\n\n\nUnlike materialized tables, VIEWs don’t store data on disk — no extra space, always up-to-date. Trade-off: re-computed on every access. We will use VIEWs to build a forest-per-canton analysis in SQL.\n\n\nOur first VIEW: a subset of the forest dataset (for faster iteration)"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#spatial-intersection-in-sql",
     "href": "vector-deepdive-duckdb.html#spatial-intersection-in-sql",
     "title": "DuckDB",
     "section": "Spatial intersection in SQL",
-    "text": "Spatial intersection in SQL\n\nStep 1 of the pipeline: intersect forest polygons with canton boundaries\n\nSELECT \n  name, \n2  st_intersection(w.geom, k.geom),\n1FROM wald2 w, kantone k;\n\n1\n\nw and k are aliases…\n\n2\n\n… used in the intersection\n\n\n┌──────────────────────┬───────────────────────────────────────────────────────┐\n│         name         │            st_intersection(w.geom, k.geom)            │\n│       varchar        │                       geometry                        │\n├──────────────────────┼───────────────────────────────────────────────────────┤\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n├──────────────────────┴───────────────────────────────────────────────────────┤\n│ 26000 rows (10 shown)                                              2 columns │\n└──────────────────────────────────────────────────────────────────────────────┘\nRun Time (s): real 1.292 user 1.293885 sys 0.005016\n\n\n\nProblem: cross join — every forest polygon × every canton (1’000 × 26 = 26’000 pairs)\nSolution: add WHERE to filter early:\n\nSELECT\n  name,\n  st_intersection(w.geom, k.geom),\nFROM wald2 w, kantone k\n1WHERE st_intersects(w.geom, k.geom);\n\n1\n\nOnly compute the intersection for pairs that actually overlap (R-Tree!)\n\n\n┌──────────────────────┬───────────────────────────────────────────────────────┐\n│         name         │            st_intersection(w.geom, k.geom)            │\n│       varchar        │                       geometry                        │\n├──────────────────────┼───────────────────────────────────────────────────────┤\n│ Appenzell Innerrho…  │ POLYGON Z ((2750577.8690000786 1236499.1299968604 1…  │\n│ St. Gallen           │ POLYGON Z ((2733301.3710000697 1235901.1909968755 1…  │\n│ St. Gallen           │ POLYGON Z ((2730828.668000072 1236533.6979968112 10…  │\n│ Appenzell Innerrho…  │ POLYGON Z ((2751117.7790000793 1236511.4949968604 1…  │\n│ Zürich               │ POLYGON Z ((2712200.8850000626 1236517.2959967866 6…  │\n│   ·                  │                           ·                           │\n│   ·                  │                           ·                           │\n│   ·                  │                           ·                           │\n│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │\n│ Zürich               │ POLYGON Z ((2684156.710000051 1239693.0049964704 51…  │\n│ St. Gallen           │ POLYGON Z ((2734307.2300000787 1239757.5959965463 1…  │\n│ Appenzell Ausserrh…  │ POLYGON Z ((2735958.5650000805 1239767.1879965463 1…  │\n│ Appenzell Ausserrh…  │ POLYGON Z ((2738798.7040000805 1239749.8799965512 8…  │\n├──────────────────────┴───────────────────────────────────────────────────────┤\n│ 1027 rows (10 shown)                                               2 columns │\n└──────────────────────────────────────────────────────────────────────────────┘\nRun Time (s): real 0.818 user 0.823316 sys 0.006000",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Spatial intersection in SQL\n\nStep 1 of the pipeline: intersect forest polygons with canton boundaries\n\nSELECT \n  name, \n2  st_intersection(w.geom, k.geom),\n1FROM wald2 w, kantone k;\n\n1\n\nw and k are aliases…\n\n2\n\n… used in the intersection\n\n\n┌──────────────────────┬───────────────────────────────────────────────────────┐\n│         name         │            st_intersection(w.geom, k.geom)            │\n│       varchar        │                       geometry                        │\n├──────────────────────┼───────────────────────────────────────────────────────┤\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│ Genève               │ POLYGON EMPTY                                         │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│   ·                  │       ·                                               │\n│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │\n├──────────────────────┴───────────────────────────────────────────────────────┤\n│ 26000 rows (10 shown)                                              2 columns │\n└──────────────────────────────────────────────────────────────────────────────┘\nRun Time (s): real 1.292 user 1.293885 sys 0.005016"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#st_intersects-vs-st_intersection",
     "href": "vector-deepdive-duckdb.html#st_intersects-vs-st_intersection",
     "title": "DuckDB",
     "section": "st_intersects vs st_intersection",
-    "text": "st_intersects vs st_intersection\nThis query uses both: st_intersects in WHERE = predicate (true/false filter), st_intersection in SELECT = operation (computes geometry). Same pattern as in R/sf!",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
-  },
-  {
-    "objectID": "vector-deepdive-duckdb.html#query-plans-with-explain",
-    "href": "vector-deepdive-duckdb.html#query-plans-with-explain",
-    "title": "DuckDB",
-    "section": "Query plans with EXPLAIN",
-    "text": "Query plans with EXPLAIN\n\nPrepend EXPLAIN to see how DuckDB will execute a query (without running it)\nCompare both versions in DBeaver:\n\n-- Without WHERE: cross join of all pairs\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k;\n\n-- With WHERE: only matching pairs (uses R-Tree index)\nEXPLAIN SELECT name, st_intersection(w.geom, k.geom)\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\nLook for INDEX SCAN or INDEX JOIN in the second plan → R-Tree is being used\n\n\n\nWe need the area, not the geometry itself:\n\nSELECT \n  name, \n1  st_area(st_intersection(w.geom, k.geom)) as wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nst_area calculates the area of the intersection\n\n\n┌────────────────────────┬────────────────────┐\n│          name          │     wald_area      │\n│        varchar         │       double       │\n├────────────────────────┼────────────────────┤\n│ Appenzell Innerrhoden  │  3223.381481670876 │\n│ St. Gallen             │ 490040.98548061884 │\n│ St. Gallen             │ 1515.7608568453097 │\n│ Appenzell Innerrhoden  │ 5697.7576364166425 │\n│ Zürich                 │  9248.165822466484 │\n│   ·                    │          ·         │\n│   ·                    │          ·         │\n│   ·                    │          ·         │\n│ Appenzell Innerrhoden  │ 31971.908096492414 │\n│ Zürich                 │ 11339.135541535818 │\n│ St. Gallen             │ 11570.958247649043 │\n│ Appenzell Ausserrhoden │ 3659.7222327571385 │\n│ Appenzell Ausserrhoden │ 1371.8734574811795 │\n├────────────────────────┴────────────────────┤\n│ 1027 rows (10 shown)              2 columns │\n└─────────────────────────────────────────────┘\nRun Time (s): real 0.810 user 0.811628 sys 0.018473\n\n\nSave this as a VIEW before aggregating:\n\n1CREATE VIEW wald_kantone AS\nSELECT \n  name, \n  st_area(st_intersection(w.geom, k.geom)) AS wald_area,\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis creates a VIEW from the preceding query\n\n\n\n\nQuery the VIEW like a table, then aggregate with GROUP BY:\n\nSELECT \n3  name,\n2  sum(wald_area) as wald_area\nFROM wald_kantone\n1GROUP BY name;\n\n1\n\nIf we use GROUP BY in a SQL query..\n\n2\n\n… we need to wrap all columns with aggregate function…\n\n3\n\n… except for the columns that we use for grouping\n\n\n\n\nSave the aggregation as a VIEW:\n\nCREATE VIEW wald_kanton_grp AS\nSELECT \n  name, \n  sum(wald_area) as wald_area\nFROM wald_kantone\nGROUP BY name;\n\n\nJoin with kantone to get the total canton area and compute the fraction:\n\nSELECT \n3    kantone.name,\n4    wald_area/area as waldanteil,\nFROM wald_kanton_grp \n1LEFT JOIN kantone\n2ON wald_kanton_grp.name=kantone.name;\n\n1\n\nLEFT JOIN appends columns from another table…\n\n2\n\n… matched by the ON condition\n\n3\n\nWe only need the canton name…\n\n4\n\n… and the fraction wald_area / area\n\n\n\n\nSave as a final VIEW, ordered by forest share:\n\nCREATE VIEW kanton_frac AS\nSELECT \n    kantone.name,                 \n    wald_area/area as waldanteil, \nFROM wald_kanton_grp \nLEFT JOIN kantone \nON wald_kanton_grp.name=kantone.name\n1ORDER BY waldanteil DESC;\n\n1\n\nWe can ORDER BY to show us the highest values first",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "st_intersects vs st_intersection\nThis query uses both: st_intersects in WHERE = predicate (true/false filter), st_intersection in SELECT = operation (computes geometry). Same pattern as in R/sf!"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#scaling-up",
     "href": "vector-deepdive-duckdb.html#scaling-up",
     "title": "DuckDB",
     "section": "Scaling up",
-    "text": "Scaling up\n\nSo far: only 1’000 forest features → incomplete results\nSince we used VIEWs, switching to the full dataset is trivial:\n\nCREATE OR REPLACE VIEW wald2 AS\nSELECT * FROM wald;\n\nEvery downstream VIEW now automatically uses the full data:\n\nSELECT * FROM kanton_frac;\n\nCREATE OR REPLACE VIEW is needed because wald2 already exists. Key advantage of VIEWs: replace one definition, the entire chain updates. Downside: full query now takes longer since nothing is materialized.",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Scaling up\n\nSo far: only 1’000 forest features → incomplete results\nSince we used VIEWs, switching to the full dataset is trivial:\n\nCREATE OR REPLACE VIEW wald2 AS\nSELECT * FROM wald;\n\nEvery downstream VIEW now automatically uses the full data:\n\nSELECT * FROM kanton_frac;\n\nCREATE OR REPLACE VIEW is needed because wald2 already exists. Key advantage of VIEWs: replace one definition, the entire chain updates. Downside: full query now takes longer since nothing is materialized."
   },
   {
     "objectID": "vector-deepdive-duckdb.html#view-vs-create-table-...-as",
     "href": "vector-deepdive-duckdb.html#view-vs-create-table-...-as",
     "title": "DuckDB",
     "section": "VIEW vs CREATE TABLE ... AS",
-    "text": "VIEW vs CREATE TABLE ... AS\n\nVIEW = lazy (re-executed on every access)\nCREATE TABLE ... AS = materialized (stored on disk):\n\n1CREATE TABLE wald_kantone_mat AS\nSELECT\n  name,\n  st_area(st_intersection(w.geom, k.geom)) AS wald_area\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis stores the result as an actual table on disk\n\n\n\nTrade-off:\n\nMaterialized: faster to query, takes disk space, does not auto-update\nVIEW: no extra storage, always current, slower to query",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "VIEW vs CREATE TABLE ... AS\n\nVIEW = lazy (re-executed on every access)\nCREATE TABLE ... AS = materialized (stored on disk):\n\n1CREATE TABLE wald_kantone_mat AS\nSELECT\n  name,\n  st_area(st_intersection(w.geom, k.geom)) AS wald_area\nFROM wald2 w, kantone k\nWHERE st_intersects(w.geom, k.geom);\n\n1\n\nThis stores the result as an actual table on disk\n\n\n\nTrade-off:\n\nMaterialized: faster to query, takes disk space, does not auto-update\nVIEW: no extra storage, always current, slower to query"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#import-into-r",
     "href": "vector-deepdive-duckdb.html#import-into-r",
     "title": "DuckDB",
     "section": "Import into R",
-    "text": "Import into R\n\nConnect, load spatial extension, read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Import into R\n\nConnect, load spatial extension, read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#wrap-up",
     "href": "vector-deepdive-duckdb.html#wrap-up",
     "title": "DuckDB",
     "section": "Wrap-up",
-    "text": "Wrap-up\n\nDuckDB = in-process OLAP database with a spatial extension\nSQL lets you express spatial analyses declaratively\nR-Tree indices make spatial predicates fast\nVIEWs let you build analyses incrementally — easy to iterate and scale\nResults flow back into R for further analysis or visualization",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>DuckDB</span>"
-    ]
+    "text": "Wrap-up\n\nDuckDB = in-process OLAP database with a spatial extension\nSQL lets you express spatial analyses declaratively\nR-Tree indices make spatial predicates fast\nVIEWs let you build analyses incrementally — easy to iterate and scale\nResults flow back into R for further analysis or visualization"
   },
   {
-    "objectID": "vector-deepdive-task.html",
-    "href": "vector-deepdive-task.html",
-    "title": "🚀 Tasks",
+    "objectID": "submission.html",
+    "href": "submission.html",
+    "title": "Submission",
     "section": "",
-    "text": "Task 1\nFollow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Solve the tasks in a file named index.qmd.\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo. Using swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton. Visualize the results (in a map and / or a plot).\nRender the document using quarto preview. Publish your result using quarto publish gh-pages",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
-    ]
+    "text": "Each task is submitted as a rendered Quarto document hosted on GitHub Pages.\n\n\nOn GitHub:\n\nCreate a free organisation with a name of your choice and submit the URL to this organisation via email.\nYou need to do this only once, the rest of the steps are done for each task.\nIn this organisation, create a new, blank repository called vector-deepdive\n\nOn your local machine:\n\nInstall the CLI tool Quarto\nCreate a new directory for this week’s task\nInitialize a Git repository and link it to your GitHub repo:\ngit init\ngit remote add origin &lt;URL&gt;\nCreate _quarto.yml:\n\n\n_quarto.yml\n\nproject:\n  output-dir: _docs\n\nCreate index.qmd:\n\n\nindex.qmd\n\n# Solution for Vector Deepdive\n\nIn this document, I solve the tasks for *vector deepdive* of the course\n*Spatiotemporal Datascience*.\n\nPreview locally: quarto preview\nPublish: quarto publish gh-pages\n\n\n\n\nFor each new task week, create a new repository in your organisation and follow the same workflow."
   },
   {
-    "objectID": "vector-deepdive-task.html#task-3",
-    "href": "vector-deepdive-task.html#task-3",
-    "title": "🚀 Tasks",
-    "section": "Task 3",
-    "text": "Task 3\nWithout consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in Figure 5.1.\nConcentrate on the boundary-boundary intersection. Note:\n\nNo intersection: F\nPoint intersection: 0\nLine intersetion: 1\nAny intersection: *\n\nThe 3x3 “chessboard” is available on moodle.\n\n\n\n\n\n\n\n\n\n\n\n\n(a) King’s case (all fields)\n\n\n\n\n\n\n\n\n\n\n\n(b) Bishop’s case (diagonal fields)\n\n\n\n\n\n\n\nFigure 5.1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals",
-    "crumbs": [
-      "Vector Deepdive",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>🚀 Tasks</span>"
-    ]
+    "objectID": "submission.html#sec-gh-pages",
+    "href": "submission.html#sec-gh-pages",
+    "title": "Submission",
+    "section": "",
+    "text": "Each task is submitted as a rendered Quarto document hosted on GitHub Pages.\n\n\nOn GitHub:\n\nCreate a free organisation with a name of your choice and submit the URL to this organisation via email.\nYou need to do this only once, the rest of the steps are done for each task.\nIn this organisation, create a new, blank repository called vector-deepdive\n\nOn your local machine:\n\nInstall the CLI tool Quarto\nCreate a new directory for this week’s task\nInitialize a Git repository and link it to your GitHub repo:\ngit init\ngit remote add origin &lt;URL&gt;\nCreate _quarto.yml:\n\n\n_quarto.yml\n\nproject:\n  output-dir: _docs\n\nCreate index.qmd:\n\n\nindex.qmd\n\n# Solution for Vector Deepdive\n\nIn this document, I solve the tasks for *vector deepdive* of the course\n*Spatiotemporal Datascience*.\n\nPreview locally: quarto preview\nPublish: quarto publish gh-pages\n\n\n\n\nFor each new task week, create a new repository in your organisation and follow the same workflow."
+  },
+  {
+    "objectID": "movement-I-minimal-example.html",
+    "href": "movement-I-minimal-example.html",
+    "title": "Minimal example",
+    "section": "",
+    "text": "Since this task is non trivial, a minimal example of the process is demonstrated here:\n\n\nThe dataset tracks_1.gpkg contains the training, testing and validation data as separate layers. We will load the training data and the testing data, and then combine them into a single dataset.\n\nlibrary(sf)         # for spatial data handling\n\n# List layers in the geopackage\nst_layers(\"data/week12-exercises/tracks_1.gpkg\")\n\nDriver: GPKG \nAvailable layers:\n  layer_name geometry_type features fields              crs_name\n1   training         Point   501432      5 WGS 84 / UTM zone 50N\n2    testing         Point   262851      5 WGS 84 / UTM zone 50N\n3 validation         Point   240449      4 WGS 84 / UTM zone 50N\n\nlibrary(dplyr)      # for data manipulation\n\ntraining_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", layer = \"training\") |&gt; \n  mutate(data = \"training\")\ntesting_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", layer = \"testing\") |&gt; \n  mutate(data = \"testing\")\n\n\nfull_dataset &lt;- bind_rows(training_dataset, testing_dataset)\n\nLet’s visualize the data as a map. The package tmap is very handy for this task.\n\nlibrary(tmap)       # for spatial maps\n\nfull_dataset |&gt; \n  tm_shape() + \n  tm_dots() + \n  tm_basemap(\"CartoDB.Positron\")\n\n\n\n\n\nFeature engineering is a crucial step in preparing data for analysis and modeling. It involves creating new variables, or features, that capture important patterns or relationships in the data. Well-designed features can enhance the performance of machine learning models by making the relevant information more accessible.\nIn this task, we aim to enrich the GPS dataset with features derived from the spatial and temporal relationships between consecutive points within each trajectory. Specifically, we will compute metrics such as the distance between consecutive points (step length), the time difference between consecutive timestamps (time lag), and the average speed over these intervals. These features provide valuable insights into movement behavior and are essential for distinguishing between different transportation modes.\nBy engineering these features, we transform raw GPS data into a more informative format, setting the stage for building predictive models.\n\n\n\nfull_dataset &lt;- full_dataset |&gt; \n  mutate(\n    steplength = as.numeric(st_distance(lead(geom), geom, by_element = TRUE)),\n    timelag = as.numeric(difftime(lead(datetime), datetime, units = \"secs\")),\n    speed = steplength / timelag,\n    .by = track_id\n  )\n\nTo understand the relationship between movement speed and transportation modes, we will summarize and visualize the dataset. By analyzing the average speeds for different modes of transportation, we can identify distinct patterns that might aid in differentiating between them.\nIn this step, we compute the mean speed for each combination of transportation mode and track, ensuring that missing values do not skew the results. Afterward, we reorder the transportation modes based on their average speeds, making the visualization more intuitive. Finally, we create a boxplot to display the speed distributions for each mode, highlighting the variability and central tendencies within the data.\nThis analysis provides a clear overview of how speed varies by transportation mode, offering valuable insights for feature interpretation and model development.\n\nlibrary(ggplot2)    # for generic plotting    \nlibrary(forcats)    # for factor handling\n\nfull_dataset |&gt; \n  st_drop_geometry() |&gt; \n  summarise(\n    speed = mean(speed, na.rm = TRUE),\n    .by = c(mode, track_id)\n  ) |&gt; \n  mutate(\n    mode = fct_reorder(mode, speed)\n  ) |&gt; \n  ggplot() +\n  geom_boxplot(aes(speed, mode, fill = mode)) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\nFigure 1: Average speed per segment for different transportation modes.\n\n\n\n\n\nNote that Figure 1 shows that the average speed per segment varies significantly between different transportation modes. This information can be used to distinguish between modes based on speed-related features on a per segment basis. However, this might not help to distinguish transport mode on a per point basis.\n\n\n\nAcceleration, the rate of change in speed over time, is a valuable feature for understanding movement dynamics. Unlike speed, which provides information about the magnitude of motion, acceleration captures changes in motion - whether an object is speeding up, slowing down, or maintaining a constant velocity.\nThis feature is particularly useful for distinguishing transportation modes. For example, walking and cycling often exhibit more frequent changes in acceleration compared to driving or taking a bus, which tend to involve smoother transitions in speed. By incorporating acceleration into our analysis, we gain a deeper understanding of movement patterns and improve the ability to differentiate between modes of transportation.\nTry to determine acceleration yourself. Hint: (lead(speed) - speed) / timelag\n\n\n\nSinuosity is a measure of the curvature of a path, and can be defined as the ratio between the actual traveled distance and the straight-line distance between the start and end points. A perfectly straight path has a sinuosity of 1, while more winding paths have higher sinuosity values.\nThis feature provides valuable insights into movement behavior, as different transportation modes often exhibit distinct patterns of sinuosity. For instance, walking and cycling paths may have higher sinuosity due to detours or obstacles, while driving or taking a train tends to follow straighter routes. By incorporating sinuosity into the analysis, we can enhance the ability to classify transportation modes based on their characteristic movement patterns.\nTo calculate sinuosity, we must first specify an observation window. In this case, we will consider the sinuosity over the next 5 points of each trajectory. This window size allows us to capture the curvature of the path while avoiding excessive noise from individual points. We will compute the straight-line distance between the current point and the point 5 steps ahead, as well as the total distance traveled over these 5 steps. The sinuosity is then calculated as the ratio between these two distances.\n\nlibrary(zoo)        # for rolling window functions\n\nfull_dataset &lt;- full_dataset |&gt; \n  mutate(\n    straight_dist5 = as.numeric(st_distance(lead(geom, 5), geom, by_element = TRUE)),\n    full_dist5 = rollsum(steplength, 5, fill = NA, align = \"left\", ),\n    sinuosity = full_dist5/straight_dist5,\n    .by = track_id\n  )\n\n\n\n\n\nOnce the dataset has been enriched with meaningful features, the next step is to train a model that can learn patterns in the data and make predictions. Model training involves using labeled data to teach an algorithm to associate input features - such as speed, acceleration, and sinuosity - with the corresponding transportation mode.\nTo simplify the task, we will train a model to predict the transportation mode on a per segment basis. To do so, we will use three aggregation functions (mean, max and mean) to summarize the features for each segment.\n\n# To calculate mean, max and mean for each feature per segment, we will use custom\n# aggregation functions that remove NA values per default\nmean2 &lt;- \\(x) mean(x, na.rm = TRUE)\nmax2 &lt;- \\(x) max(x, na.rm = TRUE)\nmin2 &lt;- \\(x) min(x, na.rm = TRUE)\n\n\n# Create a summary dataset for the model\ntracks_smry &lt;- full_dataset |&gt; \n  # we can drop the geometry column, as we don't need it for the model\n  st_drop_geometry() |&gt; \n  # We select the features we want to use for the model\n  select(data, track_id, mode, steplength, timelag, speed, sinuosity) |&gt; \n  group_by(data, track_id, mode) |&gt; \n  summarise(\n    across(everything(), list(mean = mean2, max = max2, min = min2)),\n  ) |&gt; \n  mutate(\n    mode = factor(mode)\n  ) |&gt; \n  ungroup() |&gt; \n  select(-track_id)\n\n\n\n\n# Next, split training and testing\ntracks_training &lt;- tracks_smry |&gt; \n  filter(data == \"training\") |&gt; \n  select(-data)\n\ntracks_testing &lt;- tracks_smry |&gt; \n  filter(data == \"testing\") |&gt; \n  select(-data)\n\nNow we can build a model to predict the transportation mode based on the features we have engineered. We will use a classification tree model (CART) for this task, as a simple and interpretable model that can capture complex relationships between the features and the target variable.\n\n# Build the model based on the training data\n\nlibrary(rpart)      # for building the model\n\ncart_model &lt;- rpart(mode~., data = tracks_training, method = \"class\")\n\n\nlibrary(rpart.plot) # for plotting the model\n\nrpart.plot(cart_model, type = 2)\n\n\n\n\n\n\n\n\n\n\n\nAfter training a model, it is essential to assess its performance to ensure it can accurately predict outcomes on unseen data. Model evaluation involves comparing the predicted labels with the true labels using metrics such as accuracy, precision, recall, and F1-score. These metrics provide insights into the model’s strengths and weaknesses, helping identify areas for improvement.\nIn addition to numerical metrics, visualizations like confusion matrices or ROC curves can offer a deeper understanding of how the model performs across different transportation modes. By thoroughly evaluating the model, we ensure it is both reliable and capable of generalizing beyond the training dataset.\n\n# Make predictions on the testing data\npredictions &lt;- predict(cart_model, tracks_testing) \n\n# Use the highest probability to predict the transportation mode\ntracks_testing$prediction &lt;- colnames(predictions)[apply(predictions, 1, which.max)]\n\n# Turn the prediction into a factor\ntracks_testing$prediction &lt;- factor(tracks_testing$prediction)\n\n# Sort the levels of the actual modes to match the predicted modes\ntracks_testing$mode &lt;- factor(tracks_testing$mode, levels = sort(unique(as.character(tracks_testing$mode))))\n\n\nlibrary(caret)\n\nconfusionMatrix(tracks_testing$prediction, reference = tracks_testing$mode)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction bike bus car subway train walk\n    bike     68  20   2      1     0    3\n    bus      21  91  25      4     1   11\n    car       1  18  42      8     0    1\n    subway    0   0   8     18     1    0\n    train     0   0   0      1     4    0\n    walk     11  17   6     12     0  166\n\nOverall Statistics\n                                          \n               Accuracy : 0.6934          \n                 95% CI : (0.6534, 0.7313)\n    No Information Rate : 0.3226          \n    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       \n                                          \n                  Kappa : 0.5937          \n                                          \n Mcnemar's Test P-Value : NA              \n\nStatistics by Class:\n\n                     Class: bike Class: bus Class: car Class: subway\nSensitivity               0.6733     0.6233    0.50602       0.40909\nSpecificity               0.9435     0.8506    0.94142       0.98259\nPos Pred Value            0.7234     0.5948    0.60000       0.66667\nNeg Pred Value            0.9293     0.8652    0.91650       0.95131\nPrevalence                0.1800     0.2602    0.14795       0.07843\nDetection Rate            0.1212     0.1622    0.07487       0.03209\nDetection Prevalence      0.1676     0.2727    0.12478       0.04813\nBalanced Accuracy         0.8084     0.7369    0.72372       0.69584\n                     Class: train Class: walk\nSensitivity              0.666667      0.9171\nSpecificity              0.998198      0.8789\nPos Pred Value           0.800000      0.7830\nNeg Pred Value           0.996403      0.9570\nPrevalence               0.010695      0.3226\nDetection Rate           0.007130      0.2959\nDetection Prevalence     0.008913      0.3779\nBalanced Accuracy        0.832432      0.8980"
+  },
+  {
+    "objectID": "movement-I-minimal-example.html#step-1-load-the-data",
+    "href": "movement-I-minimal-example.html#step-1-load-the-data",
+    "title": "Minimal example",
+    "section": "",
+    "text": "The dataset tracks_1.gpkg contains the training, testing and validation data as separate layers. We will load the training data and the testing data, and then combine them into a single dataset.\n\nlibrary(sf)         # for spatial data handling\n\n# List layers in the geopackage\nst_layers(\"data/week12-exercises/tracks_1.gpkg\")\n\nDriver: GPKG \nAvailable layers:\n  layer_name geometry_type features fields              crs_name\n1   training         Point   501432      5 WGS 84 / UTM zone 50N\n2    testing         Point   262851      5 WGS 84 / UTM zone 50N\n3 validation         Point   240449      4 WGS 84 / UTM zone 50N\n\nlibrary(dplyr)      # for data manipulation\n\ntraining_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", layer = \"training\") |&gt; \n  mutate(data = \"training\")\ntesting_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", layer = \"testing\") |&gt; \n  mutate(data = \"testing\")\n\n\nfull_dataset &lt;- bind_rows(training_dataset, testing_dataset)\n\nLet’s visualize the data as a map. The package tmap is very handy for this task.\n\nlibrary(tmap)       # for spatial maps\n\nfull_dataset |&gt; \n  tm_shape() + \n  tm_dots() + \n  tm_basemap(\"CartoDB.Positron\")"
+  },
+  {
+    "objectID": "movement-I-minimal-example.html#step-2-feature-engineering",
+    "href": "movement-I-minimal-example.html#step-2-feature-engineering",
+    "title": "Minimal example",
+    "section": "",
+    "text": "Feature engineering is a crucial step in preparing data for analysis and modeling. It involves creating new variables, or features, that capture important patterns or relationships in the data. Well-designed features can enhance the performance of machine learning models by making the relevant information more accessible.\nIn this task, we aim to enrich the GPS dataset with features derived from the spatial and temporal relationships between consecutive points within each trajectory. Specifically, we will compute metrics such as the distance between consecutive points (step length), the time difference between consecutive timestamps (time lag), and the average speed over these intervals. These features provide valuable insights into movement behavior and are essential for distinguishing between different transportation modes.\nBy engineering these features, we transform raw GPS data into a more informative format, setting the stage for building predictive models.\n\n\n\nfull_dataset &lt;- full_dataset |&gt; \n  mutate(\n    steplength = as.numeric(st_distance(lead(geom), geom, by_element = TRUE)),\n    timelag = as.numeric(difftime(lead(datetime), datetime, units = \"secs\")),\n    speed = steplength / timelag,\n    .by = track_id\n  )\n\nTo understand the relationship between movement speed and transportation modes, we will summarize and visualize the dataset. By analyzing the average speeds for different modes of transportation, we can identify distinct patterns that might aid in differentiating between them.\nIn this step, we compute the mean speed for each combination of transportation mode and track, ensuring that missing values do not skew the results. Afterward, we reorder the transportation modes based on their average speeds, making the visualization more intuitive. Finally, we create a boxplot to display the speed distributions for each mode, highlighting the variability and central tendencies within the data.\nThis analysis provides a clear overview of how speed varies by transportation mode, offering valuable insights for feature interpretation and model development.\n\nlibrary(ggplot2)    # for generic plotting    \nlibrary(forcats)    # for factor handling\n\nfull_dataset |&gt; \n  st_drop_geometry() |&gt; \n  summarise(\n    speed = mean(speed, na.rm = TRUE),\n    .by = c(mode, track_id)\n  ) |&gt; \n  mutate(\n    mode = fct_reorder(mode, speed)\n  ) |&gt; \n  ggplot() +\n  geom_boxplot(aes(speed, mode, fill = mode)) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\nFigure 1: Average speed per segment for different transportation modes.\n\n\n\n\n\nNote that Figure 1 shows that the average speed per segment varies significantly between different transportation modes. This information can be used to distinguish between modes based on speed-related features on a per segment basis. However, this might not help to distinguish transport mode on a per point basis.\n\n\n\nAcceleration, the rate of change in speed over time, is a valuable feature for understanding movement dynamics. Unlike speed, which provides information about the magnitude of motion, acceleration captures changes in motion - whether an object is speeding up, slowing down, or maintaining a constant velocity.\nThis feature is particularly useful for distinguishing transportation modes. For example, walking and cycling often exhibit more frequent changes in acceleration compared to driving or taking a bus, which tend to involve smoother transitions in speed. By incorporating acceleration into our analysis, we gain a deeper understanding of movement patterns and improve the ability to differentiate between modes of transportation.\nTry to determine acceleration yourself. Hint: (lead(speed) - speed) / timelag\n\n\n\nSinuosity is a measure of the curvature of a path, and can be defined as the ratio between the actual traveled distance and the straight-line distance between the start and end points. A perfectly straight path has a sinuosity of 1, while more winding paths have higher sinuosity values.\nThis feature provides valuable insights into movement behavior, as different transportation modes often exhibit distinct patterns of sinuosity. For instance, walking and cycling paths may have higher sinuosity due to detours or obstacles, while driving or taking a train tends to follow straighter routes. By incorporating sinuosity into the analysis, we can enhance the ability to classify transportation modes based on their characteristic movement patterns.\nTo calculate sinuosity, we must first specify an observation window. In this case, we will consider the sinuosity over the next 5 points of each trajectory. This window size allows us to capture the curvature of the path while avoiding excessive noise from individual points. We will compute the straight-line distance between the current point and the point 5 steps ahead, as well as the total distance traveled over these 5 steps. The sinuosity is then calculated as the ratio between these two distances.\n\nlibrary(zoo)        # for rolling window functions\n\nfull_dataset &lt;- full_dataset |&gt; \n  mutate(\n    straight_dist5 = as.numeric(st_distance(lead(geom, 5), geom, by_element = TRUE)),\n    full_dist5 = rollsum(steplength, 5, fill = NA, align = \"left\", ),\n    sinuosity = full_dist5/straight_dist5,\n    .by = track_id\n  )"
+  },
+  {
+    "objectID": "movement-I-minimal-example.html#step-3-training-a-model",
+    "href": "movement-I-minimal-example.html#step-3-training-a-model",
+    "title": "Minimal example",
+    "section": "",
+    "text": "Once the dataset has been enriched with meaningful features, the next step is to train a model that can learn patterns in the data and make predictions. Model training involves using labeled data to teach an algorithm to associate input features - such as speed, acceleration, and sinuosity - with the corresponding transportation mode.\nTo simplify the task, we will train a model to predict the transportation mode on a per segment basis. To do so, we will use three aggregation functions (mean, max and mean) to summarize the features for each segment.\n\n# To calculate mean, max and mean for each feature per segment, we will use custom\n# aggregation functions that remove NA values per default\nmean2 &lt;- \\(x) mean(x, na.rm = TRUE)\nmax2 &lt;- \\(x) max(x, na.rm = TRUE)\nmin2 &lt;- \\(x) min(x, na.rm = TRUE)\n\n\n# Create a summary dataset for the model\ntracks_smry &lt;- full_dataset |&gt; \n  # we can drop the geometry column, as we don't need it for the model\n  st_drop_geometry() |&gt; \n  # We select the features we want to use for the model\n  select(data, track_id, mode, steplength, timelag, speed, sinuosity) |&gt; \n  group_by(data, track_id, mode) |&gt; \n  summarise(\n    across(everything(), list(mean = mean2, max = max2, min = min2)),\n  ) |&gt; \n  mutate(\n    mode = factor(mode)\n  ) |&gt; \n  ungroup() |&gt; \n  select(-track_id)\n\n\n\n\n# Next, split training and testing\ntracks_training &lt;- tracks_smry |&gt; \n  filter(data == \"training\") |&gt; \n  select(-data)\n\ntracks_testing &lt;- tracks_smry |&gt; \n  filter(data == \"testing\") |&gt; \n  select(-data)\n\nNow we can build a model to predict the transportation mode based on the features we have engineered. We will use a classification tree model (CART) for this task, as a simple and interpretable model that can capture complex relationships between the features and the target variable.\n\n# Build the model based on the training data\n\nlibrary(rpart)      # for building the model\n\ncart_model &lt;- rpart(mode~., data = tracks_training, method = \"class\")\n\n\nlibrary(rpart.plot) # for plotting the model\n\nrpart.plot(cart_model, type = 2)"
+  },
+  {
+    "objectID": "movement-I-minimal-example.html#step-4-evaluating-the-model",
+    "href": "movement-I-minimal-example.html#step-4-evaluating-the-model",
+    "title": "Minimal example",
+    "section": "",
+    "text": "After training a model, it is essential to assess its performance to ensure it can accurately predict outcomes on unseen data. Model evaluation involves comparing the predicted labels with the true labels using metrics such as accuracy, precision, recall, and F1-score. These metrics provide insights into the model’s strengths and weaknesses, helping identify areas for improvement.\nIn addition to numerical metrics, visualizations like confusion matrices or ROC curves can offer a deeper understanding of how the model performs across different transportation modes. By thoroughly evaluating the model, we ensure it is both reliable and capable of generalizing beyond the training dataset.\n\n# Make predictions on the testing data\npredictions &lt;- predict(cart_model, tracks_testing) \n\n# Use the highest probability to predict the transportation mode\ntracks_testing$prediction &lt;- colnames(predictions)[apply(predictions, 1, which.max)]\n\n# Turn the prediction into a factor\ntracks_testing$prediction &lt;- factor(tracks_testing$prediction)\n\n# Sort the levels of the actual modes to match the predicted modes\ntracks_testing$mode &lt;- factor(tracks_testing$mode, levels = sort(unique(as.character(tracks_testing$mode))))\n\n\nlibrary(caret)\n\nconfusionMatrix(tracks_testing$prediction, reference = tracks_testing$mode)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction bike bus car subway train walk\n    bike     68  20   2      1     0    3\n    bus      21  91  25      4     1   11\n    car       1  18  42      8     0    1\n    subway    0   0   8     18     1    0\n    train     0   0   0      1     4    0\n    walk     11  17   6     12     0  166\n\nOverall Statistics\n                                          \n               Accuracy : 0.6934          \n                 95% CI : (0.6534, 0.7313)\n    No Information Rate : 0.3226          \n    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       \n                                          \n                  Kappa : 0.5937          \n                                          \n Mcnemar's Test P-Value : NA              \n\nStatistics by Class:\n\n                     Class: bike Class: bus Class: car Class: subway\nSensitivity               0.6733     0.6233    0.50602       0.40909\nSpecificity               0.9435     0.8506    0.94142       0.98259\nPos Pred Value            0.7234     0.5948    0.60000       0.66667\nNeg Pred Value            0.9293     0.8652    0.91650       0.95131\nPrevalence                0.1800     0.2602    0.14795       0.07843\nDetection Rate            0.1212     0.1622    0.07487       0.03209\nDetection Prevalence      0.1676     0.2727    0.12478       0.04813\nBalanced Accuracy         0.8084     0.7369    0.72372       0.69584\n                     Class: train Class: walk\nSensitivity              0.666667      0.9171\nSpecificity              0.998198      0.8789\nPos Pred Value           0.800000      0.7830\nNeg Pred Value           0.996403      0.9570\nPrevalence               0.010695      0.3226\nDetection Rate           0.007130      0.2959\nDetection Prevalence     0.008913      0.3779\nBalanced Accuracy        0.832432      0.8980"
+  },
+  {
+    "objectID": "interpolation-density.html#data",
+    "href": "interpolation-density.html#data",
+    "title": "Spatiotemporal Datascience",
+    "section": "Data",
+    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link."
+  },
+  {
+    "objectID": "interpolation-density.html#exercise-1-kernel-density-estimation",
+    "href": "interpolation-density.html#exercise-1-kernel-density-estimation",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 1: Kernel Density Estimation",
+    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl."
+  },
+  {
+    "objectID": "interpolation-density.html#sec-density-voronoi",
+    "href": "interpolation-density.html#sec-density-voronoi",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 2: Voronoi",
+    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich."
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line\n\n\n\n\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line"
+  },
+  {
+    "objectID": "syllabus.html#assessment",
+    "href": "syllabus.html#assessment",
+    "title": "Syllabus",
+    "section": "",
+    "text": "The assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+  },
+  {
+    "objectID": "syllabus.html#footnotes",
+    "href": "syllabus.html#footnotes",
+    "title": "Syllabus",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe provisions specified in the Annex thus serve as an “alternative” if no others have been specified.↩︎"
+  },
+  {
+    "objectID": "movement-I-task-description.html",
+    "href": "movement-I-task-description.html",
+    "title": "Task description",
+    "section": "",
+    "text": "Understanding human mobility is a key challenge in many fields, including transportation planning, epidemiology, and environmental science. Movement data is collected in various ways, including GPS data from smartphones, GPS trackers, or other devices.\nA key insight into human movement is method of transport. This information often needs to be inferred, since its not provided by the device.\nIn this task, you will use movement data from the project by Zheng et al. (2011). The original dataset was collected in the GeoLife project (Microsoft Research Asia) by 182 users in a period of over three years (from April 2007 to August 2012). A GPS trajectory of this dataset is represented by a sequence of time-stamped points, each of which contains the information of latitude, longitude and altitude. This dataset contains 17’621 trajectories with a total distance of about 1.2 million kilometers and a total duration of 48,000+ hours. These trajectories were recorded by different GPS loggers and GPS-phones, and have a variety of sampling rates. 91 percent of the trajectories are logged in a dense representation, e.g. every 1~5 seconds or every 5~10 meters per point.\nThis dataset consists of a broad range of users’ outdoor movements, including not only life routines like go home and go to work but also some entertainments and sports activities, such as shopping, sightseeing, dining, hiking, and cycling.\nThe goal is to build a model that can predict the transportation mode of a trajectory based on the GPS data. To build this model, you will use the a labelled subset of the data:\n73 users have labeled their trajectories with transportation mode, such as driving, taking a bus, riding a bike and walking. You will use these as labels, and build features to predict these labels from the movement parameters (such as speed, acceleration, sinuosity).\n\n\n\n\nReferences\n\nZheng, Yu, Hao Fu, Xing Xie, Wei-Ying Ma, and Quannan Li. 2011. Geolife GPS Trajectory Dataset - User Guide. Geolife GPS trajectories 1.1. https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/."
+  },
+  {
+    "objectID": "slides-tasks.html",
+    "href": "slides-tasks.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Vector Deepdive\n\nTopological Relations\nDuckDB\nVector Deepdive Tasks"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#vorausgesetzte-module",
+    "href": "Modulbeschreibung.html#vorausgesetzte-module",
+    "title": "Spatiotemporal Datascience",
+    "section": "Vorausgesetzte Module",
+    "text": "Vorausgesetzte Module\n\nDatenzentriertes Programmieren\nGIS and Geodatabases"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#zu-erreichende-kompetenzen",
+    "href": "Modulbeschreibung.html#zu-erreichende-kompetenzen",
+    "title": "Spatiotemporal Datascience",
+    "section": "Zu erreichende Kompetenzen",
+    "text": "Zu erreichende Kompetenzen\nFachliche Kompetenzen\nDie Studierenden …\n\n… kennen ein breites Spektrum an spezialisierten Geodatenformaten (die Klassiker und die neuesten) und deren spezifische Anwendungsfälle, Anforderungen, Stärken und Schwächen\n… können mittlere bis große Geodatensätze mit Hilfe von Geodaten-Skripting-Software verarbeiten und analysieren.\n\n… können umfassende räumliche Datenbanken abfragen und wissen, wie man diese Abfragen im Hinblick auf Geschwindigkeit und Effizienz optimiert\n… verstehen fortgeschrittene Konzepte von Geodaten, z. B. räumliche Indizierung, Topologie und das dimensionserweiterte Schnittmengenmodell, einfache Merkmale, Maßstäbe, das Problem der modifizierbaren Flächeneinheiten\n\nÜberfachliche Kompetenzen:\nDie Studierenden …\n\n… können komplexe Probleme in mehrere kleineren und überschaubaren Aufgaben zerlegen und bearbeiten\n… können Lösungen für Probleme recherchieren und umsetzen, mit denen sie bisher nicht konfrontiert waren\n…können öffentlich verfügbare Daten beschaffen, analysieren und kritisieren\n\nDieser umfassende Kurs soll den Teilnehmern fortgeschrittene Fähigkeiten in der raum-zeitlichen Datenwissenschaft vermitteln und wesentliche Themen abdecken, um sich in der sich entwickelnden Landschaft der Geodatenverarbeitung und -analyse zurechtzufinden und zu behaupten. Jedes Thema kombiniert theoretisches Wissen mit praktischen Übungen, um sicherzustellen, dass die Teilnehmer gut vorbereitet sind, um reale Herausforderungen in diesem Bereich zu bewältigen."
+  },
+  {
+    "objectID": "Modulbeschreibung.html#inhalt-des-moduls",
+    "href": "Modulbeschreibung.html#inhalt-des-moduls",
+    "title": "Spatiotemporal Datascience",
+    "section": "Inhalt des Moduls",
+    "text": "Inhalt des Moduls\n\nGrundlagen der fortgeschrittenen Datenverarbeitung\n\nEinführung in die klassischen und modernen Geodatenformate\nPraktische Übungen für effiziente Datenverarbeitungstechniken\nFallstudien, die reale Anwendungen zeigen\n\nRäumliche Optimierungstechniken\n\nErforschung räumlicher Indizierungsmethoden\nPraktische Implementierung zur Verbesserung der Datenverarbeitungsleistung\nStrategien zur Optimierung von räumlichen Abfragen und Analysen\n\nIntegration mit Big-Data-Technologien\n\nÜberblick über Big-Data-Technologien im Kontext der Geodatenverarbeitung\nIntegrationsstrategien für die nahtlose Analyse mit großen Datenbeständen\nPraktische Anwendungen und Anwendungsfälle\n\nMaschinelles Lernen für raumzeitliche Patterns\n\nEinführung in Algorithmen des maschinellen Lernens, zugeschnitten auf Geodaten\nPraktische Übungen zur Mustererkennung und Trendanalyse\nBeispiele aus der Praxis, die die Auswirkungen des maschinellen Lernens in raumzeitlichen Kontexten veranschaulichen\n\nGeospatial (REST) APIs und Data Science Workflows\n\nVerstehen der Rolle von Geospatial APIs in DataScience\nPraktische Übungen zur Nutzung von APIs für verbesserten Datenzugang und –Analyse\nIntegration von Geospatial (REST) APIs in umfassende Data Science Workflows"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#unterrichtsmethoden",
+    "href": "Modulbeschreibung.html#unterrichtsmethoden",
+    "title": "Spatiotemporal Datascience",
+    "section": "Unterrichtsmethoden",
+    "text": "Unterrichtsmethoden\n\nTheoretische Grundlagen und Konzepte werden mittels Vorlesungen, Seminare und Leseaufträge vermittelt.\nPraktische Fähigkeiten werden durch angeleitete Übungen erworben, wobei vorhandene Online-Ressourcen genutzt werden, sofern verfügbar.\nProjektarbeit als Einzel- oder Partnerarbeit, Coaching durch die Lehrkräfte während der Projektdurchführung"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#digitale-lernressourcen",
+    "href": "Modulbeschreibung.html#digitale-lernressourcen",
+    "title": "Spatiotemporal Datascience",
+    "section": "Digitale Lernressourcen",
+    "text": "Digitale Lernressourcen\n\nMoodle\nLern- und Instruktionsvideos\nOnline Tutorials und Benutzerplattformen\nFallstudien"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#unterrichtsgliederung-gesamtaufwand",
+    "href": "Modulbeschreibung.html#unterrichtsgliederung-gesamtaufwand",
+    "title": "Spatiotemporal Datascience",
+    "section": "Unterrichtsgliederung / Gesamtaufwand",
+    "text": "Unterrichtsgliederung / Gesamtaufwand\n\nKontaktstudium 28\nBegleitetes Selbststudium 14\nAutonomes Selbststudium 18\nTotal Workload 60"
+  },
+  {
+    "objectID": "Modulbeschreibung.html#movement-analysis",
+    "href": "Modulbeschreibung.html#movement-analysis",
+    "title": "Spatiotemporal Datascience",
+    "section": "Movement Analysis",
+    "text": "Movement Analysis\nPart 1\nTheorie: Vor allem Patterns und dann etwas zu Bewegungsparameter und Travel Mode Detection Praxis: Travel Mode detection aus Adv. Env. Stat\nPart 2\nContext: Travel Mode Detection mit Context information"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#raster-data-types",
+    "href": "raster-deepdive-datatypes.html#raster-data-types",
+    "title": "Data types / transformations",
+    "section": "Raster data types",
+    "text": "Raster data types\n\nWhile R and Python have a variety of data types including character strings, raster data is always stored as numeric\nHowever, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required\nThe choice of data type can have a significant impact on the size of the file and the precision of the data stored\nSince raster data is powered by GDAL, most raster based software (including R and Python) use the same data types when writing the file to disk\nThe numeric data types are supported by gdal are summarized in Table 1\n\n\n\n\nTable 1: The possible ranges of different datatypes in gdal (source: Amatulli 2024)\n\n\n\n\n\n\n\n\n\n\n\n\nData type\nMinimum\nMaximum\nSize1\nFactor\n\n\n\n\nByte\n0\n255\n39M\n1x\n\n\nUInt16\n0\n65,535\n78M\n2x\n\n\nInt16 / CInt16\n-32,768\n32,767\n78M\n2x\n\n\nUInt32\n0\n4,294,967,295\n155M\n~4x\n\n\nInt32 / CInt32\n-2,147,483,648\n2,147,483,647\n155M\n~4x\n\n\nFloat32 / CFloat32\n-3.4E38\n3.4E38\n155M\n~4x\n\n\nFloat64 / CFloat64\n-1.79E308\n1.79E308\n309M\n~8x\n\n\n\n\n\n\n\n\nIf you store categorical data, use integer datatype and store the corespondence in the metadata\nAlways be minimalistic about which datatype you need.\nQuestion if you have a continuous value from 0 to 1, which datatype do you use?\n\nNot Float32! But Multiply by 100 and use Byte or by 1000 (if you need more precision) and use UInt16\n\nQuestion: if you are measuring temperature, and your values are floating point ranging is -20 to +40 degrees, what datatype are you going to use?\n\nNot CFloat32!\nMultiply by 100 and use CInt16\n\nQuestion: if you compute NDVI and have values in the range 0 - 1, what datatype do you use?\n\nNot Float32, but not CInt16 either:\nTransform the values to 0 - 255\n\n\n\nDifference in file size using constant dataset (same values and resolution) and varying the datatype"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#choosing-a-data-type",
+    "href": "raster-deepdive-datatypes.html#choosing-a-data-type",
+    "title": "Data types / transformations",
+    "section": "Choosing a data type",
+    "text": "Choosing a data type\n\nTo minimize file size, it’s important to choose the data type that best fits the range of values in the raster\nAt a first glance, it might seem that the numeric values we measured / calculated determine the datatype we use\nHowever, we can transform the values to a different range to fit a different datatype\nExample 1: Fraction values ranging from 0 to 1\n\nIt might seem that we need to use Float32 to store these values.\nHowever, we can turn fraction into percentages and store them as Byte datatype.\n\nExample 2: NDVI values ranging from -1 to 1\n\nIt might seem that we need to use CFloat32 to store these values.\nHowever, we can transform (rescale) these values to the range 0 - 255 and store them as Byte datatype."
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#rescaling-transforming-values-to-0---255",
+    "href": "raster-deepdive-datatypes.html#rescaling-transforming-values-to-0---255",
+    "title": "Data types / transformations",
+    "section": "Rescaling / Transforming values to 0 - 255",
+    "text": "Rescaling / Transforming values to 0 - 255\nFrom Wikipedia:\n\nTo rescale a range between an arbitrary set of values [a, b], the formula becomes: \\[x' = a + \\frac{(x-min(x))\\times(b - a)}{max(x)-min(x)}\\]\n\nFor the NDVI usecase, we can consider:\n\n\\(x'\\) to be the stored value\n\\(x\\) to be the measured value\n\\(a\\) and \\(b\\) to be the maximum, minimum value of Byte (0 and 255 respectively)\n\\(min(x)\\) and \\(max(x)\\) the maximum and minimum measured values (-1 and 1 respectively)\n\nWe can use these values and simplify the formula as follows:\n\\[\\begin{align}\n\nx' &= 0 + \\frac{(x+1)\\times 255}{2} \\\\\n\nx' &= \\frac{255x+255}{2} \\\\\n\nx' &= 127.5x+127.5 \\\\\n\n\\end{align}\\]"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#rescaling-ndvi-values",
+    "href": "raster-deepdive-datatypes.html#rescaling-ndvi-values",
+    "title": "Data types / transformations",
+    "section": "Rescaling NDVI values",
+    "text": "Rescaling NDVI values\n\nWe can now use this formula \\(x' = 127.5x+127.5\\) to rescale NDVI values to the range 0 - 255\nSo, rather than storing the NDVI value 0.2, for example, we store the value 153\nThis rescaling is determined by two values: scale and offset (127.5 for both values in our case)"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#precision",
+    "href": "raster-deepdive-datatypes.html#precision",
+    "title": "Data types / transformations",
+    "section": "Precision",
+    "text": "Precision\nNote that this transformation to 255 values limits our precision:\n\nOur values are now limited to in their precision, since we only have 255 possible values\nWe can calculate the available precision like so: \\(\\frac{max(x)-min(x)}{b-a}\\)\nIn our case this is \\(\\frac{1 - (-1)}{255-0} = 0.0078\\).\nAny measured / calculated NDVI value will be rounded to a multiple of 0.0078."
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-vectors",
+    "href": "raster-deepdive-datatypes.html#r-implementation-for-vectors",
+    "title": "Data types / transformations",
+    "section": "R Implementation for vectors",
+    "text": "R Implementation for vectors\n\nA generic way to implement this in R is as follows:\n\n\nscale_minmax &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x) \n  max_x = max(x) \n  a + (x - min_x) * (b - a) / (max_x - min_x)\n}\n\nTake the following example:\n\n# this creates 100 random NDVI values between -1 and 1\nndvi_measured &lt;- runif(100, -1, 1)\n\nndvi_stored &lt;- scale_minmax(ndvi_measured)\n\ntibble(ndvi_measured, ndvi_stored) |&gt;\n  ggplot(aes(ndvi_measured, ndvi_stored)) + \n  geom_line(col = \"grey\") +\n  geom_point() +\n  labs(x = \"Measured NDVI (-1 to +1)\", y = \"Stored value (0 to 255)\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#restoring-the-original-values",
+    "href": "raster-deepdive-datatypes.html#restoring-the-original-values",
+    "title": "Data types / transformations",
+    "section": "Restoring the original values",
+    "text": "Restoring the original values\n\nImagine you stored the NDVI values in the range 0 - 255, stored these values in a Geotiff and sent it to a colleague.\nTo restore the original NDVI values the transformation (\\(x' = 127x+127.5\\)) needs to be known\nMore precisely, the scale and offset values need to be known\nWe can simply invert the transformation to get the original values back: \\(x = \\frac{x'-127.5}{127.5}\\)"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-i",
+    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-i",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters I",
+    "text": "R implementation for rasters I\n\nSince rescaling values is a common operation, it is supported by GDAL and therefore most raster libraries\nRather than transforming our values in memory, we can transform them when writing the raster to disk.\nFor this, we can use the arguments scale = and offset = in the writeRaster function\nTo use these arguments we need to calculate the scale and offset values first\nRewriting the formula above, we can calculate scale and offset:\n\n\\[\\begin{align}\n\\text{scale} &= \\frac{b - a}{max(x)-min(x)} \\\\\n\\text{offset} &= \\frac{a \\times max(x) - b \\times min(x)}{max(x)-min(x)}\n\\end{align}\\]\n\nTo implement this in R, I create a function: get_scale_offset:\n\n\nget_scale_offset &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x)\n  max_x = max(x)\n  \n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  list(\"scale\" = scale, \"offset\" = offset)\n}\n\n\n\nget_scale_offset(ndvi_measured)\n\n$scale\n[1] 130.0526\n\n$offset\n[1] 129.1798"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-ii",
+    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-ii",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters II",
+    "text": "R implementation for rasters II\n\nThe new function get_scale_offset works nicely with vectors, but not with rasters\nThe reason it does not work for raster is that min(x) (and max(x)) are local and not global functions\n\nThey return the minimum / maximum value per cell over all bands, not the global minimum / maximum value\nTo calculate the global minimum and maximum value, we can either use global, or the slightly faster minmax function\n\nAdditionally, the writeRaster function will divide by scale and subtract offset from the values (see ?writeRaster), so we need to invert the two values\nThis is how this is implemented in R:\n\n\nget_scale_offset2 &lt;- function(\n    x, \n    a = 0,          \n    b = 255         \n    ){\n  library(terra)\n  min_max = minmax(x) \n  # careful, this function is currently designed for single band rasters only\n  min_x &lt;- min_max[1,1]\n  max_x &lt;- min_max[2,1]\n\n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  scale_inverted &lt;- 1/scale           # invert the scale, since writeRaster divides by scale\n  offset_inverted &lt;- offset * -1       # invert the offset, since writeRaster subtracts the offset\n\n  \n  list(\"scale\" = scale, \"offset\" = offset, \"scale_inverted\" = scale_inverted, offset_inverted = offset_inverted)\n\n}"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example",
+    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters: example",
+    "text": "R implementation for rasters: example\n\nLet’s import a raster, calculate the scale and offset values and use these values to write to disk\n\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package=\"terra\"))\n\nplot(elev, main = paste(minmax(elev),collapse = \"-\"))\n\n\n\nscale_offset &lt;- get_scale_offset2(elev)\n\n# Note: this implementation leads to NA's due to floating point errors. \n# 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06\n# I haven't found a solution for this yet.\nwriteRaster(\n  elev, \n  \"data-out/INT1U.tif\",\n  datatype = \"INT1U\",\n  overwrite = TRUE, \n  scale = scale_offset$scale_inverted, \n  offset = scale_offset$offset_inverted\n  )"
+  },
+  {
+    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example-1",
+    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example-1",
+    "title": "Data types / transformations",
+    "section": "R implementation for rasters: example",
+    "text": "R implementation for rasters: example\n\nSince GDAL stores the scale and offset values in the metadata, any software powered by GDAL will restore the original values on import\nIn other words, if you run rast(\"data-out/INT1U.tif\") you will not notice the values were internally stored using 0 - 255. Instead, you will retrieve the original values.\nTo finish off, let’s compare the file sizes of the raster stored as INT1U (Byte) and FLT8S (Float32)\n\n\n\n[1] 0.5366244\n\n\n\n\n\n\nAmatulli, Giuseppe. 2024. Geocomputation and Machine Learning for Environmental Applications. Http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html."
   },
   {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Egenhofer, Max, and John Herring. 1990. “A Mathematical Framework\nfor the Definition of Topological Relations.” Proc. The\nFourth International Symposium on Spatial Data Handing, 803–13.",
-    "crumbs": [
-      "References"
-    ]
+    "text": "References"
+  },
+  {
+    "objectID": "vector-deepdive-task.html",
+    "href": "vector-deepdive-task.html",
+    "title": "🚀 Tasks",
+    "section": "",
+    "text": "Important\n\n\n\nDue date for the tasks are listed in the schedule\nFollow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Solve the tasks in a file named index.qmd."
+  },
+  {
+    "objectID": "vector-deepdive-task.html#sec-vec-basic",
+    "href": "vector-deepdive-task.html#sec-vec-basic",
+    "title": "🚀 Tasks",
+    "section": "Task 1",
+    "text": "Task 1\nDownload the datasets swissTLM3D and swissboundaries3d from swisstopo. Using swissTLM3d and swissboundaries3d, calculate the percentage of area covered by forest per canton. Visualize the results (in a map and / or a plot).\nRender the document using quarto preview. Publish your result using quarto publish gh-pages"
+  },
+  {
+    "objectID": "vector-deepdive-task.html#task-3",
+    "href": "vector-deepdive-task.html#task-3",
+    "title": "🚀 Tasks",
+    "section": "Task 3",
+    "text": "Task 3\nWithout consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in Figure 1.\nConcentrate on the boundary-boundary intersection. Note:\n\nNo intersection: F\nPoint intersection: 0\nLine intersetion: 1\nAny intersection: *\n\nThe 3x3 “chessboard” is available on moodle.\n\n\n\n\n\n\n\n\n\n\n\n\n(a) King’s case (all fields)\n\n\n\n\n\n\n\n\n\n\n\n(b) Bishop’s case (diagonal fields)\n\n\n\n\n\n\n\nFigure 1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals"
   }
 ]

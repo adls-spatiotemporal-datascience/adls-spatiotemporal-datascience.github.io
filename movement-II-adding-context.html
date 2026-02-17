@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>🚀 Tasks – Spatiotemporal Datascience</title>
+<title>movement-ii-adding-context – Spatiotemporal Datascience</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -121,102 +156,165 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">🚀 Tasks</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="callout callout-style-default callout-important callout-titled">
+<section id="sec-adding-context" class="level1">
+<h1>Adding Context</h1>
+<p><a href="#sec-min-ex">Last Week</a>, we tried to predict travel mode using movement parameters only. This simple approach can potentially already lead to good results, however we’re missing out on information readily available: Environmental data.</p>
+<p>Context information such as road type, train lines, bus stops etc. can provide valuable additional information for predicting travel mode.</p>
+<p>We prepared some data from OpenStreetMap, obtained from <a href="https://extract.bbbike.org/">extract.bbbike.org/</a>. The preperation included:</p>
+<ol type="1">
+<li>Extracting highways and railway lines from the archive.</li>
+<li>Projecting the data to <code>WGS 84 / UTM zone 50N</code> (<code>EPSG:32650</code>).</li>
+<li>For highways: Add the column <code>cycleway</code> which is <code>TRUE</code> if the road segment includes tags related to cycling infrastructure.</li>
+<li>Lump the multitude of categories (column <code>highway</code> and <code>railway</code>for the respective datasets) into the most frequent 6 and 3 categories, respectively</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Due date for the tasks are listed in <a href="./index.html#tbl-schedule">the schedule</a></p>
+<p>OSM uses the term <em>highway</em> to mean roads in general, not specifically main roads. The column <code>highway</code> differentiates different types for road. See the <a href="https://wiki.openstreetmap.org/wiki/Key:highway">OSMWiki</a> for more details.</p>
 </div>
 </div>
-<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Solve the tasks in a file named <code>index.qmd</code>.</p>
-<section id="sec-vec-basic" class="level2">
-<h2 class="anchored" data-anchor-id="sec-vec-basic">Task 1</h2>
-<p>Download the datasets <a href="https://www.swisstopo.admin.ch/en/landscape-model-swisstlm3d">swissTLM3D</a> and <a href="https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d">swissboundaries3d</a> from swisstopo. Using <code>swissTLM3d</code> and <code>swissboundaries3d</code>, calculate the percentage of area covered by forest <em>per canton</em>. Visualize the results (in a map and / or a plot).</p>
-<p>Render the document using <code>quarto preview</code>. Publish your result using <code>quarto publish gh-pages</code></p>
-</section>
-<section id="task-2" class="level1">
-<h1>Task 2</h1>
-<p>We have prepared a duckdb database on moodle (<code>wald-kantone.duckdb</code>). This database contains two layers: The forest data from swissTLM3D and the canton boundaries from swissBOUNDARIES3D.</p>
-<p>Use this dataset and with the help of <a href="./vector-deepdive-duckdb.html#sec-duckdb-practice">DuckDB in practice</a>, recreate <a href="#sec-vec-basic">Task 1</a> and measure the execution time using the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a>.</p>
-<p>Compare the execution time with <a href="#sec-vec-basic">Task 1</a>. Discuss!</p>
-<section id="task-3" class="level2">
-<h2 class="anchored" data-anchor-id="task-3">Task 3</h2>
-<p>Without consulting external help, try and specify the DE-9IM string for the queen and bishop’s case as shown in <a href="#fig-chessboard-2" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<p>Concentrate on the boundary-boundary intersection. Note:</p>
-<ul>
-<li>No intersection: <code>F</code></li>
-<li>Point intersection: <code>0</code></li>
-<li>Line intersetion: <code>1</code></li>
-<li>Any intersection: <code>*</code></li>
-</ul>
-<p>The 3x3 “chessboard” is available on moodle.</p>
-<div class="cell" data-layout-nrow="1">
-<div id="fig-chessboard-2" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-1.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>gpkg <span class="ot">&lt;-</span> <span class="st">"data/week14-exercises/osm.gpkg"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(gpkg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Driver: GPKG 
+Available layers:
+  layer_name geometry_type features fields              crs_name
+1    highway   Line String    43376      8 WGS 84 / UTM zone 50N
+2    railway   Line String     4095      7 WGS 84 / UTM zone 50N</code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) King’s case (all fields)
-</figcaption>
-</figure>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>highway <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(gpkg, <span class="st">"highway"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>railway <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(gpkg, <span class="st">"railway"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chessboard-2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chessboard-2-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="vector-deepdive-task_files/figure-html/fig-chessboard-2-2.png" class="img-fluid figure-img" style="width:80.0%" data-ref-parent="fig-chessboard-2">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chessboard-2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Bishop’s case (diagonal fields)
-</figcaption>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(highway[<span class="st">"highway"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="movement-II-adding-context_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Different cases for chess piece movements. The King can move in all directions, the Bishop only on the diagonals
-</figcaption>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(railway[<span class="st">"railway"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="movement-II-adding-context_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
+<p>To use this context information as additional features, we first need to import our movement data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For illustration purposes, we will only use 500 samples</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>training_dataset <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week12-exercises/tracks_1.gpkg"</span>, <span class="at">query =</span> <span class="st">"SELECT * FROM training LIMIT 500"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"training"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can join the movement data with the context information using various methods. A simple approach could be to use the attribute data from the <em>nearest feature</em> for each datapoint.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>training_dataset_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(training_dataset,highway, <span class="at">join =</span> st_nearest_feature) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Selecting these columns is for illustration purposes</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(user_id, datetime, highway, cycleway)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>training_dataset_join</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 500 features and 4 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 452732.2 ymin: 4417605 xmax: 454778.1 ymax: 4419221
+Projected CRS: WGS 84 / UTM zone 50N
+# A tibble: 500 × 5
+   user_id datetime            highway cycleway               geom
+     &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;   &lt;lgl&gt;           &lt;POINT [m]&gt;
+ 1      10 2008-06-18 16:47:35 primary NA       (454778.1 4419210)
+ 2      10 2008-06-18 16:47:37 primary NA         (454775 4419210)
+ 3      10 2008-06-18 16:47:38 primary NA       (454772.7 4419209)
+ 4      10 2008-06-18 16:47:39 primary NA       (454769.7 4419208)
+ 5      10 2008-06-18 16:47:40 primary NA       (454765.2 4419207)
+ 6      10 2008-06-18 16:47:41 primary NA         (454760 4419205)
+ 7      10 2008-06-18 16:47:42 primary NA       (454754.7 4419204)
+ 8      10 2008-06-18 16:47:43 primary NA       (454749.4 4419203)
+ 9      10 2008-06-18 16:47:44 primary NA       (454743.9 4419204)
+10      10 2008-06-18 16:47:45 primary NA       (454737.8 4419204)
+# ℹ 490 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(training_dataset_join) <span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="st">"highway"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(highway) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>() <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="movement-II-adding-context_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For some datasets, it might make sense to calculate the distance to the closest railway line. We’ll illustrate this by using the railway data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, determine the nearest railway for every moment sample</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nearest_railway <span class="ot">&lt;-</span> <span class="fu">st_nearest_feature</span>(training_dataset_join, railway)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, we can calculate the distance to the nearest feature</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>railway_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  training_dataset_join, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  railway[nearest_railway,], </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_element =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can add this as a feature to our training data</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>training_dataset_join<span class="sc">$</span>distance_to_railway <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(railway_dist)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(training_dataset_join) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">"distance_to_railway"</span>,<span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> <span class="st">"-brewer.spectral"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="movement-II-adding-context_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In case of the example above (<em>distance to the nearest railway</em>), it would probably make sense to use a threshold value to differentiate <em>close to railway</em> vs.&nbsp;<em>far from railway</em>. In this case, we could also have just used the function <code>st_is_within_distance()</code>.</p>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
