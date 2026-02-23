@@ -248,10 +248,19 @@ writeRaster(elev, "data-out/FLT4S.tif", datatype = "FLT4S", overwrite = TRUE)
 file.size("data-out/INT1U.tif") / file.size("data-out/FLT4S.tif")
 ```
 
+---
+
+Scale and offset are visible in the file metadata — any GDAL-powered tool can read them:
+
+```{sh}
+gdalinfo data-out/INT1U.tif
+```
+
 :::{.notes}
 
 - Reading `INT1U.tif` back gives original float values — the Byte storage is transparent
 - The ratio shows how much smaller the Byte file is compared to Float32 (`FLT4S`)
+- In the gdalinfo output, look for `Type=Byte` (stored type) and `Scale`/`Offset` under Band 1
 
 :::
 
@@ -333,11 +342,20 @@ elev_back <- rast("data-out/elev_naflag.tif")
 plot(elev_back, colNA = "black")
 ```
 
+---
+
+The reserved value and its NoData label are both visible in the metadata:
+
+```{sh}
+gdalinfo data-out/elev_naflag.tif
+```
+
 :::{.notes}
 
 - `NAflag()` returns the value currently flagged as NoData; `NA` means no flag is set
 - On read, terra converts the flagged value back to R's `NA` transparently
 - `NAflag` and `datatype` are set together in `writeRaster` — they are two sides of the same coin
+- In the gdalinfo output, look for `NoData Value=255` under Band 1
 
 :::
 
@@ -398,6 +416,227 @@ gdalinfo data-out/elev_cat.tif
 - `levels()` sets the attribute table — same function as for R factors
 - `cats(elev_cat)` to inspect the table after the fact
 - On read, terra restores the levels automatically if the attribute table is embedded in the file
+
+:::
+
+
+```{r}
+#| echo: false
+
+filesize2df <- function(file, comment){
+  data.frame(
+    comment  = comment,
+    size_mb  = round(file.size(file) / 1024^2, 2)
+  )
+}
+
+bind_print <- function(...){
+  rbind(...) |>
+    dplyr::mutate(difference = paste(round((size_mb / size_mb[1] - 1) * 100), "%")) |>
+    knitr::kable(col.names = c("File", "Size (MB)", "Difference"), align = "lrr")
+}
+```
+
+# Compression
+
+## Raster file size
+
+- File size = **dimensions × bands × bytes per pixel**
+- Example: single SRTM tile, one band, `Int16` (2 bytes/pixel):
+
+$$3601 \times 3601 \times 2\,\text{B} = 25{,}934{,}402\,\text{B} \approx 25.9\,\text{MB}$$
+
+- **Compression** reduces storage by exploiting spatial redundancy in pixel values
+
+:::{.notes}
+
+- Real-world rasters often have large homogeneous regions → high redundancy → compress well
+- Redundancy is especially high in categorical rasters (e.g. land cover with few distinct values)
+
+:::
+
+
+## Lossless vs lossy
+
+|                 | **Lossless**                         | **Lossy**                     |
+| :-------------- | :----------------------------------- | :---------------------------- |
+| Data preserved? | Perfectly                            | Approximated                  |
+| Use case        | Scientific data (DEM, multispectral) | Photographic / visual imagery |
+| Examples        | LZW, DEFLATE, ZSTD, PACKBITS         | JPEG2000, WEBP                |
+
+. . .
+
+→ For scientific analysis **always use lossless** — lossy compression permanently alters pixel values
+
+:::{.notes}
+
+- WEBP supports both lossy and lossless modes depending on settings
+- Once lossy-compressed, original values cannot be recovered — important for analysis reproducibility
+- Much of this section is based on @gandhi2020 and [Paul Ramsey's GeoTIFF compression guide](https://blog.cleverelephant.ca/2015/02/geotiff-compression-for-dummies.html)
+
+:::
+
+
+## How compression works
+
+Exploit **repeated values** — store each unique value once, track its positions:
+
+|            |                                                                                         |
+| :--------- | :-------------------------------------------------------------------------------------- |
+| Original   | `100, 101, 102, 100, 100`                                                               |
+| Compressed | `100` → positions `[0, 3, 4]` <br> `101` → positions `[1]` <br> `102` → positions `[2]` |
+
+→ 5 values encoded as 3 unique values + a position list
+
+. . .
+
+Works best when data contains **many repeated or near-repeated values** (flat terrain, uniform land cover)
+
+:::{.notes}
+
+- This is a simplified illustration of dictionary / run-length encoding
+- LZW and DEFLATE use more sophisticated variants of this principle
+
+:::
+
+
+## PREDICTOR
+
+LZW, DEFLATE, and ZSTD can use a **predictor** to improve compression further:
+
+→ Store **differences** between consecutive values instead of absolute values
+
+|                |        |       |       |       |       |
+| :------------- | :----- | ----- | ----- | ----- | ----- |
+| Original       | `100`  | `101` | `102` | `100` | `100` |
+| With predictor | `100`  | `+1`  | `+1`  | `−2`  | `0`   |
+
+Small differences compress better than large absolute values
+
+. . .
+
+| Option        | Use for                  |
+| :------------ | :----------------------- |
+| `PREDICTOR=1` | No predictor (default)   |
+| `PREDICTOR=2` | Integer data (e.g. DEMs) |
+| `PREDICTOR=3` | Float data               |
+
+:::{.notes}
+
+- Predictor=2 works well for integer rasters with gradual spatial variation
+- Predictor=3 for float rasters
+- Using the wrong predictor (e.g. =3 on integer data) still works but may not compress as well
+
+:::
+
+
+## Tiling & compression costs
+
+- By default, GeoTIFF stores data **line by line** (strip layout)
+- `TILED=YES` stores data in **256 × 256 pixel blocks**
+
+→ Tiling improves random-access reads and is essential for **Cloud-Optimized GeoTIFF (COG)**
+
+. . .
+
+**Compression is not free:**
+
+- Adds CPU overhead on **write and read**
+- Good default for most scientific workflows: **`DEFLATE` + `TILED=YES`**
+
+:::{.notes}
+
+- Strip layout is fast for sequential top-to-bottom reads but slow for spatial queries on large files
+- ZSTD generally offers better ratios than DEFLATE but has less universal software support
+- COG = Cloud-Optimized GeoTIFF; tiling + overviews enable efficient streaming from cloud storage
+
+:::
+
+
+## gdal_translate
+
+[`gdal_translate`](https://gdal.org/en/stable/programs/gdal_translate.html) converts raster files between formats and applies compression:
+
+```{bash}
+gdal_translate --help
+```
+
+Key points:
+
+- Two **positional arguments**: `<input_file>` `<output_file>`
+- Compression via `-co KEY=VALUE` (**c**reation **o**ptions)
+- Options are format-specific — always check `--help`
+
+:::{.notes}
+
+- Snake case (`gdal_translate`) vs no separator (`gdalinfo`) — GDAL naming is inconsistent, always verify
+- Mutually exclusive options are shown as `[[-strict]|[-not_strict]]` in the help output
+
+:::
+
+
+## gdal_translate: baseline
+
+```{bash}
+gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif
+```
+
+```{r}
+#| echo: false
+size0 <- filesize2df("data/week5-exercises/dhm25_grid_raster.asc", "Original (ASCII)")
+size1 <- filesize2df("data-out/dhm25.tif",                         "GeoTIFF, no compression")
+bind_print(size0, size1)
+```
+
+
+## gdal_translate: + DEFLATE
+
+```{bash}
+gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif \
+  -co COMPRESS=DEFLATE
+```
+
+```{r}
+#| echo: false
+size2 <- filesize2df("data-out/dhm25_2.tif", "`COMPRESS=DEFLATE`")
+bind_print(size0, size1, size2)
+```
+
+
+## gdal_translate: + TILED
+
+```{bash}
+gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_3.tif \
+  -co COMPRESS=DEFLATE \
+  -co TILED=YES
+```
+
+```{r}
+#| echo: false
+size3 <- filesize2df("data-out/dhm25_3.tif", "`TILED=YES`")
+bind_print(size0, size1, size2, size3)
+```
+
+
+## gdal_translate: + PREDICTOR
+
+```{bash}
+gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_4.tif \
+  -co COMPRESS=DEFLATE \
+  -co TILED=YES \
+  -co PREDICTOR=3
+```
+
+```{r}
+#| echo: false
+size4 <- filesize2df("data-out/dhm25_4.tif", "`PREDICTOR=3`")
+bind_print(size0, size1, size2, size3, size4)
+```
+
+:::{.notes}
+
+- `PREDICTOR=3` for floating-point data; use `PREDICTOR=2` for integer data
+- Each row in the table adds one `-co` flag — the cumulative effect shows how the options interact
 
 :::
 
