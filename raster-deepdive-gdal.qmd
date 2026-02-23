@@ -3,233 +3,247 @@ title: "GDAL"
 engine: knitr
 ---
 
+# GDAL CLI
 
-- As mentioned previously, GDAL is the basis for most GIS Software
-- Rather than using GDAL through R or Python, we can use the GDAL CLI tool instead
-- GDAL is a software suite containing several so called [Raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
-- These are especially useful if you need faster data processing, e.g. if you have large raster files or a lot of small ones
-- You can install GDAL [using conda](https://gdal.org/en/stable/download.html#conda)
+## GDAL CLI
+
+- GDAL is the basis for most GIS software — we can also call it **directly from the terminal**
+- Ships several [raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
+- Useful for processing **large** or **many** files — avoids R/Python overhead
+- Install via conda: `conda install -c conda-forge gdal`
+
+:::{.notes}
+
+- We've already used GDAL indirectly: terra, QGIS, gdal_translate all call it under the hood
+- Direct CLI use is ideal for scripting pipelines without a full R/Python session
+
+:::
 
 
+# gdalinfo
 
-## GDALInfo
+## gdalinfo
 
-- The simplest program in GDAL is probabbly `gdalinfo`
-- It lists information about a raster dataset.
-- The simplest command to test if a CLI tool is working, is to get the version number using `--version `:
-
-
+- `gdalinfo` lists information about a raster dataset
+- Test it's installed:
 
 ```{bash}
-#| echo: true
 gdalinfo --version
 ```
 
+. . .
 
-
-### Get help
-
-- All named arguments to `gdalinfo` are listed with `[-argument]`
-- Some arguments need parameters: 
-  - For example: `-if` stands for *input format*
-  - `if Gtiff` specifies that the input is a `GeoTIFF`
-  - This allows you to be explicit about your input format, rather than GDAL guessing it from the file extension
-  - These inputs are denoted with `<>` (i.e. `[-if <format>]`)
-- Positional arguments do not have square brackets
-- A positional argument needs to be in a specific position
-- `gdalinfo` only has one position argument: `<dataset_name>`
-
+- List all arguments with `--help`:
 
 ```{bash}
-#| echo: true
 gdalinfo --help
 ```
 
+:::{.notes}
+
+- Named args shown as `[-argument]`; args requiring a value shown as `[-if <format>]`
+- Positional args have no brackets — `gdalinfo` has one: `<dataset_name>`
+- `-if <format>` lets you declare the input format explicitly rather than relying on GDAL guessing from the file extension
+
+:::
 
 
-### Get basic Information
-
-
-
+## gdalinfo: basic info
 
 ```{bash}
-#| echo: true
 gdalinfo data/week5-exercises/elev-lux.tif
 ```
 
+:::{.notes}
 
-### Get histogram
+- Output includes: driver, dimensions, CRS, origin, pixel size, bands, datatype, NoData value, scale/offset
+- This is the quickest way to inspect any raster file without opening R or Python
 
-- To calculate a histogram, we can use the argument `-hist` (see the [help page](https://gdal.org/en/stable/programs/gdalinfo.html))
-- Note: I'm piping the output into `head` and then `tail` to truncate the result
+:::
+
+
+## gdalinfo: histogram
+
+Use `-hist` to compute a value histogram per band:
 
 ```{bash}
-#| echo: true
 gdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2
 ```
 
+:::{.notes}
 
-### Get output as JSON
+- Piping through `tail | head` trims the output — the full output includes all band metadata again
+- Useful for understanding value distribution before choosing a datatype or NoData value
 
-- To get the output as a JSON, use the argument `-json`
-- JSON outputs are much easier to to parse 
-- This is especially useful if you want to use the output in a script or program
+:::
 
+
+## gdalinfo: JSON output
+
+Use `-json` for structured, machine-readable output:
 
 ```{bash}
 #| output: false
 #| echo: true
-# pipe the output to a JSON file
-gdalinfo -hist -json data/week5-exercises/elev-lux.tif  > data-out/elev-lux.json
-
+gdalinfo -hist -json data/week5-exercises/elev-lux.tif > data-out/elev-lux.json
 ```
 
+→ Open `elev-lux.json` in a browser to explore the hierarchy
 
-### Parse JSON output
+---
 
-- Open the file `elev-lux.json` in a browser to get a good idea of the hierarchy
-- Use a tool like `jq` to parse the JSON in the terminal
-- `jq` is a powerful tool for parsing JSON in the terminal
-- We can "climb" down the JSON structure using the `.` operator and the key names
-- To extract from an array, we can use `[]`
-
-
+Parse with `jq` — navigate the structure using `.key` and `[]` for arrays:
 
 ```{bash}
-#| echo: true
 gdalinfo -hist data/week5-exercises/elev-lux.tif -json | \
   jq ".bands[].min"
 ```
 
+:::{.notes}
+
+- `jq` is a command-line JSON processor: `.bands[]` selects all band objects; `.min` extracts the min field
+- `[]` iterates over an array; chaining with `.key` drills down — e.g. `.bands[].histogram.buckets[]`
+- JSON output is much easier to use in scripts than parsing raw gdalinfo text
+
+:::
 
 
+## gdalinfo: terminal histogram
 
-
-### Plots in bash
-
-- To illustrate, we extract the histogram from the data and visualize it with [bashplotlib](https://github.com/glamp/bashplotlib)
+Extract histogram buckets and visualise with [bashplotlib](https://github.com/glamp/bashplotlib):
 
 ```{bash}
 #| output: false
 #| echo: true
-gdalinfo -hist data/week5-exercises/elev-lux.tif -json | 
+gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
   jq ".bands[].histogram.buckets[]" | # <1>
   hist -w 1 -p +                      # <2>
-
 ```
 
-1. This `jq` filter extracts the raw values from the array
-2. `hist` from [bashplotlib](https://github.com/glamp/bashplotlib) creates a histogram: `-w 1` sets the width to 1 and `-p +` creates a `+` instead of a point
+1. Extract raw bucket counts from the histogram array
+2. `hist` from bashplotlib: `-w 1` sets bar width, `-p +` uses `+` as bar character
 
 ```
- 20|  +                                                                    
- 19|  +                                                                    
- 18|  +                                                                    
- 17|  +                                                                    
- 16|  +                                                                    
- 15|  +                                                                    
- 14|  +                                                                    
- 13|  +                                                                    
- 12|  +    +                                                               
- 11|  +    +                                                               
- 10| ++ ++ +                                                               
-  9| ++ ++++                  + +                                          
-  8| +++++++  +               + +                                          
-  7| ++++++++ ++++ +    ++    + +                                          
-  6| ++++++++ ++++ +   +++    + +                                          
-  5| +++++++++++++ +  ++++    + ++ +                                       
-  4| ++++++++++++++++ ++++++  + ++ ++     +                                
-  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              
-  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            
+ 20|  +
+ 19|  +
+ 18|  +
+ 17|  +
+ 16|  +
+ 15|  +
+ 14|  +
+ 13|  +
+ 12|  +    +
+ 11|  +    +
+ 10| ++ ++ +
+  9| ++ ++++                  + +
+  8| +++++++  +               + +
+  7| ++++++++ ++++ +    ++    + +
+  6| ++++++++ ++++ +   +++    + +
+  5| +++++++++++++ +  ++++    + ++ +
+  4| ++++++++++++++++ ++++++  + ++ ++     +
+  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +
+  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +
   1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++
     ----------------------------------------------------------------------
 ```
 
+:::{.notes}
 
-### Getting the CRS
+- Install bashplotlib with `pip install bashplotlib`
+- Useful for quick EDA directly in the terminal without opening R/Python
 
-- To get the Coordinate Reference System (CRS) of a raster, we can filter for the entry `.coordinateSystem`
-- The specific raster does not seem to have a CRS assigned, so the output is `null`
-- We need to consult the metadata provided by the data provider to get the CRS
-- As noted [here](https://www.swisstopo.admin.ch/de/hoehenmodell-dhm25#DHM25---Download), the CRS is `LV03 LN02`, which is the old swiss coordinate system, aka [`EPSG:21781`](https://epsg.io/21781)
+:::
+
+
+## gdalinfo: CRS & extent
+
+Does this raster have a CRS?
 
 ```{bash}
-#| echo: true
 gdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq ".coordinateSystem"
 ```
 
-- We can confirm this by geetting the extent of the raster,
-- For this we can use the argument `-json` and then extract the `cornerCoordinates` key
+. . .
 
+→ No CRS — consult the data provider: DHM25 uses `LV03/LN02` = [`EPSG:21781`](https://epsg.io/21781)
 
-
+Confirm via corner coordinates:
 
 ```{bash}
-#| echo: true
 gdalinfo -json \
-  data/week5-exercises/dhm25_grid_raster.asc | 
+  data/week5-exercises/dhm25_grid_raster.asc | \
   jq ".cornerCoordinates"
 ```
 
+:::{.notes}
 
-## Gdalwarp
+- Large x/y values (e.g. 480000, 70000) are characteristic of Swiss LV03 coordinates → confirms EPSG:21781
+- If the CRS field is null, the corner coordinates often reveal the projection — know your coordinate ranges
 
-- The DHM25 raster is in the old Swiss coordinate system `EPSG:21781`
-- To transform it to the new Swiss coordinate system `EPSG:2056`, we can use the [`gdalwarp`](https://gdal.org/en/stable/programs/gdalwarp.html) program
-
-
-- Note that `gdalwarp` has two positional arguments: 
-  - `<src_dataset_name>...` and `<dst_dataset_name>`
-  - The dots indicate that you can input multiple data sources
+:::
 
 
+# gdalwarp
+
+## gdalwarp
+
+- [`gdalwarp`](https://gdal.org/en/stable/programs/gdalwarp.html) reprojects and transforms raster data
+- Two positional arguments: `<src_dataset_name>...` and `<dst_dataset_name>`
+  - `...` indicates multiple input sources are accepted (e.g. for mosaicking)
 
 ```{bash}
-#| echo: true
 gdalwarp --help
 ```
 
+:::{.notes}
 
-## Reproject / Transform Raster
+- gdalwarp can also mosaic, clip, and resample — reprojection is just one use case
+- Key flags: `-s_srs` (source CRS), `-t_srs` (target CRS), `-r` (resampling method)
 
-- Since our data has no CRS assigned, we need to specify the source CRS using `-s_srs` 
-- The EPSG code for the new Swiss coordinate system is `2056`, which we will provide as the target CRS using `-t_srs`
-- We recommend using geotiff rather than ascii output
+:::
 
+
+## gdalwarp: reproject
+
+DHM25 has no embedded CRS → specify source and target explicitly:
 
 ```{bash}
 #| eval: false
-#| echo: true
 gdalwarp -s_srs EPSG:21781 \
-  -t_srs EPSG:2056 \ 
+  -t_srs EPSG:2056 \
   data/week5-exercises/dhm25_grid_raster.asc \
   data-out/dhm25.tif
-
 ```
-
-
 
 ```
 0...10...20...30...40...50...60...70...80...90...100 - done.
 ```
 
-## Check the CRS
+:::{.notes}
 
-- We can now check the CRS on our created dataset
+- EPSG:21781 = old Swiss coordinate system (LV03 / CH1903)
+- EPSG:2056 = new Swiss coordinate system (LV95 / CH1903+)
+- Output as GeoTIFF — unlike ASC, it supports embedded CRS metadata
+
+:::
+
+
+## gdalwarp: verify
+
+Check that the CRS and extent are correct on the output file:
 
 ```{bash}
-#| echo: true
 gdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45
 ```
 
-<br class ="br">
-
-- As well as the extent
-- (note how the values have changed)
-
 ```{bash}
-#| echo: true
-gdalinfo -json data-out/dhm25.tif | 
+gdalinfo -json data-out/dhm25.tif | \
   jq ".cornerCoordinates"
 ```
 
+:::{.notes}
+
+- Corner coordinates should now be in LV95 range: easting ~2.6M, northing ~1.2M
+- Compare to the original ASC output — the shift in values confirms the reprojection worked
+
+:::
