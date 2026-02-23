@@ -578,13 +578,14 @@ Key points:
 ## gdal_translate: baseline
 
 ```{bash}
+#| eval: false
 gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif
 ```
 
 ```{r}
 #| echo: false
 size0 <- filesize2df("data/week5-exercises/dhm25_grid_raster.asc", "Original (ASCII)")
-size1 <- filesize2df("data-out/dhm25.tif",                         "GeoTIFF, no compression")
+size1 <- filesize2df("data-out/dhm25.tif", "GeoTIFF, no compression")
 bind_print(size0, size1)
 ```
 
@@ -592,6 +593,7 @@ bind_print(size0, size1)
 ## gdal_translate: + DEFLATE
 
 ```{bash}
+#| eval: false
 gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif \
   -co COMPRESS=DEFLATE
 ```
@@ -606,6 +608,7 @@ bind_print(size0, size1, size2)
 ## gdal_translate: + TILED
 
 ```{bash}
+#| eval: false
 gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_3.tif \
   -co COMPRESS=DEFLATE \
   -co TILED=YES
@@ -621,6 +624,7 @@ bind_print(size0, size1, size2, size3)
 ## gdal_translate: + PREDICTOR
 
 ```{bash}
+#| eval: false
 gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_4.tif \
   -co COMPRESS=DEFLATE \
   -co TILED=YES \
@@ -637,6 +641,105 @@ bind_print(size0, size1, size2, size3, size4)
 
 - `PREDICTOR=3` for floating-point data; use `PREDICTOR=2` for integer data
 - Each row in the table adds one `-co` flag — the cumulative effect shows how the options interact
+
+:::
+
+
+# Bringing it all together
+
+## Three tools, one goal
+
+All three strategies reduce on-disk file size — but they work at **different levels**:
+
+| Tool | Targets | Mechanism |
+|:-----|:--------|:----------|
+| **Datatype** | Per-pixel cost | 1 byte (`Byte`) vs 4 bytes (`Float32`) |
+| **Scale / offset** | Value range | Rescale floats to fit a smaller integer type |
+| **Compression** | Spatial redundancy | Exploit repeated values across pixels |
+
+. . .
+
+→ They are **complementary** — apply all three for maximum effect
+
+→ Order matters: choose datatype first, then compress
+
+:::{.notes}
+
+- Getting the datatype wrong means you compress a larger file to begin with
+- Scale/offset is what makes integer types viable for continuous data — without it you'd lose the value range
+- Compression then removes the spatial redundancy that remains regardless of datatype
+
+:::
+
+
+## Combined example
+
+Rows 1 & 2 reuse the `dhm25` variants from the compression section; rows 3 & 4 add scale/offset:
+
+```{r}
+#| echo: true
+library(terra)
+
+dhm <- rast("data/week5-exercises/dhm25_grid_raster.asc")
+so  <- get_scale_offset(dhm)
+
+# reuses dhm25.tif (baseline) and dhm25_4.tif (best compression) from earlier
+
+# 3. Byte + scale/offset, no compression
+writeRaster(dhm, "data-out/dhm25_byte.tif",
+            datatype = "INT1U", overwrite = TRUE,
+            scale = so$scale_inverted, offset = so$offset_inverted)
+
+# 4. Byte + scale/offset + compression
+writeRaster(dhm, "data-out/dhm25_byte_comp.tif",
+            datatype = "INT1U", overwrite = TRUE,
+            scale = so$scale_inverted, offset = so$offset_inverted,
+            gdal = c("COMPRESS=DEFLATE", "TILED=YES"))
+```
+
+---
+
+```{r}
+#| echo: false
+s0 <- filesize2df("data-out/dhm25.tif",           "GeoTIFF, no compression (baseline)")
+s1 <- filesize2df("data-out/dhm25_4.tif",         "DEFLATE + TILED + PREDICTOR")
+s2 <- filesize2df("data-out/dhm25_byte.tif",      "Byte + scale/offset")
+s3 <- filesize2df("data-out/dhm25_byte_comp.tif", "Byte + scale/offset + DEFLATE + TILED")
+bind_print(s0, s1, s2, s3)
+```
+
+:::{.notes}
+
+- Row 2 shows what compression alone buys
+- Row 3 shows what datatype reduction alone buys (scale/offset makes it possible)
+- Row 4 shows the multiplicative effect of combining both strategies
+- The two strategies are not redundant — each contributes independently
+
+:::
+
+
+## Practical checklist
+
+When writing a raster to disk:
+
+1. **What is my value range?** → choose the smallest datatype that fits
+2. **Can I rescale to fit an integer type?** → use `scale` / `offset` in `writeRaster`
+3. **Are there missing cells?** → set `NAflag` (integer types) or use NaN (float types)
+4. **Apply lossless compression:** `COMPRESS=DEFLATE` + `TILED=YES`
+   - Add `PREDICTOR=2` for integer data, `PREDICTOR=3` for float data
+
+. . .
+
+**Default recommendation for most scientific rasters:**
+
+```
+INT1U / Int16  +  scale/offset  +  DEFLATE  +  TILED=YES  +  PREDICTOR=2
+```
+
+:::{.notes}
+
+- For data that genuinely needs float precision (e.g. model outputs with many significant digits), skip the scale/offset step and use FLT4S + DEFLATE + TILED + PREDICTOR=3
+- ZSTD can replace DEFLATE for better ratios where broad software compatibility is less critical
 
 :::
 
