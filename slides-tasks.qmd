@@ -9,7 +9,7 @@ format: html
     - [Vector Deepdive Tasks](vector-deepdive-task.qmd)
 - Raster Deepdive
     - [Raster data on disk](raster-deepdive-on-disk.qmd){target="_blank"}
-    - [Tasks](raster-deepdive-task.qmd)
+    <!-- - [Tasks](raster-deepdive-task.qmd) -->
 
 :::{.content-visible when-profile="dev"}
 

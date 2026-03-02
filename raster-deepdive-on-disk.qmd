@@ -1,7 +1,6 @@
 ---
 title: "Raster data on disk"
 subtitle: "Spatiotemporal Data Science · FS26"
-engine: knitr
 ---
 
 ```{r}
@@ -18,6 +17,19 @@ library(gt)
 ```
 
 
+## Today
+
+:::{.incremental}
+1. **GDAL CLI** — what it is, when to use it, how commands are structured
+1. **Raster data types** — choosing the right type, rescaling, scale/offset
+1. **gdal raster info** — inspecting raster files from the terminal
+1. **NoData** — how missing values are stored on disk
+1. **Categorical rasters** — integer encoding + attribute tables
+1. **Compression** — lossless compression with `gdal raster convert`
+1. **Reprojection** — changing CRS with `gdal raster reproject`
+:::
+
+
 # GDAL CLI {background-color="#1269B0"}
 
 
@@ -26,11 +38,15 @@ library(gt)
 - GDAL is the basis for most GIS software — we can also call it **directly from the terminal**
 - Ships several [raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
 - Advantages over R / Python: faster, memory-efficient, composable, portable
-- Install via conda: `conda install -c conda-forge gdal`
+- Install via conda:
+
+```{.bash}
+conda install -c conda-forge gdal
+``` 
 
 :::{.notes}
 
-- We've already used GDAL indirectly: terra, QGIS, gdal_translate all call it under the hood
+- We've already used GDAL indirectly: terra, QGIS, and many other tools call it under the hood
 - "Block-by-block" means GDAL reads and writes in tiles — a 10GB raster can be processed with <1MB RAM
 - In practice: use CLI for data prep / inspection, R/Python for analysis and visualization
 
@@ -240,7 +256,7 @@ $$\boxed{x' = 127.5\,x + 127.5}$$
 
 ## Precision trade-off
 
-Storing NDVI in `Byte` limits us to 255 distinct values:
+Storing NDVI in `Byte` limits us to 256 distinct values:
 
 $$\text{precision} = \frac{\max(x) - \min(x)}{b - a} = \frac{1 - (-1)}{255 - 0} \approx 0.0078$$
 
@@ -262,7 +278,8 @@ Need finer precision? Use `UInt16` (0–65,535): $\frac{2}{65535} \approx 0.0000
 #| echo: true
 
 scale_minmax <- function(x, a = 0, b = 255) {
-  a + (x - min(x)) * (b - a) / (max(x) - min(x))
+  x_new <- a + (x - min(x)) * (b - a) / (max(x) - min(x))
+  round(x_new, 0)
 }
 
 measured_ndvi <- seq(-1, 1, 0.1)
@@ -319,31 +336,27 @@ $$\text{scale} = \frac{b - a}{\max(x) - \min(x)}, \qquad \text{offset} = \frac{a
 
 get_scale_offset <- function(x, a = 0, b = 255) {  # x must be a SpatRaster
   library(terra)
-  mm     <- minmax(x)                # <3>
-  min_x  <- mm[1, 1]
-  max_x  <- mm[2, 1]
-
-  scale  <- (b - a) / (max_x - min_x)
-  offset <- (a * max_x - b * min_x) / (max_x - min_x)
+  mm    <- minmax(x)                # <3>
+  min_x <- mm[1, 1]
+  max_x <- mm[2, 1]
 
   list(
-    scale          = scale,
-    offset         = offset,
-    scale_inverted  = 1 / scale,      # <1>
-    offset_inverted = offset * -1     # <2>
+    scale  = (max_x - min_x) / (b - a),                 # <1>
+    offset = min_x - a * (max_x - min_x) / (b - a)      # <2>
   )
 }
 ```
 
-1. `writeRaster` *divides* by scale (!)
-2. `writeRaster` *subtracts* offset (!)
+1. `writeRaster` *divides* by `scale`: `stored = (x − offset) / scale`
+2. `writeRaster` *subtracts* `offset`; for `a = 0` this simplifies to `min_x`
 3. Use the global min/max function, not per-cell (e.g. `min()`)
 
 
 :::{.notes}
 
 - `min(raster)` returns per-cell minimum over bands, NOT the global minimum → always use `minmax()` or `global()`
-- The inversion is necessary because writeRaster's convention is: stored_value = x / scale - offset (divide first, then subtract)
+- terra's writeRaster applies `stored = (x - offset) / scale`; solving for `offset` such that `min_x` maps to `a` gives `offset = min_x - a * scale`
+
 
 :::
 
@@ -369,7 +382,7 @@ so
 
 # Note: floating-point rounding may introduce NAs at boundary values
 writeRaster(elev, "data-out/INT1U.tif", datatype = "INT1U", overwrite = TRUE,
-            scale = so$scale_inverted, offset = so$offset_inverted)
+            scale = so$scale, offset = so$offset)
 
 writeRaster(elev, "data-out/FLT4S.tif", datatype = "FLT4S", overwrite = TRUE)
 
@@ -385,7 +398,7 @@ file.size("data-out/INT1U.tif") / file.size("data-out/FLT4S.tif")
 Scale and offset are visible in the file metadata — any GDAL-powered tool can read them:
 
 ```{bash}
-gdal raster info -f text data-out/INT1U.tif
+gdal raster info -f json data-out/INT1U.tif | jq '.bands[] | {scale, offset}'
 ```
 
 :::{.notes}
@@ -594,9 +607,13 @@ NAflag(elev)   # current NoData reserved value
 #| echo: true
 #| fig-cap: "Note that the maximum elevation values are now NA"
 #| classes: .center
+
+# Only use 0 - 254, so that 255 is availalable for "NoData"
+so <- get_scale_offset(elev, a = 0, b = 254)
+
 # write with an explicit NoData flag
 writeRaster(elev, "data-out/elev_naflag.tif", datatype = "INT1U", overwrite = TRUE,
-            scale = so$scale_inverted, offset = so$offset_inverted)
+            scale = so$scale, offset = so$offset, NAflag = 255)
 
 # read back — terra interprets 255 as NA automatically
 elev_back <- rast("data-out/elev_naflag.tif")
@@ -608,7 +625,7 @@ plot(elev_back, colNA = "black")
 The reserved value and its NoData label are both visible in the metadata:
 
 ```{bash}
-gdal raster info -f text data-out/elev_naflag.tif
+gdal raster info -f json data-out/elev_naflag.tif | jq ".bands[].noDataValue"
 ```
 
 :::{.notes}
@@ -670,7 +687,7 @@ writeRaster(elev_cat, "data-out/elev_cat.tif", datatype = "INT1U", overwrite = T
 []{.gap}
 
 ```{bash}
-gdal raster info -f text data-out/elev_cat.tif
+gdal raster info -f json data-out/elev_cat.tif | jq '.bands[].categories[0:3]'
 ```
 :::{.notes}
 
@@ -814,33 +831,32 @@ Small differences compress better than large absolute values
 :::
 
 
-## gdal_translate
+## gdal raster convert
 
-[`gdal_translate`](https://gdal.org/en/stable/programs/gdal_translate.html) converts raster files between formats and applies compression:
+[`gdal raster convert`](https://gdal.org/en/stable/programs/gdal_raster_convert.html) converts raster files between formats and applies compression:
 
 ```{bash}
-gdal_translate --help
+gdal raster convert --help
 ```
 
 Key points:
 
 - Two **positional arguments**: `<input_file>` `<output_file>`
-- Compression via `-co KEY=VALUE` (**c**reation **o**ptions)
+- Compression via `--co KEY=VALUE` (**c**reation **o**ptions)
 - Options are format-specific — always check `--help`
 
 :::{.notes}
 
-- Snake case (`gdal_translate`) vs no separator (`gdalinfo`) — GDAL naming is inconsistent, always verify
 - Mutually exclusive options are shown as `[[-strict]|[-not_strict]]` in the help output
 
 :::
 
 
-## gdal_translate: baseline
+## gdal raster convert: baseline
 
 ```{bash}
 #| eval: false
-gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25.tif
+gdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25.tif
 ```
 
 ```{r}
@@ -851,12 +867,12 @@ bind_print(size0, size1)
 ```
 
 
-## gdal_translate: + DEFLATE
+## gdal raster convert: + DEFLATE
 
 ```{bash}
 #| eval: false
-gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_2.tif \
-  -co COMPRESS=DEFLATE
+gdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_2.tif \
+  --co COMPRESS=DEFLATE
 ```
 
 ```{r}
@@ -866,13 +882,13 @@ bind_print(size0, size1, size2)
 ```
 
 
-## gdal_translate: + TILED
+## gdal raster convert: + TILED
 
 ```{bash}
 #| eval: false
-gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_3.tif \
-  -co COMPRESS=DEFLATE \
-  -co TILED=YES
+gdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_3.tif \
+  --co COMPRESS=DEFLATE \
+  --co TILED=YES
 ```
 
 ```{r}
@@ -882,14 +898,14 @@ bind_print(size0, size1, size2, size3)
 ```
 
 
-## gdal_translate: + PREDICTOR
+## gdal raster convert: + PREDICTOR
 
 ```{bash}
 #| eval: false
-gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_4.tif \
-  -co COMPRESS=DEFLATE \
-  -co TILED=YES \
-  -co PREDICTOR=3
+gdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_4.tif \
+  --co COMPRESS=DEFLATE \
+  --co TILED=YES \
+  --co PREDICTOR=3
 ```
 
 ```{r}
@@ -1036,7 +1052,7 @@ All three strategies reduce on-disk file size — but they work at **different l
 :::
 
 
-## Combined example
+## Combined example {visibility="hidden"}
 
 Rows 1 & 2 reuse the `dhm25` variants from the compression section; rows 3 & 4 add scale/offset:
 
@@ -1052,16 +1068,16 @@ so  <- get_scale_offset(dhm)
 # 3. Byte + scale/offset, no compression
 writeRaster(dhm, "data-out/dhm25_byte.tif",
             datatype = "INT1U", overwrite = TRUE,
-            scale = so$scale_inverted, offset = so$offset_inverted)
+            scale = so$scale, offset = so$offset)
 
 # 4. Byte + scale/offset + compression
 writeRaster(dhm, "data-out/dhm25_byte_comp.tif",
             datatype = "INT1U", overwrite = TRUE,
-            scale = so$scale_inverted, offset = so$offset_inverted,
+            scale = so$scale, offset = so$offset,
             gdal = c("COMPRESS=DEFLATE", "TILED=YES"))
 ```
 
----
+## {visibility="hidden"}
 
 ```{r}
 #| echo: false
