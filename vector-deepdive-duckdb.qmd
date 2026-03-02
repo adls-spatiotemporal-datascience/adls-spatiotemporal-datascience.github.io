@@ -418,7 +418,7 @@ library(duckdb)
 
 con <- dbConnect(
   duckdb(),
-  dbdir = "data/week4-exercises/wald-kantone.duckdb",
+  dbdir = "data/vector-deepdive/wald-kantone.duckdb",
   read_only = TRUE
 )
 

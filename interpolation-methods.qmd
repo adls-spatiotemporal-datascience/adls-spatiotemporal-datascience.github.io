@@ -36,7 +36,7 @@ Play around with `maxdist`, `nmin` /`nmax`and `idp`. Convert the resulting `sf` 
 ```{r}
 #| eval: false
 library(sf)
-luftqualitaet <- st_read("data/luftqualitaet/luftqualitaet.gpkg")
+luftqualitaet <- st_read("data/interpolation/luftqualitaet.gpkg")
 samples <- st_make_grid(luftqualitaet,10000,what = "centers")
 
 

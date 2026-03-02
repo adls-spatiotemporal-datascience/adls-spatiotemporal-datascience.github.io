@@ -16,14 +16,14 @@ The dataset `tracks_1.gpkg` contains the training, testing and validation data a
 library(sf)         # for spatial data handling
 
 # List layers in the geopackage
-st_layers("data/week12-exercises/tracks_1.gpkg")
+st_layers("data/movement-I/tracks_1.gpkg")
 
 
 library(dplyr)      # for data manipulation
 
-training_dataset <- read_sf("data/week12-exercises/tracks_1.gpkg", layer = "training") |> 
+training_dataset <- read_sf("data/movement-I/tracks_1.gpkg", layer = "training") |> 
   mutate(data = "training")
-testing_dataset <- read_sf("data/week12-exercises/tracks_1.gpkg", layer = "testing") |> 
+testing_dataset <- read_sf("data/movement-I/tracks_1.gpkg", layer = "testing") |> 
   mutate(data = "testing")
 
 

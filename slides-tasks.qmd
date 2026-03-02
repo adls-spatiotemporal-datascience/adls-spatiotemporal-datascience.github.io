@@ -1,0 +1,34 @@
+---
+title: "Slides"
+format: html
+---
+
+- Vector Deepdive
+    - [Topological Relations](vector-deepdive-topological-rel.qmd){target="_blank"}
+    - [DuckDB](vector-deepdive-duckdb.qmd){target="_blank"}
+    - [Vector Deepdive Tasks](vector-deepdive-task.qmd)
+- Raster Deepdive
+    - [GDAL](raster-deepdive-gdal.qmd){target="_blank"}
+    - [Data Storage](raster-deepdive-data-storage.qmd){target="_blank"}
+    - [Tasks](raster-deepdive-task.qmd)
+
+:::{.content-visible when-profile="dev"}
+
+
+- Interpolation / Density Estimation
+    - [Density Estimation](interpolation-density.qmd){target="_blank"}
+    - [Interpolation Methods](interpolation-methods.qmd){target="_blank"}
+    - [Tasks](interpolation-task.qmd)
+- Network Centrality
+    - [Network Centrality Tasks](network-centrality-task.qmd)
+    - [Network Routing Tasks](network-routing-task.qmd)
+- Movement Analysis I
+    - [Tasks](movement-I-tasks.qmd)
+- Movement Analysis II
+    - [Tasks](movement-II-tasks.qmd)
+:::
+
+
+
+
+

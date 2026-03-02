@@ -12,15 +12,19 @@ website:
         href: syllabus.qmd
       - text: Submission
         href: submission.qmd
-      - text: Slides
-        href: slides.qmd
-      - text: Tasks
-        href: tasks.qmd
+      - text: Slides + Tasks
+        href: slides-tasks.qmd
 
 format:
   revealjs-clean:
     smaller: true
     slide-number: c/t
+    logo: images/zhaw_rgb.png
+    css:
+      - auxilliary/style.css
+      - auxilliary/style-terminal.css
+    code-line-numbers: false
+    highlight-style: atom-one
 
 bibliography: auxilliary/references.bib
 execute:

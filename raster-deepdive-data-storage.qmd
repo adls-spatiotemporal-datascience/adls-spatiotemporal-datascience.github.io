@@ -579,12 +579,12 @@ Key points:
 
 ```{bash}
 #| eval: false
-gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25.tif
+gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25.tif
 ```
 
 ```{r}
 #| echo: false
-size0 <- filesize2df("data/week5-exercises/dhm25_grid_raster.asc", "Original (ASCII)")
+size0 <- filesize2df("data/raster-deepdive/dhm25_grid_raster.asc", "Original (ASCII)")
 size1 <- filesize2df("data-out/dhm25.tif", "GeoTIFF, no compression")
 bind_print(size0, size1)
 ```
@@ -594,7 +594,7 @@ bind_print(size0, size1)
 
 ```{bash}
 #| eval: false
-gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_2.tif \
+gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_2.tif \
   -co COMPRESS=DEFLATE
 ```
 
@@ -609,7 +609,7 @@ bind_print(size0, size1, size2)
 
 ```{bash}
 #| eval: false
-gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_3.tif \
+gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_3.tif \
   -co COMPRESS=DEFLATE \
   -co TILED=YES
 ```
@@ -625,7 +625,7 @@ bind_print(size0, size1, size2, size3)
 
 ```{bash}
 #| eval: false
-gdal_translate data/week5-exercises/dhm25_grid_raster.asc data-out/dhm25_4.tif \
+gdal_translate data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_4.tif \
   -co COMPRESS=DEFLATE \
   -co TILED=YES \
   -co PREDICTOR=3
@@ -680,7 +680,7 @@ Rows 1 & 2 reuse the `dhm25` variants from the compression section; rows 3 & 4 a
 #| echo: true
 library(terra)
 
-dhm <- rast("data/week5-exercises/dhm25_grid_raster.asc")
+dhm <- rast("data/raster-deepdive/dhm25_grid_raster.asc")
 so  <- get_scale_offset(dhm)
 
 # reuses dhm25.tif (baseline) and dhm25_4.tif (best compression) from earlier

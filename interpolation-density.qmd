@@ -29,8 +29,8 @@ To calculate the a 2D Kernel over our data, use the function `density` from the 
 #| eval: false
 
 
-rotmilan <- st_read("data/week7-exercises/rotmilan.gpkg")
-schweiz <- st_read("data/switzerland/schweiz.gpkg")
+rotmilan <- st_read("data/interpolation/rotmilan.gpkg")
+schweiz <- st_read("data/interpolation/schweiz.gpkg")
 
 library("spatstat.geom")
 library("spatstat.explore")

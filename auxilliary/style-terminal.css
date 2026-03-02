@@ -1,0 +1,8 @@
+/* Light terminal style for bash/sh code blocks */
+.reveal pre.sourceCode.bash,
+.reveal pre.sourceCode.sh {
+  background-color: #f4f4f4 !important;
+  border-left: 4px solid #888;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

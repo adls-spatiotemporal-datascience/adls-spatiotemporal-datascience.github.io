@@ -1,7 +1,0 @@
----
-title: "Tasks"
-format: html
----
-
-- [Vector Deepdive Tasks](vector-deepdive-task.qmd)
-

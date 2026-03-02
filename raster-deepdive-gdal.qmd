@@ -1,57 +1,186 @@
 ---
 title: "GDAL"
+subtitle: "Spatiotemporal Data Science · FS26"
 engine: knitr
 ---
 
-# GDAL CLI
+# GDAL CLI {background-color="#1269B0"}
+
 
 ## GDAL CLI
 
 - GDAL is the basis for most GIS software — we can also call it **directly from the terminal**
 - Ships several [raster programs](https://gdal.org/en/stable/programs/#raster-programs), each designed for a specific task
-- Useful for processing **large** or **many** files — avoids R/Python overhead
+- Advantages over R / Python: faster, memory-efficient, composable, portable
 - Install via conda: `conda install -c conda-forge gdal`
 
 :::{.notes}
 
 - We've already used GDAL indirectly: terra, QGIS, gdal_translate all call it under the hood
-- Direct CLI use is ideal for scripting pipelines without a full R/Python session
+- "Block-by-block" means GDAL reads and writes in tiles — a 10GB raster can be processed with <1MB RAM
+- In practice: use CLI for data prep / inspection, R/Python for analysis and visualization
 
 :::
 
 
-# gdalinfo
+## When does GDAL CLI shine?
 
-## gdalinfo
+:::{.incremental}
+- **Reprojection**: Block-by-block — no full load into RAM → fast!
+- **Format conversion**: no full load into RAM → fast!
+- **Extracting file info**: Instant, no environment startup — great for quick access
+- **Batch processing**: One shell loop over hundreds of files; no memory accumulation 
+- **Mosaicking**: Combining hundreds of tiles stays out of RAM entirely 
+- **Building overviews**: Purely structural file operation 
+- **Pipelines / CI**: Slots into shell scripts, Makefiles, CI/CD without an R/Python runtime 
+:::
 
-- `gdalinfo` lists information about a raster dataset
-- Test it's installed:
+:::{.notes}
 
-```{bash}
-gdalinfo --version
+- Reprojection and batch processing are the two most commonly cited by practitioners
+- "No environment startup" matters a lot in scripts: starting R just to run gdalinfo on 1000 files adds minutes of overhead
+- Overviews (pyramids) allow fast display at lower resolutions — QGIS and other tools use them automatically
+- We'll have a look at *reprojection* and *file info extraction*
+:::
+
+## Which CLI tools do you already use?
+
+. . .
+
+- `conda` — manage environments and packages
+- `pip` — install Python packages
+- `git` — version control
+
+
+:::{.notes}
+
+- Ask students to raise their hand for each one — most will have used at least 3
+- The point: they're already CLI users; GDAL is not a new paradigm, just a new tool
+- Some may also use `ssh`, `jupyter`, `docker` — worth asking
+
+:::
+
+
+## Anatomy of a CLI call
+
+```
+program    subcommand    flag  flag-value     argument
+   ↓           ↓          ↓       ↓             ↓ 
+conda     install         -c   conda-forge     gdal
+⎺⎺⎺     ⎺⎺⎺⎺⎺       ⎺⎺  ⎺⎺⎺⎺⎺⎺⎺     ⎺⎺
 ```
 
 . . .
 
-- List all arguments with `--help`:
-
-```{bash}
-gdalinfo --help
-```
+- **Program** — the tool being called
+- **Subcommand** — the action to perform (not all tools have these)
+- **Flag** — modifies behaviour; `-c` is shorthand for `--channel`
+- **Flag value** — the value passed to a flag
+- **Argument** — positional value the command operates on (no `-` prefix)
 
 :::{.notes}
 
-- Named args shown as `[-argument]`; args requiring a value shown as `[-if <format>]`
-- Positional args have no brackets — `gdalinfo` has one: `<dataset_name>`
-- `-if <format>` lets you declare the input format explicitly rather than relying on GDAL guessing from the file extension
+- Short flags (`-c`) and long flags (`--channel`) are equivalent; long flags are more readable in scripts
+- Flags can appear in any order; arguments are positional (order matters)
+- This anatomy applies to every CLI tool: `git commit -m "message"`, `quarto render --to pdf`, `gdal raster info --format json file.tif`
 
 :::
 
 
-## gdalinfo: basic info
+
+
+
+## New GDAL API
+
+- Prior to GDAL 3.11, the suite of GDAL programs had a highly inconsistent API
+- With 3.11, GDAL introduced a unified CLI entry point — `gdal <noun> <verb>`
+- The new API is great, but WIP
+- Our examples use the new API
+- See webinar [GDAL Command Line Interface Modernization ](https://youtu.be/ZKdrYm3TiBU?si=IAmioD_tCOhKgLyu)
+
+
+| Task | Old API | New API (3.11+) |
+|:-----|:--------|:---------------|
+| Inspect | `gdalinfo` | `gdal raster info` |
+| Convert | `gdal_translate` | `gdal raster convert` |
+| Reproject | `gdalwarp` | `gdal raster reproject` |
+
+
+
+
+
+
+
+
+:::{.notes}
+
+- You will see the old API in the wild — documentation, Stack Overflow answers often still use it
+- The old tools are not deprecated; new API is additive
+- Check your version: `gdal --version`
+
+:::
+
+
+## Input → output
+
+GDAL is **non-destructive by design** — it always reads from a source and writes to a new destination:
+
+```
+gdal raster reproject --dst-crs EPSG:2056 input.tif output.tif
+                                           ─────────  ──────────
+                                           source     new file, never touches source
+```
+
+. . .
+
+- The original file is **never modified**
+- Every operation requires both `<input>` and `<output>` arguments
+- Consequence: you need roughly **2× the disk space** during processing
+
+. . .
+
+**Exception:** `gdal edit` — metadata-only changes (CRS, NoData, scale/offset) can be applied in place
+
+:::{.notes}
+
+- Non-destructive is safer: if something goes wrong, the original is intact
+- `gdal edit` is useful when you just need to assign a missing CRS or fix a NoData flag without rewriting the full file
+- In pipelines, the output of one step becomes the input of the next — plan your disk usage accordingly
+
+:::
+
+
+# gdal raster info {background-color="#1269B0"}
+
+Extracting file (meta) data
+
+## gdal raster info
+
+- `gdal raster info` lists information about a raster dataset
+- We'll use `elev-lux.tif` — a small elevation model of Luxembourg — as our running example
+
+
+
+---
+
+- List all arguments with `--help`:
 
 ```{bash}
-gdalinfo data/week5-exercises/elev-lux.tif
+gdal raster info --help
+```
+
+:::{.notes}
+
+- Named args use `--flag` convention; positional arg is `<filename>`
+- Default output is JSON (text from GDAL 3.12 when run interactively) — use `--format json` to be explicit
+
+:::
+
+
+---
+
+```{bash}
+gdal raster info -f text data/raster-deepdive/elev-lux.tif    # note: -f text
 ```
 
 :::{.notes}
@@ -61,61 +190,65 @@ gdalinfo data/week5-exercises/elev-lux.tif
 
 :::
 
+## gdal raster info: Output format
 
-## gdalinfo: histogram
+- The metadata output format (`-f`) can either be `text` or to `json`
+- JSON in turn can be parsed using [`jq`](https://jqlang.org) — a lightweight command-line JSON processor
+  - Navigates JSON with `.key` (field access) and `[]` (array iteration)
+  - Install: `conda install -c conda-forge jq`
 
-Use `-hist` to compute a value histogram per band:
+
+
+## gdal raster info: histogram
+
+Use `--hist` to include a value histogram per band:
 
 ```{bash}
-gdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2
+gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif | \
+  jq ".bands[].histogram"
 ```
 
 :::{.notes}
 
-- Piping through `tail | head` trims the output — the full output includes all band metadata again
+- `.histogram` contains: `buckets` (counts per bin), `min`, `max`, `count`, `bucketSize`
 - Useful for understanding value distribution before choosing a datatype or NoData value
 
 :::
 
 
-## gdalinfo: JSON output
+## gdal raster info: JSON output
 
-Use `-json` for structured, machine-readable output:
+JSON output — pipe directly to `jq` to extract specific fields:
 
 ```{bash}
-#| output: false
-#| echo: true
-gdalinfo -hist -json data/week5-exercises/elev-lux.tif > data-out/elev-lux.json
+gdal raster info --format json data/raster-deepdive/elev-lux.tif | \
+  jq ".bands[].min"
 ```
-
-→ Open `elev-lux.json` in a browser to explore the hierarchy
 
 ---
 
-Parse with `jq` — navigate the structure using `.key` and `[]` for arrays:
+Navigate deeper by chaining `.key` and `[]` (iterates over arrays):
 
 ```{bash}
-gdalinfo -hist data/week5-exercises/elev-lux.tif -json | \
-  jq ".bands[].min"
+gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif | \
+  jq ".bands[].histogram.buckets[]"
 ```
 
 :::{.notes}
 
 - `jq` is a command-line JSON processor: `.bands[]` selects all band objects; `.min` extracts the min field
-- `[]` iterates over an array; chaining with `.key` drills down — e.g. `.bands[].histogram.buckets[]`
-- JSON output is much easier to use in scripts than parsing raw gdalinfo text
+- To explore the full structure: `gdal raster info --format json file.tif > out.json` then open in a browser or editor
 
 :::
 
 
-## gdalinfo: terminal histogram
+## gdal raster info: terminal histogram
 
 Extract histogram buckets and visualise with [bashplotlib](https://github.com/glamp/bashplotlib):
 
 ```{bash}
-#| output: false
-#| echo: true
-gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
+#| eval: false
+gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif |
   jq ".bands[].histogram.buckets[]" | # <1>
   hist -w 1 -p +                      # <2>
 ```
@@ -123,8 +256,10 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
 1. Extract raw bucket counts from the histogram array
 2. `hist` from bashplotlib: `-w 1` sets bar width, `-p +` uses `+` as bar character
 
+---
+
+
 ```
- 20|  +
  19|  +
  18|  +
  17|  +
@@ -147,6 +282,7 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
     ----------------------------------------------------------------------
 ```
 
+
 :::{.notes}
 
 - Install bashplotlib with `pip install bashplotlib`
@@ -155,23 +291,26 @@ gdalinfo -hist data/week5-exercises/elev-lux.tif -json |
 :::
 
 
-## gdalinfo: CRS & extent
+## gdal raster info: CRS & extent
 
 Does this raster have a CRS?
 
 ```{bash}
-gdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq ".coordinateSystem"
+gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
+  jq ".coordinateSystem"
 ```
 
 . . .
 
 → No CRS — consult the data provider: DHM25 uses `LV03/LN02` = [`EPSG:21781`](https://epsg.io/21781)
 
+
+---
+
 Confirm via corner coordinates:
 
 ```{bash}
-gdalinfo -json \
-  data/week5-exercises/dhm25_grid_raster.asc | \
+gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
   jq ".cornerCoordinates"
 ```
 
@@ -183,35 +322,37 @@ gdalinfo -json \
 :::
 
 
-# gdalwarp
+# gdal raster reproject {background-color="#1269B0"}
 
-## gdalwarp
+Reprojecting raster to a new CRS
 
-- [`gdalwarp`](https://gdal.org/en/stable/programs/gdalwarp.html) reprojects and transforms raster data
-- Two positional arguments: `<src_dataset_name>...` and `<dst_dataset_name>`
-  - `...` indicates multiple input sources are accepted (e.g. for mosaicking)
+## gdal raster reproject
+
+- [`gdal raster reproject`](https://gdal.org/en/stable/programs/gdal_raster_reproject.html) reprojects and transforms raster data
+- Two positional arguments: `<input>` and `<output>`
 
 ```{bash}
-gdalwarp --help
+gdal raster reproject --help
 ```
 
 :::{.notes}
 
-- gdalwarp can also mosaic, clip, and resample — reprojection is just one use case
-- Key flags: `-s_srs` (source CRS), `-t_srs` (target CRS), `-r` (resampling method)
+- gdal raster reproject can also resample — reprojection is its primary use case
+- Key flags: `--src-crs` (source CRS), `--dst-crs` (target CRS), `--resampling` (resampling method)
 
 :::
 
 
-## gdalwarp: reproject
+## gdal raster reproject: reproject
 
 DHM25 has no embedded CRS → specify source and target explicitly:
 
 ```{bash}
 #| eval: false
-gdalwarp -s_srs EPSG:21781 \
-  -t_srs EPSG:2056 \
-  data/week5-exercises/dhm25_grid_raster.asc \
+gdal raster reproject \
+  --src-crs EPSG:21781 \
+  --dst-crs EPSG:2056 \
+  data/raster-deepdive/dhm25_grid_raster.asc \
   data-out/dhm25.tif
 ```
 
@@ -228,22 +369,30 @@ gdalwarp -s_srs EPSG:21781 \
 :::
 
 
-## gdalwarp: verify
+## gdal raster reproject: verify
 
-Check that the CRS and extent are correct on the output file:
+Compare before and after — coordinates should shift from LV03 to LV95 range:
 
 ```{bash}
-gdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45
+gdal raster info --format json data-out/dhm25.tif | \
+  jq '.stac."proj:epsg"'
 ```
 
+. . .
+
 ```{bash}
-gdalinfo -json data-out/dhm25.tif | \
+gdal raster info --format json data-out/dhm25.tif | \
   jq ".cornerCoordinates"
 ```
 
+
+
+
+
 :::{.notes}
 
-- Corner coordinates should now be in LV95 range: easting ~2.6M, northing ~1.2M
-- Compare to the original ASC output — the shift in values confirms the reprojection worked
+- Corner coordinates in LV95: easting ~2.6M, northing ~1.2M (vs ~480k, ~70k in LV03)
+- `.coordinateSystem.wkt` gives the full CRS definition — look for `EPSG:2056` to confirm
+- Comparing the corner coordinates to the earlier ASC output is the most intuitive check
 
 :::

@@ -173,9 +173,9 @@ library(sf)
 library(readr)
 
 # source: https://www.stadt-zuerich.ch/geodaten/
-playgrounds <- read_sf("data/week4-exercises/playgrounds.gpkg")
-publictransport <- read_sf("data/week4-exercises/public_transport.gpkg")
-kreise <- read_sf("data/week4-exercises/stadtkreise-zh.gpkg")
+playgrounds <- read_sf("data/vector-deepdive/playgrounds.gpkg")
+publictransport <- read_sf("data/vector-deepdive/public_transport.gpkg")
+kreise <- read_sf("data/vector-deepdive/stadtkreise-zh.gpkg")
 ```
 
 - Default predicate: `st_intersects`
@@ -389,9 +389,9 @@ chessplot
 #| echo: false
 #| output: false
 
-st_write(grid_dest, "data/week4-exercises/chessboard.gpkg","grid_dest", append = FALSE)
+st_write(grid_dest, "data/vector-deepdive/chessboard.gpkg","grid_dest", append = FALSE)
 
-st_write(grid_orig, "data/week4-exercises/chessboard.gpkg","grid_orig", append = FALSE)
+st_write(grid_orig, "data/vector-deepdive/chessboard.gpkg","grid_orig", append = FALSE)
 
 
 ```

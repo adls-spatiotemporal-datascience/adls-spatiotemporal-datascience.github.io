@@ -29,7 +29,7 @@ library(sf)
 library(dplyr)
 
 
-gpkg <- "data/week14-exercises/osm.gpkg"
+gpkg <- "data/movement-II/osm.gpkg"
 
 st_layers(gpkg)
 
@@ -53,7 +53,7 @@ To use this context information as additional features, we first need to import 
 
 ```{r}
 # For illustration purposes, we will only use 500 samples
-training_dataset <- read_sf("data/week12-exercises/tracks_1.gpkg", query = "SELECT * FROM training LIMIT 500") |> 
+training_dataset <- read_sf("data/movement-I/tracks_1.gpkg", query = "SELECT * FROM training LIMIT 500") |>
   mutate(data = "training")
 ```
 
