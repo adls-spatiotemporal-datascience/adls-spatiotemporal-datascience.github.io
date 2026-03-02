@@ -82,7 +82,7 @@ conda     install         -c   conda-forge     gdal
 
 - Short flags (`-c`) and long flags (`--channel`) are equivalent; long flags are more readable in scripts
 - Flags can appear in any order; arguments are positional (order matters)
-- This anatomy applies to every CLI tool: `git commit -m "message"`, `quarto render --to pdf`, `gdal raster info --format json file.tif`
+- This anatomy applies to every CLI tool: `git commit -m "message"`, `quarto render --to pdf`, `gdal raster info -f json file.tif`
 
 :::
 
@@ -169,18 +169,21 @@ Extracting file (meta) data
 gdal raster info --help
 ```
 
+
 :::{.notes}
 
 - Named args use `--flag` convention; positional arg is `<filename>`
-- Default output is JSON (text from GDAL 3.12 when run interactively) — use `--format json` to be explicit
+- Default output is JSON (text from GDAL 3.12 when run interactively) — use `-f json` to be explicit
 
 :::
 
 
 ---
 
+- Get all metadata and display output as text
+
 ```{bash}
-gdal raster info -f text data/raster-deepdive/elev-lux.tif    # note: -f text
+gdal raster info -f text data/raster-deepdive/elev-lux.tif    
 ```
 
 :::{.notes}
@@ -190,56 +193,45 @@ gdal raster info -f text data/raster-deepdive/elev-lux.tif    # note: -f text
 
 :::
 
-## gdal raster info: Output format
+---
 
 - The metadata output format (`-f`) can either be `text` or to `json`
+- Where text is more human readable, `json` is structured and machine readable
+
+```{bash}
+gdal raster info -f json data/raster-deepdive/elev-lux.tif
+```
+
+---
+
 - JSON in turn can be parsed using [`jq`](https://jqlang.org) — a lightweight command-line JSON processor
   - Navigates JSON with `.key` (field access) and `[]` (array iteration)
   - Install: `conda install -c conda-forge jq`
 
 
-
-## gdal raster info: histogram
-
-Use `--hist` to include a value histogram per band:
-
 ```{bash}
-gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif | \
-  jq ".bands[].histogram"
+gdal raster info -f json data/raster-deepdive/elev-lux.tif | jq ".driverLongName"
 ```
 
-:::{.notes}
+. . .
 
-- `.histogram` contains: `buckets` (counts per bin), `min`, `max`, `count`, `bucketSize`
-- Useful for understanding value distribution before choosing a datatype or NoData value
-
-:::
-
-
-## gdal raster info: JSON output
-
-JSON output — pipe directly to `jq` to extract specific fields:
+Extract a single field — `.bands[]` iterates over bands, `.min` selects the field:
 
 ```{bash}
-gdal raster info --format json data/raster-deepdive/elev-lux.tif | \
-  jq ".bands[].min"
+gdal raster info -f json data/raster-deepdive/elev-lux.tif | jq ".bands[].min"
 ```
 
----
 
-Navigate deeper by chaining `.key` and `[]` (iterates over arrays):
+. . .
+
+Extract multiple fields — pipe `|` into `{min, max}` to select both at once:
 
 ```{bash}
-gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif | \
-  jq ".bands[].histogram.buckets[]"
+gdal raster info -f json data/raster-deepdive/elev-lux.tif | jq '.bands[] | {min, max}'
 ```
 
-:::{.notes}
 
-- `jq` is a command-line JSON processor: `.bands[]` selects all band objects; `.min` extracts the min field
-- To explore the full structure: `gdal raster info --format json file.tif > out.json` then open in a browser or editor
 
-:::
 
 
 ## gdal raster info: terminal histogram
@@ -248,13 +240,13 @@ Extract histogram buckets and visualise with [bashplotlib](https://github.com/gl
 
 ```{bash}
 #| eval: false
-gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif |
+gdal raster info --hist -f json data/raster-deepdive/elev-lux.tif |
   jq ".bands[].histogram.buckets[]" | # <1>
   hist -w 1 -p +                      # <2>
 ```
 
 1. Extract raw bucket counts from the histogram array
-2. `hist` from bashplotlib: `-w 1` sets bar width, `-p +` uses `+` as bar character
+2. `hist` from bashplotlib
 
 ---
 
@@ -291,16 +283,18 @@ gdal raster info --hist --format json data/raster-deepdive/elev-lux.tif |
 :::
 
 
-## gdal raster info: CRS & extent
+# gdal raster reproject {background-color="#1269B0"}
 
-Does this raster have a CRS?
+
+## gdal raster info: get crs
+
+To reproject a raster, we need to know the source CRS. Is this information available?
 
 ```{bash}
-gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
+gdal raster info -f json data/raster-deepdive/dhm25_grid_raster.asc | \
   jq ".coordinateSystem"
 ```
 
-. . .
 
 → No CRS — consult the data provider: DHM25 uses `LV03/LN02` = [`EPSG:21781`](https://epsg.io/21781)
 
@@ -310,8 +304,8 @@ gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
 Confirm via corner coordinates:
 
 ```{bash}
-gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
-  jq ".cornerCoordinates"
+gdal raster info -f json data/raster-deepdive/dhm25_grid_raster.asc  | \
+  jq ".cornerCoordinates | {upperLeft, lowerRight}"
 ```
 
 :::{.notes}
@@ -322,9 +316,7 @@ gdal raster info --format json data/raster-deepdive/dhm25_grid_raster.asc | \
 :::
 
 
-# gdal raster reproject {background-color="#1269B0"}
 
-Reprojecting raster to a new CRS
 
 ## gdal raster reproject
 
@@ -374,14 +366,14 @@ gdal raster reproject \
 Compare before and after — coordinates should shift from LV03 to LV95 range:
 
 ```{bash}
-gdal raster info --format json data-out/dhm25.tif | \
+gdal raster info -f json data-out/dhm25.tif | \
   jq '.stac."proj:epsg"'
 ```
 
 . . .
 
 ```{bash}
-gdal raster info --format json data-out/dhm25.tif | \
+gdal raster info -f json data-out/dhm25.tif | \
   jq ".cornerCoordinates"
 ```
 
