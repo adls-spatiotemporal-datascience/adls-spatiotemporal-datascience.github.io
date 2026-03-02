@@ -8,8 +8,7 @@ format: html
     - [DuckDB](vector-deepdive-duckdb.qmd){target="_blank"}
     - [Vector Deepdive Tasks](vector-deepdive-task.qmd)
 - Raster Deepdive
-    - [GDAL](raster-deepdive-gdal.qmd){target="_blank"}
-    - [Data Storage](raster-deepdive-data-storage.qmd){target="_blank"}
+    - [Raster data on disk](raster-deepdive-on-disk.qmd){target="_blank"}
     - [Tasks](raster-deepdive-task.qmd)
 
 :::{.content-visible when-profile="dev"}
