@@ -6,7 +6,7 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-3f61aac59b63c3a2d0e87c59ee7d0662.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1ec8d6f7fde4ee9fc90222376f2e5109.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.19">
 
   <title>Spatiotemporal Datascience – DuckDB</title>
@@ -58,46 +58,48 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #383a42;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #383a42; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #50a14f; } /* Annotation */
+    code span.at { color: #a626a4; } /* Attribute */
+    code span.bn { color: #986801; } /* BaseN */
+    code span.bu { color: #a626a4; } /* BuiltIn */
+    code span.cf { color: #a626a4; } /* ControlFlow */
+    code span.ch { color: #50a14f; } /* Char */
+    code span.cn { color: #986801; } /* Constant */
+    code span.co { color: #a0a1a7; font-style: italic; } /* Comment */
+    code span.cv { color: #e45649; font-style: italic; } /* CommentVar */
+    code span.do { color: #e45649; } /* Documentation */
+    code span.dt { color: #a626a4; } /* DataType */
+    code span.dv { color: #986801; } /* DecVal */
+    code span.er { color: #f44747; text-decoration: underline; } /* Error */
+    code span.ex { color: #4078f2; font-weight: bold; } /* Extension */
+    code span.fl { color: #986801; } /* Float */
+    code span.fu { color: #4078f2; } /* Function */
+    code span.im { color: #50a14f; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #a626a4; } /* Keyword */
+    code span.op { color: #a626a4; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #a626a4; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #0184bc; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #50a14f; } /* String */
+    code span.va { color: #e45649; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
   </style>
   <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link rel="stylesheet" href="auxilliary/style.css">
+  <link rel="stylesheet" href="auxilliary/style-terminal.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -310,23 +312,23 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 </figcaption>
 <div aria-describedby="tbl-duckdb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fhvptatiqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fhvptatiqo table {
+<div id="zckvkreptn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zckvkreptn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fhvptatiqo thead, #fhvptatiqo tbody, #fhvptatiqo tfoot, #fhvptatiqo tr, #fhvptatiqo td, #fhvptatiqo th {
+#zckvkreptn thead, #zckvkreptn tbody, #zckvkreptn tfoot, #zckvkreptn tr, #zckvkreptn td, #zckvkreptn th {
   border-style: none;
 }
 
-#fhvptatiqo p {
+#zckvkreptn p {
   margin: 0;
   padding: 0;
 }
 
-#fhvptatiqo .gt_table {
+#zckvkreptn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -352,12 +354,12 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-left-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_caption {
+#zckvkreptn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fhvptatiqo .gt_title {
+#zckvkreptn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -369,7 +371,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-width: 0;
 }
 
-#fhvptatiqo .gt_subtitle {
+#zckvkreptn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -381,7 +383,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-top-width: 0;
 }
 
-#fhvptatiqo .gt_heading {
+#zckvkreptn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -393,13 +395,13 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_bottom_border {
+#zckvkreptn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_col_headings {
+#zckvkreptn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -414,7 +416,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_col_heading {
+#zckvkreptn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -434,7 +436,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   overflow-x: hidden;
 }
 
-#fhvptatiqo .gt_column_spanner_outer {
+#zckvkreptn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -446,15 +448,15 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 4px;
 }
 
-#fhvptatiqo .gt_column_spanner_outer:first-child {
+#zckvkreptn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fhvptatiqo .gt_column_spanner_outer:last-child {
+#zckvkreptn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fhvptatiqo .gt_column_spanner {
+#zckvkreptn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -466,11 +468,11 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   width: 100%;
 }
 
-#fhvptatiqo .gt_spanner_row {
+#zckvkreptn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fhvptatiqo .gt_group_heading {
+#zckvkreptn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -496,7 +498,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   text-align: left;
 }
 
-#fhvptatiqo .gt_empty_group_heading {
+#zckvkreptn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -511,15 +513,15 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   vertical-align: middle;
 }
 
-#fhvptatiqo .gt_from_md > :first-child {
+#zckvkreptn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fhvptatiqo .gt_from_md > :last-child {
+#zckvkreptn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fhvptatiqo .gt_row {
+#zckvkreptn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -538,7 +540,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   overflow-x: hidden;
 }
 
-#fhvptatiqo .gt_stub {
+#zckvkreptn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -551,7 +553,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#fhvptatiqo .gt_stub_row_group {
+#zckvkreptn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -565,15 +567,15 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   vertical-align: top;
 }
 
-#fhvptatiqo .gt_row_group_first td {
+#zckvkreptn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fhvptatiqo .gt_row_group_first th {
+#zckvkreptn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fhvptatiqo .gt_summary_row {
+#zckvkreptn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -583,16 +585,16 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#fhvptatiqo .gt_first_summary_row {
+#zckvkreptn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_first_summary_row.thick {
+#zckvkreptn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fhvptatiqo .gt_last_summary_row {
+#zckvkreptn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -602,7 +604,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_grand_summary_row {
+#zckvkreptn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -612,7 +614,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#fhvptatiqo .gt_first_grand_summary_row {
+#zckvkreptn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -622,7 +624,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-top-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_last_grand_summary_row_top {
+#zckvkreptn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -632,11 +634,11 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_striped {
+#zckvkreptn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fhvptatiqo .gt_table_body {
+#zckvkreptn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -645,7 +647,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-bottom-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_footnotes {
+#zckvkreptn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -659,7 +661,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_footnote {
+#zckvkreptn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -668,7 +670,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#fhvptatiqo .gt_sourcenotes {
+#zckvkreptn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -682,7 +684,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   border-right-color: #D3D3D3;
 }
 
-#fhvptatiqo .gt_sourcenote {
+#zckvkreptn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -690,72 +692,72 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
   padding-right: 5px;
 }
 
-#fhvptatiqo .gt_left {
+#zckvkreptn .gt_left {
   text-align: left;
 }
 
-#fhvptatiqo .gt_center {
+#zckvkreptn .gt_center {
   text-align: center;
 }
 
-#fhvptatiqo .gt_right {
+#zckvkreptn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fhvptatiqo .gt_font_normal {
+#zckvkreptn .gt_font_normal {
   font-weight: normal;
 }
 
-#fhvptatiqo .gt_font_bold {
+#zckvkreptn .gt_font_bold {
   font-weight: bold;
 }
 
-#fhvptatiqo .gt_font_italic {
+#zckvkreptn .gt_font_italic {
   font-style: italic;
 }
 
-#fhvptatiqo .gt_super {
+#zckvkreptn .gt_super {
   font-size: 65%;
 }
 
-#fhvptatiqo .gt_footnote_marks {
+#zckvkreptn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fhvptatiqo .gt_asterisk {
+#zckvkreptn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fhvptatiqo .gt_indent_1 {
+#zckvkreptn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fhvptatiqo .gt_indent_2 {
+#zckvkreptn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fhvptatiqo .gt_indent_3 {
+#zckvkreptn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fhvptatiqo .gt_indent_4 {
+#zckvkreptn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fhvptatiqo .gt_indent_5 {
+#zckvkreptn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fhvptatiqo .katex-display {
+#zckvkreptn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fhvptatiqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zckvkreptn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -801,22 +803,22 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <li>Connect to the database in DBeaver</li>
 <li>Install and load the spatial extension:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a>INSTALL spatial;</span>
-<span id="cb1-2"><a></a>LOAD spatial;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>INSTALL spatial;</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>LOAD spatial;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Verify both tables are present and explore them:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a>SHOW <span class="kw">TABLES</span>;</span>
-<span id="cb2-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span>
-<span id="cb2-3"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kantone;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>SHOW <span class="kw">TABLES</span>;</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kantone;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Create an R-Tree spatial index for both tables:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> kantone_idx <span class="kw">ON</span> kantone <span class="kw">USING</span> RTREE (geom);</span>
-<span id="cb3-2"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> wald_idx <span class="kw">ON</span> wald <span class="kw">USING</span> RTREE (geom);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> kantone_idx <span class="kw">ON</span> kantone <span class="kw">USING</span> RTREE (geom);</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> wald_idx <span class="kw">ON</span> wald <span class="kw">USING</span> RTREE (geom);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="why-spatial-indices" class="slide level2">
 <h2>Why spatial indices?</h2>
@@ -877,8 +879,8 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>Limit to 1’000 rows and store as a <code>VIEW</code>:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald2 <span class="kw">AS</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald <span class="kw">LIMIT</span> <span class="dv">1000</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald2 <span class="kw">AS</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald <span class="kw">LIMIT</span> <span class="dv">1000</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
@@ -892,17 +894,17 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>Query it like a regular table:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald2;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald2;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="spatial-intersection-in-sql" class="slide level2">
 <h2>Spatial intersection in SQL</h2>
 <ul>
 <li>Step 1 of the pipeline: intersect forest polygons with canton boundaries</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1"></a><span class="kw">SELECT</span> </span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2"></a>  name, </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3"></a>  st_intersection(w.geom, k.geom),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4"></a><span class="kw">FROM</span> wald2 w, kantone k;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  st_intersection(w.geom, k.geom),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
@@ -913,28 +915,28 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="2">… used in the intersection</span>
 </dd>
 </dl>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a></a>┌──────────────────────┬───────────────────────────────────────────────────────┐</span>
-<span id="cb5-2"><a></a>│         name         │            st_intersection(w.geom, k.geom)            │</span>
-<span id="cb5-3"><a></a>│       varchar        │                       geometry                        │</span>
-<span id="cb5-4"><a></a>├──────────────────────┼───────────────────────────────────────────────────────┤</span>
-<span id="cb5-5"><a></a>│ Genève               │ POLYGON EMPTY                                         │</span>
-<span id="cb5-6"><a></a>│ Genève               │ POLYGON EMPTY                                         │</span>
-<span id="cb5-7"><a></a>│ Genève               │ POLYGON EMPTY                                         │</span>
-<span id="cb5-8"><a></a>│ Genève               │ POLYGON EMPTY                                         │</span>
-<span id="cb5-9"><a></a>│ Genève               │ POLYGON EMPTY                                         │</span>
-<span id="cb5-10"><a></a>│   ·                  │       ·                                               │</span>
-<span id="cb5-11"><a></a>│   ·                  │       ·                                               │</span>
-<span id="cb5-12"><a></a>│   ·                  │       ·                                               │</span>
-<span id="cb5-13"><a></a>│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │</span>
-<span id="cb5-14"><a></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
-<span id="cb5-15"><a></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
-<span id="cb5-16"><a></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
-<span id="cb5-17"><a></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
-<span id="cb5-18"><a></a>├──────────────────────┴───────────────────────────────────────────────────────┤</span>
-<span id="cb5-19"><a></a>│ 26000 rows (10 shown)                                              2 columns │</span>
-<span id="cb5-20"><a></a>└──────────────────────────────────────────────────────────────────────────────┘</span>
-<span id="cb5-21"><a></a>Run Time (s): real 1.292 user 1.293885 sys 0.005016</span>
-<span id="cb5-22"><a></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>┌──────────────────────┬───────────────────────────────────────────────────────┐</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>│         name         │            st_intersection(w.geom, k.geom)            │</span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>│       varchar        │                       geometry                        │</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>├──────────────────────┼───────────────────────────────────────────────────────┤</span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>│ Genève               │ POLYGON EMPTY                                         │</span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>│ Genève               │ POLYGON EMPTY                                         │</span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>│ Genève               │ POLYGON EMPTY                                         │</span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>│ Genève               │ POLYGON EMPTY                                         │</span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a>│ Genève               │ POLYGON EMPTY                                         │</span>
+<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │       ·                                               │</span>
+<span id="cb5-11"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │       ·                                               │</span>
+<span id="cb5-12"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │       ·                                               │</span>
+<span id="cb5-13"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │</span>
+<span id="cb5-14"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
+<span id="cb5-15"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
+<span id="cb5-16"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
+<span id="cb5-17"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON EMPTY                                         │</span>
+<span id="cb5-18"><a aria-hidden="true" tabindex="-1"></a>├──────────────────────┴───────────────────────────────────────────────────────┤</span>
+<span id="cb5-19"><a aria-hidden="true" tabindex="-1"></a>│ 26000 rows (10 shown)                                              2 columns │</span>
+<span id="cb5-20"><a aria-hidden="true" tabindex="-1"></a>└──────────────────────────────────────────────────────────────────────────────┘</span>
+<span id="cb5-21"><a aria-hidden="true" tabindex="-1"></a>Run Time (s): real 1.292 user 1.293885 sys 0.005016</span>
+<span id="cb5-22"><a aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -942,38 +944,38 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <li>Problem: <strong>cross join</strong> — every forest polygon × every canton (1’000 × 26 = 26’000 pairs)</li>
 <li>Solution: add <code>WHERE</code> to filter early:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1"></a><span class="kw">SELECT</span></span>
-<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2"></a>  name,</span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3"></a>  st_intersection(w.geom, k.geom),</span>
-<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  name,</span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  st_intersection(w.geom, k.geom),</span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="1">Only compute the intersection for pairs that actually overlap (R-Tree!)</span>
 </dd>
 </dl>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a></a>┌──────────────────────┬───────────────────────────────────────────────────────┐</span>
-<span id="cb6-2"><a></a>│         name         │            st_intersection(w.geom, k.geom)            │</span>
-<span id="cb6-3"><a></a>│       varchar        │                       geometry                        │</span>
-<span id="cb6-4"><a></a>├──────────────────────┼───────────────────────────────────────────────────────┤</span>
-<span id="cb6-5"><a></a>│ Appenzell Innerrho…  │ POLYGON Z ((2750577.8690000786 1236499.1299968604 1…  │</span>
-<span id="cb6-6"><a></a>│ St. Gallen           │ POLYGON Z ((2733301.3710000697 1235901.1909968755 1…  │</span>
-<span id="cb6-7"><a></a>│ St. Gallen           │ POLYGON Z ((2730828.668000072 1236533.6979968112 10…  │</span>
-<span id="cb6-8"><a></a>│ Appenzell Innerrho…  │ POLYGON Z ((2751117.7790000793 1236511.4949968604 1…  │</span>
-<span id="cb6-9"><a></a>│ Zürich               │ POLYGON Z ((2712200.8850000626 1236517.2959967866 6…  │</span>
-<span id="cb6-10"><a></a>│   ·                  │                           ·                           │</span>
-<span id="cb6-11"><a></a>│   ·                  │                           ·                           │</span>
-<span id="cb6-12"><a></a>│   ·                  │                           ·                           │</span>
-<span id="cb6-13"><a></a>│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │</span>
-<span id="cb6-14"><a></a>│ Zürich               │ POLYGON Z ((2684156.710000051 1239693.0049964704 51…  │</span>
-<span id="cb6-15"><a></a>│ St. Gallen           │ POLYGON Z ((2734307.2300000787 1239757.5959965463 1…  │</span>
-<span id="cb6-16"><a></a>│ Appenzell Ausserrh…  │ POLYGON Z ((2735958.5650000805 1239767.1879965463 1…  │</span>
-<span id="cb6-17"><a></a>│ Appenzell Ausserrh…  │ POLYGON Z ((2738798.7040000805 1239749.8799965512 8…  │</span>
-<span id="cb6-18"><a></a>├──────────────────────┴───────────────────────────────────────────────────────┤</span>
-<span id="cb6-19"><a></a>│ 1027 rows (10 shown)                                               2 columns │</span>
-<span id="cb6-20"><a></a>└──────────────────────────────────────────────────────────────────────────────┘</span>
-<span id="cb6-21"><a></a>Run Time (s): real 0.818 user 0.823316 sys 0.006000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>┌──────────────────────┬───────────────────────────────────────────────────────┐</span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>│         name         │            st_intersection(w.geom, k.geom)            │</span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>│       varchar        │                       geometry                        │</span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>├──────────────────────┼───────────────────────────────────────────────────────┤</span>
+<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON Z ((2750577.8690000786 1236499.1299968604 1…  │</span>
+<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen           │ POLYGON Z ((2733301.3710000697 1235901.1909968755 1…  │</span>
+<span id="cb6-7"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen           │ POLYGON Z ((2730828.668000072 1236533.6979968112 10…  │</span>
+<span id="cb6-8"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON Z ((2751117.7790000793 1236511.4949968604 1…  │</span>
+<span id="cb6-9"><a aria-hidden="true" tabindex="-1"></a>│ Zürich               │ POLYGON Z ((2712200.8850000626 1236517.2959967866 6…  │</span>
+<span id="cb6-10"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │                           ·                           │</span>
+<span id="cb6-11"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │                           ·                           │</span>
+<span id="cb6-12"><a aria-hidden="true" tabindex="-1"></a>│   ·                  │                           ·                           │</span>
+<span id="cb6-13"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrho…  │ POLYGON Z ((2752421.3200000883 1239807.9399965794 9…  │</span>
+<span id="cb6-14"><a aria-hidden="true" tabindex="-1"></a>│ Zürich               │ POLYGON Z ((2684156.710000051 1239693.0049964704 51…  │</span>
+<span id="cb6-15"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen           │ POLYGON Z ((2734307.2300000787 1239757.5959965463 1…  │</span>
+<span id="cb6-16"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Ausserrh…  │ POLYGON Z ((2735958.5650000805 1239767.1879965463 1…  │</span>
+<span id="cb6-17"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Ausserrh…  │ POLYGON Z ((2738798.7040000805 1239749.8799965512 8…  │</span>
+<span id="cb6-18"><a aria-hidden="true" tabindex="-1"></a>├──────────────────────┴───────────────────────────────────────────────────────┤</span>
+<span id="cb6-19"><a aria-hidden="true" tabindex="-1"></a>│ 1027 rows (10 shown)                                               2 columns │</span>
+<span id="cb6-20"><a aria-hidden="true" tabindex="-1"></a>└──────────────────────────────────────────────────────────────────────────────┘</span>
+<span id="cb6-21"><a aria-hidden="true" tabindex="-1"></a>Run Time (s): real 0.818 user 0.823316 sys 0.006000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="st_intersects-vs-st_intersection" class="slide level2 note">
 <h2><code>st_intersects</code> vs <code>st_intersection</code></h2>
@@ -984,50 +986,50 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>We need the <strong>area</strong>, not the geometry itself:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1"></a><span class="kw">SELECT</span> </span>
-<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2"></a>  name, </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">as</span> wald_area,</span>
-<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
-<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">as</span> wald_area,</span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="1"><code>st_area</code> calculates the area of the intersection</span>
 </dd>
 </dl>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a></a>┌────────────────────────┬────────────────────┐</span>
-<span id="cb7-2"><a></a>│          name          │     wald_area      │</span>
-<span id="cb7-3"><a></a>│        varchar         │       double       │</span>
-<span id="cb7-4"><a></a>├────────────────────────┼────────────────────┤</span>
-<span id="cb7-5"><a></a>│ Appenzell Innerrhoden  │  3223.381481670876 │</span>
-<span id="cb7-6"><a></a>│ St. Gallen             │ 490040.98548061884 │</span>
-<span id="cb7-7"><a></a>│ St. Gallen             │ 1515.7608568453097 │</span>
-<span id="cb7-8"><a></a>│ Appenzell Innerrhoden  │ 5697.7576364166425 │</span>
-<span id="cb7-9"><a></a>│ Zürich                 │  9248.165822466484 │</span>
-<span id="cb7-10"><a></a>│   ·                    │          ·         │</span>
-<span id="cb7-11"><a></a>│   ·                    │          ·         │</span>
-<span id="cb7-12"><a></a>│   ·                    │          ·         │</span>
-<span id="cb7-13"><a></a>│ Appenzell Innerrhoden  │ 31971.908096492414 │</span>
-<span id="cb7-14"><a></a>│ Zürich                 │ 11339.135541535818 │</span>
-<span id="cb7-15"><a></a>│ St. Gallen             │ 11570.958247649043 │</span>
-<span id="cb7-16"><a></a>│ Appenzell Ausserrhoden │ 3659.7222327571385 │</span>
-<span id="cb7-17"><a></a>│ Appenzell Ausserrhoden │ 1371.8734574811795 │</span>
-<span id="cb7-18"><a></a>├────────────────────────┴────────────────────┤</span>
-<span id="cb7-19"><a></a>│ 1027 rows (10 shown)              2 columns │</span>
-<span id="cb7-20"><a></a>└─────────────────────────────────────────────┘</span>
-<span id="cb7-21"><a></a>Run Time (s): real 0.810 user 0.811628 sys 0.018473</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>┌────────────────────────┬────────────────────┐</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>│          name          │     wald_area      │</span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>│        varchar         │       double       │</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>├────────────────────────┼────────────────────┤</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrhoden  │  3223.381481670876 │</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen             │ 490040.98548061884 │</span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen             │ 1515.7608568453097 │</span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrhoden  │ 5697.7576364166425 │</span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>│ Zürich                 │  9248.165822466484 │</span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a>│   ·                    │          ·         │</span>
+<span id="cb7-11"><a aria-hidden="true" tabindex="-1"></a>│   ·                    │          ·         │</span>
+<span id="cb7-12"><a aria-hidden="true" tabindex="-1"></a>│   ·                    │          ·         │</span>
+<span id="cb7-13"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Innerrhoden  │ 31971.908096492414 │</span>
+<span id="cb7-14"><a aria-hidden="true" tabindex="-1"></a>│ Zürich                 │ 11339.135541535818 │</span>
+<span id="cb7-15"><a aria-hidden="true" tabindex="-1"></a>│ St. Gallen             │ 11570.958247649043 │</span>
+<span id="cb7-16"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Ausserrhoden │ 3659.7222327571385 │</span>
+<span id="cb7-17"><a aria-hidden="true" tabindex="-1"></a>│ Appenzell Ausserrhoden │ 1371.8734574811795 │</span>
+<span id="cb7-18"><a aria-hidden="true" tabindex="-1"></a>├────────────────────────┴────────────────────┤</span>
+<span id="cb7-19"><a aria-hidden="true" tabindex="-1"></a>│ 1027 rows (10 shown)              2 columns │</span>
+<span id="cb7-20"><a aria-hidden="true" tabindex="-1"></a>└─────────────────────────────────────────────┘</span>
+<span id="cb7-21"><a aria-hidden="true" tabindex="-1"></a>Run Time (s): real 0.810 user 0.811628 sys 0.018473</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Save this as a <code>VIEW</code> before aggregating:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-12"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kantone <span class="kw">AS</span></span>
-<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2"></a><span class="kw">SELECT</span> </span>
-<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3"></a>  name, </span>
-<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">AS</span> wald_area,</span>
-<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
-<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-12"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kantone <span class="kw">AS</span></span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>  name, </span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">AS</span> wald_area,</span>
+<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
@@ -1040,11 +1042,11 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>Query the <code>VIEW</code> like a table, then aggregate with <code>GROUP BY</code>:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-13"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1"></a><span class="kw">SELECT</span> </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>  name,</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3"></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
-<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4"></a><span class="kw">FROM</span> wald_kantone</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-5" class="code-annotation-target"><a href="#annotated-cell-13-5"></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-13"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  name,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kantone</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-5" class="code-annotation-target"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
@@ -1065,24 +1067,24 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>Save the aggregation as a <code>VIEW</code>:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kanton_grp <span class="kw">AS</span></span>
-<span id="cb8-2"><a></a><span class="kw">SELECT</span> </span>
-<span id="cb8-3"><a></a>  name, </span>
-<span id="cb8-4"><a></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
-<span id="cb8-5"><a></a><span class="kw">FROM</span> wald_kantone</span>
-<span id="cb8-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> wald_kanton_grp <span class="kw">AS</span></span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>  name, </span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(wald_area) <span class="kw">as</span> wald_area</span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kantone</span>
+<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> name;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Join with <code>kantone</code> to get the total canton area and compute the fraction:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-15"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1"></a><span class="kw">SELECT</span> </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2"></a>    kantone.name,</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil,</span>
-<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4"></a><span class="kw">FROM</span> wald_kanton_grp </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-5" class="code-annotation-target"><a href="#annotated-cell-15-5"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-6" class="code-annotation-target"><a href="#annotated-cell-15-6"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-15"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>    kantone.name,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil,</span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kanton_grp </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-5" class="code-annotation-target"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-6" class="code-annotation-target"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
@@ -1107,14 +1109,14 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <ul>
 <li>Save as a final <code>VIEW</code>, ordered by forest share:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-16"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> kanton_frac <span class="kw">AS</span></span>
-<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2"></a><span class="kw">SELECT</span> </span>
-<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3"></a>    kantone.name,                 </span>
-<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil, </span>
-<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5"></a><span class="kw">FROM</span> wald_kanton_grp </span>
-<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone </span>
-<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-16-8" class="code-annotation-target"><a href="#annotated-cell-16-8"></a><span class="kw">ORDER</span> <span class="kw">BY</span> waldanteil <span class="kw">DESC</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-16"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> kanton_frac <span class="kw">AS</span></span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    kantone.name,                 </span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>    wald_area<span class="op">/</span>area <span class="kw">as</span> waldanteil, </span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald_kanton_grp </span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kantone </span>
+<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> wald_kanton_grp.name<span class="op">=</span>kantone.name</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-16-8" class="code-annotation-target"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> waldanteil <span class="kw">DESC</span>;</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
 <dd>
@@ -1128,12 +1130,12 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <li>So far: only 1’000 forest features → incomplete results</li>
 <li>Since we used <code>VIEW</code>s, switching to the full dataset is trivial:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> wald2 <span class="kw">AS</span></span>
-<span id="cb9-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> wald2 <span class="kw">AS</span></span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> wald;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Every downstream <code>VIEW</code> now automatically uses the full data:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kanton_frac;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> kanton_frac;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p><code>CREATE OR REPLACE VIEW</code> is needed because <code>wald2</code> already exists. Key advantage of VIEWs: replace one definition, the entire chain updates. Downside: full query now takes longer since nothing is materialized.</p>
 <style type="text/css">
@@ -1154,12 +1156,12 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <li><code>VIEW</code> = lazy (re-executed on every access)</li>
 <li><code>CREATE TABLE ... AS</code> = <strong>materialized</strong> (stored on disk):</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-19"><pre class="sourceCode numberSource sql code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> wald_kantone_mat <span class="kw">AS</span></span>
-<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2"></a><span class="kw">SELECT</span></span>
-<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3"></a>  name,</span>
-<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">AS</span> wald_area</span>
-<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
-<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-19"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> wald_kantone_mat <span class="kw">AS</span></span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a>  name,</span>
+<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>  st_area(st_intersection(w.geom, k.geom)) <span class="kw">AS</span> wald_area</span>
+<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> wald2 w, kantone k</span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> st_intersects(w.geom, k.geom);</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
@@ -1180,18 +1182,18 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 <li>Connect, load spatial extension, read the <code>VIEW</code>:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(duckdb)</span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
-<span id="cb11-4"><a></a>  <span class="fu">duckdb</span>(),</span>
-<span id="cb11-5"><a></a>  <span class="at">dbdir =</span> <span class="st">"data/week4-exercises/wald-kantone.duckdb"</span>,</span>
-<span id="cb11-6"><a></a>  <span class="at">read_only =</span> <span class="cn">TRUE</span></span>
-<span id="cb11-7"><a></a>)</span>
-<span id="cb11-8"><a></a></span>
-<span id="cb11-9"><a></a><span class="fu">dbExecute</span>(con, <span class="st">"LOAD spatial;"</span>)</span>
-<span id="cb11-10"><a></a>kanton_frac <span class="ot">&lt;-</span> <span class="fu">dbReadTable</span>(con, <span class="st">"kanton_frac"</span>)</span>
-<span id="cb11-11"><a></a></span>
-<span id="cb11-12"><a></a><span class="fu">dbDisconnect</span>(con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">duckdb</span>(),</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">dbdir =</span> <span class="st">"data/vector-deepdive/wald-kantone.duckdb"</span>,</span>
+<span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">read_only =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a aria-hidden="true" tabindex="-1"></a><span class="fu">dbExecute</span>(con, <span class="st">"LOAD spatial;"</span>)</span>
+<span id="cb11-10"><a aria-hidden="true" tabindex="-1"></a>kanton_frac <span class="ot">&lt;-</span> <span class="fu">dbReadTable</span>(con, <span class="st">"kanton_frac"</span>)</span>
+<span id="cb11-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="wrap-up" class="slide level2">
@@ -1208,6 +1210,7 @@ Table&nbsp;1: DuckDB fills a niche that no previous software has filled yet
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/zhaw_rgb.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>

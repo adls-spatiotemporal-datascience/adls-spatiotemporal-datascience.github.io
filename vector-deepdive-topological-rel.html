@@ -6,7 +6,7 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-3f61aac59b63c3a2d0e87c59ee7d0662.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1ec8d6f7fde4ee9fc90222376f2e5109.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.19">
 
   <title>Spatiotemporal Datascience – Topological relations</title>
@@ -58,44 +58,44 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #383a42;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #383a42; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #50a14f; } /* Annotation */
+    code span.at { color: #a626a4; } /* Attribute */
+    code span.bn { color: #986801; } /* BaseN */
+    code span.bu { color: #a626a4; } /* BuiltIn */
+    code span.cf { color: #a626a4; } /* ControlFlow */
+    code span.ch { color: #50a14f; } /* Char */
+    code span.cn { color: #986801; } /* Constant */
+    code span.co { color: #a0a1a7; font-style: italic; } /* Comment */
+    code span.cv { color: #e45649; font-style: italic; } /* CommentVar */
+    code span.do { color: #e45649; } /* Documentation */
+    code span.dt { color: #a626a4; } /* DataType */
+    code span.dv { color: #986801; } /* DecVal */
+    code span.er { color: #f44747; text-decoration: underline; } /* Error */
+    code span.ex { color: #4078f2; font-weight: bold; } /* Extension */
+    code span.fl { color: #986801; } /* Float */
+    code span.fu { color: #4078f2; } /* Function */
+    code span.im { color: #50a14f; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #a626a4; } /* Keyword */
+    code span.op { color: #a626a4; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #a626a4; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #0184bc; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #50a14f; } /* String */
+    code span.va { color: #e45649; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -117,6 +117,8 @@
       margin-left: 2em;
     }  </style>
   <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link rel="stylesheet" href="auxilliary/style.css">
+  <link rel="stylesheet" href="auxilliary/style-terminal.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -389,19 +391,19 @@ Figure&nbsp;2: Polygon <strong>a</strong> (purple) overlaps <strong>b1</strong> 
 <li>Returns a <em>sparse geometry binary predicate</em> (<code>sgbp</code>) — a list of <strong>matching indices</strong></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">st_intersects</span>(a, b)</span>
-<span id="cb1-2"><a></a><span class="do">## Sparse geometry binary predicate list of length 1, where the predicate</span></span>
-<span id="cb1-3"><a></a><span class="do">## was `intersects'</span></span>
-<span id="cb1-4"><a></a><span class="do">##  1: 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersects</span>(a, b)</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Sparse geometry binary predicate list of length 1, where the predicate</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## was `intersects'</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a><span class="do">##  1: 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><code>lengths()</code> counts the number of matches per feature</li>
 <li>Use <code>sparse = FALSE</code> to get a dense logical matrix instead</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">st_intersects</span>(a, b, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-2"><a></a><span class="do">##      [,1]  [,2]</span></span>
-<span id="cb2-3"><a></a><span class="do">## [1,] TRUE FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersects</span>(a, b, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]  [,2]</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] TRUE FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="applying-predicates-subsetting" class="slide level2 center">
@@ -415,25 +417,25 @@ Figure&nbsp;2: Polygon <strong>a</strong> (purple) overlaps <strong>b1</strong> 
 <li>Example data: playgrounds, public transport stops, and Stadtkreise in Zurich</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(sf)</span>
-<span id="cb3-2"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="co"># source: https://www.stadt-zuerich.ch/geodaten/</span></span>
-<span id="cb3-5"><a></a>playgrounds <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week4-exercises/playgrounds.gpkg"</span>)</span>
-<span id="cb3-6"><a></a>publictransport <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week4-exercises/public_transport.gpkg"</span>)</span>
-<span id="cb3-7"><a></a>kreise <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/week4-exercises/stadtkreise-zh.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># source: https://www.stadt-zuerich.ch/geodaten/</span></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>playgrounds <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/vector-deepdive/playgrounds.gpkg"</span>)</span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>publictransport <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/vector-deepdive/public_transport.gpkg"</span>)</span>
+<span id="cb3-7"><a aria-hidden="true" tabindex="-1"></a>kreise <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/vector-deepdive/stadtkreise-zh.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Default predicate: <code>st_intersects</code></li>
 <li>Example: <em>which playgrounds lie within Stadtkreis 1?</em></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>kreis1 <span class="ot">&lt;-</span> kreise[kreise<span class="sc">$</span>STADTKREIS <span class="sc">==</span> <span class="st">"Kreis 1"</span>, ]</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>playgrounds_k1 <span class="ot">&lt;-</span> playgrounds[kreis1, ]  <span class="co"># st_intersects is the default</span></span>
-<span id="cb4-4"><a></a></span>
-<span id="cb4-5"><a></a><span class="fu">nrow</span>(playgrounds_k1)</span>
-<span id="cb4-6"><a></a><span class="do">## [1] 6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>kreis1 <span class="ot">&lt;-</span> kreise[kreise<span class="sc">$</span>STADTKREIS <span class="sc">==</span> <span class="st">"Kreis 1"</span>, ]</span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>playgrounds_k1 <span class="ot">&lt;-</span> playgrounds[kreis1, ]  <span class="co"># st_intersects is the default</span></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(playgrounds_k1)</span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="distance-based-subsetting" class="slide level2">
@@ -443,12 +445,12 @@ Figure&nbsp;2: Polygon <strong>a</strong> (purple) overlaps <strong>b1</strong> 
 <li>Example: <em>which playgrounds are within 100m of a public transport stop?</em></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Using the shorthand notation</span></span>
-<span id="cb5-2"><a></a>playgrounds_close <span class="ot">&lt;-</span> playgrounds[publictransport,,op <span class="ot">=</span> st_is_within_distance, dist <span class="ot">=</span> <span class="dv">100</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Using the shorthand notation</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>playgrounds_close <span class="ot">&lt;-</span> playgrounds[publictransport,,op <span class="ot">=</span> st_is_within_distance, dist <span class="ot">=</span> <span class="dv">100</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Same thing, more readable with <code>st_filter()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>playgrounds_close <span class="ot">&lt;-</span> <span class="fu">st_filter</span>(playgrounds, publictransport, <span class="at">.predicate =</span> st_is_within_distance, <span class="at">dist =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>playgrounds_close <span class="ot">&lt;-</span> <span class="fu">st_filter</span>(playgrounds, publictransport, <span class="at">.predicate =</span> st_is_within_distance, <span class="at">dist =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2">
@@ -485,19 +487,19 @@ Figure&nbsp;3: Note that the playgrounds within 100m of public transport (red do
 <section class="slide level2">
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>publictransport <span class="ot">&lt;-</span> publictransport[,<span class="st">"CHSTNAME"</span>]</span>
-<span id="cb7-2"><a></a></span>
-<span id="cb7-3"><a></a>playgrounds <span class="ot">&lt;-</span> playgrounds[, <span class="st">"name"</span>]</span>
-<span id="cb7-4"><a></a></span>
-<span id="cb7-5"><a></a></span>
-<span id="cb7-6"><a></a>playgrounds_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
-<span id="cb7-7"><a></a>  playgrounds, </span>
-<span id="cb7-8"><a></a>  publictransport, </span>
-<span id="cb7-9"><a></a>  <span class="at">join =</span> st_nearest_feature</span>
-<span id="cb7-10"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>publictransport <span class="ot">&lt;-</span> publictransport[,<span class="st">"CHSTNAME"</span>]</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>playgrounds <span class="ot">&lt;-</span> playgrounds[, <span class="st">"name"</span>]</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>playgrounds_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>  playgrounds, </span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>  publictransport, </span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">join =</span> st_nearest_feature</span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>playgrounds_join</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>playgrounds_join</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 184 features and 2 fields
 Geometry type: POINT
@@ -537,24 +539,24 @@ Projected CRS: CH1903+ / LV95
 <section class="slide level2">
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>playgrounds_join2 <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
-<span id="cb10-2"><a></a>  playgrounds, </span>
-<span id="cb10-3"><a></a>  publictransport, </span>
-<span id="cb10-4"><a></a>  <span class="at">join =</span> st_is_within_distance, </span>
-<span id="cb10-5"><a></a>  <span class="at">dist =</span> <span class="dv">100</span></span>
-<span id="cb10-6"><a></a>  )</span>
-<span id="cb10-7"><a></a></span>
-<span id="cb10-8"><a></a><span class="fu">nrow</span>(playgrounds)</span>
-<span id="cb10-9"><a></a><span class="do">## [1] 184</span></span>
-<span id="cb10-10"><a></a></span>
-<span id="cb10-11"><a></a><span class="fu">nrow</span>(playgrounds_join2)</span>
-<span id="cb10-12"><a></a><span class="do">## [1] 186</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>playgrounds_join2 <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>  playgrounds, </span>
+<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>  publictransport, </span>
+<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">join =</span> st_is_within_distance, </span>
+<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> <span class="dv">100</span></span>
+<span id="cb10-6"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(playgrounds)</span>
+<span id="cb10-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 184</span></span>
+<span id="cb10-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(playgrounds_join2)</span>
+<span id="cb10-12"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 186</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>playgrounds_join2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>playgrounds_join2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 186 features and 2 fields
 Geometry type: POINT
@@ -589,9 +591,9 @@ Projected CRS: CH1903+ / LV95
 <section class="slide level2">
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>kreise <span class="ot">&lt;-</span> kreise[,<span class="st">"STADTKREIS"</span>]</span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>publictransport_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(publictransport, kreise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>kreise <span class="ot">&lt;-</span> kreise[,<span class="st">"STADTKREIS"</span>]</span>
+<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a>publictransport_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(publictransport, kreise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <img data-src="vector-deepdive-topological-rel_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
@@ -601,13 +603,13 @@ Projected CRS: CH1903+ / LV95
 <li>Reverse order → each <code>stadtkreis</code> gets <strong>duplicated</strong> for every intersecting point</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>kreise_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(kreise, publictransport)</span>
-<span id="cb14-2"><a></a></span>
-<span id="cb14-3"><a></a><span class="fu">nrow</span>(kreise)</span>
-<span id="cb14-4"><a></a><span class="do">## [1] 12</span></span>
-<span id="cb14-5"><a></a></span>
-<span id="cb14-6"><a></a><span class="fu">nrow</span>(kreise_join)</span>
-<span id="cb14-7"><a></a><span class="do">## [1] 477</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>kreise_join <span class="ot">&lt;-</span> <span class="fu">st_join</span>(kreise, publictransport)</span>
+<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(kreise)</span>
+<span id="cb14-4"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 12</span></span>
+<span id="cb14-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(kreise_join)</span>
+<span id="cb14-7"><a aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 477</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-nrow="1">
 <div id="fig-publictransport-kreise" class="quarto-layout-panel">
@@ -722,23 +724,23 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
 </figcaption>
 <div aria-describedby="tbl-de9im-rook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ymokekppnl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ymokekppnl table {
+<div id="gxjhmnvqed" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gxjhmnvqed table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ymokekppnl thead, #ymokekppnl tbody, #ymokekppnl tfoot, #ymokekppnl tr, #ymokekppnl td, #ymokekppnl th {
+#gxjhmnvqed thead, #gxjhmnvqed tbody, #gxjhmnvqed tfoot, #gxjhmnvqed tr, #gxjhmnvqed td, #gxjhmnvqed th {
   border-style: none;
 }
 
-#ymokekppnl p {
+#gxjhmnvqed p {
   margin: 0;
   padding: 0;
 }
 
-#ymokekppnl .gt_table {
+#gxjhmnvqed .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -764,12 +766,12 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-left-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_caption {
+#gxjhmnvqed .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ymokekppnl .gt_title {
+#gxjhmnvqed .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -781,7 +783,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-bottom-width: 0;
 }
 
-#ymokekppnl .gt_subtitle {
+#gxjhmnvqed .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -793,7 +795,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-top-width: 0;
 }
 
-#ymokekppnl .gt_heading {
+#gxjhmnvqed .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -805,13 +807,13 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-right-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_bottom_border {
+#gxjhmnvqed .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_col_headings {
+#gxjhmnvqed .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -826,7 +828,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-right-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_col_heading {
+#gxjhmnvqed .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -846,7 +848,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   overflow-x: hidden;
 }
 
-#ymokekppnl .gt_column_spanner_outer {
+#gxjhmnvqed .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -858,15 +860,15 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 4px;
 }
 
-#ymokekppnl .gt_column_spanner_outer:first-child {
+#gxjhmnvqed .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ymokekppnl .gt_column_spanner_outer:last-child {
+#gxjhmnvqed .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ymokekppnl .gt_column_spanner {
+#gxjhmnvqed .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -878,11 +880,11 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   width: 100%;
 }
 
-#ymokekppnl .gt_spanner_row {
+#gxjhmnvqed .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ymokekppnl .gt_group_heading {
+#gxjhmnvqed .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -908,7 +910,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   text-align: left;
 }
 
-#ymokekppnl .gt_empty_group_heading {
+#gxjhmnvqed .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -923,15 +925,15 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   vertical-align: middle;
 }
 
-#ymokekppnl .gt_from_md > :first-child {
+#gxjhmnvqed .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ymokekppnl .gt_from_md > :last-child {
+#gxjhmnvqed .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ymokekppnl .gt_row {
+#gxjhmnvqed .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -950,7 +952,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   overflow-x: hidden;
 }
 
-#ymokekppnl .gt_stub {
+#gxjhmnvqed .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -963,7 +965,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 5px;
 }
 
-#ymokekppnl .gt_stub_row_group {
+#gxjhmnvqed .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -977,15 +979,15 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   vertical-align: top;
 }
 
-#ymokekppnl .gt_row_group_first td {
+#gxjhmnvqed .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ymokekppnl .gt_row_group_first th {
+#gxjhmnvqed .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ymokekppnl .gt_summary_row {
+#gxjhmnvqed .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -995,16 +997,16 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 5px;
 }
 
-#ymokekppnl .gt_first_summary_row {
+#gxjhmnvqed .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_first_summary_row.thick {
+#gxjhmnvqed .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ymokekppnl .gt_last_summary_row {
+#gxjhmnvqed .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1014,7 +1016,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-bottom-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_grand_summary_row {
+#gxjhmnvqed .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1024,7 +1026,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 5px;
 }
 
-#ymokekppnl .gt_first_grand_summary_row {
+#gxjhmnvqed .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1034,7 +1036,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-top-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_last_grand_summary_row_top {
+#gxjhmnvqed .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1044,11 +1046,11 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-bottom-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_striped {
+#gxjhmnvqed .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ymokekppnl .gt_table_body {
+#gxjhmnvqed .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1057,7 +1059,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-bottom-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_footnotes {
+#gxjhmnvqed .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1071,7 +1073,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-right-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_footnote {
+#gxjhmnvqed .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1080,7 +1082,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 5px;
 }
 
-#ymokekppnl .gt_sourcenotes {
+#gxjhmnvqed .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1094,7 +1096,7 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   border-right-color: #D3D3D3;
 }
 
-#ymokekppnl .gt_sourcenote {
+#gxjhmnvqed .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1102,72 +1104,72 @@ Table&nbsp;1: DE-9IM for two edge-sharing squares (A in purple, B in green). Red
   padding-right: 5px;
 }
 
-#ymokekppnl .gt_left {
+#gxjhmnvqed .gt_left {
   text-align: left;
 }
 
-#ymokekppnl .gt_center {
+#gxjhmnvqed .gt_center {
   text-align: center;
 }
 
-#ymokekppnl .gt_right {
+#gxjhmnvqed .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ymokekppnl .gt_font_normal {
+#gxjhmnvqed .gt_font_normal {
   font-weight: normal;
 }
 
-#ymokekppnl .gt_font_bold {
+#gxjhmnvqed .gt_font_bold {
   font-weight: bold;
 }
 
-#ymokekppnl .gt_font_italic {
+#gxjhmnvqed .gt_font_italic {
   font-style: italic;
 }
 
-#ymokekppnl .gt_super {
+#gxjhmnvqed .gt_super {
   font-size: 65%;
 }
 
-#ymokekppnl .gt_footnote_marks {
+#gxjhmnvqed .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ymokekppnl .gt_asterisk {
+#gxjhmnvqed .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ymokekppnl .gt_indent_1 {
+#gxjhmnvqed .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ymokekppnl .gt_indent_2 {
+#gxjhmnvqed .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ymokekppnl .gt_indent_3 {
+#gxjhmnvqed .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ymokekppnl .gt_indent_4 {
+#gxjhmnvqed .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ymokekppnl .gt_indent_5 {
+#gxjhmnvqed .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ymokekppnl .katex-display {
+#gxjhmnvqed .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ymokekppnl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gxjhmnvqed div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1226,23 +1228,23 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
 </figcaption>
 <div aria-describedby="tbl-rook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="jynapyefzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jynapyefzq table {
+<div id="kvtloouqzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvtloouqzq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jynapyefzq thead, #jynapyefzq tbody, #jynapyefzq tfoot, #jynapyefzq tr, #jynapyefzq td, #jynapyefzq th {
+#kvtloouqzq thead, #kvtloouqzq tbody, #kvtloouqzq tfoot, #kvtloouqzq tr, #kvtloouqzq td, #kvtloouqzq th {
   border-style: none;
 }
 
-#jynapyefzq p {
+#kvtloouqzq p {
   margin: 0;
   padding: 0;
 }
 
-#jynapyefzq .gt_table {
+#kvtloouqzq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1268,12 +1270,12 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-left-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_caption {
+#kvtloouqzq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jynapyefzq .gt_title {
+#kvtloouqzq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1285,7 +1287,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-bottom-width: 0;
 }
 
-#jynapyefzq .gt_subtitle {
+#kvtloouqzq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1297,7 +1299,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-top-width: 0;
 }
 
-#jynapyefzq .gt_heading {
+#kvtloouqzq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1309,13 +1311,13 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-right-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_bottom_border {
+#kvtloouqzq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_col_headings {
+#kvtloouqzq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1330,7 +1332,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-right-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_col_heading {
+#kvtloouqzq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1350,7 +1352,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   overflow-x: hidden;
 }
 
-#jynapyefzq .gt_column_spanner_outer {
+#kvtloouqzq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1362,15 +1364,15 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 4px;
 }
 
-#jynapyefzq .gt_column_spanner_outer:first-child {
+#kvtloouqzq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jynapyefzq .gt_column_spanner_outer:last-child {
+#kvtloouqzq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jynapyefzq .gt_column_spanner {
+#kvtloouqzq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1382,11 +1384,11 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   width: 100%;
 }
 
-#jynapyefzq .gt_spanner_row {
+#kvtloouqzq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jynapyefzq .gt_group_heading {
+#kvtloouqzq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1412,7 +1414,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   text-align: left;
 }
 
-#jynapyefzq .gt_empty_group_heading {
+#kvtloouqzq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1427,15 +1429,15 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   vertical-align: middle;
 }
 
-#jynapyefzq .gt_from_md > :first-child {
+#kvtloouqzq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jynapyefzq .gt_from_md > :last-child {
+#kvtloouqzq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jynapyefzq .gt_row {
+#kvtloouqzq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1454,7 +1456,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   overflow-x: hidden;
 }
 
-#jynapyefzq .gt_stub {
+#kvtloouqzq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1467,7 +1469,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 5px;
 }
 
-#jynapyefzq .gt_stub_row_group {
+#kvtloouqzq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1481,15 +1483,15 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   vertical-align: top;
 }
 
-#jynapyefzq .gt_row_group_first td {
+#kvtloouqzq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jynapyefzq .gt_row_group_first th {
+#kvtloouqzq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jynapyefzq .gt_summary_row {
+#kvtloouqzq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1499,16 +1501,16 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 5px;
 }
 
-#jynapyefzq .gt_first_summary_row {
+#kvtloouqzq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_first_summary_row.thick {
+#kvtloouqzq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jynapyefzq .gt_last_summary_row {
+#kvtloouqzq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1518,7 +1520,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-bottom-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_grand_summary_row {
+#kvtloouqzq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1528,7 +1530,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 5px;
 }
 
-#jynapyefzq .gt_first_grand_summary_row {
+#kvtloouqzq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1538,7 +1540,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-top-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_last_grand_summary_row_top {
+#kvtloouqzq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1548,11 +1550,11 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-bottom-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_striped {
+#kvtloouqzq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jynapyefzq .gt_table_body {
+#kvtloouqzq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1561,7 +1563,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-bottom-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_footnotes {
+#kvtloouqzq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1575,7 +1577,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-right-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_footnote {
+#kvtloouqzq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1584,7 +1586,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 5px;
 }
 
-#jynapyefzq .gt_sourcenotes {
+#kvtloouqzq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1598,7 +1600,7 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   border-right-color: #D3D3D3;
 }
 
-#jynapyefzq .gt_sourcenote {
+#kvtloouqzq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1606,72 +1608,72 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
   padding-right: 5px;
 }
 
-#jynapyefzq .gt_left {
+#kvtloouqzq .gt_left {
   text-align: left;
 }
 
-#jynapyefzq .gt_center {
+#kvtloouqzq .gt_center {
   text-align: center;
 }
 
-#jynapyefzq .gt_right {
+#kvtloouqzq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jynapyefzq .gt_font_normal {
+#kvtloouqzq .gt_font_normal {
   font-weight: normal;
 }
 
-#jynapyefzq .gt_font_bold {
+#kvtloouqzq .gt_font_bold {
   font-weight: bold;
 }
 
-#jynapyefzq .gt_font_italic {
+#kvtloouqzq .gt_font_italic {
   font-style: italic;
 }
 
-#jynapyefzq .gt_super {
+#kvtloouqzq .gt_super {
   font-size: 65%;
 }
 
-#jynapyefzq .gt_footnote_marks {
+#kvtloouqzq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jynapyefzq .gt_asterisk {
+#kvtloouqzq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jynapyefzq .gt_indent_1 {
+#kvtloouqzq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jynapyefzq .gt_indent_2 {
+#kvtloouqzq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jynapyefzq .gt_indent_3 {
+#kvtloouqzq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jynapyefzq .gt_indent_4 {
+#kvtloouqzq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jynapyefzq .gt_indent_5 {
+#kvtloouqzq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jynapyefzq .katex-display {
+#kvtloouqzq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jynapyefzq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kvtloouqzq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1798,10 +1800,10 @@ Table&nbsp;2: The DE-9IM for the <em>rooks</em> case. This can be flattend into 
 
 <p>Create a custom <code>st_rook</code> function and use it like any named predicate:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>st_rook <span class="ot">&lt;-</span> \(x, y) <span class="fu">st_relate</span>(x, y, <span class="at">pattern =</span> <span class="st">"F***1****"</span>)</span>
-<span id="cb15-2"><a></a></span>
-<span id="cb15-3"><a></a>grid_rook <span class="ot">&lt;-</span> grid_dest[grid_orig, , op <span class="ot">=</span> st_rook] <span class="sc">|&gt;</span> </span>
-<span id="cb15-4"><a></a>  <span class="fu">st_sample</span>(<span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"hexagonal"</span>,<span class="at">by_polygon =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>st_rook <span class="ot">&lt;-</span> \(x, y) <span class="fu">st_relate</span>(x, y, <span class="at">pattern =</span> <span class="st">"F***1****"</span>)</span>
+<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>grid_rook <span class="ot">&lt;-</span> grid_dest[grid_orig, , op <span class="ot">=</span> st_rook] <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sample</span>(<span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"hexagonal"</span>,<span class="at">by_polygon =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <img data-src="vector-deepdive-topological-rel_files/figure-revealjs/fig-chessboard-rook-1.png" style="width:80.0%" class="r-stretch quarto-figure-center" id="fig-chessboard-rook"><p class="caption">
@@ -1832,6 +1834,7 @@ Egenhofer, Max, and John Herring. 1990. <span>“A Mathematical Framework for th
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/zhaw_rgb.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>

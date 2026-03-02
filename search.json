@@ -14,34 +14,6 @@
     "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nRedo you task from last Week, but further extend your features by using the approach described in Adding Context. Add at least 2, to 3 features of your own.\nCompare your results to the ones you got last week. Does your model perform better if context information is added?"
   },
   {
-    "objectID": "raster-deepdive-gdal.html#gdalinfo",
-    "href": "raster-deepdive-gdal.html#gdalinfo",
-    "title": "GDAL",
-    "section": "GDALInfo",
-    "text": "GDALInfo\n\nThe simplest program in GDAL is probabbly gdalinfo\nIt lists information about a raster dataset.\nThe simplest command to test if a CLI tool is working, is to get the version number using --version:\n\n\ngdalinfo --version\n\nGDAL 3.11.4 \"Eganville\", released 2025/09/04\n\n\nGet help\n\nAll named arguments to gdalinfo are listed with [-argument]\nSome arguments need parameters:\n\nFor example: -if stands for input format\nif Gtiff specifies that the input is a GeoTIFF\nThis allows you to be explicit about your input format, rather than GDAL guessing it from the file extension\nThese inputs are denoted with &lt;&gt; (i.e. [-if &lt;format&gt;])\n\nPositional arguments do not have square brackets\nA positional argument needs to be in a specific position\ngdalinfo only has one position argument: &lt;dataset_name&gt;\n\n\ngdalinfo --help\n\nUsage: gdalinfo [--help] [--long-usage] [--help-general]\n                [-json] [-mm]\n                [[-stats]|[-approx_stats]]\n                [-hist]\n                [-nogcp] [-nomd] [-norat] [-noct] [-nofl] [-nonodata] [-nomask]\n                [-checksum] [-listmdd] [-proj4]\n                [-wkt_format &lt;WKT1|WKT2|WKT2_2015|WKT2_2018|WKT2_2019&gt;]\n                [-sd &lt;n&gt;] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]... [-if &lt;format&gt;]...\n                [-mdd &lt;domain&gt;|all]\n                &lt;dataset_name&gt;\n\nNote: gdalinfo --long-usage for full help.\n\n\nGet basic Information\n\ngdalinfo data/week5-exercises/elev-lux.tif\n\nDriver: GTiff/GeoTIFF\nFiles: data/week5-exercises/elev-lux.tif\n       data/week5-exercises/elev-lux.tif.aux.xml\nSize is 95, 90\nCoordinate System is:\nGEOGCRS[\"WGS 84\",\n    ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n        MEMBER[\"World Geodetic System 1984 (Transit)\"],\n        MEMBER[\"World Geodetic System 1984 (G730)\"],\n        MEMBER[\"World Geodetic System 1984 (G873)\"],\n        MEMBER[\"World Geodetic System 1984 (G1150)\"],\n        MEMBER[\"World Geodetic System 1984 (G1674)\"],\n        MEMBER[\"World Geodetic System 1984 (G1762)\"],\n        MEMBER[\"World Geodetic System 1984 (G2139)\"],\n        MEMBER[\"World Geodetic System 1984 (G2296)\"],\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"World.\"],\n        BBOX[-90,-180,90,180]],\n    ID[\"EPSG\",4326]]\nData axis to CRS axis mapping: 2,1\nOrigin = (5.741666666666666,50.191666666666663)\nPixel Size = (0.008333333333333,-0.008333333333333)\nMetadata:\n  AREA_OR_POINT=Area\nImage Structure Metadata:\n  COMPRESSION=LZW\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (   5.7416667,  50.1916667) (  5d44'30.00\"E, 50d11'30.00\"N)\nLower Left  (   5.7416667,  49.4416667) (  5d44'30.00\"E, 49d26'30.00\"N)\nUpper Right (   6.5333333,  50.1916667) (  6d32' 0.00\"E, 50d11'30.00\"N)\nLower Right (   6.5333333,  49.4416667) (  6d32' 0.00\"E, 49d26'30.00\"N)\nCenter      (   6.1375000,  49.8166667) (  6d 8'15.00\"E, 49d49' 0.00\"N)\nBand 1 Block=95x43 Type=Int16, ColorInterp=Gray\n  Description = elevation\n  Min=141.000 Max=547.000 \n  Minimum=141.000, Maximum=547.000, Mean=-9999.000, StdDev=-9999.000\n  NoData Value=-32768\n  Metadata:\n    STATISTICS_MINIMUM=141\n    STATISTICS_MAXIMUM=547\n    STATISTICS_MEAN=-9999\n    STATISTICS_STDDEV=-9999\n\n\nGet histogram\n\nTo calculate a histogram, we can use the argument -hist (see the help page)\nNote: I’m piping the output into head and then tail to truncate the result\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif | tail -n 8 | head -n 2\n\n  256 buckets from 140.204 to 547.796:\n  2 3 1 4 0 0 1 1 1 5 1 0 0 2 1 1 3 5 1 5 4 4 1 4 4 1 1 3 2 0 6 4 0 2 6 7 5 5 6 5 7 8 4 4 3 11 8 2 3 3 10 5 13 14 3 13 4 14 10 6 19 6 12 11 10 18 9 17 26 14 25 8 19 24 10 37 15 30 12 30 37 22 32 18 47 42 23 44 35 48 53 21 56 33 52 59 31 46 33 39 68 27 57 31 44 28 61 64 24 55 32 57 69 30 55 22 52 40 25 51 28 48 52 23 37 20 40 13 42 55 17 39 11 41 37 20 40 22 38 25 25 31 17 21 42 13 30 12 18 27 11 24 10 25 14 19 30 12 19 10 27 28 3 22 10 15 28 9 15 6 20 20 7 9 5 20 12 9 19 6 25 7 18 27 9 21 7 21 19 9 19 8 18 27 9 27 16 17 25 12 31 18 25 26 16 35 14 25 11 36 20 17 35 15 27 27 14 16 6 29 20 7 27 11 28 14 2 12 8 11 3 6 7 6 9 6 4 6 1 3 1 1 5 1 1 1 1 1 0 1 0 2 2 0 0 1 \n\n\nGet output as JSON\n\nTo get the output as a JSON, use the argument -json\nJSON outputs are much easier to to parse\nThis is especially useful if you want to use the output in a script or program\n\n\n# pipe the output to a JSON file\ngdalinfo -hist -json data/week5-exercises/elev-lux.tif  &gt; data-out/elev-lux.json\n\nParse JSON output\n\nOpen the file elev-lux.json in a browser to get a good idea of the hierarchy\nUse a tool like jq to parse the JSON in the terminal\njq is a powerful tool for parsing JSON in the terminal\nWe can “climb” down the JSON structure using the . operator and the key names\nTo extract from an array, we can use []\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \\\n  jq \".bands[].min\"\n\n141.0\n\n\nPlots in bash\n\nTo illustrate, we extract the histogram from the data and visualize it with bashplotlib\n\n\ngdalinfo -hist data/week5-exercises/elev-lux.tif -json | \n1  jq \".bands[].histogram.buckets[]\" |\n2  hist -w 1 -p +\n\n\n1\n\nThis jq filter extracts the raw values from the array\n\n2\n\nhist from bashplotlib creates a histogram: -w 1 sets the width to 1 and -p + creates a + instead of a point\n\n\n\n\n 20|  +                                                                    \n 19|  +                                                                    \n 18|  +                                                                    \n 17|  +                                                                    \n 16|  +                                                                    \n 15|  +                                                                    \n 14|  +                                                                    \n 13|  +                                                                    \n 12|  +    +                                                               \n 11|  +    +                                                               \n 10| ++ ++ +                                                               \n  9| ++ ++++                  + +                                          \n  8| +++++++  +               + +                                          \n  7| ++++++++ ++++ +    ++    + +                                          \n  6| ++++++++ ++++ +   +++    + +                                          \n  5| +++++++++++++ +  ++++    + ++ +                                       \n  4| ++++++++++++++++ ++++++  + ++ ++     +                                \n  3| +++++++++++++++++++++++ ++ ++ ++   + +  + +         +  +              \n  2| +++++++++++++++++++++++++++++ ++++ + + ++ + +   +   +  + +            \n  1| ++++++++++++++++++++++++++++++++++ ++++++++ + +++  +++ +++ + +  +   ++\n    ----------------------------------------------------------------------\nGetting the CRS\n\nTo get the Coordinate Reference System (CRS) of a raster, we can filter for the entry .coordinateSystem\nThe specific raster does not seem to have a CRS assigned, so the output is null\nWe need to consult the metadata provided by the data provider to get the CRS\nAs noted here, the CRS is LV03 LN02, which is the old swiss coordinate system, aka EPSG:21781\n\n\ngdalinfo -json data/week5-exercises/dhm25_grid_raster.asc | jq \".coordinateSystem\"\n\nnull\n\n\n\nWe can confirm this by geetting the extent of the raster,\nFor this we can use the argument -json and then extract the cornerCoordinates key\n\n\ngdalinfo -json \\\n  data/week5-exercises/dhm25_grid_raster.asc | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}"
-  },
-  {
-    "objectID": "raster-deepdive-gdal.html#gdalwarp",
-    "href": "raster-deepdive-gdal.html#gdalwarp",
-    "title": "GDAL",
-    "section": "Gdalwarp",
-    "text": "Gdalwarp\n\nThe DHM25 raster is in the old Swiss coordinate system EPSG:21781\nTo transform it to the new Swiss coordinate system EPSG:2056, we can use the gdalwarp program\nNote that gdalwarp has two positional arguments:\n\n&lt;src_dataset_name&gt;... and &lt;dst_dataset_name&gt;\nThe dots indicate that you can input multiple data sources\n\n\n\ngdalwarp --help\n\nUsage: gdalwarp [--help] [--long-usage] [--help-general]\n                [--quiet] [-overwrite] [-of &lt;output_format&gt;]\n                [-co &lt;NAME&gt;=&lt;VALUE&gt;]... [-s_srs &lt;srs_def&gt;] [-t_srs &lt;srs_def&gt;]\n                [[-srcalpha]|[-nosrcalpha]]\n                [-dstalpha] [-tr &lt;xres&gt; &lt;yres&gt;|square] [-ts &lt;width&gt; &lt;height&gt;]\n                [-te &lt;xmin&gt; &lt;ymin&gt; &lt;xmax&gt; &lt;ymax&gt;] [-te_srs &lt;srs_def&gt;]\n                [-r near|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum]\n                [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                &lt;src_dataset_name&gt;... &lt;dst_dataset_name&gt;\n\nAdvanced options:\n                [-wo &lt;NAME&gt;=&lt;VALUE&gt;]... [-multi] [-s_coord_epoch &lt;epoch&gt;]\n                [-t_coord_epoch &lt;epoch&gt;] [-ct &lt;string&gt;]\n                [[-tps]|[-rpc]|[-geoloc]]\n                [-order &lt;1|2|3&gt;] [-refine_gcps &lt;tolerance&gt; [&lt;minimum_gcps&gt;]]\n                [-to &lt;NAME&gt;=&lt;VALUE&gt;]... [-et &lt;err_threshold&gt;]\n                [-wm &lt;memory_in_mb&gt;] [-srcnodata \"&lt;value&gt;[ &lt;value&gt;]...\"]\n                [-dstnodata \"&lt;value&gt;[ &lt;value&gt;]...\"] [-tap]\n                [-wt Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                [-cutline &lt;datasource&gt;|&lt;WKT&gt;] [-cutline_srs &lt;srs_def&gt;]\n                [-cwhere &lt;expression&gt;]\n                [[-cl &lt;layername&gt;]|[-csql &lt;query&gt;]]\n                [-cblend &lt;distance&gt;] [-crop_to_cutline] [-nomd]\n                [-cvmd &lt;meta_conflict_value&gt;] [-setci] [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                [-doo &lt;NAME&gt;=&lt;VALUE&gt;]... [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE]\n                [[-vshift]|[-novshiftgrid]]\n                [-if &lt;format&gt;]... [-srcband &lt;band&gt;]... [-dstband &lt;band&gt;]...\n\nNote: gdalwarp --long-usage for full help."
-  },
-  {
-    "objectID": "raster-deepdive-gdal.html#reproject-transform-raster",
-    "href": "raster-deepdive-gdal.html#reproject-transform-raster",
-    "title": "GDAL",
-    "section": "Reproject / Transform Raster",
-    "text": "Reproject / Transform Raster\n\nSince our data has no CRS assigned, we need to specify the source CRS using -s_srs\nThe EPSG code for the new Swiss coordinate system is 2056, which we will provide as the target CRS using -t_srs\nWe recommend using geotiff rather than ascii output\n\n\ngdalwarp -s_srs EPSG:21781 \\\n  -t_srs EPSG:2056 \\ \n  data/week5-exercises/dhm25_grid_raster.asc \\\n  data-out/dhm25.tif\n\n0...10...20...30...40...50...60...70...80...90...100 - done."
-  },
-  {
-    "objectID": "raster-deepdive-gdal.html#check-the-crs",
-    "href": "raster-deepdive-gdal.html#check-the-crs",
-    "title": "GDAL",
-    "section": "Check the CRS",
-    "text": "Check the CRS\n\nWe can now check the CRS on our created dataset\n\n\ngdalinfo data-out/dhm25.tif | tail -n 60 | head -n 45\n\nDriver: GTiff/GeoTIFF\nFiles: data-out/dhm25.tif\nSize is 15401, 9121\nOrigin = (479987.500000000000000,302012.500000000000000)\nPixel Size = (25.000000000000000,-25.000000000000000)\nImage Structure Metadata:\n  INTERLEAVE=BAND\nCorner Coordinates:\nUpper Left  (  479987.500,  302012.500) \nLower Left  (  479987.500,   73987.500) \nUpper Right (  865012.500,  302012.500) \nLower Right (  865012.500,   73987.500) \nCenter      (  672500.000,  188000.000) \nBand 1 Block=15401x1 Type=Float32, ColorInterp=Gray\n  Min=193.000 Max=4629.000 \n  Minimum=193.000, Maximum=4629.000, Mean=1277.369, StdDev=806.323\n  NoData Value=-9999\n  Metadata:\n    STATISTICS_MAXIMUM=4629\n    STATISTICS_MEAN=1277.3686534266\n    STATISTICS_MINIMUM=193\n    STATISTICS_STDDEV=806.32292704492\n\n\n\n\nAs well as the extent\n(note how the values have changed)\n\n\ngdalinfo -json data-out/dhm25.tif | \n  jq \".cornerCoordinates\"\n\n{\n  \"upperLeft\": [\n    479987.5,\n    302012.5\n  ],\n  \"lowerLeft\": [\n    479987.5,\n    73987.5\n  ],\n  \"lowerRight\": [\n    865012.5,\n    73987.5\n  ],\n  \"upperRight\": [\n    865012.5,\n    302012.5\n  ],\n  \"center\": [\n    672500.0,\n    188000.0\n  ]\n}"
-  },
-  {
     "objectID": "network-centrality-task.html",
     "href": "network-centrality-task.html",
     "title": "🚀 Tasks",
@@ -84,6 +56,55 @@
     "text": "Table 1: The course schedule (might be subject to change).\n\n\n\n\n\n\n\n\n\n\nSW\nCW\nDate\n\n\n\n\nVector Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n1\n8\n2026-02-17\n\n\nTask (async), due: 2026-03-02\n2\n9\n2026-02-24\n\n\nRaster Deepdive (Nils Ratnaweera)\n\n\nTutorial (in person)\n3\n10\n2026-03-03\n\n\nTask (async), due: 2026-03-16\n4\n11\n2026-03-10\n\n\nWeb Mapping (Nils Ratnaweera)\n\n\nTutorial (in person)\n5\n12\n2026-03-17\n\n\nInterpolation and Density Estimation (Patrick Laube)\n\n\nTheory (in person)\n6\n13\n2026-03-24\n\n\nTask (async), due: 2026-04-06\n7\n14\n2026-03-31\n\n\nNetwork Analysis (Patrick Laube)\n\n\nTheory (in person)\n8\n15\n2026-04-07\n\n\nTask (async), due: 2026-04-20\n9\n16\n2026-04-14\n\n\nMovement Analysis I (Patrick Laube)\n\n\nTheory (in person)\n10\n17\n2026-04-21\n\n\nTask (async), due: 2026-05-04\n11\n18\n2026-04-28\n\n\nMovement Analysis II (Patrick Laube)\n\n\nTheory (in person)\n12\n19\n2026-05-05\n\n\nTask (async), due: 2026-05-18\n13\n20\n2026-05-12\n\n\nOral Review (Nils Ratnaweera)\n\n\nIn Person\n14\n21\n2026-05-19"
   },
   {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line\n\n\n\n\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line"
+  },
+  {
+    "objectID": "syllabus.html#assessment",
+    "href": "syllabus.html#assessment",
+    "title": "Syllabus",
+    "section": "",
+    "text": "The assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+  },
+  {
+    "objectID": "syllabus.html#footnotes",
+    "href": "syllabus.html#footnotes",
+    "title": "Syllabus",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe provisions specified in the Annex thus serve as an “alternative” if no others have been specified.↩︎"
+  },
+  {
+    "objectID": "interpolation-density.html#data",
+    "href": "interpolation-density.html#data",
+    "title": "Spatiotemporal Datascience",
+    "section": "Data",
+    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link."
+  },
+  {
+    "objectID": "interpolation-density.html#exercise-1-kernel-density-estimation",
+    "href": "interpolation-density.html#exercise-1-kernel-density-estimation",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 1: Kernel Density Estimation",
+    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl."
+  },
+  {
+    "objectID": "interpolation-density.html#sec-density-voronoi",
+    "href": "interpolation-density.html#sec-density-voronoi",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 2: Voronoi",
+    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich."
+  },
+  {
     "objectID": "raster-deepdive-task.html",
     "href": "raster-deepdive-task.html",
     "title": "🚀 Tasks",
@@ -102,63 +123,35 @@
     "href": "movement-II-adding-context.html",
     "title": "Adding Context",
     "section": "",
-    "text": "Adding Context\nLast Week, we tried to predict travel mode using movement parameters only. This simple approach can potentially already lead to good results, however we’re missing out on information readily available: Environmental data.\nContext information such as road type, train lines, bus stops etc. can provide valuable additional information for predicting travel mode.\nWe prepared some data from OpenStreetMap, obtained from extract.bbbike.org/. The preperation included:\n\nExtracting highways and railway lines from the archive.\nProjecting the data to WGS 84 / UTM zone 50N (EPSG:32650).\nFor highways: Add the column cycleway which is TRUE if the road segment includes tags related to cycling infrastructure.\nLump the multitude of categories (column highway and railwayfor the respective datasets) into the most frequent 6 and 3 categories, respectively\n\n\n\n\n\n\n\nNote\n\n\n\nOSM uses the term highway to mean roads in general, not specifically main roads. The column highway differentiates different types for road. See the OSMWiki for more details.\n\n\n\nlibrary(sf)\nlibrary(dplyr)\n\n\ngpkg &lt;- \"data/week14-exercises/osm.gpkg\"\n\nst_layers(gpkg)\n\nDriver: GPKG \nAvailable layers:\n  layer_name geometry_type features fields              crs_name\n1    highway   Line String    43376      8 WGS 84 / UTM zone 50N\n2    railway   Line String     4095      7 WGS 84 / UTM zone 50N\n\nhighway &lt;- read_sf(gpkg, \"highway\")\nrailway &lt;- read_sf(gpkg, \"railway\")\n\n\nplot(highway[\"highway\"])\n\n\n\n\n\n\n\n\n\nplot(railway[\"railway\"])\n\n\n\n\n\n\n\n\nTo use this context information as additional features, we first need to import our movement data:\n\n# For illustration purposes, we will only use 500 samples\ntraining_dataset &lt;- read_sf(\"data/week12-exercises/tracks_1.gpkg\", query = \"SELECT * FROM training LIMIT 500\") |&gt; \n  mutate(data = \"training\")\n\nNow we can join the movement data with the context information using various methods. A simple approach could be to use the attribute data from the nearest feature for each datapoint.\n\ntraining_dataset_join &lt;- st_join(training_dataset,highway, join = st_nearest_feature) |&gt; \n  # Selecting these columns is for illustration purposes\n  select(user_id, datetime, highway, cycleway)\n\ntraining_dataset_join\n\nSimple feature collection with 500 features and 4 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 452732.2 ymin: 4417605 xmax: 454778.1 ymax: 4419221\nProjected CRS: WGS 84 / UTM zone 50N\n# A tibble: 500 × 5\n   user_id datetime            highway cycleway               geom\n     &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;   &lt;lgl&gt;           &lt;POINT [m]&gt;\n 1      10 2008-06-18 16:47:35 primary NA       (454778.1 4419210)\n 2      10 2008-06-18 16:47:37 primary NA         (454775 4419210)\n 3      10 2008-06-18 16:47:38 primary NA       (454772.7 4419209)\n 4      10 2008-06-18 16:47:39 primary NA       (454769.7 4419208)\n 5      10 2008-06-18 16:47:40 primary NA       (454765.2 4419207)\n 6      10 2008-06-18 16:47:41 primary NA         (454760 4419205)\n 7      10 2008-06-18 16:47:42 primary NA       (454754.7 4419204)\n 8      10 2008-06-18 16:47:43 primary NA       (454749.4 4419203)\n 9      10 2008-06-18 16:47:44 primary NA       (454743.9 4419204)\n10      10 2008-06-18 16:47:45 primary NA       (454737.8 4419204)\n# ℹ 490 more rows\n\n\n\nlibrary(tmap)\ntm_shape(training_dataset_join) + \n  tm_dots(\"highway\") +\n  tm_shape(highway) +\n  tm_lines() +\n  tm_layout(frame = FALSE)\n\n\n\n\n\n\n\n\nFor some datasets, it might make sense to calculate the distance to the closest railway line. We’ll illustrate this by using the railway data:\n\n# First, determine the nearest railway for every moment sample\nnearest_railway &lt;- st_nearest_feature(training_dataset_join, railway)\n\n# Now, we can calculate the distance to the nearest feature\n\nrailway_dist &lt;- st_distance(\n  training_dataset_join, \n  railway[nearest_railway,], \n  by_element = TRUE\n  )\n\n# Now we can add this as a feature to our training data\ntraining_dataset_join$distance_to_railway &lt;- as.numeric(railway_dist)\n\n\ntm_shape(training_dataset_join) +\n  tm_dots(fill = \"distance_to_railway\",fill.scale = tm_scale_continuous(values = \"-brewer.spectral\"))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn case of the example above (distance to the nearest railway), it would probably make sense to use a threshold value to differentiate close to railway vs. far from railway. In this case, we could also have just used the function st_is_within_distance()."
+    "text": "Adding Context\nLast Week, we tried to predict travel mode using movement parameters only. This simple approach can potentially already lead to good results, however we’re missing out on information readily available: Environmental data.\nContext information such as road type, train lines, bus stops etc. can provide valuable additional information for predicting travel mode.\nWe prepared some data from OpenStreetMap, obtained from extract.bbbike.org/. The preperation included:\n\nExtracting highways and railway lines from the archive.\nProjecting the data to WGS 84 / UTM zone 50N (EPSG:32650).\nFor highways: Add the column cycleway which is TRUE if the road segment includes tags related to cycling infrastructure.\nLump the multitude of categories (column highway and railwayfor the respective datasets) into the most frequent 6 and 3 categories, respectively\n\n\n\n\n\n\n\nNote\n\n\n\nOSM uses the term highway to mean roads in general, not specifically main roads. The column highway differentiates different types for road. See the OSMWiki for more details.\n\n\n\nlibrary(sf)\nlibrary(dplyr)\n\n\ngpkg &lt;- \"data/movement-II/osm.gpkg\"\n\nst_layers(gpkg)\n\nDriver: GPKG \nAvailable layers:\n  layer_name geometry_type features fields              crs_name\n1    highway   Line String    43376      8 WGS 84 / UTM zone 50N\n2    railway   Line String     4095      7 WGS 84 / UTM zone 50N\n\nhighway &lt;- read_sf(gpkg, \"highway\")\nrailway &lt;- read_sf(gpkg, \"railway\")\n\n\nplot(highway[\"highway\"])\n\n\n\n\n\n\n\n\n\nplot(railway[\"railway\"])\n\n\n\n\n\n\n\n\nTo use this context information as additional features, we first need to import our movement data:\n\n# For illustration purposes, we will only use 500 samples\ntraining_dataset &lt;- read_sf(\"data/movement-I/tracks_1.gpkg\", query = \"SELECT * FROM training LIMIT 500\") |&gt;\n  mutate(data = \"training\")\n\nNow we can join the movement data with the context information using various methods. A simple approach could be to use the attribute data from the nearest feature for each datapoint.\n\ntraining_dataset_join &lt;- st_join(training_dataset,highway, join = st_nearest_feature) |&gt; \n  # Selecting these columns is for illustration purposes\n  select(user_id, datetime, highway, cycleway)\n\ntraining_dataset_join\n\nSimple feature collection with 500 features and 4 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 452732.2 ymin: 4417605 xmax: 454778.1 ymax: 4419221\nProjected CRS: WGS 84 / UTM zone 50N\n# A tibble: 500 × 5\n   user_id datetime            highway cycleway               geom\n     &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;   &lt;lgl&gt;           &lt;POINT [m]&gt;\n 1      10 2008-06-18 16:47:35 primary NA       (454778.1 4419210)\n 2      10 2008-06-18 16:47:37 primary NA         (454775 4419210)\n 3      10 2008-06-18 16:47:38 primary NA       (454772.7 4419209)\n 4      10 2008-06-18 16:47:39 primary NA       (454769.7 4419208)\n 5      10 2008-06-18 16:47:40 primary NA       (454765.2 4419207)\n 6      10 2008-06-18 16:47:41 primary NA         (454760 4419205)\n 7      10 2008-06-18 16:47:42 primary NA       (454754.7 4419204)\n 8      10 2008-06-18 16:47:43 primary NA       (454749.4 4419203)\n 9      10 2008-06-18 16:47:44 primary NA       (454743.9 4419204)\n10      10 2008-06-18 16:47:45 primary NA       (454737.8 4419204)\n# ℹ 490 more rows\n\n\n\nlibrary(tmap)\ntm_shape(training_dataset_join) + \n  tm_dots(\"highway\") +\n  tm_shape(highway) +\n  tm_lines() +\n  tm_layout(frame = FALSE)\n\n\n\n\n\n\n\n\nFor some datasets, it might make sense to calculate the distance to the closest railway line. We’ll illustrate this by using the railway data:\n\n# First, determine the nearest railway for every moment sample\nnearest_railway &lt;- st_nearest_feature(training_dataset_join, railway)\n\n# Now, we can calculate the distance to the nearest feature\n\nrailway_dist &lt;- st_distance(\n  training_dataset_join, \n  railway[nearest_railway,], \n  by_element = TRUE\n  )\n\n# Now we can add this as a feature to our training data\ntraining_dataset_join$distance_to_railway &lt;- as.numeric(railway_dist)\n\n\ntm_shape(training_dataset_join) +\n  tm_dots(fill = \"distance_to_railway\",fill.scale = tm_scale_continuous(values = \"-brewer.spectral\"))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn case of the example above (distance to the nearest railway), it would probably make sense to use a threshold value to differentiate close to railway vs. far from railway. In this case, we could also have just used the function st_is_within_distance()."
   },
   {
-    "objectID": "raster-deepdive-compression.html#raster-data-storage-requirements",
-    "href": "raster-deepdive-compression.html#raster-data-storage-requirements",
-    "title": "Compression",
-    "section": "Raster Data Storage Requirements",
-    "text": "Raster Data Storage Requirements\n\nThe storage space required for an image depends on its dimensions and data type.\n\nExample:\n\nAn SRTM tile consists of a single band with a resolution of 3601 × 3601 pixels.\n\nEach pixel is stored as an Int16 (16-bit integer), requiring 2 Bytes (1 Byte = 8 Bits).\n\nThe total storage needed is: \\(3601 \\times 3601 \\times 2 = 25,934,402 \\text{ Bytes} \\approx 25.93 \\text{ MB}\\)\n\nCompression algorithms can be used to reduce the required storage space."
+    "objectID": "interpolation-methods.html#data",
+    "href": "interpolation-methods.html#data",
+    "title": "Spatiotemporal Datascience",
+    "section": "Data",
+    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here."
   },
   {
-    "objectID": "raster-deepdive-compression.html#types-of-compression",
-    "href": "raster-deepdive-compression.html#types-of-compression",
-    "title": "Compression",
-    "section": "Types of Compression",
-    "text": "Types of Compression\n\nLossless Compression\n\nPreserves data quality without any loss.\n\nThe original data can be perfectly reconstructed.\n\nReduces file size by eliminating redundant information.\n\nCommonly used for scientific data such as elevation models and satellite imagery.\n\nExamples: LZW, DEFLATE, PACKBITS, ZSTD, …\n\nLossy Compression\n\nSacrifices some data quality to achieve higher compression.\n\nThe original data is approximated rather than perfectly reconstructed.\n\nAllows for significantly smaller file sizes by discarding less perceptible details.\nCommonly used for photographic data such as aerial and drone imagery.\n\nExamples: JPEG2000, WEBP (supports both lossy and lossless modes), …"
+    "objectID": "interpolation-methods.html#exercise-1-idw",
+    "href": "interpolation-methods.html#exercise-1-idw",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 1: IDW",
+    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result."
   },
   {
-    "objectID": "raster-deepdive-compression.html#how-does-compression-work",
-    "href": "raster-deepdive-compression.html#how-does-compression-work",
-    "title": "Compression",
-    "section": "How does compression work?",
-    "text": "How does compression work?\n\nGiven the pixel values: 100, 101, 102, 100, 100\n\nInstead of storing each value individually, we can store each unique value once and keep track of its positions.\n\nRepresentation:\n\n100 → Appears at positions [0, 3, 4]\n\n101 → Appears at position [1]\n\n102 → Appears at position [2]"
+    "objectID": "interpolation-methods.html#exercise-2-nearest-neighbour",
+    "href": "interpolation-methods.html#exercise-2-nearest-neighbour",
+    "title": "Spatiotemporal Datascience",
+    "section": "Exercise 2: Nearest Neighbour",
+    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result."
   },
   {
-    "objectID": "raster-deepdive-compression.html#use-of-predictor",
-    "href": "raster-deepdive-compression.html#use-of-predictor",
-    "title": "Compression",
-    "section": "Use of PREDICTOR",
-    "text": "Use of PREDICTOR\n\nSome compression algorithms, such as LZW, DEFLATE, and ZSTD, can utilize a predictor to enhance compression efficiency.\n\nInstead of storing absolute values, a predictor stores only the differences between consecutive values.\n\nAvailable predictor methods:\n\nNo predictor (1, default)\n\nHorizontal differencing (2)\n\nFloating point prediction (3)\n\nExample:\n\nOriginal values: 100, 101, 102, 100, 100\n\nValues with predictor: 100, 1, 1, -2, 0"
-  },
-  {
-    "objectID": "raster-deepdive-compression.html#use-of-tiling",
-    "href": "raster-deepdive-compression.html#use-of-tiling",
-    "title": "Compression",
-    "section": "Use of Tiling",
-    "text": "Use of Tiling\n\nBy default, data is stored line by line.\n\nIn many cases, storing and reading data in blocks of pixels improves efficiency.\n\nWhen the TILED=YES option is enabled, data is stored and compressed in 256 × 256 pixel blocks."
-  },
-  {
-    "objectID": "raster-deepdive-compression.html#compression-costs",
-    "href": "raster-deepdive-compression.html#compression-costs",
-    "title": "Compression",
-    "section": "Compression Costs",
-    "text": "Compression Costs\n\nCompression adds processing overhead during both data creation and retrieval.\n\nHighly compressed data may result in slower read times.\n\nIn many applications, the reduction in disk space comes at the cost of increased processing time and CPU usage."
-  },
-  {
-    "objectID": "raster-deepdive-compression.html#gdal_translate",
-    "href": "raster-deepdive-compression.html#gdal_translate",
-    "title": "Compression",
-    "section": "Gdal_translate",
-    "text": "Gdal_translate\n\ngdal_translate is a program to convert raster data between different formats\nNote how the naming convention differs (snake case). The APIs for all the software vary slightly, always consult the documentation (e.g. using --help)\nSome options are mutually exclusive. These are wrapped in extra []. For example: [[-strict]|[-not_strict]]\nNote how this program has two positional arguments: &lt;input_file&gt; and &lt;output_file&gt;\n\n\n\nUsage: gdal_translate [--help] [--long-usage] [--help-general]\n                      [-ot Byte|Int8|[U]Int{16|32|64}|CInt{16|32}|[C]Float{32|64}]\n                      [-if &lt;format&gt;]... [-of &lt;output_format&gt;] [--quiet]\n                      [-b &lt;band&gt;]... [-mask &lt;mask&gt;] [-expand gray|rgb|rgba]\n                      [[-strict]|[-not_strict]]\n                      [-outsize &lt;xsize[%]|0&gt; &lt;ysize[%]|0&gt;] [-tr &lt;xres&gt; &lt;yes&gt;]\n                      [-ovr &lt;level&gt;|AUTO|AUTO-&lt;n&gt;|NONE] [-sds]\n                      [-r nearest,bilinear,cubic,cubicspline,lanczos,average,mode]\n                      [[-scale [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-scale_X [&lt;src_min&gt; &lt;src_max&gt; [&lt;dst_min&gt; &lt;dst_max&gt;]]]...|\n                      [-unscale]]\n                      [[-exponent &lt;value&gt;]|[-exponent_X &lt;value&gt;]...]\n                      [-srcwin &lt;xoff&gt; &lt;yoff&gt; &lt;xsize&gt; &lt;ysize&gt;]\n                      [-projwin &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-projwin_srs &lt;srs_def&gt;] [-epo] [-eco] [-a_srs &lt;srs_def&gt;]\n                      [-a_coord_epoch &lt;epoch&gt;] [-a_ullr &lt;ulx&gt; &lt;uly&gt; &lt;lrx&gt; &lt;lry&gt;]\n                      [-a_nodata &lt;value&gt;|none]\n                      [-a_gt &lt;gt(0)&gt; &lt;gt(1)&gt; &lt;gt(2)&gt; &lt;gt(3)&gt; &lt;gt(4)&gt; &lt;gt(5)&gt;]\n                      [-a_scale &lt;value&gt;] [-a_offset &lt;value&gt;] [-nogcp]\n                      [-gcp &lt;pixel&gt; &lt;line&gt; &lt;easting&gt; &lt;northing&gt; [&lt;elevation&gt;]]...\n                      [-colorinterp {red|green|blue|alpha|gray|undefined|pan|coastal|rededge|nir|swir|mwir|lwir|...},...]\n                      [-colorinterp_X {red|green|blue|alpha|gray|undefined|pan|coastal|rededge|nir|swir|mwir|lwir|...}]...\n                      [[-stats]|[-approx_stats]]\n                      [-norat] [-noxmp] [-co &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      [-mo &lt;NAME&gt;=&lt;VALUE&gt;]... [-dmo &lt;DOMAIN&gt;:&lt;KEY&gt;=&lt;VALUE&gt;]...\n                      [-oo &lt;NAME&gt;=&lt;VALUE&gt;]...\n                      &lt;input_file&gt; &lt;output_file&gt;\n\nNote: gdal_translate --long-usage for full help.\n\n\nConvert to Geotiff\n\nIn the last exercise, we reprojected a raster file to a geotiff file.\nHowever, for this exercise we will ignore this an concentrate on using gdal_translate to create a Geotiff and use compression\n\n\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done in 00:00:07.\n\n\n\nLet’s compare the file sizes:\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\n\n\n\nCompress DEFLATE\n\nWe can now compress the file using the DEFLATE algorithm with the -co argument\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\n\n\n\nCompress TILED=YES\n\n\nInput file size is 15401, 9121\n0...10...20...30...40...50...60...70...80...90...100 - done in 00:00:06.\n\n\n\n\ntrans: 5.24 sec elapsed\n\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\n\n\n\nCompress PREDICTOR=3\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal File (ASCII)\n824.43\n0 %\n\n\nGeoTIFF (without compression)\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\nPREDICTOR=3\n150.89\n-82 %\n\n\n\n\n\n\n\n\n\nGandhi, Ujaval. 2020. Mastering GDAL Tools (Full Course). Https://courses.spatialthoughts.com/gdal-tools.html#compressing-output."
-  },
-  {
-    "objectID": "network-routing-task.html",
-    "href": "network-routing-task.html",
+    "objectID": "movement-I-tasks.html",
+    "href": "movement-I-tasks.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 1: A possible way to visualize the results from your shortest path analysis."
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nYour task is to improve upon the simple model we have built in the chapter Minimal example. You can do this by:\n\nFeature Engineering: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows\nModel Selection: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.\nPer point prediction: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.\n\nUsing one or more of these approaches, predict the transportation mode for the validation dataset."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
@@ -221,7 +214,7 @@
     "href": "vector-deepdive-topological-rel.html#spatial-subsetting",
     "title": "Topological relations",
     "section": "Spatial subsetting",
-    "text": "Spatial subsetting\n\nPredicates can be used to subset one dataset based on another\nExample data: playgrounds, public transport stops, and Stadtkreise in Zurich\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/week4-exercises/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/week4-exercises/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/week4-exercises/stadtkreise-zh.gpkg\")\n\n\nDefault predicate: st_intersects\nExample: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6"
+    "text": "Spatial subsetting\n\nPredicates can be used to subset one dataset based on another\nExample data: playgrounds, public transport stops, and Stadtkreise in Zurich\n\n\nlibrary(sf)\nlibrary(readr)\n\n# source: https://www.stadt-zuerich.ch/geodaten/\nplaygrounds &lt;- read_sf(\"data/vector-deepdive/playgrounds.gpkg\")\npublictransport &lt;- read_sf(\"data/vector-deepdive/public_transport.gpkg\")\nkreise &lt;- read_sf(\"data/vector-deepdive/stadtkreise-zh.gpkg\")\n\n\nDefault predicate: st_intersects\nExample: which playgrounds lie within Stadtkreis 1?\n\n\nkreis1 &lt;- kreise[kreise$STADTKREIS == \"Kreis 1\", ]\n\nplaygrounds_k1 &lt;- playgrounds[kreis1, ]  # st_intersects is the default\n\nnrow(playgrounds_k1)\n## [1] 6"
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#distance-based-subsetting",
@@ -294,32 +287,11 @@
     "text": "Wrap-up\n\nNamed predicates (st_intersects, st_covers, …) cover most use cases for subsetting and joining\nWhen they don’t suffice, DE-9IM patterns let you define custom relations (st_relate)\nKey pitfalls to remember:\n\nst_contains vs st_covers (boundary matters!)\nJoin order determines geometry and row count\nPredicates return sparse index lists, not logical vectors (use sparse = FALSE if needed)"
   },
   {
-    "objectID": "movement-I-tasks.html",
-    "href": "movement-I-tasks.html",
+    "objectID": "network-routing-task.html",
+    "href": "network-routing-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nYour task is to improve upon the simple model we have built in the chapter Minimal example. You can do this by:\n\nFeature Engineering: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows\nModel Selection: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.\nPer point prediction: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.\n\nUsing one or more of these approaches, predict the transportation mode for the validation dataset."
-  },
-  {
-    "objectID": "interpolation-methods.html#data",
-    "href": "interpolation-methods.html#data",
-    "title": "Spatiotemporal Datascience",
-    "section": "Data",
-    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here."
-  },
-  {
-    "objectID": "interpolation-methods.html#exercise-1-idw",
-    "href": "interpolation-methods.html#exercise-1-idw",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 1: IDW",
-    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result."
-  },
-  {
-    "objectID": "interpolation-methods.html#exercise-2-nearest-neighbour",
-    "href": "interpolation-methods.html#exercise-2-nearest-neighbour",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 2: Nearest Neighbour",
-    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result."
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 1: A possible way to visualize the results from your shortest path analysis."
   },
   {
     "objectID": "vector-deepdive-duckdb.html#why-duckdb-for-spatial-data",
@@ -417,7 +389,7 @@
     "href": "vector-deepdive-duckdb.html#import-into-r",
     "title": "DuckDB",
     "section": "Import into R",
-    "text": "Import into R\n\nConnect, load spatial extension, read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/week4-exercises/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)"
+    "text": "Import into R\n\nConnect, load spatial extension, read the VIEW:\n\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(\n  duckdb(),\n  dbdir = \"data/vector-deepdive/wald-kantone.duckdb\",\n  read_only = TRUE\n)\n\ndbExecute(con, \"LOAD spatial;\")\nkanton_frac &lt;- dbReadTable(con, \"kanton_frac\")\n\ndbDisconnect(con)"
   },
   {
     "objectID": "vector-deepdive-duckdb.html#wrap-up",
@@ -476,53 +448,277 @@
     "text": "After training a model, it is essential to assess its performance to ensure it can accurately predict outcomes on unseen data. Model evaluation involves comparing the predicted labels with the true labels using metrics such as accuracy, precision, recall, and F1-score. These metrics provide insights into the model’s strengths and weaknesses, helping identify areas for improvement.\nIn addition to numerical metrics, visualizations like confusion matrices or ROC curves can offer a deeper understanding of how the model performs across different transportation modes. By thoroughly evaluating the model, we ensure it is both reliable and capable of generalizing beyond the training dataset.\n\n# Make predictions on the testing data\npredictions &lt;- predict(cart_model, tracks_testing) \n\n# Use the highest probability to predict the transportation mode\ntracks_testing$prediction &lt;- colnames(predictions)[apply(predictions, 1, which.max)]\n\n# Turn the prediction into a factor\ntracks_testing$prediction &lt;- factor(tracks_testing$prediction)\n\n# Sort the levels of the actual modes to match the predicted modes\ntracks_testing$mode &lt;- factor(tracks_testing$mode, levels = sort(unique(as.character(tracks_testing$mode))))\n\n\nlibrary(caret)\n\nconfusionMatrix(tracks_testing$prediction, reference = tracks_testing$mode)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction bike bus car subway train walk\n    bike     68  20   2      1     0    3\n    bus      21  91  25      4     1   11\n    car       1  18  42      8     0    1\n    subway    0   0   8     18     1    0\n    train     0   0   0      1     4    0\n    walk     11  17   6     12     0  166\n\nOverall Statistics\n                                          \n               Accuracy : 0.6934          \n                 95% CI : (0.6534, 0.7313)\n    No Information Rate : 0.3226          \n    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       \n                                          \n                  Kappa : 0.5937          \n                                          \n Mcnemar's Test P-Value : NA              \n\nStatistics by Class:\n\n                     Class: bike Class: bus Class: car Class: subway\nSensitivity               0.6733     0.6233    0.50602       0.40909\nSpecificity               0.9435     0.8506    0.94142       0.98259\nPos Pred Value            0.7234     0.5948    0.60000       0.66667\nNeg Pred Value            0.9293     0.8652    0.91650       0.95131\nPrevalence                0.1800     0.2602    0.14795       0.07843\nDetection Rate            0.1212     0.1622    0.07487       0.03209\nDetection Prevalence      0.1676     0.2727    0.12478       0.04813\nBalanced Accuracy         0.8084     0.7369    0.72372       0.69584\n                     Class: train Class: walk\nSensitivity              0.666667      0.9171\nSpecificity              0.998198      0.8789\nPos Pred Value           0.800000      0.7830\nNeg Pred Value           0.996403      0.9570\nPrevalence               0.010695      0.3226\nDetection Rate           0.007130      0.2959\nDetection Prevalence     0.008913      0.3779\nBalanced Accuracy        0.832432      0.8980"
   },
   {
-    "objectID": "interpolation-density.html#data",
-    "href": "interpolation-density.html#data",
-    "title": "Spatiotemporal Datascience",
-    "section": "Data",
-    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link."
+    "objectID": "raster-deepdive-on-disk.html#today",
+    "href": "raster-deepdive-on-disk.html#today",
+    "title": "Raster data on disk",
+    "section": "Today",
+    "text": "Today\n\nGDAL CLI — what it is, when to use it, how commands are structured\nRaster data types — choosing the right type, rescaling, scale/offset\ngdal raster info — inspecting raster files from the terminal\nNoData — how missing values are stored on disk\nCategorical rasters — integer encoding + attribute tables\nCompression — lossless compression with gdal raster convert\nReprojection — changing CRS with gdal raster reproject"
   },
   {
-    "objectID": "interpolation-density.html#exercise-1-kernel-density-estimation",
-    "href": "interpolation-density.html#exercise-1-kernel-density-estimation",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 1: Kernel Density Estimation",
-    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl."
+    "objectID": "raster-deepdive-on-disk.html#gdal-cli-1",
+    "href": "raster-deepdive-on-disk.html#gdal-cli-1",
+    "title": "Raster data on disk",
+    "section": "GDAL CLI",
+    "text": "GDAL CLI\n\nGDAL is the basis for most GIS software — we can also call it directly from the terminal\nShips several raster programs, each designed for a specific task\nAdvantages over R / Python: faster, memory-efficient, composable, portable\nInstall via conda:\n\nconda install -c conda-forge gdal\n\n\nWe’ve already used GDAL indirectly: terra, QGIS, and many other tools call it under the hood\n“Block-by-block” means GDAL reads and writes in tiles — a 10GB raster can be processed with &lt;1MB RAM\nIn practice: use CLI for data prep / inspection, R/Python for analysis and visualization"
   },
   {
-    "objectID": "interpolation-density.html#sec-density-voronoi",
-    "href": "interpolation-density.html#sec-density-voronoi",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 2: Voronoi",
-    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich."
+    "objectID": "raster-deepdive-on-disk.html#when-does-gdal-cli-shine",
+    "href": "raster-deepdive-on-disk.html#when-does-gdal-cli-shine",
+    "title": "Raster data on disk",
+    "section": "When does GDAL CLI shine?",
+    "text": "When does GDAL CLI shine?\n\nReprojection: Block-by-block — no full load into RAM → fast!\nFormat conversion: no full load into RAM → fast!\nExtracting file info: Instant, no environment startup — great for quick access\nBatch processing: One shell loop over hundreds of files; no memory accumulation\nMosaicking: Combining hundreds of tiles stays out of RAM entirely\nBuilding overviews: Purely structural file operation\nPipelines / CI: Slots into shell scripts, Makefiles, CI/CD without an R/Python runtime\n\n\n\nReprojection and batch processing are the two most commonly cited by practitioners\n“No environment startup” matters a lot in scripts: starting R just to run gdalinfo on 1000 files adds minutes of overhead\nOverviews (pyramids) allow fast display at lower resolutions — QGIS and other tools use them automatically\nWe’ll have a look at reprojection and file info extraction"
   },
   {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "Syllabus",
-    "section": "",
-    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line\n\n\n\n\nThe assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+    "objectID": "raster-deepdive-on-disk.html#which-cli-tools-do-you-already-use",
+    "href": "raster-deepdive-on-disk.html#which-cli-tools-do-you-already-use",
+    "title": "Raster data on disk",
+    "section": "Which CLI tools do you already use?",
+    "text": "Which CLI tools do you already use?\n\n\nconda — manage environments and packages\npip — install Python packages\ngit — version control\n\n\n\nAsk students to raise their hand for each one — most will have used at least 3\nThe point: they’re already CLI users; GDAL is not a new paradigm, just a new tool\nSome may also use ssh, jupyter, docker — worth asking"
   },
   {
-    "objectID": "syllabus.html#prerequisites",
-    "href": "syllabus.html#prerequisites",
-    "title": "Syllabus",
-    "section": "",
-    "text": "Completion of the course GISc and Geodatabases or equivalent experience with:\n\nR programming (tidyverse, basic data wrangling)\nVector data handling with sf\nRaster data handling with terra\n\nBasic familiarity with Git and GitHub\nFamiliarity with the command line"
+    "objectID": "raster-deepdive-on-disk.html#anatomy-of-a-cli-call",
+    "href": "raster-deepdive-on-disk.html#anatomy-of-a-cli-call",
+    "title": "Raster data on disk",
+    "section": "Anatomy of a CLI call",
+    "text": "Anatomy of a CLI call\nprogram    subcommand    flag  flag-value     argument\n   ↓           ↓          ↓       ↓             ↓\nconda     install         -c   conda-forge     gdal\n⎺⎺⎺     ⎺⎺⎺⎺⎺       ⎺⎺  ⎺⎺⎺⎺⎺⎺⎺     ⎺⎺\n\n\nProgram — the tool being called\nSubcommand — the action to perform (not all tools have these)\nFlag — modifies behaviour; -c is shorthand for --channel\nFlag value — the value passed to a flag\nArgument — positional value the command operates on (no - prefix)\n\n\n\nShort flags (-c) and long flags (--channel) are equivalent; long flags are more readable in scripts\nFlags can appear in any order; arguments are positional (order matters)\nThis anatomy applies to every CLI tool: git commit -m \"message\", quarto render --to pdf, gdal raster info -f json file.tif"
   },
   {
-    "objectID": "syllabus.html#assessment",
-    "href": "syllabus.html#assessment",
-    "title": "Syllabus",
-    "section": "",
-    "text": "The assessment of the course is based to 100% via the so called course work, which are your solutions to the tasks provided throughout the course.\n\n\nYou must submit solutions for all but one task assigned throughout the course — you have one “joker” that you may skip. Each submission will be checked for completeness (pass/fail). In addition, 2 tasks per student will be randomly selected for detailed grading using the criteria below.\nThe due dates are listed in the schedule.\n\n\n\nIn the final lesson, you will have the opportunity to present and discuss one of your solutions in a short individual conversation (~5–10 minutes). This is your chance to walk us through your approach, highlight what you learned, and reflect on your choices. This oral review will be graded pass / fail.\n\n\n\nThe randomly selected tasks are evaluated on three dimensions:\n\n\n\n\n\n\n\n\nCriterion\nWeight\nDescription\n\n\n\n\nCorrectness\n40%\nCode runs without errors and produces the expected output\n\n\nDocumentation\n30%\nClear explanations of your approach, code is readable and commented where necessary\n\n\nReflection\n30%\nDiscussion of limitations, alternatives considered, or lessons learned\n\n\n\n\n\n\nYou may use AI assistants (ChatGPT, GitHub Copilot, Claude, etc.) to support your work. However:\n\nYour submission must reflect your understanding\nThe documentation and reflection sections are where you demonstrate this\n\nAs a general rule, the use of generative AI systems must be declared (based on der Z-RL-Guidelines AI in assessments, 01.04.2023).\n\nUse of generative AI systems in graded assignments Graded assignments are a type of assessment which, unlike examinations, are completed over a longer period of time that generally exceeds four hours. They mostly have an individual character in terms of the solutions provided and are not supervised. The use of generative AI systems for graded assignments reflects a natural and expected approach towards digital tools by students and continuing education participants and is an expression of their digital competence and modern working methods. However, to ensure that their personal contribution can be assessed, and in the interests of academic integrity, the use of generative AI systems must be made as transparent as possible. The share or extent of the contribution made by generative AI systems to the creative output generated by students and continuing education participants in compiling their graded assignments must be recognisable to third parties. In principle, there is therefore an obligation to declare all generative AI systems that influence a graded assignment in terms of its content. The Annex governs the aforementioned declaration obligation in detail. The provisions contained therein are subsidiary 1 in nature."
+    "objectID": "raster-deepdive-on-disk.html#new-gdal-api",
+    "href": "raster-deepdive-on-disk.html#new-gdal-api",
+    "title": "Raster data on disk",
+    "section": "New GDAL API",
+    "text": "New GDAL API\n\nPrior to GDAL 3.11, the suite of GDAL programs had a highly inconsistent API\nWith 3.11, GDAL introduced a unified CLI entry point — gdal &lt;noun&gt; &lt;verb&gt;\nThe new API is great, but WIP\nOur examples use the new API\nSee webinar GDAL Command Line Interface Modernization\n\n\n\n\nTask\nOld API\nNew API (3.11+)\n\n\n\n\nInspect\ngdalinfo\ngdal raster info\n\n\nConvert\ngdal_translate\ngdal raster convert\n\n\nReproject\ngdalwarp\ngdal raster reproject\n\n\n\n\n\nYou will see the old API in the wild — documentation, Stack Overflow answers often still use it\nThe old tools are not deprecated; new API is additive\nCheck your version: gdal --version"
   },
   {
-    "objectID": "syllabus.html#footnotes",
-    "href": "syllabus.html#footnotes",
-    "title": "Syllabus",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThe provisions specified in the Annex thus serve as an “alternative” if no others have been specified.↩︎"
+    "objectID": "raster-deepdive-on-disk.html#input-output",
+    "href": "raster-deepdive-on-disk.html#input-output",
+    "title": "Raster data on disk",
+    "section": "Input → output",
+    "text": "Input → output\nGDAL is non-destructive by design — it always reads from a source and writes to a new destination:\ngdal raster reproject --dst-crs EPSG:2056 input.tif output.tif\n                                           ─────────  ──────────\n                                           source     new file, never touches source\n\n\nThe original file is never modified\nEvery operation requires both &lt;input&gt; and &lt;output&gt; arguments\nConsequence: you need roughly 2× the disk space during processing\n\n\n\nException: gdal edit — metadata-only changes (CRS, NoData, scale/offset) can be applied in place\n\n\nNon-destructive is safer: if something goes wrong, the original is intact\ngdal edit is useful when you just need to assign a missing CRS or fix a NoData flag without rewriting the full file\nIn pipelines, the output of one step becomes the input of the next — plan your disk usage accordingly"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#raster-data-types-1",
+    "href": "raster-deepdive-on-disk.html#raster-data-types-1",
+    "title": "Raster data on disk",
+    "section": "Raster data types",
+    "text": "Raster data types\n\nRaster data on disk is always stored as numeric (no strings, no factors)\nMany numeric data types exist — choice affects file size and precision\nGDAL powers most raster software → same types across R, Python, QGIS, …\n\n\n\n\nTable 1: Numeric data types supported by GDAL (source: Amatulli 2024). File size using a constant dataset (same values and resolution)\n\n\n\n\n\nData type\nMinimum\nMaximum\nSize\nFactor\n\n\n\n\nByte\n0\n255\n39M\n1x\n\n\nUInt16\n0\n65,535\n78M\n2x\n\n\nInt16 / CInt16\n-32,768\n32,767\n78M\n2x\n\n\nUInt32\n0\n4,294,967,295\n155M\n~4x\n\n\nInt32 / CInt32\n-2,147,483,648\n2,147,483,647\n155M\n~4x\n\n\nFloat32 / CFloat32\n-3.4E38\n3.4E38\n155M\n~4x\n\n\nFloat64 / CFloat64\n-1.79E308\n1.79E308\n309M\n~8x\n\n\n\n\n\n\n\n\nCategorical data → use integer type and store the label–value mapping in the metadata\nAlways use the smallest datatype that covers your value range\nQ: values 0–1 (fraction)? → not Float32! Multiply by 100 → Byte, or ×1000 → UInt16\nQ: temperature –20 to +40°C? → not CFloat32! Multiply by 100 → CInt16 (–2000 to 4000)\nQ: NDVI –1 to 1? → rescale to 0–255 → Byte"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#choosing-a-data-type",
+    "href": "raster-deepdive-on-disk.html#choosing-a-data-type",
+    "title": "Raster data on disk",
+    "section": "Choosing a data type",
+    "text": "Choosing a data type\n\nNaive approach: let the value range dictate the datatype (e.g. NDVI –1 to 1 → Float32)\nBetter approach: transform values to fit a smaller datatype\n\n\n\n\n\n\n\n\n\n\n\n\nData\nData Range\nNaive type\nSmart type\nNew Range\n\n\n\n\nFraction\n0-1\nFloat32\nByte\n0 - 100\n\n\nNDVI\n-1-+1\nCFloat32\nByte\n0 - 255\n\n\nTemp\n-20 - +40\nCFloat32\nCInt16\n–2000 - 4000\n\n\n\n\n\nThe precision lost by using a smaller type is often negligible for the application\nGDAL stores scale/offset in file metadata, so any GDAL-powered software reverses the transform on read"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#min-max-rescaling",
+    "href": "raster-deepdive-on-disk.html#min-max-rescaling",
+    "title": "Raster data on disk",
+    "section": "Min-max rescaling",
+    "text": "Min-max rescaling\nGeneral formula to rescale \\(x\\) into range \\([a, b]\\):\n\\[x' = a + \\frac{(x - \\min(x))\\,(b - a)}{\\max(x) - \\min(x)}\\]\nFor NDVI (\\(x \\in [-1,\\,1]\\), target \\([a, b] = [0,\\,255]\\)):\n\n\\[x' = 0 + \\frac{(x - (-1))\\,\\times\\,255}{1-(-1)} = \\frac{(x+1)\\times 255}{2}\\]\n\n\nSimplified:\n\\[\\boxed{x' = 127.5\\,x + 127.5}\\]\n→ e.g. NDVI 0.2 is stored as \\(127.5 \\times 0.2 + 127.5 = 153\\)\n\n\n\\(a = 0\\), \\(b = 255\\) (Byte range); \\(\\min(x) = -1\\), \\(\\max(x) = 1\\) (NDVI range)\nThe two parameters 127.5 and 127.5 are the scale and offset of this linear transform"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#precision-trade-off",
+    "href": "raster-deepdive-on-disk.html#precision-trade-off",
+    "title": "Raster data on disk",
+    "section": "Precision trade-off",
+    "text": "Precision trade-off\nStoring NDVI in Byte limits us to 256 distinct values:\n\\[\\text{precision} = \\frac{\\max(x) - \\min(x)}{b - a} = \\frac{1 - (-1)}{255 - 0} \\approx 0.0078\\]\n→ Every stored NDVI is rounded to the nearest 0.0078\n\nFor most vegetation mapping applications, NDVI differences below ~0.01 are not ecologically meaningful → Byte precision is usually sufficient\n\n\nNeed finer precision? Use UInt16 (0–65,535): \\(\\frac{2}{65535} \\approx 0.00003\\)"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#r-rescaling-vectors",
+    "href": "raster-deepdive-on-disk.html#r-rescaling-vectors",
+    "title": "Raster data on disk",
+    "section": "R: rescaling vectors",
+    "text": "R: rescaling vectors\n\nscale_minmax &lt;- function(x, a = 0, b = 255) {\n  x_new &lt;- a + (x - min(x)) * (b - a) / (max(x) - min(x))\n  round(x_new, 0)\n}\n\nmeasured_ndvi &lt;- seq(-1, 1, 0.1)\nstored_value &lt;- scale_minmax(measured_ndvi)"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#restoring-original-values",
+    "href": "raster-deepdive-on-disk.html#restoring-original-values",
+    "title": "Raster data on disk",
+    "section": "Restoring original values",
+    "text": "Restoring original values\n\nThe transform \\(x' = 127.5\\,x + 127.5\\) is reversible\nInvert the function to recover originals: \\(x = \\dfrac{x' - 127.5}{127.5}\\)\nMore generally: two parameters describe the transform — scale and offset\nIdeally transformation of values is not done within the R / Python session. Best practice:\n\nGDAL transforms values during writing\nGDAL stores scale and offset in the file metadata\nGDAL restores the original values on read\n\nHowever, this is not always the case “in the wild”\n\n\n\nNo need to tell your colleague about the transform — it’s in the GeoTIFF metadata\nrast(\"INT1U.tif\") returns the original floating-point values; the Byte storage is invisible"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-scaleoffset-in-r",
+    "href": "raster-deepdive-on-disk.html#gdal-scaleoffset-in-r",
+    "title": "Raster data on disk",
+    "section": "GDAL scale/offset in R",
+    "text": "GDAL scale/offset in R\n\nterra::writeRaster supports scale = and offset = arguments — it transforms on write, inverts on read.\nThe user needs to know (calculate) these values beforehand\nThe formula to determine scale and offset can be derived by the min-max formula\n\n\\[\\text{scale} = \\frac{b - a}{\\max(x) - \\min(x)}, \\qquad \\text{offset} = \\frac{a\\,\\max(x) - b\\,\\min(x)}{\\max(x) - \\min(x)}\\]"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#scale-offset-in-practice",
+    "href": "raster-deepdive-on-disk.html#scale-offset-in-practice",
+    "title": "Raster data on disk",
+    "section": "Scale / offset in practice",
+    "text": "Scale / offset in practice\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package = \"terra\"))\nplot(elev, main = paste(minmax(elev), collapse = \" – \"))"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-info-1",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-info-1",
+    "title": "Raster data on disk",
+    "section": "gdal raster info",
+    "text": "gdal raster info\n\ngdal raster info lists information about a raster dataset\nWe’ll use elev-lux.tif — a small elevation model of Luxembourg — as our running example"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-info-terminal-histogram",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-info-terminal-histogram",
+    "title": "Raster data on disk",
+    "section": "gdal raster info: terminal histogram",
+    "text": "gdal raster info: terminal histogram\nExtract histogram buckets and visualise with bashplotlib:\n\ngdal raster info --hist -f json data/raster-deepdive/elev-lux.tif |\n1  jq \".bands[].histogram.buckets[]\" |\n2  hist -w 1 -p +\n\n\n1\n\nExtract raw bucket counts from the histogram array\n\n2\n\nhist from bashplotlib"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#nodata-in-rasters-1",
+    "href": "raster-deepdive-on-disk.html#nodata-in-rasters-1",
+    "title": "Raster data on disk",
+    "section": "NoData in rasters",
+    "text": "NoData in rasters\n\nRaster files have no explicit null type — every cell must hold a numeric value\nTo mark cells as missing, a two-step approach is used:\n\nAssign a reserved value within the datatype’s range (e.g. the maximum possible value)\nLabel that value as NoData in the file metadata\n\n\n\n→ Any software reading the file interprets that reserved value as missing, not as a real measurement\n\n\nThis is different from R’s in-memory NA, which is a proper null type\nThe reserved value label lives in the metadata, just like scale/offset"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#nodata-data-types",
+    "href": "raster-deepdive-on-disk.html#nodata-data-types",
+    "title": "Raster data on disk",
+    "section": "NoData & data types",
+    "text": "NoData & data types\nFor integer types, the reserved value must fit within the datatype’s range:\n\n\n\nDatatype\nCommon NoData reserved value\n\n\n\n\nByte\n255 (max value)\n\n\nInt16\n−32,768 (min value)\n\n\nFloat321\nNaN or −9999\n\n\n\n\nRisk (integer types): if real data happens to contain the reserved value → those cells silently become NoData\n\n\nFor Byte: using 255 as NoData means you only have 0–254 for real data\nNaN is an unambiguous bit pattern in IEEE 754 — it represents “undefined result” (e.g. 0/0) and is never a valid number\nThe silent data-loss risk applies only to integer types; float types with NaN are safe\n\n\n\nFloat types support NaN (as part of the IEEE 754 standard). -9999 sometimes seen in float rasters is a legacy workaround for older software that cannot handle NaN"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#nodata-in-terra",
+    "href": "raster-deepdive-on-disk.html#nodata-in-terra",
+    "title": "Raster data on disk",
+    "section": "NoData in terra",
+    "text": "NoData in terra\nInspect and set the NoData flag:\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package = \"terra\"))\n\nNAflag(elev)   # current NoData reserved value\n\n[1] NaN"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#categorical-rasters-1",
+    "href": "raster-deepdive-on-disk.html#categorical-rasters-1",
+    "title": "Raster data on disk",
+    "section": "Categorical rasters",
+    "text": "Categorical rasters\n\nSome raster data is categorical, not continuous: land use, soil type, vegetation class, …\nRaster files cannot store text — categories are encoded as integers\nThe mapping (integer code → category label) is stored in the file metadata as an attribute table\n\n\n→ Analogous to R’s factor: an underlying integer + a levels table\n\n\n→ Choose the smallest integer type that covers the number of categories — Byte handles up to 255 classes\n\n\nMost land use / land cover classifications have far fewer than 255 classes → Byte is almost always sufficient\nThe attribute table lives in the file metadata, just like scale/offset and NoData flags"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#categorical-rasters-in-terra",
+    "href": "raster-deepdive-on-disk.html#categorical-rasters-in-terra",
+    "title": "Raster data on disk",
+    "section": "Categorical rasters in terra",
+    "text": "Categorical rasters in terra\n\n1elev_cat &lt;- classify(elev, c(0, 200, 350, 550))\n2levels(elev_cat) &lt;- data.frame(value = 0:2, label = c(\"low\", \"medium\", \"high\"))\n\nplot(elev_cat)\n\n\n1\n\nReclassify values into three categories (0-200, 200-350 and 350-550)\n\n2\n\nRelable the default classes to low, medium and high"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#raster-file-size",
+    "href": "raster-deepdive-on-disk.html#raster-file-size",
+    "title": "Raster data on disk",
+    "section": "Raster file size",
+    "text": "Raster file size\n\nFile size = dimensions × bands × bytes per pixel\nExample: single SRTM tile, one band, Int16 (2 bytes/pixel):\n\n\\[3601 \\times 3601 \\times 2\\,\\text{B} = 25{,}934{,}402\\,\\text{B} \\approx 25.9\\,\\text{MB}\\]\n\nCompression reduces storage by exploiting spatial redundancy in pixel values\n\n\n\nReal-world rasters often have large homogeneous regions → high redundancy → compress well\nRedundancy is especially high in categorical rasters (e.g. land cover with few distinct values)"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#lossless-vs-lossy",
+    "href": "raster-deepdive-on-disk.html#lossless-vs-lossy",
+    "title": "Raster data on disk",
+    "section": "Lossless vs lossy",
+    "text": "Lossless vs lossy\n\n\n\n\n\n\n\n\n\nLossless\nLossy\n\n\n\n\nData preserved?\nPerfectly\nApproximated\n\n\nUse case\nScientific data (DEM, multispectral)\nPhotographic / visual imagery\n\n\nExamples\nLZW, DEFLATE, ZSTD, PACKBITS\nJPEG2000, WEBP\n\n\n\n\n→ For scientific analysis always use lossless — lossy compression permanently alters pixel values\n\n\nWEBP supports both lossy and lossless modes depending on settings\nOnce lossy-compressed, original values cannot be recovered — important for analysis reproducibility\nMuch of this section is based on Gandhi (2020) and Paul Ramsey’s GeoTIFF compression guide"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#how-compression-works",
+    "href": "raster-deepdive-on-disk.html#how-compression-works",
+    "title": "Raster data on disk",
+    "section": "How compression works",
+    "text": "How compression works\nExploit repeated values — store each unique value once, track its positions:\n\n\n\n\n\n\n\nOriginal\n100, 101, 102, 100, 100\n\n\nCompressed\n100 → positions [0, 3, 4]  101 → positions [1]  102 → positions [2]\n\n\n\n→ 5 values encoded as 3 unique values + a position list\n\nWorks best when data contains many repeated or near-repeated values (flat terrain, uniform land cover)\n\n\nThis is a simplified illustration of dictionary / run-length encoding\nLZW and DEFLATE use more sophisticated variants of this principle"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#predictor",
+    "href": "raster-deepdive-on-disk.html#predictor",
+    "title": "Raster data on disk",
+    "section": "PREDICTOR",
+    "text": "PREDICTOR\nLZW, DEFLATE, and ZSTD can use a predictor to improve compression further:\n→ Store differences between consecutive values instead of absolute values\n\n\n\nOriginal\n100\n101\n102\n100\n100\n\n\nWith predictor\n100\n+1\n+1\n−2\n0\n\n\n\nSmall differences compress better than large absolute values\n\n\n\n\nOption\nUse for\n\n\n\n\nPREDICTOR=1\nNo predictor (default)\n\n\nPREDICTOR=2\nInteger data (e.g. DEMs)\n\n\nPREDICTOR=3\nFloat data\n\n\n\n\n\nPredictor=2 works well for integer rasters with gradual spatial variation\nPredictor=3 for float rasters\nUsing the wrong predictor (e.g. =3 on integer data) still works but may not compress as well"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#tiling-compression-costs",
+    "href": "raster-deepdive-on-disk.html#tiling-compression-costs",
+    "title": "Raster data on disk",
+    "section": "Tiling & compression costs",
+    "text": "Tiling & compression costs\n\nBy default, GeoTIFF stores data line by line (strip layout)\nTILED=YES stores data in 256 × 256 pixel blocks\n\n→ Tiling improves random-access reads and is essential for Cloud-Optimized GeoTIFF (COG)\n\nCompression is not free:\n\nAdds CPU overhead on write and read\nGood default for most scientific workflows: DEFLATE + TILED=YES\n\n\n\nStrip layout is fast for sequential top-to-bottom reads but slow for spatial queries on large files\nZSTD generally offers better ratios than DEFLATE but has less universal software support\nCOG = Cloud-Optimized GeoTIFF; tiling + overviews enable efficient streaming from cloud storage"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-convert",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-convert",
+    "title": "Raster data on disk",
+    "section": "gdal raster convert",
+    "text": "gdal raster convert\ngdal raster convert converts raster files between formats and applies compression:\n\ngdal raster convert --help\n\nUsage: gdal raster convert [OPTIONS] &lt;INPUT&gt; &lt;OUTPUT&gt;\n\nConvert a raster dataset.\n\nPositional arguments:\n  -i, --input &lt;INPUT&gt;                                  Input raster dataset [required]\n  -o, --output &lt;OUTPUT&gt;                                Output raster dataset (created by algorithm) [required]\n\nCommon Options:\n  -h, --help                                           Display help message and exit\n  --json-usage                                         Display usage as JSON document and exit\n  --config &lt;KEY&gt;=&lt;VALUE&gt;                               Configuration option [may be repeated]\n  --progress                                           Display progress bar\n\nOptions:\n  -f, --of, --format, --output-format &lt;OUTPUT-FORMAT&gt;  Output format\n  --co, --creation-option &lt;KEY&gt;=&lt;VALUE&gt;                Creation option [may be repeated]\n  --overwrite                                          Whether overwriting existing output is allowed\n                                                       Mutually exclusive with --append\n  --append                                             Append as a subdataset to existing output\n                                                       Mutually exclusive with --overwrite\n\nAdvanced Options:\n  --oo, --open-option &lt;KEY&gt;=&lt;VALUE&gt;                    Open options [may be repeated]\n  --if, --input-format &lt;INPUT-FORMAT&gt;                  Input formats [may be repeated]\n\nFor more details, consult https://gdal.org/programs/gdal_raster_convert.html\n\nWARNING: the gdal command is provisionally provided as an alternative interface to GDAL and OGR command line utilities.\nThe project reserves the right to modify, rename, reorganize, and change the behavior of the utility\nuntil it is officially frozen in a future feature release of GDAL.\n\n\nKey points:\n\nTwo positional arguments: &lt;input_file&gt; &lt;output_file&gt;\nCompression via --co KEY=VALUE (creation options)\nOptions are format-specific — always check --help\n\n\n\nMutually exclusive options are shown as [[-strict]|[-not_strict]] in the help output"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-convert-baseline",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-convert-baseline",
+    "title": "Raster data on disk",
+    "section": "gdal raster convert: baseline",
+    "text": "gdal raster convert: baseline\n\ngdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25.tif\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal (ASCII)\n824.43\n0 %\n\n\nGeoTIFF, no compression\n535.91\n-35 %"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-convert-deflate",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-convert-deflate",
+    "title": "Raster data on disk",
+    "section": "gdal raster convert: + DEFLATE",
+    "text": "gdal raster convert: + DEFLATE\n\ngdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_2.tif \\\n  --co COMPRESS=DEFLATE\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal (ASCII)\n824.43\n0 %\n\n\nGeoTIFF, no compression\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-convert-tiled",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-convert-tiled",
+    "title": "Raster data on disk",
+    "section": "gdal raster convert: + TILED",
+    "text": "gdal raster convert: + TILED\n\ngdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_3.tif \\\n  --co COMPRESS=DEFLATE \\\n  --co TILED=YES\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal (ASCII)\n824.43\n0 %\n\n\nGeoTIFF, no compression\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-convert-predictor",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-convert-predictor",
+    "title": "Raster data on disk",
+    "section": "gdal raster convert: + PREDICTOR",
+    "text": "gdal raster convert: + PREDICTOR\n\ngdal raster convert data/raster-deepdive/dhm25_grid_raster.asc data-out/dhm25_4.tif \\\n  --co COMPRESS=DEFLATE \\\n  --co TILED=YES \\\n  --co PREDICTOR=3\n\n\n\n\n\n\nFile\nSize (MB)\nDifference\n\n\n\n\nOriginal (ASCII)\n824.43\n0 %\n\n\nGeoTIFF, no compression\n535.91\n-35 %\n\n\nCOMPRESS=DEFLATE\n208.24\n-75 %\n\n\nTILED=YES\n177.50\n-78 %\n\n\nPREDICTOR=3\n150.89\n-82 %\n\n\n\n\n\n\n\nPREDICTOR=3 for floating-point data; use PREDICTOR=2 for integer data\nEach row in the table adds one -co flag — the cumulative effect shows how the options interact"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-info-get-crs",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-info-get-crs",
+    "title": "Raster data on disk",
+    "section": "gdal raster info: get CRS",
+    "text": "gdal raster info: get CRS\nTo reproject a raster, we need to know the source CRS. Is this information available?\n\ngdal raster info -f json data/raster-deepdive/dhm25_grid_raster.asc | \\\n  jq \".coordinateSystem\"\n\nnull\n\n\n→ No CRS — consult the data provider: DHM25 uses LV03/LN02 = EPSG:21781"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-reproject-1",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-reproject-1",
+    "title": "Raster data on disk",
+    "section": "gdal raster reproject",
+    "text": "gdal raster reproject\n\ngdal raster reproject reprojects and transforms raster data\nTwo positional arguments: &lt;input&gt; and &lt;output&gt;\n\n\ngdal raster reproject --help\n\nUsage: gdal raster reproject [OPTIONS] &lt;INPUT&gt; &lt;OUTPUT&gt;\n\nReproject a raster dataset.\n\nPositional arguments:\n  -i, --input &lt;INPUT&gt;                                  Input raster dataset [required]\n  -o, --output &lt;OUTPUT&gt;                                Output raster dataset [required]\n\nCommon Options:\n  -h, --help                                           Display help message and exit\n  --json-usage                                         Display usage as JSON document and exit\n  --config &lt;KEY&gt;=&lt;VALUE&gt;                               Configuration option [may be repeated]\n  --progress                                           Display progress bar\n\nOptions:\n  -f, --of, --format, --output-format &lt;OUTPUT-FORMAT&gt;  Output format (\"GDALG\" allowed)\n  --co, --creation-option &lt;KEY&gt;=&lt;VALUE&gt;                Creation option [may be repeated]\n  --overwrite                                          Whether overwriting existing output is allowed\n  -s, --src-crs &lt;SRC-CRS&gt;                              Source CRS\n  -d, --dst-crs &lt;DST-CRS&gt;                              Destination CRS\n  -r, --resampling &lt;RESAMPLING&gt;                        Resampling method. RESAMPLING=nearest|bilinear|cubic|cubicspline|lanczos|average|rms|mode|min|max|med|q1|q3|sum (default: nearest)\n  --resolution &lt;xres&gt;,&lt;yres&gt;                           Target resolution (in destination CRS units)\n                                                       Mutually exclusive with --size\n  --size &lt;width&gt;,&lt;height&gt;                              Target size in pixels\n                                                       Mutually exclusive with --resolution\n  --bbox &lt;BBOX&gt;                                        Target bounding box (in destination CRS units)\n  --bbox-crs &lt;BBOX-CRS&gt;                                CRS of target bounding box\n\nAdvanced Options:\n  --if, --input-format &lt;INPUT-FORMAT&gt;                  Input formats [may be repeated]\n  --oo, --open-option &lt;KEY&gt;=&lt;VALUE&gt;                    Open options [may be repeated]\n  --target-aligned-pixels                              Round target extent to target resolution\n  --src-nodata &lt;SRC-NODATA&gt;                            Set nodata values for input bands ('None' to unset). [1.. values]\n  --dst-nodata &lt;DST-NODATA&gt;                            Set nodata values for output bands ('None' to unset). [1.. values]\n  --add-alpha                                          Adds an alpha mask band to the destination when the source raster have none.\n  --wo, --warp-option &lt;NAME&gt;=&lt;VALUE&gt;                   Warping option(s) [may be repeated]\n  --to, --transform-option &lt;NAME&gt;=&lt;VALUE&gt;              Transform option(s) [may be repeated]\n  --et, --error-threshold &lt;ERROR-THRESHOLD&gt;            Error threshold\n\nFor more details, consult https://gdal.org/programs/gdal_raster_reproject.html\n\nWARNING: the gdal command is provisionally provided as an alternative interface to GDAL and OGR command line utilities.\nThe project reserves the right to modify, rename, reorganize, and change the behavior of the utility\nuntil it is officially frozen in a future feature release of GDAL.\n\n\n\n\ngdal raster reproject can also resample — reprojection is its primary use case\nKey flags: --src-crs (source CRS), --dst-crs (target CRS), --resampling (resampling method)"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-reproject-reproject",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-reproject-reproject",
+    "title": "Raster data on disk",
+    "section": "gdal raster reproject: reproject",
+    "text": "gdal raster reproject: reproject\nDHM25 has no embedded CRS → specify source and target explicitly:\n\ngdal raster reproject \\\n  --src-crs EPSG:21781 \\\n  --dst-crs EPSG:2056 \\\n  data/raster-deepdive/dhm25_grid_raster.asc \\\n  data-out/dhm25.tif\n\n0...10...20...30...40...50...60...70...80...90...100 - done.\n\n\nEPSG:21781 = old Swiss coordinate system (LV03 / CH1903)\nEPSG:2056 = new Swiss coordinate system (LV95 / CH1903+)\nOutput as GeoTIFF — unlike ASC, it supports embedded CRS metadata"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#gdal-raster-reproject-verify",
+    "href": "raster-deepdive-on-disk.html#gdal-raster-reproject-verify",
+    "title": "Raster data on disk",
+    "section": "gdal raster reproject: verify",
+    "text": "gdal raster reproject: verify\nCompare before and after — coordinates should shift from LV03 to LV95 range:\n\ngdal raster info -f json data-out/dhm25.tif | \\\n  jq '.stac.\"proj:epsg\"'\n\n2056\n\n\n\n\ngdal raster info -f json data-out/dhm25.tif | \\\n  jq \".cornerCoordinates | {upperLeft, lowerRight}\"\n\n{\n  \"upperLeft\": [\n    2479987.5,\n    1302012.5\n  ],\n  \"lowerRight\": [\n    2865012.5,\n    1073987.5\n  ]\n}\n\n\n\n\nCorner coordinates in LV95: easting ~2.6M, northing ~1.2M (vs ~480k, ~70k in LV03)\n.coordinateSystem.wkt gives the full CRS definition — look for EPSG:2056 to confirm\nComparing the corner coordinates to the earlier ASC output is the most intuitive check"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#three-tools-one-goal",
+    "href": "raster-deepdive-on-disk.html#three-tools-one-goal",
+    "title": "Raster data on disk",
+    "section": "Three tools, one goal",
+    "text": "Three tools, one goal\nAll three strategies reduce on-disk file size — but they work at different levels:\n\n\n\n\n\n\n\n\nTool\nTargets\nMechanism\n\n\n\n\nDatatype\nPer-pixel cost\n1 byte (Byte) vs 4 bytes (Float32)\n\n\nScale / offset\nValue range\nRescale floats to fit a smaller integer type\n\n\nCompression\nSpatial redundancy\nExploit repeated values across pixels\n\n\n\n\n→ They are complementary — apply all three for maximum effect\n→ Order matters: choose datatype first, then compress\n\n\nGetting the datatype wrong means you compress a larger file to begin with\nScale/offset is what makes integer types viable for continuous data — without it you’d lose the value range\nCompression then removes the spatial redundancy that remains regardless of datatype"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#practical-checklist",
+    "href": "raster-deepdive-on-disk.html#practical-checklist",
+    "title": "Raster data on disk",
+    "section": "Practical checklist",
+    "text": "Practical checklist\nWhen writing a raster to disk:\n\nWhat is my value range? → choose the smallest datatype that fits\nCan I rescale to fit an integer type? → use scale / offset in writeRaster\nAre there missing cells? → set NAflag (integer types) or use NaN (float types)\nApply lossless compression: COMPRESS=DEFLATE + TILED=YES\n\nAdd PREDICTOR=2 for integer data, PREDICTOR=3 for float data\n\n\n\nDefault recommendation for most scientific rasters:\nINT1U / Int16  +  scale/offset  +  DEFLATE  +  TILED=YES  +  PREDICTOR=2\n\n\nFor data that genuinely needs float precision (e.g. model outputs with many significant digits), skip the scale/offset step and use FLT4S + DEFLATE + TILED + PREDICTOR=3\nZSTD can replace DEFLATE for better ratios where broad software compatibility is less critical"
+  },
+  {
+    "objectID": "raster-deepdive-on-disk.html#references",
+    "href": "raster-deepdive-on-disk.html#references",
+    "title": "Raster data on disk",
+    "section": "References",
+    "text": "References\n\n\n\n\nAmatulli, Giuseppe. 2024. Geocomputation and Machine Learning for Environmental Applications. Http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.\n\n\nGandhi, Ujaval. 2020. Mastering GDAL Tools (Full Course). Https://courses.spatialthoughts.com/gdal-tools.html#compressing-output."
   },
   {
     "objectID": "movement-I-task-description.html",
@@ -536,7 +732,7 @@
     "href": "slides-tasks.html",
     "title": "Slides",
     "section": "",
-    "text": "Vector Deepdive\n\nTopological Relations\nDuckDB\nVector Deepdive Tasks"
+    "text": "Vector Deepdive\n\nTopological Relations\nDuckDB\nVector Deepdive Tasks\n\nRaster Deepdive\n\nRaster data on disk"
   },
   {
     "objectID": "Modulbeschreibung.html#vorausgesetzte-module",
@@ -586,83 +782,6 @@
     "title": "Spatiotemporal Datascience",
     "section": "Movement Analysis",
     "text": "Movement Analysis\nPart 1\nTheorie: Vor allem Patterns und dann etwas zu Bewegungsparameter und Travel Mode Detection Praxis: Travel Mode detection aus Adv. Env. Stat\nPart 2\nContext: Travel Mode Detection mit Context information"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#raster-data-types",
-    "href": "raster-deepdive-datatypes.html#raster-data-types",
-    "title": "Data types / transformations",
-    "section": "Raster data types",
-    "text": "Raster data types\n\nWhile R and Python have a variety of data types including character strings, raster data is always stored as numeric\nHowever, there are quite a number of numeric data types that can be used to store raster data, depending on the range of values and the precision required\nThe choice of data type can have a significant impact on the size of the file and the precision of the data stored\nSince raster data is powered by GDAL, most raster based software (including R and Python) use the same data types when writing the file to disk\nThe numeric data types are supported by gdal are summarized in Table 1\n\n\n\n\nTable 1: The possible ranges of different datatypes in gdal (source: Amatulli 2024)\n\n\n\n\n\n\n\n\n\n\n\n\nData type\nMinimum\nMaximum\nSize1\nFactor\n\n\n\n\nByte\n0\n255\n39M\n1x\n\n\nUInt16\n0\n65,535\n78M\n2x\n\n\nInt16 / CInt16\n-32,768\n32,767\n78M\n2x\n\n\nUInt32\n0\n4,294,967,295\n155M\n~4x\n\n\nInt32 / CInt32\n-2,147,483,648\n2,147,483,647\n155M\n~4x\n\n\nFloat32 / CFloat32\n-3.4E38\n3.4E38\n155M\n~4x\n\n\nFloat64 / CFloat64\n-1.79E308\n1.79E308\n309M\n~8x\n\n\n\n\n\n\n\n\nIf you store categorical data, use integer datatype and store the corespondence in the metadata\nAlways be minimalistic about which datatype you need.\nQuestion if you have a continuous value from 0 to 1, which datatype do you use?\n\nNot Float32! But Multiply by 100 and use Byte or by 1000 (if you need more precision) and use UInt16\n\nQuestion: if you are measuring temperature, and your values are floating point ranging is -20 to +40 degrees, what datatype are you going to use?\n\nNot CFloat32!\nMultiply by 100 and use CInt16\n\nQuestion: if you compute NDVI and have values in the range 0 - 1, what datatype do you use?\n\nNot Float32, but not CInt16 either:\nTransform the values to 0 - 255\n\n\n\nDifference in file size using constant dataset (same values and resolution) and varying the datatype"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#choosing-a-data-type",
-    "href": "raster-deepdive-datatypes.html#choosing-a-data-type",
-    "title": "Data types / transformations",
-    "section": "Choosing a data type",
-    "text": "Choosing a data type\n\nTo minimize file size, it’s important to choose the data type that best fits the range of values in the raster\nAt a first glance, it might seem that the numeric values we measured / calculated determine the datatype we use\nHowever, we can transform the values to a different range to fit a different datatype\nExample 1: Fraction values ranging from 0 to 1\n\nIt might seem that we need to use Float32 to store these values.\nHowever, we can turn fraction into percentages and store them as Byte datatype.\n\nExample 2: NDVI values ranging from -1 to 1\n\nIt might seem that we need to use CFloat32 to store these values.\nHowever, we can transform (rescale) these values to the range 0 - 255 and store them as Byte datatype."
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#rescaling-transforming-values-to-0---255",
-    "href": "raster-deepdive-datatypes.html#rescaling-transforming-values-to-0---255",
-    "title": "Data types / transformations",
-    "section": "Rescaling / Transforming values to 0 - 255",
-    "text": "Rescaling / Transforming values to 0 - 255\nFrom Wikipedia:\n\nTo rescale a range between an arbitrary set of values [a, b], the formula becomes: \\[x' = a + \\frac{(x-min(x))\\times(b - a)}{max(x)-min(x)}\\]\n\nFor the NDVI usecase, we can consider:\n\n\\(x'\\) to be the stored value\n\\(x\\) to be the measured value\n\\(a\\) and \\(b\\) to be the maximum, minimum value of Byte (0 and 255 respectively)\n\\(min(x)\\) and \\(max(x)\\) the maximum and minimum measured values (-1 and 1 respectively)\n\nWe can use these values and simplify the formula as follows:\n\\[\\begin{align}\n\nx' &= 0 + \\frac{(x+1)\\times 255}{2} \\\\\n\nx' &= \\frac{255x+255}{2} \\\\\n\nx' &= 127.5x+127.5 \\\\\n\n\\end{align}\\]"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#rescaling-ndvi-values",
-    "href": "raster-deepdive-datatypes.html#rescaling-ndvi-values",
-    "title": "Data types / transformations",
-    "section": "Rescaling NDVI values",
-    "text": "Rescaling NDVI values\n\nWe can now use this formula \\(x' = 127.5x+127.5\\) to rescale NDVI values to the range 0 - 255\nSo, rather than storing the NDVI value 0.2, for example, we store the value 153\nThis rescaling is determined by two values: scale and offset (127.5 for both values in our case)"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#precision",
-    "href": "raster-deepdive-datatypes.html#precision",
-    "title": "Data types / transformations",
-    "section": "Precision",
-    "text": "Precision\nNote that this transformation to 255 values limits our precision:\n\nOur values are now limited to in their precision, since we only have 255 possible values\nWe can calculate the available precision like so: \\(\\frac{max(x)-min(x)}{b-a}\\)\nIn our case this is \\(\\frac{1 - (-1)}{255-0} = 0.0078\\).\nAny measured / calculated NDVI value will be rounded to a multiple of 0.0078."
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-vectors",
-    "href": "raster-deepdive-datatypes.html#r-implementation-for-vectors",
-    "title": "Data types / transformations",
-    "section": "R Implementation for vectors",
-    "text": "R Implementation for vectors\n\nA generic way to implement this in R is as follows:\n\n\nscale_minmax &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x) \n  max_x = max(x) \n  a + (x - min_x) * (b - a) / (max_x - min_x)\n}\n\nTake the following example:\n\n# this creates 100 random NDVI values between -1 and 1\nndvi_measured &lt;- runif(100, -1, 1)\n\nndvi_stored &lt;- scale_minmax(ndvi_measured)\n\ntibble(ndvi_measured, ndvi_stored) |&gt;\n  ggplot(aes(ndvi_measured, ndvi_stored)) + \n  geom_line(col = \"grey\") +\n  geom_point() +\n  labs(x = \"Measured NDVI (-1 to +1)\", y = \"Stored value (0 to 255)\") +\n  theme_minimal()"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#restoring-the-original-values",
-    "href": "raster-deepdive-datatypes.html#restoring-the-original-values",
-    "title": "Data types / transformations",
-    "section": "Restoring the original values",
-    "text": "Restoring the original values\n\nImagine you stored the NDVI values in the range 0 - 255, stored these values in a Geotiff and sent it to a colleague.\nTo restore the original NDVI values the transformation (\\(x' = 127x+127.5\\)) needs to be known\nMore precisely, the scale and offset values need to be known\nWe can simply invert the transformation to get the original values back: \\(x = \\frac{x'-127.5}{127.5}\\)"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-i",
-    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-i",
-    "title": "Data types / transformations",
-    "section": "R implementation for rasters I",
-    "text": "R implementation for rasters I\n\nSince rescaling values is a common operation, it is supported by GDAL and therefore most raster libraries\nRather than transforming our values in memory, we can transform them when writing the raster to disk.\nFor this, we can use the arguments scale = and offset = in the writeRaster function\nTo use these arguments we need to calculate the scale and offset values first\nRewriting the formula above, we can calculate scale and offset:\n\n\\[\\begin{align}\n\\text{scale} &= \\frac{b - a}{max(x)-min(x)} \\\\\n\\text{offset} &= \\frac{a \\times max(x) - b \\times min(x)}{max(x)-min(x)}\n\\end{align}\\]\n\nTo implement this in R, I create a function: get_scale_offset:\n\n\nget_scale_offset &lt;- function(\n    x, \n    a = 0,          # the minimum value of the new range (default 0)\n    b = 255         # the maximum value of the new range (default 255)\n    ){\n  min_x = min(x)\n  max_x = max(x)\n  \n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  list(\"scale\" = scale, \"offset\" = offset)\n}\n\n\n\nget_scale_offset(ndvi_measured)\n\n$scale\n[1] 130.0526\n\n$offset\n[1] 129.1798"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-ii",
-    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-ii",
-    "title": "Data types / transformations",
-    "section": "R implementation for rasters II",
-    "text": "R implementation for rasters II\n\nThe new function get_scale_offset works nicely with vectors, but not with rasters\nThe reason it does not work for raster is that min(x) (and max(x)) are local and not global functions\n\nThey return the minimum / maximum value per cell over all bands, not the global minimum / maximum value\nTo calculate the global minimum and maximum value, we can either use global, or the slightly faster minmax function\n\nAdditionally, the writeRaster function will divide by scale and subtract offset from the values (see ?writeRaster), so we need to invert the two values\nThis is how this is implemented in R:\n\n\nget_scale_offset2 &lt;- function(\n    x, \n    a = 0,          \n    b = 255         \n    ){\n  library(terra)\n  min_max = minmax(x) \n  # careful, this function is currently designed for single band rasters only\n  min_x &lt;- min_max[1,1]\n  max_x &lt;- min_max[2,1]\n\n  scale &lt;- (b - a) / (max_x - min_x)\n  offset &lt;- (a * max_x - b * min_x) / (max_x - min_x)\n\n  \n  scale_inverted &lt;- 1/scale           # invert the scale, since writeRaster divides by scale\n  offset_inverted &lt;- offset * -1       # invert the offset, since writeRaster subtracts the offset\n\n  \n  list(\"scale\" = scale, \"offset\" = offset, \"scale_inverted\" = scale_inverted, offset_inverted = offset_inverted)\n\n}"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example",
-    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example",
-    "title": "Data types / transformations",
-    "section": "R implementation for rasters: example",
-    "text": "R implementation for rasters: example\n\nLet’s import a raster, calculate the scale and offset values and use these values to write to disk\n\n\nlibrary(terra)\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package=\"terra\"))\n\nplot(elev, main = paste(minmax(elev),collapse = \"-\"))\n\n\n\nscale_offset &lt;- get_scale_offset2(elev)\n\n# Note: this implementation leads to NA's due to floating point errors. \n# 141 * 1/1/1.592157 + 88.55911*-1 = -4.333913e-06\n# I haven't found a solution for this yet.\nwriteRaster(\n  elev, \n  \"data-out/INT1U.tif\",\n  datatype = \"INT1U\",\n  overwrite = TRUE, \n  scale = scale_offset$scale_inverted, \n  offset = scale_offset$offset_inverted\n  )"
-  },
-  {
-    "objectID": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example-1",
-    "href": "raster-deepdive-datatypes.html#r-implementation-for-rasters-example-1",
-    "title": "Data types / transformations",
-    "section": "R implementation for rasters: example",
-    "text": "R implementation for rasters: example\n\nSince GDAL stores the scale and offset values in the metadata, any software powered by GDAL will restore the original values on import\nIn other words, if you run rast(\"data-out/INT1U.tif\") you will not notice the values were internally stored using 0 - 255. Instead, you will retrieve the original values.\nTo finish off, let’s compare the file sizes of the raster stored as INT1U (Byte) and FLT8S (Float32)\n\n\n\n[1] 0.5366244\n\n\n\n\n\n\nAmatulli, Giuseppe. 2024. Geocomputation and Machine Learning for Environmental Applications. Http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html."
   },
   {
     "objectID": "references.html",

@@ -1,0 +1,11 @@
+.caption{
+  text-align: center;
+}
+
+/* White text on dark-background section slides */
+.reveal .has-dark-background h1,
+.reveal .has-dark-background h2,
+.reveal .has-dark-background p,
+.reveal .has-dark-background li {
+  color: white;
+}
