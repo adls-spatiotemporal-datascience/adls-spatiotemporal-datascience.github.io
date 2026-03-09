@@ -177,35 +177,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="sec-task-rast-advanced" class="level2">
-<h2 class="anchored" data-anchor-id="sec-task-rast-advanced">Task 1</h2>
 <p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named <code>index.qmd</code>.</p>
+<section id="task-1" class="level2">
+<h2 class="anchored" data-anchor-id="task-1">Task 1</h2>
 <ol type="1">
-<li>Redo <a href="./preperation.html#sec-task-rast-basic">Raster Basics</a>. However, this time use <code>gdal</code> from the command line to to the processing. Note that you can use <code>bash</code> commands in quarto, you just have to
+<li>Redo <a href="./vector-deepdive-task.html#sec-vec-basic">Task 1</a> from <em>Vector Deepdive</em> (calculate the percentage of forest per canton). However, this time use the R package <code>terra</code> to to the processing.</li>
+<li>Again, use the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a> to measure the execute time of each step in the process.</li>
+</ol>
+</section>
+<section id="sec-task-rast-advanced" class="level2">
+<h2 class="anchored" data-anchor-id="sec-task-rast-advanced">Task 2</h2>
+<ol type="1">
+<li>Redo <a href="./vector-deepdive-task.html#sec-vec-basic">Task 1</a> from <em>Vector Deepdive</em>. However, this time use <code>gdal</code> from the command line to the processing. Note that you can use <code>bash</code> commands in quarto, you just have to
 <ul>
 <li>set the language to <code>{bash}</code> in the code chunk and</li>
 <li>the <code>engine</code> to <code>knitr</code> in the YAML header</li>
 </ul></li>
-<li>Again, use the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a> to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.</li>
-<li>Compare the execution times of with the <code>terra</code> approach. Which is faster?</li>
+<li>Again, use the R package <a href="http://jabiru.github.io/tictoc/"><code>tictoc</code></a> to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below (which is a bit of a workaround since tictoc was made for R, not Bash commands)</li>
+<li>Compare the execution times of all approaches (<code>sf</code>, <code>duckdb</code>, <code>terra</code>, <code>gdal</code>). How do they differ?</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="at">msg =</span> <span class="st">"Step 1: Transform the data"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal_translate</span> input.tif output.tif</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>(<span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally (to get a full log:)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic.log</span>()</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># starts the measurement</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>(<span class="at">msg =</span> <span class="st">"Step 1: Transform the data"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># gdal command</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">gdal</span> raster convert input.tif output.tif</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ends the measurement</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>(<span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally (to get a full log:)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic.log</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
