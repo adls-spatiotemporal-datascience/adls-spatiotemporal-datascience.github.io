@@ -4,22 +4,22 @@ format: html
 ---
 
 - Vector Deepdive
-    - [Topological Relations](vector-deepdive-topological-rel.qmd){target="_blank"}
-    - [DuckDB](vector-deepdive-duckdb.qmd){target="_blank"}
+    - [🔗 Topological Relations](vector-deepdive-topological-rel.qmd){target="_blank"}
+    - [🔗 DuckDB](vector-deepdive-duckdb.qmd){target="_blank"}
     - [Vector Deepdive Tasks](vector-deepdive-task.qmd)
 - Raster Deepdive
-    - [Raster data on disk](raster-deepdive-on-disk.qmd){target="_blank"}
-    <!-- - [Tasks](raster-deepdive-task.qmd) -->
+    - [🔗 Raster data on disk](raster-deepdive-on-disk.qmd){target="_blank"}
+    - [Tasks](raster-deepdive-task.qmd)
 
 :::{.content-visible when-profile="dev"}
 
 
 - Interpolation / Density Estimation
-    - [Density Estimation](interpolation-density.qmd){target="_blank"}
-    - [Interpolation Methods](interpolation-methods.qmd){target="_blank"}
+    - [🔗 Density Estimation](interpolation-density.qmd){target="_blank"}
+    - [🔗Interpolation Methods](interpolation-methods.qmd){target="_blank"}
     - [Tasks](interpolation-task.qmd)
 - Network Centrality
-    - [Network Centrality Tasks](network-centrality-task.qmd)
+    - [🔗Network Centrality Tasks](network-centrality-task.qmd)
     - [Network Routing Tasks](network-routing-task.qmd)
 - Movement Analysis I
     - [Tasks](movement-I-tasks.qmd)

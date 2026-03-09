@@ -4,27 +4,41 @@ format: html
 ---
 
 
-## Task 1 {#sec-task-rast-advanced}
-
 Follow the instructions in [Submission via GitHub Pages](submission.qmd#sec-gh-pages) to create a new repo in the existing organization. As you did in the previous weeks, solve the next task in a file named `index.qmd`.
 
-1. Redo [Raster Basics](preperation.qmd#sec-task-rast-basic). However, this time use `gdal` from the command line to to the processing. Note that you can use `bash` commands in quarto, you just have to 
+
+## Task 1
+
+1. Redo [Task 1](vector-deepdive-task.qmd#sec-vec-basic) from *Vector Deepdive* (calculate the percentage of forest per canton). However, this time use the R package  `terra` to to the processing.
+2. Again, use the R package [`tictoc`](http://jabiru.github.io/tictoc/) to measure the execute time of each step in the process.
+ 
+
+
+## Task 2 {#sec-task-rast-advanced}
+
+
+1. Redo [Task 1](vector-deepdive-task.qmd#sec-vec-basic) from *Vector Deepdive*. However, this time use `gdal` from the command line to the processing. Note that you can use `bash` commands in quarto, you just have to 
    - set the language to `{bash}` in the code chunk and 
    - the `engine` to `knitr` in the YAML header
-2. Again, use the R package [`tictoc`](http://jabiru.github.io/tictoc/) to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below.
-3. Compare the execution times of with the `terra` approach. Which is faster? 
+2. Again, use the R package [`tictoc`](http://jabiru.github.io/tictoc/) to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below (which is a bit of a workaround since tictoc was made for R, not Bash commands)
+3. Compare the execution times of all approaches (`sf`, `duckdb`, `terra`, `gdal`). How do they differ?
+
 
 
 ````
+
 ```{{r}}
+# starts the measurement
 tictoc::tic(msg = "Step 1: Transform the data")
 ```
 
 ```{{bash}}
-gdal_translate input.tif output.tif
+# gdal command
+gdal raster convert input.tif output.tif
 ```
 
 ```{{r}}
+# ends the measurement
 tictoc::toc(log = TRUE)
 ```
 

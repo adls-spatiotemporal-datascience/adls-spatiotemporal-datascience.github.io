@@ -605,7 +605,7 @@ NAflag(elev)   # current NoData reserved value
 
 ```{r}
 #| echo: true
-#| fig-cap: "Note that the maximum elevation values are now NA"
+#| fig-cap: "NA values explicitly colored in black"
 #| classes: .center
 
 # Only use 0 - 254, so that 255 is availalable for "NoData"
