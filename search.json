@@ -25,14 +25,49 @@
     "href": "interpolation-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. The task is due in two weeks."
+    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd."
   },
   {
-    "objectID": "interpolation-task.html#sec-task-interp-density",
-    "href": "interpolation-task.html#sec-task-interp-density",
+    "objectID": "interpolation-task.html#data",
+    "href": "interpolation-task.html#data",
     "title": "🚀 Tasks",
-    "section": "",
-    "text": "Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization. Do the exercises in Density Estimation and Interpolation in a file named index.qmd. The task is due in two weeks."
+    "section": "Data",
+    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here."
+  },
+  {
+    "objectID": "interpolation-task.html#exercise-1-idw",
+    "href": "interpolation-task.html#exercise-1-idw",
+    "title": "🚀 Tasks",
+    "section": "Exercise 1: IDW",
+    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result."
+  },
+  {
+    "objectID": "interpolation-task.html#exercise-2-nearest-neighbour",
+    "href": "interpolation-task.html#exercise-2-nearest-neighbour",
+    "title": "🚀 Tasks",
+    "section": "Exercise 2: Nearest Neighbour",
+    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result."
+  },
+  {
+    "objectID": "interpolation-task.html#data-1",
+    "href": "interpolation-task.html#data-1",
+    "title": "🚀 Tasks",
+    "section": "Data",
+    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link."
+  },
+  {
+    "objectID": "interpolation-task.html#exercise-1-kernel-density-estimation",
+    "href": "interpolation-task.html#exercise-1-kernel-density-estimation",
+    "title": "🚀 Tasks",
+    "section": "Exercise 1: Kernel Density Estimation",
+    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl."
+  },
+  {
+    "objectID": "interpolation-task.html#sec-density-voronoi",
+    "href": "interpolation-task.html#sec-density-voronoi",
+    "title": "🚀 Tasks",
+    "section": "Exercise 2: Voronoi",
+    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland."
   },
   {
     "objectID": "movement-I-data-description.html",
@@ -329,6 +364,160 @@
     "text": "References\n\n\n\n\nAmatulli, Giuseppe. 2024. Geocomputation and Machine Learning for Environmental Applications. Http://spatial-ecology.net/docs/build/html/GDAL/gdal_osgeo.html.\n\n\nGandhi, Ujaval. 2020. Mastering GDAL Tools (Full Course). Https://courses.spatialthoughts.com/gdal-tools.html#compressing-output."
   },
   {
+    "objectID": "webmapping.html#the-web",
+    "href": "webmapping.html#the-web",
+    "title": "Webmapping",
+    "section": "The Web",
+    "text": "The Web\n\nBrowsers understand exactly three things: HTML (structure), CSS (style), JavaScript (behaviour)\nA Shapefile, GeoPackage, or GeoTIFF are not browser native\nTo put a map on the web, geodata must be translated into something JS can work with\nA mapping library (Leaflet, MapLibre, …) bridges the gap — but the data still needs to arrive in the right format"
+  },
+  {
+    "objectID": "webmapping.html#two-ways-geodata-enters-a-browser",
+    "href": "webmapping.html#two-ways-geodata-enters-a-browser",
+    "title": "Webmapping",
+    "section": "Two Ways Geodata Enters a Browser",
+    "text": "Two Ways Geodata Enters a Browser\n\nEmbedded — data is serialised into the HTML/JS directly\n\nGeoJSON stored as a JavaScript variable in the HTML file\nBrowser has everything it needs on load\nSimple, but the entire dataset must download before anything renders\n\nFetched on demand — browser requests tiles as the user pans and zooms\n\nOnly the tiles visible in the current viewport are loaded\nScales to arbitrarily large datasets\nRequires the data to be pre-tiled\n\n\n\n→ This distinction drives almost every decision in webmapping"
+  },
+  {
+    "objectID": "webmapping.html#tmap-r",
+    "href": "webmapping.html#tmap-r",
+    "title": "Webmapping",
+    "section": "tmap (R)",
+    "text": "tmap (R)\n\nlibrary(tmap)\nlibrary(sf)\ntmap_mode(\"view\")   # interactive; \"plot\" for static print output\n\ngpkg &lt;- \"data/vector-deepdive/swissboundaries3d_2024-01_2056_5728/swissBOUNDARIES3D_1_5_LV95_LN02.gpkg\"\n\ncantons &lt;- st_read(gpkg, \"tlm_kantonsgebiet\")\n\ntm_shape(cantons) +\n  tm_polygons(fill = \"kantonsflaeche\")\n\n\nUses leaflet (Leaflet.js) under the hood in interactive mode\nSave as standalone HTML with tmap_save(m, \"map.html\")\nGood for: quick sharing, small datasets (&lt; ~5 MB)"
+  },
+  {
+    "objectID": "webmapping.html#part-1-open-the-hood",
+    "href": "webmapping.html#part-1-open-the-hood",
+    "title": "Webmapping",
+    "section": "Part 1: Open the Hood",
+    "text": "Part 1: Open the Hood\n\nCreate a tmap map using the cantonal data from webmapping (on Moodle)\nsave it as HTML (tmap_save()) with the name index.html\nOpen index.html in your browser toggle developper tools\nOpen index.html in VSCode"
+  },
+  {
+    "objectID": "webmapping.html#part-1-questions",
+    "href": "webmapping.html#part-1-questions",
+    "title": "Webmapping",
+    "section": "Part 1: Questions",
+    "text": "Part 1: Questions\nWork through the HTML source and answer:\n\nWhere is the canton polygon data? What format is it in?\nWhere is the basemap? Is it embedded the same way — or something different?\nHow large is map.html? Now swap cantons for the Swiss municipalities layer (~2300 polygons). What happens to file size?\nWhat would happen if you embedded a 100 MB dataset this way?\n\n\n\nLine 936 — the entire FeatureCollection is serialised as a single minified JS variable, inlined directly in the HTML. Format: GeoJSON, embedded at page load. No network request needed.\nNo — completely different mechanism. Lines ~4149+ contain URL templates like https://tile.openstreetmap.org/{z}/{x}/{y}.png. Leaflet fetches only the tiles visible in the current viewport on demand. The basemap imagery never lives in the file — it is streamed from OSM’s CDN at runtime. Two mechanisms in one file: polygon data is embedded, basemap is fetched on demand.\n~7.5 MB for 26 cantons. With ~2300 municipalities (88× more features, more detailed geometry) the file would grow to 50–150 MB+. The entire dataset must be serialised into the HTML — browser must download and parse it all before rendering.\nThe HTML file itself would be 100 MB+. The browser must download everything before rendering. JS must parse and hold the GeoJSON in memory (~3–5× raw size → 300–500 MB RAM). On slow connections the map never loads. No spatial indexing: every pan/zoom re-evaluates all features client-side. → This is the core argument for the tile approach."
+  },
+  {
+    "objectID": "webmapping.html#the-billion-dollar-code---the-problem",
+    "href": "webmapping.html#the-billion-dollar-code---the-problem",
+    "title": "Webmapping",
+    "section": "The Billion Dollar Code - The problem",
+    "text": "The Billion Dollar Code - The problem\nVideo shown in class only — watch The Billion Dollar Code (2021) on Netflix"
+  },
+  {
+    "objectID": "webmapping.html#the-billion-dollar-code---the-idea",
+    "href": "webmapping.html#the-billion-dollar-code---the-idea",
+    "title": "Webmapping",
+    "section": "The Billion Dollar Code - The idea",
+    "text": "The Billion Dollar Code - The idea\nVideo shown in class only — watch The Billion Dollar Code (2021) on Netflix"
+  },
+  {
+    "objectID": "webmapping.html#the-billion-dollar-code---the-solution",
+    "href": "webmapping.html#the-billion-dollar-code---the-solution",
+    "title": "Webmapping",
+    "section": "The Billion Dollar Code - The solution",
+    "text": "The Billion Dollar Code - The solution\nVideo shown in class only — watch The Billion Dollar Code (2021) on Netflix"
+  },
+  {
+    "objectID": "webmapping.html#the-tile-grid",
+    "href": "webmapping.html#the-tile-grid",
+    "title": "Webmapping",
+    "section": "The Tile Grid",
+    "text": "The Tile Grid\n\nThe world is divided into a pyramid of tiles at discrete zoom levels\nEach tile is addressed by z / x / y: zoom level, column, row\nAt zoom 0: 1 tile covers the whole world\nEach zoom level quadruples the number of tiles\n\n\n\n\n\n    \n\n    \n\n    \n    \n    \n      \n        \n        \n              \n                Zoom Level\n                Tiles\n                Total\n              \n        \n        \n        \n                \n                  0\n                  1 × 1\n                  1\n                \n                \n                  1\n                  2 × 2\n                  4\n                \n                \n                  2\n                  4 × 4\n                  16\n                \n                \n                  7\n                  128 × 128\n                  16'384\n                \n                \n                  10\n                  1024 × 1024\n                  1'048'576\n                \n                \n                  14\n                  16384 × 16384\n                  268'435'456"
+  },
+  {
+    "objectID": "webmapping.html#raster-tiles-vs.-vector-tiles",
+    "href": "webmapping.html#raster-tiles-vs.-vector-tiles",
+    "title": "Webmapping",
+    "section": "Raster Tiles vs. Vector Tiles",
+    "text": "Raster Tiles vs. Vector Tiles\n\n\n\n\n\n\n\n\n\nRaster tiles\nVector tiles\n\n\n\n\nFormat\nPNG / JPEG image\nProtobuf-encoded geometry (.pbf)\n\n\nRendering\nServer-side\nClient-side (browser / GPU)\n\n\nStyling\nBaked into image\nDefined in JSON, applied at runtime\n\n\nFile size\nLarger\nSmaller\n\n\nFlexibility\nFixed style\nOne dataset, many styles\n\n\nTypical use\nBasemaps, aerial imagery\nThematic data, interactive layers"
+  },
+  {
+    "objectID": "webmapping.html#web-mercator-epsg3857",
+    "href": "webmapping.html#web-mercator-epsg3857",
+    "title": "Webmapping",
+    "section": "Web Mercator (EPSG:3857)",
+    "text": "Web Mercator (EPSG:3857)\n\nNearly all webmaps use Web Mercator — the projection of the internet\nProjects the sphere onto a square → convenient for tile grids\nDistortion: areas near poles appear much larger than they are (Greenland ≈ Africa)\nAngles are preserved (conformal) — useful for navigation\n\n\n\nYour data is likely in a different CRS → must be reprojected before serving\nTools handle this automatically, but be aware of the distortion"
+  },
+  {
+    "objectID": "webmapping.html#geojson",
+    "href": "webmapping.html#geojson",
+    "title": "Webmapping",
+    "section": "GeoJSON",
+    "text": "GeoJSON\n\nHuman-readable, text-based format — geometry + attributes in one file\nNatively understood by every webmapping library\nEasy to embed directly in an HTML page\n\n{\n  \"type\": \"FeatureCollection\",\n  \"features\": [{\n    \"type\": \"Feature\",\n    \"geometry\": { \"type\": \"Point\", \"coordinates\": [8.54, 47.37] },\n    \"properties\": { \"name\": \"Zurich\" }\n  }]\n}"
+  },
+  {
+    "objectID": "webmapping.html#limits-of-geojson",
+    "href": "webmapping.html#limits-of-geojson",
+    "title": "Webmapping",
+    "section": "Limits of GeoJSON",
+    "text": "Limits of GeoJSON\n\nFile size: a 50 MB GeoJSON is painful to load — full download before anything renders\nNo streaming: browser must receive the entire file before it can display anything\nNo tiling: all features loaded regardless of what’s visible in the viewport\nNo built-in indexing: spatial queries happen client-side over all features\n\n\n\nGeoJSON works well for small datasets (&lt; ~5 MB) — for larger data, use tiles"
+  },
+  {
+    "objectID": "webmapping.html#mapbox-vector-tiles-mvt",
+    "href": "webmapping.html#mapbox-vector-tiles-mvt",
+    "title": "Webmapping",
+    "section": "Mapbox Vector Tiles (MVT)",
+    "text": "Mapbox Vector Tiles (MVT)\n\nBinary format (protobuf) — much more compact than GeoJSON\nGeometry encoded in tile-local integer coordinates (0–4096), not lat/lon\nFeatures are simplified at low zoom levels — less data transferred when zoomed out\nSpec is open — implemented by MapLibre, OpenLayers, deck.gl\nFile extension: .pbf or .mvt\nMVT is the format of individual tiles; PMTiles packages them all into one file\nGDAL can also write MVT (ogr2ogr -f MVT) — but outputs a directory tree, not a single archive"
+  },
+  {
+    "objectID": "webmapping.html#pmtiles",
+    "href": "webmapping.html#pmtiles",
+    "title": "Webmapping",
+    "section": "PMTiles",
+    "text": "PMTiles\n\nA single-file archive containing all tiles of a dataset\nTiles are addressed by z/x/y \nClients fetch only the tiles they need using HTTP range requests — no tile server needed\nHost on any object storage: S3, Cloudflare R2, GitHub Pages\nOne file, no server process, scales to any traffic\nGenerate with tippecanoe\n\n\n\n\n\n\nflowchart LR\n  A[Geopackage] --&gt;|gdal| B[GeoJSON]\n  B --&gt;|tippecanoe| C[.pmtiles]\n\n\n\n\n\n\n\n\nPMTiles was developed by Protomaps. The key insight: HTTP range requests let a client read arbitrary byte ranges from a remote file — the same mechanism that enables video seeking. This means a static file on S3 can behave like a tile server without any running process."
+  },
+  {
+    "objectID": "webmapping.html#exercise-part-2-optional",
+    "href": "webmapping.html#exercise-part-2-optional",
+    "title": "Webmapping",
+    "section": "Exercise Part 2 (optional)",
+    "text": "Exercise Part 2 (optional)\nConvert the municipalities GeoJSON to PMTiles with tippecanoe:\ntippecanoe -o municipalities.pmtiles \\\n           -zg \\\n           --drop-densest-as-needed \\\n           municipalities.geojson\nThen:\n\nCreate a minimal index.html that loads the .pmtiles with MapLibre GL JS\nPush both files to a GitHub repository with Pages enabled\nShare your public URL"
+  },
+  {
+    "objectID": "webmapping.html#two-paths-to-a-public-map",
+    "href": "webmapping.html#two-paths-to-a-public-map",
+    "title": "Webmapping",
+    "section": "Two Paths to a Public Map",
+    "text": "Two Paths to a Public Map\n\n\n\n\n\n\n\n\n\nEmbedded GeoJSON\nPMTiles\n\n\n\n\nData size\n&lt; ~5 MB\nAny size\n\n\nOutput\nStandalone HTML\n.pmtiles + HTML\n\n\nHosting\nAnywhere (Drive, email, Pages)\nObject storage or GitHub Pages\n\n\nWorkflow\ntmap → tmap_save()\ntippecanoe → upload\n\n\nRequires a server?\nNo\nNo\n\n\n\nBoth paths produce a static, serverless public map."
+  },
+  {
+    "objectID": "webmapping.html#github-pages-free-hosting",
+    "href": "webmapping.html#github-pages-free-hosting",
+    "title": "Webmapping",
+    "section": "GitHub Pages — Free Hosting",
+    "text": "GitHub Pages — Free Hosting\nA GitHub repository with Pages enabled serves files as a static website:\nyour-repo/\n├── index.html        ← MapLibre map that loads the PMTiles\n└── data.pmtiles      ← your tile archive\n\nPublic URL, zero cost, works immediately after git push\nWorks well for files up to ~100 MB\nLarger files → use S3 or Cloudflare R2"
+  },
+  {
+    "objectID": "webmapping.html#object-storage-s3-r2",
+    "href": "webmapping.html#object-storage-s3-r2",
+    "title": "Webmapping",
+    "section": "Object Storage (S3, R2)",
+    "text": "Object Storage (S3, R2)\nWhen serving PMTiles from S3 or Cloudflare R2, you must configure CORS:\n[{\n  \"AllowedOrigins\": [\"*\"],\n  \"AllowedMethods\": [\"GET\", \"HEAD\"],\n  \"AllowedHeaders\": [\"Range\"],\n  \"ExposeHeaders\": [\"Content-Range\", \"Content-Length\"]\n}]\n\nWithout this, the browser blocks range requests to your bucket\nRange is the header that enables partial tile fetching — it must be explicitly allowed\nThis is the most common reason PMTiles “doesn’t work” in production"
+  },
+  {
+    "objectID": "webmapping.html#basemap-providers",
+    "href": "webmapping.html#basemap-providers",
+    "title": "Webmapping",
+    "section": "Basemap Providers",
+    "text": "Basemap Providers\nYour PMTiles has your thematic data — you also need a basemap:\n\n\n\nProvider\nFree tier\nAPI key\n\n\n\n\nProtomaps\nUnlimited (CDN)\nNo\n\n\nMapTiler\n100k requests/month\nYes\n\n\nStadia Maps\nUnlimited for non-commercial\nYes\n\n\nOpenStreetMap (raster)\nRate-limited\nNo"
+  },
+  {
+    "objectID": "webmapping.html#a-minimal-maplibre-map",
+    "href": "webmapping.html#a-minimal-maplibre-map",
+    "title": "Webmapping",
+    "section": "A Minimal MapLibre Map",
+    "text": "A Minimal MapLibre Map\n&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n  &lt;link href=\"https://unpkg.com/maplibre-gl/dist/maplibre-gl.css\" rel=\"stylesheet\"/&gt;\n  &lt;script src=\"https://unpkg.com/maplibre-gl/dist/maplibre-gl.js\"&gt;&lt;/script&gt;\n  &lt;style&gt; #map { height: 100vh; } &lt;/style&gt;\n&lt;/head&gt;\n&lt;body&gt;\n  &lt;div id=\"map\"&gt;&lt;/div&gt;\n  &lt;script&gt;\n    const map = new maplibregl.Map({\n      container: 'map',\n      style: 'https://demotiles.maplibre.org/style.json',  // &lt;1&gt;\n      center: [8.54, 47.37],\n      zoom: 8\n    });\n  &lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n\nThe style URL is a JSON document defining all layers and sources — this is where you add your PMTiles layer"
+  },
+  {
+    "objectID": "webmapping.html#decision-guide",
+    "href": "webmapping.html#decision-guide",
+    "title": "Webmapping",
+    "section": "Decision Guide",
+    "text": "Decision Guide\n\nQuick exploration / publication map → tmap\nSmall data + sharing → tmap → tmap_save() → standalone HTML → any host\nLarge data + public map → tippecanoe → PMTiles → GitHub Pages / S3\nCustom styled vector map → PMTiles + MapLibre GL JS + Protomaps basemap\nEnterprise / government → AGOL or GeoServer (out of today’s scope)\n\n\nThe low-infrastructure path for most projects:\n\n\n\n\n\nflowchart LR\n  A[Geopackage] --&gt;|gdal| B[GeoJSON]\n  B --&gt;|tippecanoe| C[.pmtiles]\n  C --&gt;|git push| D[GitHub Pages]\n  D --&gt; E([public URL: no server · no subscription])"
+  },
+  {
     "objectID": "movement-I-minimal-example.html",
     "href": "movement-I-minimal-example.html",
     "title": "Minimal example",
@@ -483,11 +672,11 @@
     "text": "Wrap-up\n\nDuckDB = in-process OLAP database with a spatial extension\nSQL lets you express spatial analyses declaratively\nR-Tree indices make spatial predicates fast\nVIEWs let you build analyses incrementally — easy to iterate and scale\nResults flow back into R for further analysis or visualization"
   },
   {
-    "objectID": "network-routing-task.html",
-    "href": "network-routing-task.html",
+    "objectID": "movement-I-tasks.html",
+    "href": "movement-I-tasks.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 1: A possible way to visualize the results from your shortest path analysis."
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nYour task is to improve upon the simple model we have built in the chapter Minimal example. You can do this by:\n\nFeature Engineering: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows\nModel Selection: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.\nPer point prediction: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.\n\nUsing one or more of these approaches, predict the transportation mode for the validation dataset."
   },
   {
     "objectID": "vector-deepdive-topological-rel.html#quick-recap-vector-data",
@@ -623,32 +812,11 @@
     "text": "Wrap-up\n\nNamed predicates (st_intersects, st_covers, …) cover most use cases for subsetting and joining\nWhen they don’t suffice, DE-9IM patterns let you define custom relations (st_relate)\nKey pitfalls to remember:\n\nst_contains vs st_covers (boundary matters!)\nJoin order determines geometry and row count\nPredicates return sparse index lists, not logical vectors (use sparse = FALSE if needed)"
   },
   {
-    "objectID": "movement-I-tasks.html",
-    "href": "movement-I-tasks.html",
+    "objectID": "network-routing-task.html",
+    "href": "network-routing-task.html",
     "title": "🚀 Tasks",
     "section": "",
-    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nYour task is to improve upon the simple model we have built in the chapter Minimal example. You can do this by:\n\nFeature Engineering: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows\nModel Selection: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.\nPer point prediction: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.\n\nUsing one or more of these approaches, predict the transportation mode for the validation dataset."
-  },
-  {
-    "objectID": "interpolation-methods.html#data",
-    "href": "interpolation-methods.html#data",
-    "title": "Spatiotemporal Datascience",
-    "section": "Data",
-    "text": "Data\nThe airquality dataset (luftqualitaet.gpkg) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this here."
-  },
-  {
-    "objectID": "interpolation-methods.html#exercise-1-idw",
-    "href": "interpolation-methods.html#exercise-1-idw",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 1: IDW",
-    "text": "Exercise 1: IDW\nUse the function gstat::idw to interpolate the NO₂ values using the inverse distance weighted method.\n\n\n\n\n\n\nNote\n\n\nThe function idw needs following inputs: formula, locations and newdata\n\nformula: For ordinary, simple kriging use the formula z~1 where z is the column name of the dependent variable\nlocations: A sf object with the locations of the dependent variable\nnewdata: A sf object with the locations for which the dependent variable should be calculated. Can be created with sf::st_make_grid. The cellsize arugument determins the resolution of the resuting dataset.\n\nOptional arguments:\n\nmaxdist: Maximum distance to which measurements should be considered\nnmin /nmax: Minimum and maxximum number of measurements to consider\nidp the inverse distance weighting power\n\n\n\n\nPlay around with maxdist, nmin /nmaxand idp. Convert the resulting sf object to a raster (find out how!) and visualize the result."
-  },
-  {
-    "objectID": "interpolation-methods.html#exercise-2-nearest-neighbour",
-    "href": "interpolation-methods.html#exercise-2-nearest-neighbour",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 2: Nearest Neighbour",
-    "text": "Exercise 2: Nearest Neighbour\nAnother simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in Exercise 2: Voronoi to create voronoi polygons. Turn the resulting sfc object to sf using st_as_sf, then use st_join to add the measured NO2 values the polygons.\nVisualize the result."
+    "text": "As always, the data for this task is on moodle. Follow the instructions in Submission via GitHub Pages to create a new repo in the existing organization.\nThis week, you will do your do your own routing using the Veloland dataset from last week and some points of interestes (locations.gpkg on moodle). Import the two datasets and convert the Veloland dataset to an undirected network using sfnetworks, as you did last week.\n\nSubset a single location and call this origin\nCreate a second object with all the other locations and call this destination\nUse the function st_network_paths from sfnetworks to calculate the shortest paths from origin, to destination, using the column length as weight\nThe output returns a two column data.frame. The column edge_paths retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an sf object for each path.\n\nVisualize the result in a map. Include origin and destination in your visualization. See Figure 1 for a possible way to visualize your result.\n\n\n\n\n\n\n\nFigure 1: A possible way to visualize the results from your shortest path analysis."
   },
   {
     "objectID": "movement-II-adding-context.html",
@@ -677,27 +845,6 @@
     "title": "🚀 Tasks",
     "section": "Task 2",
     "text": "Task 2\n\nRedo Task 1 from Vector Deepdive. However, this time use gdal from the command line to the processing. Note that you can use bash commands in quarto, you just have to\n\nset the language to {bash} in the code chunk and\nthe engine to knitr in the YAML header\n\nAgain, use the R package tictoc to measure the execute time of each step in the process. To measure the execution time of bash commands, you can use the approach shown below (which is a bit of a workaround since tictoc was made for R, not Bash commands)\nCompare the execution times of all approaches (sf, duckdb, terra, gdal). How do they differ?\n\n\n```{r}\n# starts the measurement\ntictoc::tic(msg = \"Step 1: Transform the data\")\n```\n\n```{bash}\n# gdal command\ngdal raster convert input.tif output.tif\n```\n\n```{r}\n# ends the measurement\ntictoc::toc(log = TRUE)\n```\n\n\n```{r}\n# Finally (to get a full log:)\ntictoc::tic.log()\n```"
-  },
-  {
-    "objectID": "interpolation-density.html#data",
-    "href": "interpolation-density.html#data",
-    "title": "Spatiotemporal Datascience",
-    "section": "Data",
-    "text": "Data\nThe data set rotmilan.gpkg originates from a larger research project of the Sempach Ornithological Institute which can be accessed via the platform movebank platform (see Scherler 2020). This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link."
-  },
-  {
-    "objectID": "interpolation-density.html#exercise-1-kernel-density-estimation",
-    "href": "interpolation-density.html#exercise-1-kernel-density-estimation",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 1: Kernel Density Estimation",
-    "text": "Exercise 1: Kernel Density Estimation\nTo calculate the a 2D Kernel over our data, use the function density from the R package spatstat.\n\n\n\n\n\n\nNote\n\n\n\nx, the point pattern, needs to be of class ppp. Use the function as.ppp to convert our red kite data\neps is an argument passed on to as.maks to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)\nYou can convert the output (of class im) to a raster using the function terra::rast\n\n\n\n\n\nTry out different options for sigma and choose a reasonable parameter\nTry different functions to choose sigma: bw.diggle, bw.CvL, bw.scott and bw.ppl."
-  },
-  {
-    "objectID": "interpolation-density.html#sec-density-voronoi",
-    "href": "interpolation-density.html#sec-density-voronoi",
-    "title": "Spatiotemporal Datascience",
-    "section": "Exercise 2: Voronoi",
-    "text": "Exercise 2: Voronoi\nThiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function sf::st_voronoi.\n\n\n\n\n\n\nNote\n\n\n\nYou have to combine the individual points to MULTIPOINT using the function sf::st_union.\nst_voronoi takes an envelope argument, however this only takes effect when it is larger than the default envelope. Use sf::st_intersection to clip your output to the boundary of switzerland.\n\n\n\n\n\n\n\n\nScherler, Patrick. 2020. “Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).” PhD thesis, University of Zurich."
   },
   {
     "objectID": "syllabus.html",
@@ -739,7 +886,7 @@
     "href": "slides-tasks.html",
     "title": "Slides",
     "section": "",
-    "text": "Vector Deepdive\n\n🔗 Topological Relations\n🔗 DuckDB\nVector Deepdive Tasks\n\nRaster Deepdive\n\n🔗 Raster data on disk\nTasks"
+    "text": "Vector Deepdive\n\n🔗 Topological Relations\n🔗 DuckDB\nVector Deepdive Tasks\n\nRaster Deepdive\n\n🔗 Raster data on disk\nTasks\n\nWebmapping\n\n🔗 Webmapping\n\nInterpolation / Density Estimation\n\nTasks"
   },
   {
     "objectID": "Modulbeschreibung.html#vorausgesetzte-module",

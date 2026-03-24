@@ -10,4 +10,24 @@
   color: white;
 }
 
+.reveal .quarto-title-block h1.title {
+  -webkit-text-stroke: 2px black;
+}
+
+.reveal .quarto-title-block .slide-background-content{
+  filter: blur(5px)
+}
+
+
+.vimeo{
+  position: absolute; 
+  bottom: 1em; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  color: white; 
+  background: rgba(0,0,0,0.6); 
+  padding: 0.5em 1em; 
+  border-radius: 2px; 
+  white-space: nowrap;
+}
 

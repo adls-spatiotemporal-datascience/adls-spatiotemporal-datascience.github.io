@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tile Coordinates</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; }
+
+    #map { height: 100vh; width: 100%; }
+
+    #tip {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 2px solid #4a90d9;
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-size: 13px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #info {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 12px 20px;
+      font-size: 13px;
+      z-index: 1000;
+      display: none;
+      min-width: 240px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #info h4 {
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    #info table { border-collapse: collapse; width: 100%; }
+    #info td { padding: 3px 8px; }
+    #info td:first-child { color: #888; font-size: 12px; }
+    #info td:last-child { font-weight: bold; font-family: monospace; }
+  </style>
+</head>
+<body>
+
+<div id="tip">TIP: Click on the map to get details for a tile!</div>
+<div id="map"></div>
+<div id="info">
+  <h4 id="info-title">Tile at zoom <span id="info-z"></span></h4>
+  <table>
+    <tr><td>XYZ (Google/OSM)</td><td>x=<span id="info-x"></span>, y=<span id="info-y-xyz"></span></td></tr>
+    <tr><td>TMS</td><td>x=<span id="info-x2"></span>, y=<span id="info-y-tms"></span></td></tr>
+  </table>
+</div>
+
+<script>
+  // --- Map setup ---
+  const map = L.map('map', { zoomControl: true, worldCopyJump: false, zoomDelta: 1, wheelPxPerZoomLevel: 120 }).setView([20, 0], 0);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    noWrap: true
+  }).addTo(map);
+
+  // --- Custom grid layer showing tile coordinates ---
+  const TileDebug = L.GridLayer.extend({
+    createTile: function (coords) {
+      const tile = document.createElement('div');
+      const z = coords.z;
+      const x = coords.x;
+      const y = coords.y;
+      const n = Math.pow(2, z);
+      if (x < 0 || x >= n || y < 0 || y >= n) return tile;
+      const tmsY = n - 1 - y;
+
+      tile.style.cssText = [
+        'border: 1px solid rgba(80, 120, 200, 0.5)',
+        'display: flex',
+        'flex-direction: column',
+        'align-items: center',
+        'justify-content: center',
+        'gap: 2px',
+        'font-size: 11px',
+        'line-height: 1.5',
+        'text-align: center',
+        'color: white',
+        'text-shadow: 0 0 3px black, 0 0 3px black',
+        'pointer-events: none'
+      ].join(';');
+
+      const tag = `
+        background: rgba(0,0,0,0.55);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 15px;
+        font-family: monospace;
+        white-space: nowrap;
+      `;
+      tile.innerHTML = `
+        <span style="${tag}">XYZ: ${x}, ${y}</span>
+        <span style="${tag}">TMS: ${x}, ${tmsY}</span>
+        <span style="${tag} font-weight:bold">z = ${z}</span>
+      `;
+
+      return tile;
+    }
+  });
+
+  new TileDebug({ opacity: 1, zIndex: 500, noWrap: true }).addTo(map);
+
+  // --- Click handler: show tile details ---
+  map.on('click', function (e) {
+    const z = map.getZoom();
+    const n = Math.pow(2, z);
+
+    // Convert lat/lng to tile x/y
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    const x = Math.floor((lng + 180) / 360 * n);
+    const latRad = lat * Math.PI / 180;
+    const y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+    const tmsY = n - 1 - y;
+
+    document.getElementById('info-z').textContent   = z;
+    document.getElementById('info-x').textContent   = x;
+    document.getElementById('info-x2').textContent  = x;
+    document.getElementById('info-y-xyz').textContent = y;
+    document.getElementById('info-y-tms').textContent = tmsY;
+    document.getElementById('info').style.display = 'block';
+  });
+</script>
+</body>
+</html>

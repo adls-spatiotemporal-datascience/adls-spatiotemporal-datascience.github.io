@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -126,6 +145,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">🚀 Tasks</h1>
+<p class="subtitle lead">Interpolation and Density Estimation</p>
 </div>
 
 
@@ -142,14 +162,109 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="sec-task-interp-density" class="level2">
-<h2 class="anchored" data-anchor-id="sec-task-interp-density">Task 7</h2>
-<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Do the exercises in <a href="./interpolation-density.html#sec-density">Density Estimation</a> and <a href="./interpolation-methods.html#sec-interpolation">Interpolation</a> in a file named <code>index.qmd</code>. The task is due in two weeks.</p>
+<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Do the exercises in <a href="interpolation-density.qmd#sec-density">Density Estimation</a> and <a href="interpolation-methods.qmd#sec-interpolation">Interpolation</a> in a file named <code>index.qmd</code>.</p>
+<section id="sec-interpolation" class="level1">
+<h1>Interpolation</h1>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The airquality dataset (<code>luftqualitaet.gpkg</code>) contains measurements of nitrogen dioxide NO₂ from 2015 for 97 monitoring sites in Switzerland. Nitrogen dioxide is produced when fuels and combustibles are burned, especially at high combustion temperatures, with road traffic being the main source. You can find more information on this <a href="https://www.bafu.admin.ch/bafu/de/home/themen/thema-luft/luft--daten--indikatoren-und-karten/luft--indikatoren/indikator-luft.pt.html/aHR0cHM6Ly93d3cuaW5kaWthdG9yZW4uYWRtaW4uY2gvUHVibG/ljL0FlbURldGFpbD9pbmQ9TFUwMjAmbG5nPWRlJlN1Ymo9Tg%3d%3d.html">here</a>.</p>
+</section>
+<section id="exercise-1-idw" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-idw">Exercise 1: IDW</h2>
+<p>Use the function <code>gstat::idw</code> to interpolate the NO₂ values using the <em>inverse distance weighted</em> method.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The function <code>idw</code> needs following inputs: <code>formula</code>, <code>locations</code> and <code>newdata</code></p>
+<ul>
+<li><code>formula</code>: For ordinary, simple kriging use the formula <code>z~1</code> where <code>z</code> is the column name of the dependent variable</li>
+<li><code>locations</code>: A <code>sf</code> object with the locations of the dependent variable</li>
+<li><code>newdata</code>: A <code>sf</code> object with the locations for which the dependent variable should be calculated. Can be created with <code>sf::st_make_grid</code>. The <code>cellsize</code> arugument determins the resolution of the resuting dataset.</li>
+</ul>
+<p>Optional arguments:</p>
+<ul>
+<li><code>maxdist</code>: Maximum distance to which measurements should be considered</li>
+<li><code>nmin</code> /<code>nmax</code>: Minimum and maxximum number of measurements to consider</li>
+<li><code>idp</code> the inverse distance weighting power</li>
+</ul>
+</div>
+</div>
+<p>Play around with <code>maxdist</code>, <code>nmin</code> /<code>nmax</code>and <code>idp</code>. Convert the resulting <code>sf</code> object to a raster (find out how!) and visualize the result.</p>
+</section>
+<section id="exercise-2-nearest-neighbour" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-nearest-neighbour">Exercise 2: Nearest Neighbour</h2>
+<p>Another simple option for interpolation is the nearest neighbour approach, that we can recreate using voronoi polygons. Use the approach described in <a href="interpolation-density.qmd#sec-density-voronoi">Exercise 2: Voronoi</a> to create voronoi polygons. Turn the resulting <code>sfc</code> object to <code>sf</code> using <code>st_as_sf</code>, then use <code>st_join</code> to add the measured NO2 values the polygons.</p>
+<p>Visualize the result.</p>
+</section>
+</section>
+<section id="sec-density" class="level1">
+<h1>Density Estimation</h1>
+<section id="data-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-1">Data</h2>
+<p>The data set <em>rotmilan.gpkg</em> originates from a larger research project of the <a href="https://www.vogelwarte.ch/de/projekte/oekologische-forschung/mechanismen-der-populationsdynamik-beim-rotmilan">Sempach Ornithological Institute</a> which can be accessed via the platform <a href="http://www.movebank.org/panel_embedded_movebank_webapp?gwt_fragment=page%3Dsearch_map_linked%2CindividualIds%3D676571254%2Clat%3D44.465151013519666%2Clon%3D9.096679687499508%2Cz%3D5">movebank</a> platform <span class="citation" data-cites="scherler2020">(see <a href="#ref-scherler2020" role="doc-biblioref">Scherler 2020</a>)</span>. This is a single individual that has been fitted with a transmitter since 2017 and is travelling across the whole of Central Europe. In this exercise, we only work with the data points that were recorded in Switzerland. If you would like to analyse the entire data set, you can download it via the Movebank link.</p>
+</section>
+<section id="exercise-1-kernel-density-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-kernel-density-estimation">Exercise 1: Kernel Density Estimation</h2>
+<p>To calculate the a 2D Kernel over our data, use the function <code>density</code> from the R package <code>spatstat</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>x</code>, the <em>point pattern</em>, needs to be of class <code>ppp</code>. Use the function <code>as.ppp</code> to convert our red kite data</li>
+<li><code>eps</code> is an argument passed on to <code>as.maks</code> to determine the output resolution / pixel size. Choose a reasonable size (not too pixelated, not to slow in computing)</li>
+<li>You can convert the output (of class <code>im</code>) to a raster using the function <code>terra::rast</code></li>
+</ul>
+</div>
+</div>
+<ul>
+<li>Try out different options for <code>sigma</code> and choose a reasonable parameter</li>
+<li>Try different functions to choose <code>sigma</code>: <code>bw.diggle</code>, <code>bw.CvL</code>, <code>bw.scott</code> and <code>bw.ppl</code>.</li>
+</ul>
+</section>
+<section id="sec-density-voronoi" class="level2">
+<h2 class="anchored" data-anchor-id="sec-density-voronoi">Exercise 2: Voronoi</h2>
+<p>Thiessen polygons offer an alternative for visualising differences in the density distribution of point data sets. You can create these using the function <code>sf::st_voronoi</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>You have to combine the individual points to <code>MULTIPOINT</code> using the function <code>sf::st_union</code>.</li>
+<li><code>st_voronoi</code> takes an <code>envelope</code> argument, however this only takes effect when it is larger than the default envelope. Use <code>sf::st_intersection</code> to clip your output to the boundary of switzerland.</li>
+</ul>
+</div>
+</div>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-scherler2020" class="csl-entry" role="listitem">
+Scherler, Patrick. 2020. <span>“Drivers of Departure and Prospecting in Dispersing Juvenile Red Kites (Milvus Milvus).”</span> PhD thesis, University of Zurich.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
