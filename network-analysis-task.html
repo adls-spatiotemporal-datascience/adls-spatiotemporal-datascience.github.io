@@ -207,8 +207,27 @@ Figure&nbsp;1: One possible way to visualize the results of your centrality anal
 </figure>
 </div>
 </section>
-<section id="routing" class="level2">
+<section id="routing" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="routing">Routing</h2>
+<p>In this task, you will do your do your own routing using the <em>Veloland</em> dataset from the previous task (<em>locations.gpkg</em> on moodle). Import the two datasets and convert the Veloland dataset to an <em>undirected</em> network using <code>sfnetworks</code>, as you did before.</p>
+<ol type="1">
+<li>Subset a single location and call this <code>origin</code></li>
+<li>Create a second object with all the other locations and call this <code>destination</code></li>
+<li>Use the function <code>st_network_paths</code> from <code>sfnetworks</code> to calculate the shortest paths from <code>origin</code>, to <code>destination</code>, using the column <code>length</code> as weight</li>
+<li>The output returns a two column data.frame. The column <code>edge_paths</code> retuns the row numbers of the line segments that constitute the shortest path. Use these values to create an <code>sf</code> object for each path.<br>
+</li>
+<li>Visualize the result in a map. Include <code>origin</code> and <code>destination</code> in your visualization. See <a href="#fig-shortest-path" class="quarto-xref">Figure&nbsp;2</a> for a possible way to visualize your result.</li>
+</ol>
+<div id="fig-shortest-path" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-shortest-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="images/shortest_path.png" class="img-fluid figure-img column-page">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shortest-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A possible way to visualize the results from your shortest path analysis.
+</figcaption>
+</figure>
+</div>
 
 
 </section>
@@ -287,7 +306,7 @@ Figure&nbsp;1: One possible way to visualize the results of your centrality anal
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/adls-spatiotemporal-datascience\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
