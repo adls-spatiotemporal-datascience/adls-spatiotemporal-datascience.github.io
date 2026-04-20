@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.19">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -35,15 +89,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-3f61aac59b63c3a2d0e87c59ee7d0662.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7013eb072be138bb66cb423e394fb174.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f24e557408e12e01b2e1cecebd1628ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -121,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -142,19 +195,325 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>As always, the data for this task is on moodle. Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization.</p>
-<p>Your task is to improve upon the simple model we have built in the chapter <a href="./movement-I-minimal-example.html#sec-min-ex">Minimal example</a>. You can do this by:</p>
+<p>Follow the instructions in <a href="./submission.html#sec-gh-pages">Submission via GitHub Pages</a> to create a new repo in the existing organization. Do the exercises in a file named <code>index.qmd</code>.</p>
+<p>Some of you might know the dataset from the course <a href="https://adls-advanced-environmental-statistics.github.io">Advanced Environmental Statistics</a>.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Understanding human mobility is a key challenge in many fields, including transportation planning, epidemiology, and environmental science. Movement data is collected in various ways, including GPS data from smartphones, GPS trackers, or other devices. A key insight into human movement is method of transport. This information often needs to be inferred, since its not provided by the device.</p>
+<p>In this task, you will use movement data from the project by <span class="citation" data-cites="zheng2011">Zheng et al. (<a href="#ref-zheng2011" role="doc-biblioref">2011</a>)</span>. The original dataset was collected in the GeoLife project (Microsoft Research Asia) by 182 users in a period of over three years (from April 2007 to August 2012). A GPS trajectory of this dataset is represented by a sequence of time-stamped points, each of which contains the information of latitude, longitude and altitude. This dataset contains 17’621 trajectories with a total distance of about 1.2 million kilometers and a total duration of 48,000+ hours. These trajectories were recorded by different GPS loggers and GPS-phones, and have a variety of sampling rates. 91 percent of the trajectories are logged in a dense representation, e.g.&nbsp;every 1~5 seconds or every 5~10 meters per point.</p>
+<p>This dataset consists of a broad range of users’ outdoor movements, including not only life routines like go home and go to work but also some entertainments and sports activities, such as shopping, sightseeing, dining, hiking, and cycling.</p>
+<p><strong>The goal is to build a model that can predict the transportation mode of a single sample (location) based on the GPS data</strong>. To build this model, you will use the a labelled subset of the data: 73 users have labeled their trajectories with transportation mode, such as driving, taking a bus, riding a bike and walking. You will use these as labels, and build features to predict these labels from the movement parameters (such as speed, acceleration, sinuosity).</p>
+<p>Version 1.2.2 of the original dataset <span class="citation" data-cites="zheng2011">(<a href="#ref-zheng2011" role="doc-biblioref">Zheng et al. 2011</a>)</span> was downloaded on the 19.11.2024 and preprocessed <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+</section>
+<section id="task" class="level2">
+<h2 class="anchored" data-anchor-id="task">Task</h2>
+<p>Your goal is to predict the transportation mode <strong>for each individual point</strong> in the validation dataset. The minimal example (see next chapter) shows a simpler per-segment approach as a starting point — your task is to extend it to per-point predictions.</p>
+<p>To do so, you will need to:</p>
 <ol type="1">
-<li><strong>Feature Engineering</strong>: Create additional features that you think might help to distinguish between different transportation modes. For example, you could consider turning angles, stop durations or extending observation windows</li>
-<li><strong>Model Selection</strong>: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve the predictive performance.</li>
-<li><strong>Per point prediction</strong>: Instead of predicting the transportation mode on a per segment basis, try to predict the transportation mode for each point. This is a more challenging task but can provide more detailed insights into the movement behavior.</li>
+<li><strong>Feature Engineering</strong>: Create features that capture movement behaviour at the point level. For example, you could consider turning angles, stop durations, or varying the observation window size.</li>
+<li><strong>Model Selection</strong>: Experiment with different models (e.g., random forests, gradient boosting, neural networks) and hyperparameters to improve predictive performance.</li>
 </ol>
-<p>Using one or more of these approaches, predict the transportation mode for the <em>validation</em> dataset.</p>
-<!-- Next week, we will evaluate the performance of your models and award the best performing team with a standing ovation. -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Difference to <em>Advanced Environmental Statistics</em>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the course <em>Advanced Environmental Statistics</em> some of you previously worked with this data on a similar task. This time however, we will expand on the approach used in that course. Rather than providing you with a subset of simple movement parameters, you are tasked with calculating them yourselves. In addition, your goal is to classify transportation mode <em>per point</em>, rather than over an entire segment. This makes the task significantly more difficult, but also more realistic since clean single-mode-segments are usually not the case in real life examples.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-min-ex" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-min-ex">Getting started</h2>
+<section id="step-1-load-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-load-the-data">Step 1: Load the data</h3>
+<p>The dataset <code>tracks_1.gpkg</code> contains the training, testing and validation data as separate layers. We will load the training data and the testing data, and then combine them into a single dataset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)         <span class="co"># for spatial data handling</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List layers in the geopackage</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(<span class="st">"data/movement-I/tracks_1.gpkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Driver: GPKG 
+Available layers:
+  layer_name geometry_type features fields              crs_name
+1   training         Point   501432      5 WGS 84 / UTM zone 50N
+2    testing         Point   262851      5 WGS 84 / UTM zone 50N
+3 validation         Point   240449      4 WGS 84 / UTM zone 50N</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># for data manipulation</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>training_dataset <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/movement-I/tracks_1.gpkg"</span>, <span class="at">layer =</span> <span class="st">"training"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"training"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>testing_dataset <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/movement-I/tracks_1.gpkg"</span>, <span class="at">layer =</span> <span class="st">"testing"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"testing"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>validation_dataset <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/movement-I/tracks_1.gpkg"</span>, <span class="at">layer =</span> <span class="st">"validation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">"validation"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>full_dataset <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(training_dataset, testing_dataset, validation_dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s visualize the data as a map. The package <code>tmap</code> is very handy for this task.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)       <span class="co"># for spatial maps</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>full_dataset <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>() <span class="sc">+</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>() <span class="sc">+</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"CartoDB.Positron"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><img src="images/overview.png" class="img-fluid"></p>
+</section>
+<section id="step-2-feature-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-feature-engineering">Step 2: Feature engineering</h3>
+<p>Feature engineering is a crucial step in preparing data for analysis and modeling. It involves creating new variables, or features, that capture important patterns or relationships in the data. Well-designed features can enhance the performance of machine learning models by making the relevant information more accessible.</p>
+<p>In this task, we aim to enrich the GPS dataset with features derived from the spatial and temporal relationships between consecutive points within each trajectory. Specifically, we will compute metrics such as the distance between consecutive points (step length), the time difference between consecutive timestamps (time lag), and the average speed over these intervals. These features provide valuable insights into movement behavior and are essential for distinguishing between different transportation modes.</p>
+<p>By engineering these features, we transform raw GPS data into a more informative format, setting the stage for building predictive models.</p>
+</section>
+<section id="speed" class="level3">
+<h3 class="anchored" data-anchor-id="speed">Speed</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>full_dataset <span class="ot">&lt;-</span> full_dataset <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">steplength =</span> <span class="fu">as.numeric</span>(<span class="fu">st_distance</span>(<span class="fu">lead</span>(geom), geom, <span class="at">by_element =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">timelag =</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(<span class="fu">lead</span>(datetime), datetime, <span class="at">units =</span> <span class="st">"secs"</span>)),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">speed =</span> steplength <span class="sc">/</span> timelag,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> track_id</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To understand the relationship between movement speed and transportation modes, we will summarize and visualize the dataset. By analyzing the average speeds for different modes of transportation, we can identify distinct patterns that might aid in differentiating between them.</p>
+<p>In this step, we compute the mean speed for each combination of transportation mode and track, ensuring that missing values do not skew the results. Afterward, we reorder the transportation modes based on their average speeds, making the visualization more intuitive. Finally, we create a boxplot to display the speed distributions for each mode, highlighting the variability and central tendencies within the data.</p>
+<p>This analysis provides a clear overview of how speed varies by transportation mode, offering valuable insights for feature interpretation and model development.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># for generic plotting    </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)    <span class="co"># for factor handling</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>full_dataset <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">speed =</span> <span class="fu">mean</span>(speed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(mode, track_id)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="fu">fct_reorder</span>(mode, speed)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(speed, mode, <span class="at">fill =</span> mode)) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-speed-average" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-speed-average-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="movement-I-tasks_files/figure-html/fig-speed-average-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-speed-average-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Average speed per segment for different transportation modes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that <a href="#fig-speed-average" class="quarto-xref">Figure&nbsp;1</a> shows that the average speed <em>per segment</em> varies significantly between different transportation modes. This information can be used to distinguish between modes based on speed-related features on a <em>per segment</em> basis. However, this might not help to distinguish transport mode on a <em>per point</em> basis.</p>
+</section>
+<section id="acceleration" class="level3">
+<h3 class="anchored" data-anchor-id="acceleration">Acceleration</h3>
+<p>Acceleration, the rate of change in speed over time, is a valuable feature for understanding movement dynamics. Unlike speed, which provides information about the magnitude of motion, acceleration captures changes in motion - whether an object is speeding up, slowing down, or maintaining a constant velocity.</p>
+<p>This feature is particularly useful for distinguishing transportation modes. For example, walking and cycling often exhibit more frequent changes in acceleration compared to driving or taking a bus, which tend to involve smoother transitions in speed. By incorporating acceleration into our analysis, we gain a deeper understanding of movement patterns and improve the ability to differentiate between modes of transportation.</p>
+<p>Try to determine acceleration yourself. Hint: <code>(lead(speed) - speed) / timelag</code></p>
+</section>
+<section id="sinuosity" class="level3">
+<h3 class="anchored" data-anchor-id="sinuosity">Sinuosity</h3>
+<p>Sinuosity is a measure of the curvature of a path, and can be defined as the ratio between the actual traveled distance and the straight-line distance between the start and end points. A perfectly straight path has a sinuosity of 1, while more winding paths have higher sinuosity values.</p>
+<p>This feature provides valuable insights into movement behavior, as different transportation modes often exhibit distinct patterns of sinuosity. For instance, walking and cycling paths may have higher sinuosity due to detours or obstacles, while driving or taking a train tends to follow straighter routes. By incorporating sinuosity into the analysis, we can enhance the ability to classify transportation modes based on their characteristic movement patterns.</p>
+<p>To calculate <em>sinuosity</em>, we must first specify an observation window. In this case, we will consider the sinuosity over the next 5 points of each trajectory. This window size allows us to capture the curvature of the path while avoiding excessive noise from individual points. We will compute the straight-line distance between the current point and the point 5 steps ahead, as well as the total distance traveled over these 5 steps. The sinuosity is then calculated as the ratio between these two distances.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)        <span class="co"># for rolling window functions</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>full_dataset <span class="ot">&lt;-</span> full_dataset <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">straight_dist5 =</span> <span class="fu">as.numeric</span>(<span class="fu">st_distance</span>(<span class="fu">lead</span>(geom, <span class="dv">5</span>), geom, <span class="at">by_element =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">full_dist5 =</span> <span class="fu">rollsum</span>(steplength, <span class="dv">5</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">align =</span> <span class="st">"left"</span>, ),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sinuosity =</span> full_dist5<span class="sc">/</span>straight_dist5,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> track_id</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="step-3-training-a-model" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="step-3-training-a-model">Step 3: Training a model</h3>
+<p>Once the dataset has been enriched with meaningful features, the next step is to train a model that can learn patterns in the data and make predictions. Model training involves using labeled data to teach an algorithm to associate input features - such as speed, acceleration, and sinuosity - with the corresponding transportation mode.</p>
+<p>To simplify the task, we will train a model to predict the transportation mode on a <em>per segment</em> basis. To do so, we will use three aggregation functions (<code>mean</code>, <code>max</code> and <code>min</code>) to summarize the features for each segment.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To calculate mean, max and min for each feature per segment, we will use custom</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregation functions that remove NA values per default</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mean2 <span class="ot">&lt;-</span> \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>max2 <span class="ot">&lt;-</span> \(x) <span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>min2 <span class="ot">&lt;-</span> \(x) <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a summary dataset for the model</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>tracks_smry <span class="ot">&lt;-</span> full_dataset <span class="sc">|&gt;</span> </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># we can drop the geometry column, as we don't need it for the model</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We select the features we want to use for the model</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(data, track_id, mode, steplength, timelag, speed, sinuosity) <span class="sc">|&gt;</span> </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(data, track_id, mode) <span class="sc">|&gt;</span> </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(steplength, timelag, speed, sinuosity), <span class="fu">list</span>(<span class="at">mean =</span> mean2, <span class="at">max =</span> max2, <span class="at">min =</span> min2)),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="fu">factor</span>(mode)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>track_id)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, split training and testing</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>tracks_training <span class="ot">&lt;-</span> tracks_smry <span class="sc">|&gt;</span> </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(data <span class="sc">==</span> <span class="st">"training"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>tracks_testing <span class="ot">&lt;-</span> tracks_smry <span class="sc">|&gt;</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(data <span class="sc">==</span> <span class="st">"testing"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>tracks_validation <span class="ot">&lt;-</span> tracks_smry <span class="sc">|&gt;</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(data <span class="sc">==</span> <span class="st">"validation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can build a model to predict the transportation mode based on the features we have engineered. We will use a classification tree model (CART) for this task, as a simple and interpretable model that can capture complex relationships between the features and the target variable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the model based on the training data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)      <span class="co"># for building the model</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>cart_model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(mode<span class="sc">~</span>., <span class="at">data =</span> tracks_training, <span class="at">method =</span> <span class="st">"class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell page-columns page-full">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot) <span class="co"># for plotting the model</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(cart_model, <span class="at">type =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="movement-I-tasks_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img column-page" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-evaluating-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-evaluating-the-model">Step 4: Evaluating the model</h3>
+<p>After training a model, it is essential to assess its performance to ensure it can accurately predict outcomes on unseen data. Model evaluation involves comparing the predicted labels with the true labels using metrics such as accuracy, precision, recall, and F1-score. These metrics provide insights into the model’s strengths and weaknesses, helping identify areas for improvement.</p>
+<p>In addition to numerical metrics, visualizations like confusion matrices or ROC curves can offer a deeper understanding of how the model performs across different transportation modes. By thoroughly evaluating the model, we ensure it is both reliable and capable of generalizing beyond the training dataset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the testing data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cart_model, tracks_testing) </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the highest probability to predict the transportation mode</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>tracks_testing<span class="sc">$</span>prediction <span class="ot">&lt;-</span> <span class="fu">colnames</span>(predictions)[<span class="fu">apply</span>(predictions, <span class="dv">1</span>, which.max)]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the prediction into a factor</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>tracks_testing<span class="sc">$</span>prediction <span class="ot">&lt;-</span> <span class="fu">factor</span>(tracks_testing<span class="sc">$</span>prediction)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the levels of the actual modes to match the predicted modes</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>tracks_testing<span class="sc">$</span>mode <span class="ot">&lt;-</span> <span class="fu">factor</span>(tracks_testing<span class="sc">$</span>mode, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">as.character</span>(tracks_testing<span class="sc">$</span>mode))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tracks_testing<span class="sc">$</span>prediction, <span class="at">reference =</span> tracks_testing<span class="sc">$</span>mode)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction bike bus car subway train walk
+    bike     68  20   2      1     0    3
+    bus      21  91  25      4     1   11
+    car       1  18  42      8     0    1
+    subway    0   0   8     18     1    0
+    train     0   0   0      1     4    0
+    walk     11  17   6     12     0  166
+
+Overall Statistics
+                                          
+               Accuracy : 0.6934          
+                 95% CI : (0.6534, 0.7313)
+    No Information Rate : 0.3226          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.5937          
+                                          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: bike Class: bus Class: car Class: subway
+Sensitivity               0.6733     0.6233    0.50602       0.40909
+Specificity               0.9435     0.8506    0.94142       0.98259
+Pos Pred Value            0.7234     0.5948    0.60000       0.66667
+Neg Pred Value            0.9293     0.8652    0.91650       0.95131
+Prevalence                0.1800     0.2602    0.14795       0.07843
+Detection Rate            0.1212     0.1622    0.07487       0.03209
+Detection Prevalence      0.1676     0.2727    0.12478       0.04813
+Balanced Accuracy         0.8084     0.7369    0.72372       0.69584
+                     Class: train Class: walk
+Sensitivity              0.666667      0.9171
+Specificity              0.998198      0.8789
+Pos Pred Value           0.800000      0.7830
+Neg Pred Value           0.996403      0.9570
+Prevalence               0.010695      0.3226
+Detection Rate           0.007130      0.2959
+Detection Prevalence     0.008913      0.3779
+Balanced Accuracy        0.832432      0.8980</code></pre>
+</div>
+</div>
+</section>
+<section id="step-5-predicting-the-validation-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-predicting-the-validation-data">Step 5: Predicting the validation data</h3>
+<p>Once we are satisfied with the model performance on the testing data, we can apply it to the validation dataset. Note that the validation data has no labels, so we can only make predictions but not evaluate them here.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>predictions_validation <span class="ot">&lt;-</span> <span class="fu">predict</span>(cart_model, tracks_validation)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tracks_validation<span class="sc">$</span>prediction <span class="ot">&lt;-</span> <span class="fu">colnames</span>(predictions_validation)[<span class="fu">apply</span>(predictions_validation, <span class="dv">1</span>, which.max)]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>tracks_validation<span class="sc">$</span>prediction <span class="ot">&lt;-</span> <span class="fu">factor</span>(tracks_validation<span class="sc">$</span>prediction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
 
-</main> <!-- /main -->
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-zheng2011" class="csl-entry" role="listitem">
+Zheng, Yu, Hao Fu, Xing Xie, Wei-Ying Ma, and Quannan Li. 2011. <em>Geolife GPS Trajectory Dataset - User Guide</em>. Geolife GPS trajectories 1.1. <a href="https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/">https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The data was processed as follows:</p>
+<ol type="a">
+<li>Merged the data of all users into a single dataset</li>
+<li>Added transport mode labels and removed all trajectories without a transport mode label.</li>
+<li>Split the trajectories into segments based on the user id, transportation mode and time difference between consecutive points. A new segment is created if the time difference is larger than 10 minutes.</li>
+<li>Split the segments (from the previous step) further based on the distance between consecutive points. A new segment is created if the distance is larger than 100 meters. The created segment ids are unique across all users.</li>
+<li>Removed all segments with less than 100 points.</li>
+<li>Projected the data into UTM zone 50N (EPSG: 32650)</li>
+<li>Removed all segments that move outside of the bounding box of Beijing (406993 , 487551 , 4387642, 4463488 in EPSG 32650)</li>
+<li>Split the data into 4 sets of training, testing and validation data.</li>
+</ol>
+<p>The full process is documented in <a href="https://github.com/adls-advanced-environmental-statistics/GeoLife_data-preperation">this GitHub Repository</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
